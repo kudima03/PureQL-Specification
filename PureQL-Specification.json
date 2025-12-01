@@ -1,0 +1,526 @@
+﻿{
+  "$id": "https://github.com/kudima03/PureQL-Specification/blob/main/PureQL-Specification.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "definitions": {
+    "betweenCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "between"
+        },
+        "value": {
+          "$ref": "#/definitions/expression"
+        },
+        "min": {
+          "$ref": "#/definitions/expression"
+        },
+        "max": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "kind",
+        "value",
+        "min",
+        "max"
+      ],
+      "type": "object"
+    },
+    "binaryCompareCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "compare"
+        },
+        "operator": {
+          "enum": [
+            "equal",
+            "notEqual",
+            "greaterThan",
+            "greaterOrEqual",
+            "lessThan",
+            "lessOrEqual",
+            "contains",
+            "startsWith",
+            "endsWith",
+            "like",
+            "iLike"
+          ],
+          "type": "string"
+        },
+        "left": {
+          "$ref": "#/definitions/expression"
+        },
+        "right": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "kind",
+        "operator",
+        "left",
+        "right"
+      ],
+      "type": "object"
+    },
+    "binaryExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "binary"
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "add",
+            "subtract",
+            "multiply",
+            "divide"
+          ]
+        },
+        "left": {
+          "$ref": "#/definitions/expression"
+        },
+        "right": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "kind",
+        "operator",
+        "left",
+        "right"
+      ],
+      "type": "object"
+    },
+    "conditionExpression": {
+      "discriminator": {
+        "mapping": {
+          "and": "#/definitions/logicCondition",
+          "or": "#/definitions/logicCondition",
+          "not": "#/definitions/logicCondition",
+          "compare": "#/definitions/binaryCompareCondition",
+          "in": "#/definitions/inCompareCondition",
+          "notIn": "#/definitions/inCompareCondition",
+          "isNull": "#/definitions/nullCheckCondition",
+          "isNotNull": "#/definitions/nullCheckCondition",
+          "between": "#/definitions/betweenCondition"
+        },
+        "propertyName": "kind"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/logicCondition"
+        },
+        {
+          "$ref": "#/definitions/binaryCompareCondition"
+        },
+        {
+          "$ref": "#/definitions/inCompareCondition"
+        },
+        {
+          "$ref": "#/definitions/nullCheckCondition"
+        },
+        {
+          "$ref": "#/definitions/betweenCondition"
+        }
+      ]
+    },
+    "expression": {
+      "discriminator": {
+        "mapping": {
+          "binary": "#/definitions/binaryExpression",
+          "field": "#/definitions/fieldExpression",
+          "function": "#/definitions/functionExpression",
+          "literal": "#/definitions/literalExpression",
+          "parameter": "#/definitions/parameterExpression",
+          "unary": "#/definitions/unaryExpression"
+        },
+        "propertyName": "kind"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/literalExpression"
+        },
+        {
+          "$ref": "#/definitions/fieldExpression"
+        },
+        {
+          "$ref": "#/definitions/unaryExpression"
+        },
+        {
+          "$ref": "#/definitions/binaryExpression"
+        },
+        {
+          "$ref": "#/definitions/functionExpression"
+        },
+        {
+          "$ref": "#/definitions/parameterExpression"
+        }
+      ]
+    },
+    "fieldExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "field"
+        },
+        "entity": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "entity",
+        "name"
+      ],
+      "type": "object"
+    },
+    "fromEntity": {
+      "type": "object",
+      "required": [
+        "entity"
+      ],
+      "properties": {
+        "entity": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "functionExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "function"
+        },
+        "name": {
+          "type": "string"
+        },
+        "args": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/expression"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "args"
+      ],
+      "type": "object"
+    },
+    "inCompareCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "in",
+            "notIn"
+          ]
+        },
+        "operator": {
+          "type": "string",
+          "enum": [
+            "in",
+            "notIn"
+          ]
+        },
+        "left": {
+          "$ref": "#/definitions/expression"
+        },
+        "right": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/expression"
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "operator",
+        "left",
+        "right"
+      ],
+      "type": "object"
+    },
+    "joinItem": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "left",
+            "right",
+            "inner",
+            "full"
+          ]
+        },
+        "entity": {
+          "type": "string"
+        },
+        "on": {
+          "$ref": "#/definitions/conditionExpression"
+        }
+      },
+      "required": [
+        "type",
+        "entity",
+        "on"
+      ],
+      "type": "object"
+    },
+    "literalExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "literal"
+        },
+        "valueType": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "float",
+            "decimal",
+            "string",
+            "boolean",
+            "date",
+            "time",
+            "datetime",
+            "null"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "valueType",
+        "value"
+      ],
+      "type": "object"
+    },
+    "logicCondition": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "condition": {
+          "$ref": "#/definitions/conditionExpression"
+        },
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/conditionExpression"
+          }
+        },
+        "kind": {
+          "enum": [
+            "and",
+            "or",
+            "not"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "nullCheckCondition": {
+      "type": "object",
+      "required": [
+        "kind",
+        "left"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "isNull",
+            "isNotNull"
+          ]
+        },
+        "left": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "additionalProperties": false
+    },
+    "orderByItem": {
+      "type": "object",
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "$ref": "#/definitions/expression"
+        },
+        "direction": {
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "asc"
+        }
+      },
+      "additionalProperties": false
+    },
+    "pagination": {
+      "additionalProperties": false,
+      "properties": {
+        "take": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "skip": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "type": "object"
+    },
+    "parameterDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "float",
+            "decimal",
+            "string",
+            "boolean",
+            "date",
+            "time",
+            "datetime",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "required"
+      ],
+      "type": "object"
+    },
+    "parameterExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "parameter"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "selectItem": {
+      "type": "object",
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "$ref": "#/definitions/expression"
+        },
+        "alias": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "unaryExpression": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "unary"
+        },
+        "operator": {
+          "enum": [
+            "neg",
+            "not"
+          ],
+          "type": "string"
+        },
+        "operand": {
+          "$ref": "#/definitions/expression"
+        }
+      },
+      "required": [
+        "kind",
+        "operator",
+        "operand"
+      ],
+      "type": "object"
+    }
+  },
+  "properties": {
+    "distinct": {
+      "type": "boolean",
+      "default": false
+    },
+    "from": {
+      "$ref": "#/definitions/fromEntity"
+    },
+    "groupBy": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/expression"
+      }
+    },
+    "having": {
+      "$ref": "#/definitions/conditionExpression"
+    },
+    "joins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/joinItem"
+      }
+    },
+    "orderBy": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/orderByItem"
+      }
+    },
+    "pagination": {
+      "$ref": "#/definitions/pagination"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/parameterDeclaration"
+      }
+    },
+    "select": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/selectItem"
+      }
+    },
+    "where": {
+      "$ref": "#/definitions/conditionExpression"
+    }
+  },
+  "required": [
+    "from",
+    "select"
+  ],
+  "title": "PureQL specification",
+  "type": "object",
+  "version": "0.1.0-preview.0.1.0"
+}
