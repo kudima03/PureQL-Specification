@@ -44,8 +44,7 @@
             "contains",
             "startsWith",
             "endsWith",
-            "like",
-            "iLike"
+            "like"
           ],
           "type": "string"
         },
