@@ -1,5 +1,5 @@
 ﻿{
-  "$id": "https://github.com/kudima03/PureQL-Specification/blob/main/PureQL-Specification.json",
+  "$id": "https://raw.githubusercontent.com/kudima03/PureQL-Specification/refs/heads/main/PureQL-Specification.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "definitions": {
