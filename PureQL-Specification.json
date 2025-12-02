@@ -86,6 +86,33 @@
       },
       "additionalProperties": false
     },
+    "inCompareCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "in",
+            "notIn"
+          ]
+        },
+        "left": {
+          "$ref": "#/definitions/expression"
+        },
+        "right": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/expression"
+          }
+        }
+      }
+    },
     "fieldExpression": {
       "type": "object",
       "additionalProperties": false,
@@ -280,4 +307,3 @@
   "title": "PureQL specification",
   "type": "object"
 }
-
