@@ -281,7 +281,7 @@
         "kind": {
           "const": "literal"
         },
-        "valueType": {
+        "type": {
           "type": "string",
           "enum": [
             "integer",
@@ -301,7 +301,7 @@
       },
       "required": [
         "kind",
-        "valueType",
+        "type",
         "value"
       ],
       "type": "object"
@@ -522,4 +522,5 @@
   "title": "PureQL specification",
   "type": "object",
   "version": "0.1.0-preview.0.1.0"
+
 }
