@@ -64,47 +64,27 @@
       }
     },
     "logicCondition": {
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "conditions"
-          ],
-          "properties": {
-            "kind": {
-              "enum": [
-                "and",
-                "or"
-              ]
-            },
-            "conditions": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/conditionExpression"
-              },
-              "minItems": 1
-            }
-          },
-          "additionalProperties": false
+      "type": "object",
+      "required": [
+        "kind",
+        "conditions"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "and",
+            "or"
+          ]
         },
-        {
-          "type": "object",
-          "required": [
-            "kind",
-            "condition"
-          ],
-          "properties": {
-            "kind": {
-              "const": "not"
-            },
-            "condition": {
-              "$ref": "#/definitions/conditionExpression"
-            }
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/conditionExpression"
           },
-          "additionalProperties": false
+          "minItems": 1
         }
-      ]
+      },
+      "additionalProperties": false
     },
     "inCompareCondition": {
       "type": "object",
