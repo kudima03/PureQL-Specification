@@ -386,8 +386,8 @@
     "parameterDeclaration": {
       "additionalProperties": false,
       "properties": {
-        "required": {
-          "type": "boolean"
+        "name": {
+          "type": "string"
         },
         "type": {
           "type": "string",
@@ -405,8 +405,8 @@
         }
       },
       "required": [
-        "type",
-        "required"
+        "name",
+        "type"
       ],
       "type": "object"
     },
@@ -524,3 +524,4 @@
   "version": "0.1.0-preview.0.1.0"
 
 }
+
