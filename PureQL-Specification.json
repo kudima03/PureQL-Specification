@@ -86,7 +86,7 @@
       },
       "additionalProperties": false
     },
-    "inCompareCondition": {
+    "inCondition": {
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -307,3 +307,4 @@
   "title": "PureQL specification",
   "type": "object"
 }
+
