@@ -1,5 +1,4 @@
 {
-  "$id": "https://raw.githubusercontent.com/kudima03/PureQL-Specification/refs/heads/main/PureQL-Specification.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "definitions": {
@@ -17,13 +16,112 @@
           "const": "between"
         },
         "value": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/betweenCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         },
         "min": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/betweenCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         },
         "max": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         }
       }
     },
@@ -56,10 +154,72 @@
           ]
         },
         "left": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         },
         "right": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         }
       }
     },
@@ -79,7 +239,23 @@
         "conditions": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/conditionExpression"
+            "oneOf": [
+              {
+                "$ref": "#/definitions/binaryCompareCondition"
+              },
+              {
+                "$ref": "#/definitions/betweenCondition"
+              },
+              {
+                "$ref": "#/definitions/inCondition"
+              },
+              {
+                "$ref": "#/definitions/logicCondition"
+              },
+              {
+                "$ref": "#/definitions/unaryExpression"
+              }
+            ]
           },
           "minItems": 1
         }
@@ -102,13 +278,51 @@
           ]
         },
         "left": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            }
+          ]
         },
         "right": {
           "type": "array",
           "minItems": 1,
           "items": {
-            "$ref": "#/definitions/expression"
+            "oneOf": [
+              {
+                "$ref": "#/definitions/fieldExpression"
+              },
+              {
+                "$ref": "#/definitions/aggregateExpression"
+              },
+              {
+                "$ref": "#/definitions/functionExpression"
+              },
+              {
+                "$ref": "#/definitions/unaryExpression"
+              },
+              {
+                "$ref": "#/definitions/literalExpression"
+              },
+              {
+                "$ref": "#/definitions/parameterExpression"
+              }
+            ]
           }
         }
       }
@@ -157,7 +371,23 @@
           "minLength": 1
         },
         "on": {
-          "$ref": "#/definitions/conditionExpression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/betweenCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
         }
       }
     },
@@ -184,7 +414,26 @@
           ]
         },
         "arg": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            }
+          ]
         }
       }
     },
@@ -219,9 +468,27 @@
         },
         "args": {
           "type": "array",
-          "minItems": 1,
           "items": {
-            "$ref": "#/definitions/expression"
+            "oneOf": [
+              {
+                "$ref": "#/definitions/fieldExpression"
+              },
+              {
+                "$ref": "#/definitions/aggregateExpression"
+              },
+              {
+                "$ref": "#/definitions/functionExpression"
+              },
+              {
+                "$ref": "#/definitions/unaryExpression"
+              },
+              {
+                "$ref": "#/definitions/literalExpression"
+              },
+              {
+                "$ref": "#/definitions/parameterExpression"
+              }
+            ]
           }
         }
       }
@@ -246,7 +513,221 @@
           ]
         },
         "operand": {
-          "$ref": "#/definitions/expression"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            },
+            {
+              "$ref": "#/definitions/binaryCompareCondition"
+            },
+            {
+              "$ref": "#/definitions/betweenCondition"
+            },
+            {
+              "$ref": "#/definitions/inCondition"
+            },
+            {
+              "$ref": "#/definitions/logicCondition"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            }
+          ]
+        }
+      }
+    },
+    "fromEntity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "entity"
+      ],
+      "properties": {
+        "entity": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alias": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "selectItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            }
+          ]
+        },
+        "alias": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "orderByItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fieldExpression"
+            },
+            {
+              "$ref": "#/definitions/aggregateExpression"
+            },
+            {
+              "$ref": "#/definitions/functionExpression"
+            },
+            {
+              "$ref": "#/definitions/unaryExpression"
+            },
+            {
+              "$ref": "#/definitions/literalExpression"
+            },
+            {
+              "$ref": "#/definitions/parameterExpression"
+            }
+          ]
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "asc"
+        }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skip",
+        "take"
+      ],
+      "properties": {
+        "skip": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "take": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "parameterDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "float",
+            "decimal",
+            "string",
+            "boolean",
+            "date",
+            "time",
+            "dateTime",
+            "null"
+          ]
+        }
+      }
+    },
+    "literalExpression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value",
+        "type"
+      ],
+      "properties": {
+        "kind": {
+          "const": "literal"
+        },
+        "value": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "integer",
+            "float",
+            "decimal",
+            "string",
+            "boolean",
+            "date",
+            "time",
+            "dateTime",
+            "null"
+          ]
+        }
+      }
+    },
+    "parameterExpression": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "name"
+      ],
+      "properties": {
+        "kind": {
+          "const": "parameter"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }
@@ -267,7 +748,23 @@
       }
     },
     "where": {
-      "$ref": "#/definitions/conditionExpression"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/binaryCompareCondition"
+        },
+        {
+          "$ref": "#/definitions/betweenCondition"
+        },
+        {
+          "$ref": "#/definitions/inCondition"
+        },
+        {
+          "$ref": "#/definitions/logicCondition"
+        },
+        {
+          "$ref": "#/definitions/unaryExpression"
+        }
+      ]
     },
     "joins": {
       "type": "array",
@@ -278,11 +775,46 @@
     "groupBy": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/expression"
+        "oneOf": [
+          {
+            "$ref": "#/definitions/fieldExpression"
+          },
+          {
+            "$ref": "#/definitions/aggregateExpression"
+          },
+          {
+            "$ref": "#/definitions/functionExpression"
+          },
+          {
+            "$ref": "#/definitions/unaryExpression"
+          },
+          {
+            "$ref": "#/definitions/literalExpression"
+          },
+          {
+            "$ref": "#/definitions/parameterExpression"
+          }
+        ]
       }
     },
     "having": {
-      "$ref": "#/definitions/conditionExpression"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/binaryCompareCondition"
+        },
+        {
+          "$ref": "#/definitions/betweenCondition"
+        },
+        {
+          "$ref": "#/definitions/inCondition"
+        },
+        {
+          "$ref": "#/definitions/logicCondition"
+        },
+        {
+          "$ref": "#/definitions/unaryExpression"
+        }
+      ]
     },
     "orderBy": {
       "type": "array",
@@ -307,4 +839,3 @@
   "title": "PureQL specification",
   "type": "object"
 }
-
