@@ -299,7 +299,10 @@
       "oneOf": [
         { "$ref": "#/definitions/or" },
         { "$ref": "#/definitions/and" },
-        { "$ref": "#/definitions/not" }
+        { "$ref": "#/definitions/not" },
+        { "$ref": "#/definitions/equals" },
+        { "$ref": "#/definitions/numericComparison" },
+        { "$ref": "#/definitions/stringComparison" }
       ]
     },
 
@@ -770,6 +773,84 @@
         "on": {
           "$ref": "#/definitions/predicates"
         }
+      }
+    },
+    "numericComparable": {
+      "oneOf": [
+        { "$ref": "#/definitions/scalars/numberScalar" },
+        { "$ref": "#/definitions/scalars/integerScalar" },
+        { "$ref": "#/definitions/parametersTypes/numberParameter" },
+        { "$ref": "#/definitions/parametersTypes/integerParameter" },
+        { "$ref": "#/definitions/arithmetics" },
+        { "$ref": "#/definitions/aggregates" },
+        { "$ref": "#/definitions/fieldExpression" }
+      ]
+    },
+    "stringLikeComparable": {
+      "oneOf": [
+        { "$ref": "#/definitions/scalars/stringScalar" },
+        { "$ref": "#/definitions/scalars/dateScalar" },
+        { "$ref": "#/definitions/scalars/datetimeScalar" },
+        { "$ref": "#/definitions/scalars/timeScalar" },
+        { "$ref": "#/definitions/scalars/uuidScalar" },
+
+        { "$ref": "#/definitions/parametersTypes/stringParameter" },
+        { "$ref": "#/definitions/parametersTypes/dateParameter" },
+        { "$ref": "#/definitions/parametersTypes/datetimeParameter" },
+        { "$ref": "#/definitions/parametersTypes/timeParameter" },
+        { "$ref": "#/definitions/parametersTypes/uuidParameter" },
+
+        { "$ref": "#/definitions/fieldExpression" }
+      ]
+    },
+    "equals": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [ "function", "left", "right" ],
+      "properties": {
+        "function": { "enum": [ "eq", "neq" ] },
+
+        "left": {
+          "oneOf": [
+            { "$ref": "#/definitions/numericComparable" },
+            { "$ref": "#/definitions/stringLikeComparable" },
+            { "$ref": "#/definitions/scalars/booleanScalar" },
+            { "$ref": "#/definitions/parametersTypes/booleanParameter" }
+          ]
+        },
+
+        "right": {
+          "oneOf": [
+            { "$ref": "#/definitions/numericComparable" },
+            { "$ref": "#/definitions/stringLikeComparable" },
+            { "$ref": "#/definitions/scalars/booleanScalar" },
+            { "$ref": "#/definitions/parametersTypes/booleanParameter" }
+          ]
+        }
+      }
+    },
+    "numericComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [ "function", "left", "right" ],
+      "properties": {
+        "function": {
+          "enum": [ "gt", "lt", "gte", "lte" ]
+        },
+        "left": { "$ref": "#/definitions/numericComparable" },
+        "right": { "$ref": "#/definitions/numericComparable" }
+      }
+    },
+    "stringComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [ "function", "left", "right" ],
+      "properties": {
+        "function": {
+          "enum": [ "gt", "lt", "gte", "lte" ]
+        },
+        "left": { "$ref": "#/definitions/stringLikeComparable" },
+        "right": { "$ref": "#/definitions/stringLikeComparable" }
       }
     }
   },
