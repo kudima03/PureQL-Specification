@@ -526,7 +526,7 @@
           "properties": {
             "function": { "const": "max_datetime" },
             "arg": {
-              "$ref": "#/definitions/datetimeReturning"
+              "$ref": "#/definitions/fields/datetimeField"
             }
           },
           "required": [ "function", "arg" ]
@@ -538,7 +538,7 @@
           "properties": {
             "function": { "const": "min_datetime" },
             "arg": {
-              "$ref": "#/definitions/datetimeReturning"
+              "$ref": "#/definitions/fields/datetimeField"
             }
           },
           "required": [ "function", "arg" ]
@@ -550,7 +550,7 @@
           "properties": {
             "function": { "const": "average_datetime" },
             "arg": {
-              "$ref": "#/definitions/datetimeField"
+              "$ref": "#/definitions/fields/datetimeField"
             }
           },
           "required": [ "function", "arg" ]
