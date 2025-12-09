@@ -1359,8 +1359,8 @@
       "$ref": "#/definitions/pagination"
     },
     "parameters": {
-      "type": "object",
-      "additionalProperties": {
+      "type": "array",
+      "items": {
         "$ref": "#/definitions/parameterDeclaration"
       }
     }
