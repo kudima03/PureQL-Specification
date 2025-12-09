@@ -1098,15 +1098,13 @@
           "function": { "const": "equal" },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/scalars/booleanScalar" },
-              { "$ref": "#/definitions/parameters/booleanParameter" }
+              { "$ref": "#/definitions/predicate" }
             ]
           },
 
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/scalars/booleanScalar" },
-              { "$ref": "#/definitions/parameters/booleanParameter" }
+              { "$ref": "#/definitions/predicate" }
             ]
           }
         }
