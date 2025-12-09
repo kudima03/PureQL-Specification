@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "additionalProperties": false,
   "definitions": {
 
     "parameterDeclaration": {
@@ -71,7 +70,6 @@
     "parameters": {
       "stringParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -83,7 +81,7 @@
       },
       "numberParameter": {
         "type": "object",
-        "additionalProperties": false,
+        "additionalProperties": true,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -95,7 +93,6 @@
       },
       "booleanParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -107,7 +104,6 @@
       },
       "nullParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -119,7 +115,6 @@
       },
       "dateParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -131,7 +126,6 @@
       },
       "datetimeParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -143,7 +137,6 @@
       },
       "timeParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -155,7 +148,6 @@
       },
       "uuidParameter": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "name", "type" ],
         "properties": {
           "name": {
@@ -169,7 +161,6 @@
 
     "pagination": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "skip",
         "take"
@@ -188,7 +179,6 @@
 
     "fromExpression": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "entity"
       ],
@@ -206,7 +196,6 @@
 
     "selectExpression": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "expression"
       ],
@@ -335,7 +324,6 @@
 
       "count": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "count" },
           "arg": {
@@ -349,7 +337,6 @@
 
         "sum": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "sum" },
             "arg": {
@@ -361,7 +348,6 @@
 
         "max_number": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "max_number" },
             "arg": {
@@ -374,7 +360,6 @@
 
         "min_number": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "min_number" },
             "arg": {
@@ -387,7 +372,6 @@
 
         "average_number": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "average_number" },
             "arg": {
@@ -402,7 +386,6 @@
 
         "max_string": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "max_string" },
             "arg": {
@@ -414,7 +397,6 @@
 
         "min_string": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "min_string" },
             "arg": {
@@ -429,7 +411,6 @@
 
         "max_date": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "max_date" },
             "arg": {
@@ -441,7 +422,6 @@
 
         "min_date": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "min_date" },
             "arg": {
@@ -453,7 +433,6 @@
 
         "average_date": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "average_date" },
             "arg": {
@@ -468,7 +447,6 @@
 
         "max_datetime": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "max_datetime" },
             "arg": {
@@ -480,7 +458,6 @@
 
         "min_datetime": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "min_datetime" },
             "arg": {
@@ -492,7 +469,6 @@
 
         "average_datetime": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "average_datetime" },
             "arg": {
@@ -507,7 +483,6 @@
 
         "max_time": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "max_time" },
             "arg": {
@@ -519,7 +494,6 @@
 
         "min_time": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "min_time" },
             "arg": {
@@ -531,7 +505,6 @@
 
         "average_time": {
           "type": "object",
-          "additionalProperties": false,
           "properties": {
             "function": { "const": "average_time" },
             "arg": {
@@ -568,7 +541,6 @@
     "arithmetics": {
       "add": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "add" },
           "values": {
@@ -584,7 +556,6 @@
 
       "subtract": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "subtract" },
           "values": {
@@ -600,7 +571,6 @@
 
       "multiply": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "multiply" },
           "values": {
@@ -616,7 +586,6 @@
 
       "divide": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "divide" },
           "values": {
@@ -635,7 +604,6 @@
 
       "or": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "or" },
           "conditions": {
@@ -651,7 +619,6 @@
 
       "and": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "and" },
           "conditions": {
@@ -667,7 +634,6 @@
 
       "not": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "function": { "const": "not" },
           "condition": {
@@ -682,7 +648,6 @@
 
       "stringScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/stringType" },
           "value": { "type": "string" }
@@ -692,7 +657,7 @@
 
       "numberScalar": {
         "type": "object",
-        "additionalProperties": false,
+        "additionalProperties": true,
         "properties": {
           "type": { "$ref": "#/definitions/types/numberType" },
           "value": { "type": "number" }
@@ -702,7 +667,6 @@
 
       "booleanScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/booleanType" },
           "value": { "type": "boolean" }
@@ -712,7 +676,6 @@
 
       "nullScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/nullType" },
           "value": { "type": "null" }
@@ -722,7 +685,6 @@
 
       "dateScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/dateType" },
           "value": {
@@ -735,7 +697,6 @@
 
       "datetimeScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/datetimeType" },
           "value": {
@@ -748,7 +709,6 @@
 
       "timeScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/timeType" },
           "value": {
@@ -761,7 +721,6 @@
 
       "uuidScalar": {
         "type": "object",
-        "additionalProperties": false,
         "properties": {
           "type": { "$ref": "#/definitions/types/uuidType" },
           "value": {
@@ -790,56 +749,48 @@
 
       "stringType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "string" } },
         "required": [ "name" ]
       },
 
       "numberType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "number" } },
         "required": [ "name" ]
       },
 
       "booleanType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "boolean" } },
         "required": [ "name" ]
       },
 
       "nullType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "null" } },
         "required": [ "name" ]
       },
 
       "dateType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "date" } },
         "required": [ "name" ]
       },
 
       "datetimeType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "datetime" } },
         "required": [ "name" ]
       },
 
       "timeType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "time" } },
         "required": [ "name" ]
       },
 
       "uuidType": {
         "type": "object",
-        "additionalProperties": false,
         "properties": { "name": { "const": "uuid" } },
         "required": [ "name" ]
       }
@@ -848,7 +799,6 @@
     "fields": {
       "stringField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -864,7 +814,6 @@
       },
       "numberField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -880,7 +829,6 @@
       },
       "booleanField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -896,7 +844,6 @@
       },
       "nullField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -912,7 +859,6 @@
       },
       "dateField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -928,7 +874,6 @@
       },
       "datetimeField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -944,7 +889,6 @@
       },
       "timeField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -960,7 +904,6 @@
       },
       "uuidField": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "entity", "field", "type" ],
         "properties": {
           "entity": {
@@ -1032,7 +975,6 @@
 
       "boolean_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1052,7 +994,6 @@
 
       "integer_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1072,7 +1013,6 @@
 
       "string_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1092,7 +1032,6 @@
 
       "date_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1112,7 +1051,6 @@
 
       "time_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1132,7 +1070,6 @@
 
       "date_time_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1152,7 +1089,6 @@
 
       "uuid_equality": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": { "const": "equal" },
@@ -1185,7 +1121,6 @@
 
       "numericComparison": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": {
@@ -1198,7 +1133,6 @@
 
       "stringComparison": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": {
@@ -1211,7 +1145,6 @@
 
       "dateComparison": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": {
@@ -1224,7 +1157,6 @@
 
       "datetimeComparison": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": {
@@ -1237,7 +1169,6 @@
 
       "timeComparison": {
         "type": "object",
-        "additionalProperties": false,
         "required": [ "function", "left", "right" ],
         "properties": {
           "function": {
