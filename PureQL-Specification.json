@@ -364,6 +364,12 @@
           "$ref": "#/definitions/fields/stringField"
         },
         {
+          "$ref": "#/definitions/scalars/stringScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/stringParameter"
+        },
+        {
           "$ref": "#/definitions/stringAggregate"
         }
       ]
@@ -372,6 +378,12 @@
       "oneOf": [
         {
           "$ref": "#/definitions/fields/dateField"
+        },
+        {
+          "$ref": "#/definitions/scalars/dateScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/dateParameter"
         },
         {
           "$ref": "#/definitions/dateAggregate"
@@ -384,6 +396,12 @@
           "$ref": "#/definitions/fields/timeField"
         },
         {
+          "$ref": "#/definitions/scalars/timeScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/timeParameter"
+        },
+        {
           "$ref": "#/definitions/timeAggregate"
         }
       ]
@@ -394,6 +412,12 @@
           "$ref": "#/definitions/fields/datetimeField"
         },
         {
+          "$ref": "#/definitions/scalars/datetimeScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/datetimeParameter"
+        },
+        {
           "$ref": "#/definitions/dateTimeAggregate"
         }
       ]
@@ -402,6 +426,12 @@
       "oneOf": [
         {
           "$ref": "#/definitions/fields/uuidField"
+        },
+        {
+          "$ref": "#/definitions/scalars/uuidScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/uuidParameter"
         }
       ]
     },
