@@ -851,57 +851,57 @@
       "stringType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "string" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "string" } },
+        "required": [ "name" ]
       },
 
       "numberType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "number" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "number" } },
+        "required": [ "name" ]
       },
 
       "booleanType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "boolean" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "boolean" } },
+        "required": [ "name" ]
       },
 
       "nullType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "null" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "null" } },
+        "required": [ "name" ]
       },
 
       "dateType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "date" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "date" } },
+        "required": [ "name" ]
       },
 
       "datetimeType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "datetime" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "datetime" } },
+        "required": [ "name" ]
       },
 
       "timeType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "time" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "time" } },
+        "required": [ "name" ]
       },
 
       "uuidType": {
         "type": "object",
         "additionalProperties": false,
-        "properties": { "type": { "const": "uuid" } },
-        "required": [ "type" ]
+        "properties": { "name": { "const": "uuid" } },
+        "required": [ "name" ]
       }
     },
 
