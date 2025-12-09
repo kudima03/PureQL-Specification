@@ -21,109 +21,49 @@
       "stringParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/stringParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": { "type": "string" }
-            }
-          }
+          { "$ref": "#/definitions/scalars/stringScalar" }
         ]
       },
       "numberParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/numberParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": { "type": "number" }
-            }
-          }
+          { "$ref": "#/definitions/scalars/numberScalar" }
         ]
       },
       "booleanParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/booleanParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": { "type": "boolean" }
-            }
-          }
+          { "$ref": "#/definitions/scalars/booleanScalar" }
         ]
       },
       "nullParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/nullParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": { "type": "null" }
-            }
-          }
+          { "$ref": "#/definitions/scalars/nullScalar" }
         ]
       },
       "dateParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/dateParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": {
-                "type": "string",
-                "format": "date"
-              }
-            }
-          }
+          { "$ref": "#/definitions/scalars/dateScalar" }
         ]
       },
       "datetimeParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/datetimeParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": {
-                "type": "string",
-                "format": "date-time"
-              }
-            }
-          }
+          { "$ref": "#/definitions/scalars/datetimeScalar" }
         ]
       },
       "timeParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/timeParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": {
-                "type": "string",
-                "format": "time"
-              }
-            }
-          }
+          { "$ref": "#/definitions/scalars/timeScalar" }
         ]
       },
       "uuidParameterDeclaration": {
         "allOf": [
           { "$ref": "#/definitions/parameters/uuidParameter" },
-          {
-            "type": "object",
-            "required": [ "value" ],
-            "properties": {
-              "value": {
-                "type": "string",
-                "format": "uuid"
-              }
-            }
-          }
+          { "$ref": "#/definitions/scalars/uuidScalar" }
         ]
       }
     },
