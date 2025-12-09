@@ -132,7 +132,7 @@
       "stringParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -144,7 +144,7 @@
       "numberParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -156,7 +156,7 @@
       "booleanParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -168,7 +168,7 @@
       "nullParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -180,7 +180,7 @@
       "dateParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -192,7 +192,7 @@
       "datetimeParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -204,7 +204,7 @@
       "timeParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
@@ -216,7 +216,7 @@
       "uuidParameter": {
         "type": "object",
         "additionalProperties": false,
-        "required": [ "type" ],
+        "required": [ "name", "type" ],
         "properties": {
           "name": {
             "type": "string",
