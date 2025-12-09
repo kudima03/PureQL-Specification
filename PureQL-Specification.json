@@ -311,13 +311,28 @@
     "booleanReturning": {
       "oneOf": [
         {
+          "$ref": "#/definitions/fields/booleanField"
+        },
+        {
           "$ref": "#/definitions/scalars/booleanScalar"
         },
         {
           "$ref": "#/definitions/parameters/booleanParameter"
         },
         {
-          "$ref": "#/definitions/fields/booleanField"
+          "$ref": "#/definitions/booleanOperations/and"
+        },
+        {
+          "$ref": "#/definitions/booleanOperations/or"
+        },
+        {
+          "$ref": "#/definitions/booleanOperations/not"
+        },
+        {
+          "$ref": "#/definitions/equality"
+        },
+        {
+          "$ref": "#/definitions/comparison"
         }
       ]
     },
@@ -726,34 +741,6 @@
         }
       }
     },
-    "predicate": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/fields/booleanField"
-        },
-        {
-          "$ref": "#/definitions/scalars/booleanScalar"
-        },
-        {
-          "$ref": "#/definitions/parameters/booleanParameter"
-        },
-        {
-          "$ref": "#/definitions/booleanOperations/and"
-        },
-        {
-          "$ref": "#/definitions/booleanOperations/or"
-        },
-        {
-          "$ref": "#/definitions/booleanOperations/not"
-        },
-        {
-          "$ref": "#/definitions/equality"
-        },
-        {
-          "$ref": "#/definitions/comparison"
-        }
-      ]
-    },
     "arithmetic": {
       "oneOf": [
         {
@@ -858,7 +845,7 @@
           "conditions": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/predicate"
+              "$ref": "#/definitions/booleanReturning"
             },
             "minItems": 1
           }
@@ -877,7 +864,7 @@
           "conditions": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/predicate"
+              "$ref": "#/definitions/booleanReturning"
             },
             "minItems": 1
           }
@@ -894,7 +881,7 @@
             "const": "not"
           },
           "condition": {
-            "$ref": "#/definitions/predicate"
+            "$ref": "#/definitions/booleanReturning"
           }
         },
         "required": [
@@ -1366,7 +1353,7 @@
           "minLength": 1
         },
         "on": {
-          "$ref": "#/definitions/predicate"
+          "$ref": "#/definitions/booleanReturning"
         }
       }
     },
@@ -1410,14 +1397,14 @@
           "left": {
             "oneOf": [
               {
-                "$ref": "#/definitions/predicate"
+                "$ref": "#/definitions/booleanReturning"
               }
             ]
           },
           "right": {
             "oneOf": [
               {
-                "$ref": "#/definitions/predicate"
+                "$ref": "#/definitions/booleanReturning"
               }
             ]
           }
@@ -1744,7 +1731,7 @@
       }
     },
     "where": {
-      "$ref": "#/definitions/predicate"
+      "$ref": "#/definitions/booleanReturning"
     },
     "joins": {
       "type": "array",
@@ -1759,7 +1746,7 @@
       }
     },
     "having": {
-      "$ref": "#/definitions/predicate"
+      "$ref": "#/definitions/booleanReturning"
     },
     "orderBy": {
       "type": "array",
