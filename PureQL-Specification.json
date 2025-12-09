@@ -335,6 +335,12 @@
       ]
     },
 
+    "uuidReturning": {
+      "oneOf": [
+        { "$ref": "#/definitions/fields/uuidField" }
+      ]
+    },
+
     "aggregate": {
       "oneOf": [
         { "$ref": "#/definitions/numericAggregate" },
@@ -1077,7 +1083,8 @@
         { "$ref": "#/definitions/equalities/string_equality" },
         { "$ref": "#/definitions/equalities/date_equality" },
         { "$ref": "#/definitions/equalities/time_equality" },
-        { "$ref": "#/definitions/equalities/date_time_equality" }
+        { "$ref": "#/definitions/equalities/date_time_equality" },
+        { "$ref": "#/definitions/equalities/uuid_equality" }
       ]
     },
 
@@ -1200,6 +1207,26 @@
           "right": {
             "oneOf": [
               { "$ref": "#/definitions/dateTimeReturning" }
+            ]
+          }
+        }
+      },
+
+      "uuid_equality": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [ "function", "left", "right" ],
+        "properties": {
+          "function": { "const": "equal" },
+          "left": {
+            "oneOf": [
+              { "$ref": "#/definitions/uuidReturning" }
+            ]
+          },
+
+          "right": {
+            "oneOf": [
+              { "$ref": "#/definitions/uuidReturning" }
             ]
           }
         }
