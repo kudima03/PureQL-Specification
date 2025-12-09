@@ -603,7 +603,7 @@
         { "$ref": "#/definitions/scalars/booleanScalar" },
         { "$ref": "#/definitions/parameters/booleanParameter" },
         { "$ref": "#/definitions/booleanOperations/and" },
-        { "$ref": "#/definitions/booleanOperations/and" },
+        { "$ref": "#/definitions/booleanOperations/or" },
         { "$ref": "#/definitions/booleanOperations/not" },
         { "$ref": "#/definitions/equality" },
         { "$ref": "#/definitions/comparison" }
