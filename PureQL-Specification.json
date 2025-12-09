@@ -370,6 +370,14 @@
       ]
     },
 
+    "dateTimeAggregate": {
+      "oneOf": [
+        { "$ref": "#/definitions/aggregates/datetime/average_datetime" },
+        { "$ref": "#/definitions/aggregates/datetime/max_datetime" },
+        { "$ref": "#/definitions/aggregates/datetime/min_datetime" }
+      ]
+    },
+
     "stringAggregate": {
       "oneOf": [
         { "$ref": "#/definitions/aggregates/string/max_string" },
