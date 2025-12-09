@@ -695,18 +695,8 @@
           "conditions": {
             "type": "array",
             "items": {
-              "oneOf": [
-                {
                   "$ref": "#/definitions/predicate"
                 },
-                {
-                  "$ref": "#/definitions/parameters/booleanParameter"
-                },
-                {
-                  "$ref": "#/definitions/scalars/booleanScalar"
-                }
-              ]
-            },
             "minItems": 1
           }
         },
@@ -721,18 +711,8 @@
           "conditions": {
             "type": "array",
             "items": {
-              "oneOf": [
-                {
                   "$ref": "#/definitions/predicate"
                 },
-                {
-                  "$ref": "#/definitions/parameters/booleanParameter"
-                },
-                {
-                  "$ref": "#/definitions/scalars/booleanScalar"
-                }
-              ]
-            },
             "minItems": 1
           }
         },
@@ -745,17 +725,7 @@
         "properties": {
           "function": { "const": "not" },
           "condition": {
-            "oneOf": [
-              {
                 "$ref": "#/definitions/predicate"
-              },
-              {
-                "$ref": "#/definitions/parameters/booleanParameter"
-              },
-              {
-                "$ref": "#/definitions/scalars/booleanScalar"
-              }
-            ]
           }
         },
         "required": [ "function", "condition" ]
