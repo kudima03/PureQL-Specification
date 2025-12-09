@@ -340,6 +340,7 @@
         { "$ref": "#/definitions/numericAggregate" },
         { "$ref": "#/definitions/dateAggregate" },
         { "$ref": "#/definitions/timeAggregate" },
+        { "$ref": "#/definitions/dateTimeAggregate" },
         { "$ref": "#/definitions/stringAggregate" },
         { "$ref": "#/definitions/stringAggregate" }
       ]
