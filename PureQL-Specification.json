@@ -130,7 +130,6 @@
       },
       "numberParameter": {
         "type": "object",
-        "additionalProperties": true,
         "required": [
           "name",
           "type"
@@ -922,7 +921,6 @@
       },
       "numberScalar": {
         "type": "object",
-        "additionalProperties": true,
         "properties": {
           "type": {
             "$ref": "#/definitions/types/numberType"
@@ -1349,7 +1347,6 @@
     },
     "joinItem": {
       "type": "object",
-      "additionalProperties": false,
       "required": [
         "type",
         "entity",
