@@ -273,25 +273,12 @@
       "properties": {
         "expression": {
           "oneOf": [
-            { "$ref": "#/definitions/field" },
-            { "$ref": "#/definitions/scalars/stringScalar" },
-            { "$ref": "#/definitions/scalars/numberScalar" },
-            { "$ref": "#/definitions/scalars/booleanScalar" },
-            { "$ref": "#/definitions/scalars/nullScalar" },
-            { "$ref": "#/definitions/scalars/dateScalar" },
-            { "$ref": "#/definitions/scalars/datetimeScalar" },
-            { "$ref": "#/definitions/scalars/timeScalar" },
-            { "$ref": "#/definitions/scalars/uuidScalar" },
-            { "$ref": "#/definitions/parameters/booleanParameter" },
-            { "$ref": "#/definitions/parameters/numberParameter" },
-            { "$ref": "#/definitions/parameters/booleanParameter" },
-            { "$ref": "#/definitions/parameters/nullParameter" },
-            { "$ref": "#/definitions/parameters/dateParameter" },
-            { "$ref": "#/definitions/parameters/datetimeParameter" },
-            { "$ref": "#/definitions/parameters/timeParameter" },
-            { "$ref": "#/definitions/parameters/uuidParameter" },
-            { "$ref": "#/definitions/arithmetic" },
-            { "$ref": "#/definitions/aggregate" }
+            { "$ref": "#/definitions/booleanReturning" },
+            { "$ref": "#/definitions/numericReturning" },
+            { "$ref": "#/definitions/stringReturning" },
+            { "$ref": "#/definitions/dateReturning" },
+            { "$ref": "#/definitions/timeReturning" },
+            { "$ref": "#/definitions/dateTimeReturning" }
           ]
         },
         "alias": {
