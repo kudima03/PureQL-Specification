@@ -695,8 +695,8 @@
           "conditions": {
             "type": "array",
             "items": {
-                  "$ref": "#/definitions/predicate"
-                },
+              "$ref": "#/definitions/predicate"
+            },
             "minItems": 1
           }
         },
@@ -711,8 +711,8 @@
           "conditions": {
             "type": "array",
             "items": {
-                  "$ref": "#/definitions/predicate"
-                },
+              "$ref": "#/definitions/predicate"
+            },
             "minItems": 1
           }
         },
@@ -725,7 +725,7 @@
         "properties": {
           "function": { "const": "not" },
           "condition": {
-                "$ref": "#/definitions/predicate"
+            "$ref": "#/definitions/predicate"
           }
         },
         "required": [ "function", "condition" ]
