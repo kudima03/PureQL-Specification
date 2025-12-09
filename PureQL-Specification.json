@@ -1,164 +1,247 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "definitions": {
-
     "parameterDeclaration": {
       "oneOf": [
-        { "$ref": "#/definitions/parametersDeclarations/stringParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/numberParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/booleanParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/nullParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/dateParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/datetimeParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/timeParameterDeclaration" },
-        { "$ref": "#/definitions/parametersDeclarations/uuidParameterDeclaration" }
+        {
+          "$ref": "#/definitions/parametersDeclarations/stringParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/numberParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/booleanParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/nullParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/dateParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/datetimeParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/timeParameterDeclaration"
+        },
+        {
+          "$ref": "#/definitions/parametersDeclarations/uuidParameterDeclaration"
+        }
       ]
     },
-
     "parametersDeclarations": {
-
       "stringParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/stringParameter" },
-          { "$ref": "#/definitions/scalars/stringScalar" }
+          {
+            "$ref": "#/definitions/parameters/stringParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/stringScalar"
+          }
         ]
       },
       "numberParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/numberParameter" },
-          { "$ref": "#/definitions/scalars/numberScalar" }
+          {
+            "$ref": "#/definitions/parameters/numberParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/numberScalar"
+          }
         ]
       },
       "booleanParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/booleanParameter" },
-          { "$ref": "#/definitions/scalars/booleanScalar" }
+          {
+            "$ref": "#/definitions/parameters/booleanParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/booleanScalar"
+          }
         ]
       },
       "nullParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/nullParameter" },
-          { "$ref": "#/definitions/scalars/nullScalar" }
+          {
+            "$ref": "#/definitions/parameters/nullParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/nullScalar"
+          }
         ]
       },
       "dateParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/dateParameter" },
-          { "$ref": "#/definitions/scalars/dateScalar" }
+          {
+            "$ref": "#/definitions/parameters/dateParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/dateScalar"
+          }
         ]
       },
       "datetimeParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/datetimeParameter" },
-          { "$ref": "#/definitions/scalars/datetimeScalar" }
+          {
+            "$ref": "#/definitions/parameters/datetimeParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/datetimeScalar"
+          }
         ]
       },
       "timeParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/timeParameter" },
-          { "$ref": "#/definitions/scalars/timeScalar" }
+          {
+            "$ref": "#/definitions/parameters/timeParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/timeScalar"
+          }
         ]
       },
       "uuidParameterDeclaration": {
         "allOf": [
-          { "$ref": "#/definitions/parameters/uuidParameter" },
-          { "$ref": "#/definitions/scalars/uuidScalar" }
+          {
+            "$ref": "#/definitions/parameters/uuidParameter"
+          },
+          {
+            "$ref": "#/definitions/scalars/uuidScalar"
+          }
         ]
       }
     },
-
     "parameters": {
       "stringParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/stringType" }
+          "type": {
+            "$ref": "#/definitions/types/stringType"
+          }
         }
       },
       "numberParameter": {
         "type": "object",
         "additionalProperties": true,
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/numberType" }
+          "type": {
+            "$ref": "#/definitions/types/numberType"
+          }
         }
       },
       "booleanParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/booleanType" }
+          "type": {
+            "$ref": "#/definitions/types/booleanType"
+          }
         }
       },
       "nullParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/nullType" }
+          "type": {
+            "$ref": "#/definitions/types/nullType"
+          }
         }
       },
       "dateParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/dateType" }
+          "type": {
+            "$ref": "#/definitions/types/dateType"
+          }
         }
       },
       "datetimeParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/datetimeType" }
+          "type": {
+            "$ref": "#/definitions/types/datetimeType"
+          }
         }
       },
       "timeParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/timeType" }
+          "type": {
+            "$ref": "#/definitions/types/timeType"
+          }
         }
       },
       "uuidParameter": {
         "type": "object",
-        "required": [ "name", "type" ],
+        "required": [
+          "name",
+          "type"
+        ],
         "properties": {
           "name": {
             "type": "string",
             "minLength": 1
           },
-          "type": { "$ref": "#/definitions/types/uuidType" }
+          "type": {
+            "$ref": "#/definitions/types/uuidType"
+          }
         }
       }
     },
-
     "pagination": {
       "type": "object",
       "required": [
@@ -176,7 +259,6 @@
         }
       }
     },
-
     "fromExpression": {
       "type": "object",
       "required": [
@@ -193,7 +275,6 @@
         }
       }
     },
-
     "selectExpression": {
       "type": "object",
       "required": [
@@ -202,12 +283,24 @@
       "properties": {
         "expression": {
           "oneOf": [
-            { "$ref": "#/definitions/booleanReturning" },
-            { "$ref": "#/definitions/numericReturning" },
-            { "$ref": "#/definitions/stringReturning" },
-            { "$ref": "#/definitions/dateReturning" },
-            { "$ref": "#/definitions/timeReturning" },
-            { "$ref": "#/definitions/dateTimeReturning" }
+            {
+              "$ref": "#/definitions/booleanReturning"
+            },
+            {
+              "$ref": "#/definitions/numericReturning"
+            },
+            {
+              "$ref": "#/definitions/stringReturning"
+            },
+            {
+              "$ref": "#/definitions/dateReturning"
+            },
+            {
+              "$ref": "#/definitions/timeReturning"
+            },
+            {
+              "$ref": "#/definitions/dateTimeReturning"
+            }
           ]
         },
         "alias": {
@@ -216,333 +309,475 @@
         }
       }
     },
-
     "booleanReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/scalars/booleanScalar" },
-        { "$ref": "#/definitions/parameters/booleanParameter" },
-        { "$ref": "#/definitions/fields/booleanField" }
+        {
+          "$ref": "#/definitions/scalars/booleanScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/booleanParameter"
+        },
+        {
+          "$ref": "#/definitions/fields/booleanField"
+        }
       ]
     },
-
     "numericReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/scalars/numberScalar" },
-        { "$ref": "#/definitions/parameters/numberParameter" },
-        { "$ref": "#/definitions/arithmetic" },
-        { "$ref": "#/definitions/numericAggregate" },
-        { "$ref": "#/definitions/aggregates/count" },
-        { "$ref": "#/definitions/fields/numberField" }
+        {
+          "$ref": "#/definitions/scalars/numberScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/numberParameter"
+        },
+        {
+          "$ref": "#/definitions/arithmetic"
+        },
+        {
+          "$ref": "#/definitions/numericAggregate"
+        },
+        {
+          "$ref": "#/definitions/aggregates/count"
+        },
+        {
+          "$ref": "#/definitions/fields/numberField"
+        }
       ]
     },
-
     "stringReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/stringField" },
-        { "$ref": "#/definitions/stringAggregate" }
+        {
+          "$ref": "#/definitions/fields/stringField"
+        },
+        {
+          "$ref": "#/definitions/stringAggregate"
+        }
       ]
     },
-
     "dateReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/dateField" },
-        { "$ref": "#/definitions/dateAggregate" }
+        {
+          "$ref": "#/definitions/fields/dateField"
+        },
+        {
+          "$ref": "#/definitions/dateAggregate"
+        }
       ]
     },
-
     "timeReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/timeField" },
-        { "$ref": "#/definitions/timeAggregate" }
+        {
+          "$ref": "#/definitions/fields/timeField"
+        },
+        {
+          "$ref": "#/definitions/timeAggregate"
+        }
       ]
     },
-
     "dateTimeReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/datetimeField" },
-        { "$ref": "#/definitions/dateTimeAggregate" }
+        {
+          "$ref": "#/definitions/fields/datetimeField"
+        },
+        {
+          "$ref": "#/definitions/dateTimeAggregate"
+        }
       ]
     },
-
     "uuidReturning": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/uuidField" }
+        {
+          "$ref": "#/definitions/fields/uuidField"
+        }
       ]
     },
-
     "aggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/numericAggregate" },
-        { "$ref": "#/definitions/dateAggregate" },
-        { "$ref": "#/definitions/timeAggregate" },
-        { "$ref": "#/definitions/dateTimeAggregate" },
-        { "$ref": "#/definitions/stringAggregate" }
+        {
+          "$ref": "#/definitions/numericAggregate"
+        },
+        {
+          "$ref": "#/definitions/dateAggregate"
+        },
+        {
+          "$ref": "#/definitions/timeAggregate"
+        },
+        {
+          "$ref": "#/definitions/dateTimeAggregate"
+        },
+        {
+          "$ref": "#/definitions/stringAggregate"
+        }
       ]
     },
-
     "numericAggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/aggregates/numeric/average_number" },
-        { "$ref": "#/definitions/aggregates/numeric/max_number" },
-        { "$ref": "#/definitions/aggregates/numeric/min_number" },
-        { "$ref": "#/definitions/aggregates/numeric/sum" }
+        {
+          "$ref": "#/definitions/aggregates/numeric/average_number"
+        },
+        {
+          "$ref": "#/definitions/aggregates/numeric/max_number"
+        },
+        {
+          "$ref": "#/definitions/aggregates/numeric/min_number"
+        },
+        {
+          "$ref": "#/definitions/aggregates/numeric/sum"
+        }
       ]
     },
-
     "dateAggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/aggregates/date/average_date" },
-        { "$ref": "#/definitions/aggregates/date/max_date" },
-        { "$ref": "#/definitions/aggregates/date/min_date" }
+        {
+          "$ref": "#/definitions/aggregates/date/average_date"
+        },
+        {
+          "$ref": "#/definitions/aggregates/date/max_date"
+        },
+        {
+          "$ref": "#/definitions/aggregates/date/min_date"
+        }
       ]
     },
-
     "timeAggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/aggregates/time/average_time" },
-        { "$ref": "#/definitions/aggregates/time/max_time" },
-        { "$ref": "#/definitions/aggregates/time/min_time" }
+        {
+          "$ref": "#/definitions/aggregates/time/average_time"
+        },
+        {
+          "$ref": "#/definitions/aggregates/time/max_time"
+        },
+        {
+          "$ref": "#/definitions/aggregates/time/min_time"
+        }
       ]
     },
-
     "dateTimeAggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/aggregates/datetime/average_datetime" },
-        { "$ref": "#/definitions/aggregates/datetime/max_datetime" },
-        { "$ref": "#/definitions/aggregates/datetime/min_datetime" }
+        {
+          "$ref": "#/definitions/aggregates/datetime/average_datetime"
+        },
+        {
+          "$ref": "#/definitions/aggregates/datetime/max_datetime"
+        },
+        {
+          "$ref": "#/definitions/aggregates/datetime/min_datetime"
+        }
       ]
     },
-
     "stringAggregate": {
       "oneOf": [
-        { "$ref": "#/definitions/aggregates/string/max_string" },
-        { "$ref": "#/definitions/aggregates/string/min_string" }
+        {
+          "$ref": "#/definitions/aggregates/string/max_string"
+        },
+        {
+          "$ref": "#/definitions/aggregates/string/min_string"
+        }
       ]
     },
-
     "aggregates": {
-
       "count": {
         "type": "object",
         "properties": {
-          "function": { "const": "count" },
+          "function": {
+            "const": "count"
+          },
           "arg": {
             "$ref": "#/definitions/field"
           }
         },
-        "required": [ "function", "arg" ]
+        "required": [
+          "function",
+          "arg"
+        ]
       },
-
       "numeric": {
-
         "sum": {
           "type": "object",
           "properties": {
-            "function": { "const": "sum" },
+            "function": {
+              "const": "sum"
+            },
             "arg": {
               "$ref": "#/definitions/fields/numberField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "max_number": {
           "type": "object",
           "properties": {
-            "function": { "const": "max_number" },
+            "function": {
+              "const": "max_number"
+            },
             "arg": {
               "$ref": "#/definitions/numericReturning"
             }
           },
-
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "min_number": {
           "type": "object",
           "properties": {
-            "function": { "const": "min_number" },
+            "function": {
+              "const": "min_number"
+            },
             "arg": {
               "$ref": "#/definitions/numericReturning"
             }
           },
-
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "average_number": {
           "type": "object",
           "properties": {
-            "function": { "const": "average_number" },
+            "function": {
+              "const": "average_number"
+            },
             "arg": {
               "$ref": "#/definitions/fields/numberField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         }
       },
-
       "string": {
-
         "max_string": {
           "type": "object",
           "properties": {
-            "function": { "const": "max_string" },
+            "function": {
+              "const": "max_string"
+            },
             "arg": {
               "$ref": "#/definitions/stringReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "min_string": {
           "type": "object",
           "properties": {
-            "function": { "const": "min_string" },
+            "function": {
+              "const": "min_string"
+            },
             "arg": {
               "$ref": "#/definitions/stringReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         }
       },
-
       "date": {
-
         "max_date": {
           "type": "object",
           "properties": {
-            "function": { "const": "max_date" },
+            "function": {
+              "const": "max_date"
+            },
             "arg": {
               "$ref": "#/definitions/dateReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "min_date": {
           "type": "object",
           "properties": {
-            "function": { "const": "min_date" },
+            "function": {
+              "const": "min_date"
+            },
             "arg": {
               "$ref": "#/definitions/dateReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "average_date": {
           "type": "object",
           "properties": {
-            "function": { "const": "average_date" },
+            "function": {
+              "const": "average_date"
+            },
             "arg": {
               "$ref": "#/definitions/fields/dateField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         }
       },
-
       "datetime": {
-
         "max_datetime": {
           "type": "object",
           "properties": {
-            "function": { "const": "max_datetime" },
+            "function": {
+              "const": "max_datetime"
+            },
             "arg": {
               "$ref": "#/definitions/fields/datetimeField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "min_datetime": {
           "type": "object",
           "properties": {
-            "function": { "const": "min_datetime" },
+            "function": {
+              "const": "min_datetime"
+            },
             "arg": {
               "$ref": "#/definitions/fields/datetimeField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "average_datetime": {
           "type": "object",
           "properties": {
-            "function": { "const": "average_datetime" },
+            "function": {
+              "const": "average_datetime"
+            },
             "arg": {
               "$ref": "#/definitions/fields/datetimeField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         }
       },
-
       "time": {
-
         "max_time": {
           "type": "object",
           "properties": {
-            "function": { "const": "max_time" },
+            "function": {
+              "const": "max_time"
+            },
             "arg": {
               "$ref": "#/definitions/timeReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "min_time": {
           "type": "object",
           "properties": {
-            "function": { "const": "min_time" },
+            "function": {
+              "const": "min_time"
+            },
             "arg": {
               "$ref": "#/definitions/timeReturning"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         },
-
         "average_time": {
           "type": "object",
           "properties": {
-            "function": { "const": "average_time" },
+            "function": {
+              "const": "average_time"
+            },
             "arg": {
               "$ref": "#/definitions/fields/timeField"
             }
           },
-          "required": [ "function", "arg" ]
+          "required": [
+            "function",
+            "arg"
+          ]
         }
       }
     },
-
     "predicate": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/booleanField" },
-        { "$ref": "#/definitions/scalars/booleanScalar" },
-        { "$ref": "#/definitions/parameters/booleanParameter" },
-        { "$ref": "#/definitions/booleanOperations/and" },
-        { "$ref": "#/definitions/booleanOperations/or" },
-        { "$ref": "#/definitions/booleanOperations/not" },
-        { "$ref": "#/definitions/equality" },
-        { "$ref": "#/definitions/comparison" }
+        {
+          "$ref": "#/definitions/fields/booleanField"
+        },
+        {
+          "$ref": "#/definitions/scalars/booleanScalar"
+        },
+        {
+          "$ref": "#/definitions/parameters/booleanParameter"
+        },
+        {
+          "$ref": "#/definitions/booleanOperations/and"
+        },
+        {
+          "$ref": "#/definitions/booleanOperations/or"
+        },
+        {
+          "$ref": "#/definitions/booleanOperations/not"
+        },
+        {
+          "$ref": "#/definitions/equality"
+        },
+        {
+          "$ref": "#/definitions/comparison"
+        }
       ]
     },
-
     "arithmetic": {
       "oneOf": [
-        { "$ref": "#/definitions/arithmetics/add" },
-        { "$ref": "#/definitions/arithmetics/subtract" },
-        { "$ref": "#/definitions/arithmetics/multiply" },
-        { "$ref": "#/definitions/arithmetics/divide" }
+        {
+          "$ref": "#/definitions/arithmetics/add"
+        },
+        {
+          "$ref": "#/definitions/arithmetics/subtract"
+        },
+        {
+          "$ref": "#/definitions/arithmetics/multiply"
+        },
+        {
+          "$ref": "#/definitions/arithmetics/divide"
+        }
       ]
     },
-
     "arithmetics": {
       "add": {
         "type": "object",
         "properties": {
-          "function": { "const": "add" },
+          "function": {
+            "const": "add"
+          },
           "values": {
             "type": "array",
             "items": {
@@ -551,13 +786,17 @@
             "minItems": 2
           }
         },
-        "required": [ "function", "values" ]
+        "required": [
+          "function",
+          "values"
+        ]
       },
-
       "subtract": {
         "type": "object",
         "properties": {
-          "function": { "const": "subtract" },
+          "function": {
+            "const": "subtract"
+          },
           "values": {
             "type": "array",
             "items": {
@@ -566,13 +805,17 @@
             "minItems": 2
           }
         },
-        "required": [ "function", "values" ]
+        "required": [
+          "function",
+          "values"
+        ]
       },
-
       "multiply": {
         "type": "object",
         "properties": {
-          "function": { "const": "multiply" },
+          "function": {
+            "const": "multiply"
+          },
           "values": {
             "type": "array",
             "items": {
@@ -581,13 +824,17 @@
             "minItems": 2
           }
         },
-        "required": [ "function", "values" ]
+        "required": [
+          "function",
+          "values"
+        ]
       },
-
       "divide": {
         "type": "object",
         "properties": {
-          "function": { "const": "divide" },
+          "function": {
+            "const": "divide"
+          },
           "values": {
             "type": "array",
             "items": {
@@ -596,16 +843,19 @@
             "minItems": 2
           }
         },
-        "required": [ "function", "values" ]
+        "required": [
+          "function",
+          "values"
+        ]
       }
     },
-
     "booleanOperations": {
-
       "or": {
         "type": "object",
         "properties": {
-          "function": { "const": "or" },
+          "function": {
+            "const": "or"
+          },
           "conditions": {
             "type": "array",
             "items": {
@@ -614,13 +864,17 @@
             "minItems": 1
           }
         },
-        "required": [ "function", "conditions" ]
+        "required": [
+          "function",
+          "conditions"
+        ]
       },
-
       "and": {
         "type": "object",
         "properties": {
-          "function": { "const": "and" },
+          "function": {
+            "const": "and"
+          },
           "conditions": {
             "type": "array",
             "items": {
@@ -629,177 +883,280 @@
             "minItems": 1
           }
         },
-        "required": [ "function", "conditions" ]
+        "required": [
+          "function",
+          "conditions"
+        ]
       },
-
       "not": {
         "type": "object",
         "properties": {
-          "function": { "const": "not" },
+          "function": {
+            "const": "not"
+          },
           "condition": {
             "$ref": "#/definitions/predicate"
           }
         },
-        "required": [ "function", "condition" ]
+        "required": [
+          "function",
+          "condition"
+        ]
       }
     },
-
     "scalars": {
-
       "stringScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/stringType" },
-          "value": { "type": "string" }
+          "type": {
+            "$ref": "#/definitions/types/stringType"
+          },
+          "value": {
+            "type": "string"
+          }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "numberScalar": {
         "type": "object",
         "additionalProperties": true,
         "properties": {
-          "type": { "$ref": "#/definitions/types/numberType" },
-          "value": { "type": "number" }
+          "type": {
+            "$ref": "#/definitions/types/numberType"
+          },
+          "value": {
+            "type": "number"
+          }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "booleanScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/booleanType" },
-          "value": { "type": "boolean" }
+          "type": {
+            "$ref": "#/definitions/types/booleanType"
+          },
+          "value": {
+            "type": "boolean"
+          }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "nullScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/nullType" },
-          "value": { "type": "null" }
+          "type": {
+            "$ref": "#/definitions/types/nullType"
+          },
+          "value": {
+            "type": "null"
+          }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "dateScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/dateType" },
+          "type": {
+            "$ref": "#/definitions/types/dateType"
+          },
           "value": {
             "type": "string",
             "format": "date"
           }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "datetimeScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/datetimeType" },
+          "type": {
+            "$ref": "#/definitions/types/datetimeType"
+          },
           "value": {
             "type": "string",
             "format": "date-time"
           }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "timeScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/timeType" },
+          "type": {
+            "$ref": "#/definitions/types/timeType"
+          },
           "value": {
             "type": "string",
             "format": "time"
           }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       },
-
       "uuidScalar": {
         "type": "object",
         "properties": {
-          "type": { "$ref": "#/definitions/types/uuidType" },
+          "type": {
+            "$ref": "#/definitions/types/uuidType"
+          },
           "value": {
             "type": "string",
             "format": "uuid"
           }
         },
-        "required": [ "type", "value" ]
+        "required": [
+          "type",
+          "value"
+        ]
       }
     },
-
     "type": {
       "oneOf": [
-        { "$ref": "#/definitions/types/stringType" },
-        { "$ref": "#/definitions/types/numberType" },
-        { "$ref": "#/definitions/types/booleanType" },
-        { "$ref": "#/definitions/types/nullType" },
-        { "$ref": "#/definitions/types/dateType" },
-        { "$ref": "#/definitions/types/datetimeType" },
-        { "$ref": "#/definitions/types/timeType" },
-        { "$ref": "#/definitions/types/uuidType" }
+        {
+          "$ref": "#/definitions/types/stringType"
+        },
+        {
+          "$ref": "#/definitions/types/numberType"
+        },
+        {
+          "$ref": "#/definitions/types/booleanType"
+        },
+        {
+          "$ref": "#/definitions/types/nullType"
+        },
+        {
+          "$ref": "#/definitions/types/dateType"
+        },
+        {
+          "$ref": "#/definitions/types/datetimeType"
+        },
+        {
+          "$ref": "#/definitions/types/timeType"
+        },
+        {
+          "$ref": "#/definitions/types/uuidType"
+        }
       ]
     },
-
     "types": {
-
       "stringType": {
         "type": "object",
-        "properties": { "name": { "const": "string" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "numberType": {
         "type": "object",
-        "properties": { "name": { "const": "number" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "number"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "booleanType": {
         "type": "object",
-        "properties": { "name": { "const": "boolean" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "nullType": {
         "type": "object",
-        "properties": { "name": { "const": "null" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "null"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "dateType": {
         "type": "object",
-        "properties": { "name": { "const": "date" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "date"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "datetimeType": {
         "type": "object",
-        "properties": { "name": { "const": "datetime" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "datetime"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "timeType": {
         "type": "object",
-        "properties": { "name": { "const": "time" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "time"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
-
       "uuidType": {
         "type": "object",
-        "properties": { "name": { "const": "uuid" } },
-        "required": [ "name" ]
+        "properties": {
+          "name": {
+            "const": "uuid"
+          }
+        },
+        "required": [
+          "name"
+        ]
       }
     },
-
     "fields": {
       "stringField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -809,12 +1166,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "string" }
+          "type": {
+            "const": "string"
+          }
         }
       },
       "numberField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -824,12 +1187,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "number" }
+          "type": {
+            "const": "number"
+          }
         }
       },
       "booleanField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -839,12 +1208,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "boolean" }
+          "type": {
+            "const": "boolean"
+          }
         }
       },
       "nullField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -854,12 +1229,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "null" }
+          "type": {
+            "const": "null"
+          }
         }
       },
       "dateField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -869,12 +1250,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "date" }
+          "type": {
+            "const": "date"
+          }
         }
       },
       "datetimeField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -884,12 +1271,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "datetime" }
+          "type": {
+            "const": "datetime"
+          }
         }
       },
       "timeField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -899,12 +1292,18 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "time" }
+          "type": {
+            "const": "time"
+          }
         }
       },
       "uuidField": {
         "type": "object",
-        "required": [ "entity", "field", "type" ],
+        "required": [
+          "entity",
+          "field",
+          "type"
+        ],
         "properties": {
           "entity": {
             "type": "string",
@@ -914,24 +1313,40 @@
             "type": "string",
             "minLength": 1
           },
-          "type": { "const": "uuid" }
+          "type": {
+            "const": "uuid"
+          }
         }
       }
     },
-
     "field": {
       "oneOf": [
-        { "$ref": "#/definitions/fields/stringField" },
-        { "$ref": "#/definitions/fields/numberField" },
-        { "$ref": "#/definitions/fields/booleanField" },
-        { "$ref": "#/definitions/fields/nullField" },
-        { "$ref": "#/definitions/fields/dateField" },
-        { "$ref": "#/definitions/fields/datetimeField" },
-        { "$ref": "#/definitions/fields/timeField" },
-        { "$ref": "#/definitions/fields/uuidField" }
+        {
+          "$ref": "#/definitions/fields/stringField"
+        },
+        {
+          "$ref": "#/definitions/fields/numberField"
+        },
+        {
+          "$ref": "#/definitions/fields/booleanField"
+        },
+        {
+          "$ref": "#/definitions/fields/nullField"
+        },
+        {
+          "$ref": "#/definitions/fields/dateField"
+        },
+        {
+          "$ref": "#/definitions/fields/datetimeField"
+        },
+        {
+          "$ref": "#/definitions/fields/timeField"
+        },
+        {
+          "$ref": "#/definitions/fields/uuidField"
+        }
       ]
     },
-
     "joinItem": {
       "type": "object",
       "additionalProperties": false,
@@ -958,224 +1373,360 @@
         }
       }
     },
-
     "equality": {
       "oneOf": [
-        { "$ref": "#/definitions/equalities/boolean_equality" },
-        { "$ref": "#/definitions/equalities/integer_equality" },
-        { "$ref": "#/definitions/equalities/string_equality" },
-        { "$ref": "#/definitions/equalities/date_equality" },
-        { "$ref": "#/definitions/equalities/time_equality" },
-        { "$ref": "#/definitions/equalities/date_time_equality" },
-        { "$ref": "#/definitions/equalities/uuid_equality" }
+        {
+          "$ref": "#/definitions/equalities/boolean_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/integer_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/string_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/date_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/time_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/date_time_equality"
+        },
+        {
+          "$ref": "#/definitions/equalities/uuid_equality"
+        }
       ]
     },
-
     "equalities": {
-
       "boolean_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/predicate" }
+              {
+                "$ref": "#/definitions/predicate"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/predicate" }
+              {
+                "$ref": "#/definitions/predicate"
+              }
             ]
           }
         }
       },
-
       "integer_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/numericReturning" }
+              {
+                "$ref": "#/definitions/numericReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/numericReturning" }
+              {
+                "$ref": "#/definitions/numericReturning"
+              }
             ]
           }
         }
       },
-
       "string_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/stringReturning" }
+              {
+                "$ref": "#/definitions/stringReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/stringReturning" }
+              {
+                "$ref": "#/definitions/stringReturning"
+              }
             ]
           }
         }
       },
-
       "date_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/dateReturning" }
+              {
+                "$ref": "#/definitions/dateReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/dateReturning" }
+              {
+                "$ref": "#/definitions/dateReturning"
+              }
             ]
           }
         }
       },
-
       "time_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/timeReturning" }
+              {
+                "$ref": "#/definitions/timeReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/timeReturning" }
+              {
+                "$ref": "#/definitions/timeReturning"
+              }
             ]
           }
         }
       },
-
       "date_time_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/dateTimeReturning" }
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/dateTimeReturning" }
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              }
             ]
           }
         }
       },
-
       "uuid_equality": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
-          "function": { "const": "equal" },
+          "function": {
+            "const": "equal"
+          },
           "left": {
             "oneOf": [
-              { "$ref": "#/definitions/uuidReturning" }
+              {
+                "$ref": "#/definitions/uuidReturning"
+              }
             ]
           },
-
           "right": {
             "oneOf": [
-              { "$ref": "#/definitions/uuidReturning" }
+              {
+                "$ref": "#/definitions/uuidReturning"
+              }
             ]
           }
         }
       }
     },
-
     "comparison": {
       "oneOf": [
-        { "$ref": "#/definitions/comparisons/numericComparison" },
-        { "$ref": "#/definitions/comparisons/stringComparison" },
-        { "$ref": "#/definitions/comparisons/dateComparison" },
-        { "$ref": "#/definitions/comparisons/datetimeComparison" },
-        { "$ref": "#/definitions/comparisons/timeComparison" }
+        {
+          "$ref": "#/definitions/comparisons/numericComparison"
+        },
+        {
+          "$ref": "#/definitions/comparisons/stringComparison"
+        },
+        {
+          "$ref": "#/definitions/comparisons/dateComparison"
+        },
+        {
+          "$ref": "#/definitions/comparisons/datetimeComparison"
+        },
+        {
+          "$ref": "#/definitions/comparisons/timeComparison"
+        }
       ]
     },
-
     "comparisons": {
-
       "numericComparison": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
           "function": {
-            "enum": [ "greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual" ]
+            "enum": [
+              "greaterThan",
+              "lessThan",
+              "greaterThanOrEqual",
+              "lessThanOrEqual"
+            ]
           },
-          "left": { "$ref": "#/definitions/numericReturning" },
-          "right": { "$ref": "#/definitions/numericReturning" }
+          "left": {
+            "$ref": "#/definitions/numericReturning"
+          },
+          "right": {
+            "$ref": "#/definitions/numericReturning"
+          }
         }
       },
-
       "stringComparison": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
           "function": {
-            "enum": [ "greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual" ]
+            "enum": [
+              "greaterThan",
+              "lessThan",
+              "greaterThanOrEqual",
+              "lessThanOrEqual"
+            ]
           },
-          "left": { "$ref": "#/definitions/stringReturning" },
-          "right": { "$ref": "#/definitions/stringReturning" }
+          "left": {
+            "$ref": "#/definitions/stringReturning"
+          },
+          "right": {
+            "$ref": "#/definitions/stringReturning"
+          }
         }
       },
-
       "dateComparison": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
           "function": {
-            "enum": [ "greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual" ]
+            "enum": [
+              "greaterThan",
+              "lessThan",
+              "greaterThanOrEqual",
+              "lessThanOrEqual"
+            ]
           },
-          "left": { "$ref": "#/definitions/dateReturning" },
-          "right": { "$ref": "#/definitions/dateReturning" }
+          "left": {
+            "$ref": "#/definitions/dateReturning"
+          },
+          "right": {
+            "$ref": "#/definitions/dateReturning"
+          }
         }
       },
-
       "datetimeComparison": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
           "function": {
-            "enum": [ "greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual" ]
+            "enum": [
+              "greaterThan",
+              "lessThan",
+              "greaterThanOrEqual",
+              "lessThanOrEqual"
+            ]
           },
-          "left": { "$ref": "#/definitions/dateTimeReturning" },
-          "right": { "$ref": "#/definitions/dateTimeReturning" }
+          "left": {
+            "$ref": "#/definitions/dateTimeReturning"
+          },
+          "right": {
+            "$ref": "#/definitions/dateTimeReturning"
+          }
         }
       },
-
       "timeComparison": {
         "type": "object",
-        "required": [ "function", "left", "right" ],
+        "required": [
+          "function",
+          "left",
+          "right"
+        ],
         "properties": {
           "function": {
-            "enum": [ "greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual" ]
+            "enum": [
+              "greaterThan",
+              "lessThan",
+              "greaterThanOrEqual",
+              "lessThanOrEqual"
+            ]
           },
-          "left": { "$ref": "#/definitions/timeReturning" },
-          "right": { "$ref": "#/definitions/timeReturning" }
+          "left": {
+            "$ref": "#/definitions/timeReturning"
+          },
+          "right": {
+            "$ref": "#/definitions/timeReturning"
+          }
         }
       }
     }
@@ -1221,7 +1772,6 @@
             "$ref": "#/definitions/field"
           }
         ]
-
       }
     },
     "pagination": {
