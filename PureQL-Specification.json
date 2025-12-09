@@ -600,6 +600,9 @@
 
     "predicate": {
       "oneOf": [
+        { "$ref": "#/definitions/fields/booleanField" },
+        { "$ref": "#/definitions/scalars/booleanScalar" },
+        { "$ref": "#/definitions/parameters/booleanParameter" },
         { "$ref": "#/definitions/booleanOperations/and" },
         { "$ref": "#/definitions/booleanOperations/and" },
         { "$ref": "#/definitions/booleanOperations/not" },
