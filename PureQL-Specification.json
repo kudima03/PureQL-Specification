@@ -115,11 +115,11 @@
       "stringParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -131,11 +131,11 @@
       "numberParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -147,11 +147,11 @@
       "booleanParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -163,11 +163,11 @@
       "nullParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -179,11 +179,11 @@
       "dateParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -195,11 +195,11 @@
       "datetimeParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -211,11 +211,11 @@
       "timeParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
@@ -227,11 +227,11 @@
       "uuidParameter": {
         "type": "object",
         "required": [
-          "name",
+          "param_name",
           "type"
         ],
         "properties": {
-          "name": {
+          "param_name": {
             "type": "string",
             "minLength": 1
           },
