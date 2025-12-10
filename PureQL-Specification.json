@@ -523,7 +523,7 @@
       "count": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "count"
           },
           "arg": {
@@ -531,7 +531,7 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "arg"
         ]
       },
@@ -539,7 +539,7 @@
         "sum": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "sum"
             },
             "arg": {
@@ -547,14 +547,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "max_number": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "max_number"
             },
             "arg": {
@@ -562,14 +562,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "min_number": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "min_number"
             },
             "arg": {
@@ -577,14 +577,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "average_number": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "average_number"
             },
             "arg": {
@@ -592,7 +592,7 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         }
@@ -601,7 +601,7 @@
         "max_string": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "max_string"
             },
             "arg": {
@@ -609,14 +609,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "min_string": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "min_string"
             },
             "arg": {
@@ -624,7 +624,7 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         }
@@ -633,7 +633,7 @@
         "max_date": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "max_date"
             },
             "arg": {
@@ -641,14 +641,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "min_date": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "min_date"
             },
             "arg": {
@@ -656,14 +656,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "average_date": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "average_date"
             },
             "arg": {
@@ -671,7 +671,7 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         }
@@ -680,7 +680,7 @@
         "max_datetime": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "max_datetime"
             },
             "arg": {
@@ -688,14 +688,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "min_datetime": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "min_datetime"
             },
             "arg": {
@@ -703,14 +703,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "average_datetime": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "average_datetime"
             },
             "arg": {
@@ -718,7 +718,7 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         }
@@ -727,7 +727,7 @@
         "max_time": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "max_time"
             },
             "arg": {
@@ -735,14 +735,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "min_time": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "min_time"
             },
             "arg": {
@@ -750,14 +750,14 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         },
         "average_time": {
           "type": "object",
           "properties": {
-            "function": {
+            "operator": {
               "const": "average_time"
             },
             "arg": {
@@ -765,7 +765,7 @@
             }
           },
           "required": [
-            "function",
+            "operator",
             "arg"
           ]
         }
@@ -791,7 +791,7 @@
       "add": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "add"
           },
           "values": {
@@ -803,14 +803,14 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "values"
         ]
       },
       "subtract": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "subtract"
           },
           "values": {
@@ -822,14 +822,14 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "values"
         ]
       },
       "multiply": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "multiply"
           },
           "values": {
@@ -841,14 +841,14 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "values"
         ]
       },
       "divide": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "divide"
           },
           "values": {
@@ -860,7 +860,7 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "values"
         ]
       }
@@ -869,7 +869,7 @@
       "or": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "or"
           },
           "conditions": {
@@ -881,14 +881,14 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "conditions"
         ]
       },
       "and": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "and"
           },
           "conditions": {
@@ -900,14 +900,14 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "conditions"
         ]
       },
       "not": {
         "type": "object",
         "properties": {
-          "function": {
+          "operator": {
             "const": "not"
           },
           "condition": {
@@ -915,7 +915,7 @@
           }
         },
         "required": [
-          "function",
+          "operator",
           "condition"
         ]
       }
@@ -1416,12 +1416,12 @@
       "boolean_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1443,12 +1443,12 @@
       "integer_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1470,12 +1470,12 @@
       "string_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1497,12 +1497,12 @@
       "date_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1524,12 +1524,12 @@
       "time_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1551,12 +1551,12 @@
       "date_time_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1578,12 +1578,12 @@
       "uuid_equality": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "const": "equal"
           },
           "left": {
@@ -1626,12 +1626,12 @@
       "numericComparison": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "enum": [
               "greaterThan",
               "lessThan",
@@ -1650,12 +1650,12 @@
       "stringComparison": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "enum": [
               "greaterThan",
               "lessThan",
@@ -1674,12 +1674,12 @@
       "dateComparison": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "enum": [
               "greaterThan",
               "lessThan",
@@ -1698,12 +1698,12 @@
       "datetimeComparison": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "enum": [
               "greaterThan",
               "lessThan",
@@ -1722,12 +1722,12 @@
       "timeComparison": {
         "type": "object",
         "required": [
-          "function",
+          "operator",
           "left",
           "right"
         ],
         "properties": {
-          "function": {
+          "operator": {
             "enum": [
               "greaterThan",
               "lessThan",
