@@ -1185,7 +1185,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "string"
+            "$ref": "#/definitions/types/stringType"
           }
         }
       },
@@ -1206,7 +1206,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "number"
+            "$ref": "#/definitions/types/numberType"
           }
         }
       },
@@ -1227,7 +1227,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "boolean"
+            "$ref": "#/definitions/types/booleanType"
           }
         }
       },
@@ -1248,7 +1248,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "null"
+            "$ref": "#/definitions/types/nullType"
           }
         }
       },
@@ -1269,7 +1269,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "date"
+            "$ref": "#/definitions/types/dateType"
           }
         }
       },
@@ -1290,7 +1290,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "datetime"
+            "$ref": "#/definitions/types/datetimeType"
           }
         }
       },
@@ -1311,7 +1311,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "time"
+            "$ref": "#/definitions/types/timeType"
           }
         }
       },
@@ -1332,7 +1332,7 @@
             "minLength": 1
           },
           "type": {
-            "const": "uuid"
+            "$ref": "#/definitions/types/uuidType"
           }
         }
       }
