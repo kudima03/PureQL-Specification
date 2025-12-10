@@ -299,6 +299,9 @@
             },
             {
               "$ref": "#/definitions/dateTimeReturning"
+            },
+            {
+              "$ref": "#/definitions/uuidReturning"
             }
           ]
         },
