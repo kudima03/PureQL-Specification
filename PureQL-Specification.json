@@ -546,7 +546,7 @@
               "const": "sum"
             },
             "arg": {
-              "$ref": "#/definitions/fields/numberField"
+              "$ref": "#/definitions/numericReturning"
             }
           },
           "required": [
