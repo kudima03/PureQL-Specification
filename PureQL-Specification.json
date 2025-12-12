@@ -1,116 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "definitions": {
-    "parameterDeclaration": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/parametersDeclarations/stringParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/numberParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/booleanParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/nullParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/dateParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/datetimeParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/timeParameterDeclaration"
-        },
-        {
-          "$ref": "#/definitions/parametersDeclarations/uuidParameterDeclaration"
-        }
-      ]
-    },
-    "parametersDeclarations": {
-      "stringParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/stringParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/stringScalar"
-          }
-        ]
-      },
-      "numberParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/numberParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/numberScalar"
-          }
-        ]
-      },
-      "booleanParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/booleanParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/booleanScalar"
-          }
-        ]
-      },
-      "nullParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/nullParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/nullScalar"
-          }
-        ]
-      },
-      "dateParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/dateParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/dateScalar"
-          }
-        ]
-      },
-      "datetimeParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/datetimeParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/datetimeScalar"
-          }
-        ]
-      },
-      "timeParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/timeParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/timeScalar"
-          }
-        ]
-      },
-      "uuidParameterDeclaration": {
-        "allOf": [
-          {
-            "$ref": "#/definitions/parameters/uuidParameter"
-          },
-          {
-            "$ref": "#/definitions/scalars/uuidScalar"
-          }
-        ]
-      }
-    },
     "parameters": {
       "stringParameter": {
         "type": "object",
@@ -1793,12 +1683,6 @@
     },
     "pagination": {
       "$ref": "#/definitions/pagination"
-    },
-    "parameters": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/parameterDeclaration"
-      }
     }
   },
   "required": [
