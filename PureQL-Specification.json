@@ -165,41 +165,28 @@
       }
     },
     "selectExpression": {
-      "type": "object",
-      "required": [
-        "expression"
-      ],
-      "properties": {
-        "expression": {
+      "allOf": [
+        {
           "oneOf": [
-            {
-              "$ref": "#/definitions/booleanReturning"
-            },
-            {
-              "$ref": "#/definitions/numericReturning"
-            },
-            {
-              "$ref": "#/definitions/stringReturning"
-            },
-            {
-              "$ref": "#/definitions/dateReturning"
-            },
-            {
-              "$ref": "#/definitions/timeReturning"
-            },
-            {
-              "$ref": "#/definitions/dateTimeReturning"
-            },
-            {
-              "$ref": "#/definitions/uuidReturning"
-            }
+            { "$ref": "#/definitions/booleanReturning" },
+            { "$ref": "#/definitions/numericReturning" },
+            { "$ref": "#/definitions/stringReturning" },
+            { "$ref": "#/definitions/dateReturning" },
+            { "$ref": "#/definitions/timeReturning" },
+            { "$ref": "#/definitions/dateTimeReturning" },
+            { "$ref": "#/definitions/uuidReturning" }
           ]
         },
-        "alias": {
-          "type": "string",
-          "minLength": 1
+        {
+          "type": "object",
+          "properties": {
+            "alias": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
-      }
+      ]
     },
     "booleanReturning": {
       "oneOf": [
