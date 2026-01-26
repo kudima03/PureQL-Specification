@@ -1058,6 +1058,124 @@
         ]
       }
     },
+    "arrayType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayTypes/stringArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/numberArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/booleanArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/nullArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/dateArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/timeArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/uuidArrayType"
+        }
+      ]
+    },
+    "arrayTypes": {
+      "stringArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "stringArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "numberArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "numberArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "booleanArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "booleanArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "nullArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "nullArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "dateArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "dateArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "datetimeArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "datetimeArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "timeArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "timeArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "uuidArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "uuidArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
     "fields": {
       "stringField": {
         "type": "object",
