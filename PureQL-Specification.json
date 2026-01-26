@@ -1801,6 +1801,16 @@
     "equality": {
       "oneOf": [
         {
+          "$ref": "#/definitions/singleValueEquality"
+        },
+        {
+          "$ref": "#/definitions/arrayEquality"
+        }
+      ]
+    },
+    "singleValueEquality": {
+      "oneOf": [
+        {
           "$ref": "#/definitions/equalities/boolean_equality"
         },
         {
@@ -1820,7 +1830,11 @@
         },
         {
           "$ref": "#/definitions/equalities/uuid_equality"
-        },
+        }
+      ]
+    },
+    "arrayEquality": {
+      "oneOf": [
         {
           "$ref": "#/definitions/arrayEqualities/boolean_array_equality"
         },
