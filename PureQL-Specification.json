@@ -205,9 +205,6 @@
     "booleanReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/booleanField"
-        },
-        {
           "$ref": "#/definitions/scalars/booleanScalar"
         },
         {
@@ -246,17 +243,11 @@
         },
         {
           "$ref": "#/definitions/aggregates/count"
-        },
-        {
-          "$ref": "#/definitions/fields/numberField"
         }
       ]
     },
     "stringReturning": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/fields/stringField"
-        },
         {
           "$ref": "#/definitions/scalars/stringScalar"
         },
@@ -271,9 +262,6 @@
     "dateReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/dateField"
-        },
-        {
           "$ref": "#/definitions/scalars/dateScalar"
         },
         {
@@ -286,9 +274,6 @@
     },
     "timeReturning": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/fields/timeField"
-        },
         {
           "$ref": "#/definitions/scalars/timeScalar"
         },
@@ -303,9 +288,6 @@
     "dateTimeReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/datetimeField"
-        },
-        {
           "$ref": "#/definitions/scalars/datetimeScalar"
         },
         {
@@ -319,13 +301,59 @@
     "uuidReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/uuidField"
-        },
-        {
           "$ref": "#/definitions/scalars/uuidScalar"
         },
         {
           "$ref": "#/definitions/parameters/uuidParameter"
+        }
+      ]
+    },
+    "booleanArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/booleanField"
+        }
+      ]
+    },
+    "numericArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/numberField"
+        }
+      ]
+    },
+    "stringArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/stringField"
+        }
+      ]
+    },
+    "dateArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/dateField"
+        }
+      ]
+    },
+    "timeArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/timeField"
+        }
+      ]
+    },
+    "dateTimeArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/datetimeField"
+        }
+      ]
+    },
+    "uuidArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/fields/uuidField"
         }
       ]
     },
