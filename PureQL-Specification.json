@@ -662,7 +662,7 @@
               "const": "sum"
             },
             "arg": {
-              "$ref": "#/definitions/numericReturning"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
