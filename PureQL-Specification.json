@@ -771,7 +771,7 @@
               "const": "min_date"
             },
             "arg": {
-              "$ref": "#/definitions/dateReturning"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
