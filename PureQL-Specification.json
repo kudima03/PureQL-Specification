@@ -168,13 +168,27 @@
       "allOf": [
         {
           "oneOf": [
-            { "$ref": "#/definitions/booleanReturning" },
-            { "$ref": "#/definitions/numericReturning" },
-            { "$ref": "#/definitions/stringReturning" },
-            { "$ref": "#/definitions/dateReturning" },
-            { "$ref": "#/definitions/timeReturning" },
-            { "$ref": "#/definitions/dateTimeReturning" },
-            { "$ref": "#/definitions/uuidReturning" }
+            {
+              "$ref": "#/definitions/booleanReturning"
+            },
+            {
+              "$ref": "#/definitions/numericReturning"
+            },
+            {
+              "$ref": "#/definitions/stringReturning"
+            },
+            {
+              "$ref": "#/definitions/dateReturning"
+            },
+            {
+              "$ref": "#/definitions/timeReturning"
+            },
+            {
+              "$ref": "#/definitions/dateTimeReturning"
+            },
+            {
+              "$ref": "#/definitions/uuidReturning"
+            }
           ]
         },
         {
