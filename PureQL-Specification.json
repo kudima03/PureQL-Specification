@@ -299,46 +299,10 @@
         {
           "oneOf": [
             {
-              "$ref": "#/definitions/booleanReturning"
+              "$ref": "#/definitions/singleValueReturning"
             },
             {
-              "$ref": "#/definitions/numericReturning"
-            },
-            {
-              "$ref": "#/definitions/stringReturning"
-            },
-            {
-              "$ref": "#/definitions/dateReturning"
-            },
-            {
-              "$ref": "#/definitions/timeReturning"
-            },
-            {
-              "$ref": "#/definitions/dateTimeReturning"
-            },
-            {
-              "$ref": "#/definitions/uuidReturning"
-            },
-            {
-              "$ref": "#/definitions/booleanArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/numericArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/stringArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/dateArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/timeArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/dateTimeArrayReturning"
-            },
-            {
-              "$ref": "#/definitions/uuidArrayReturning"
+              "$ref": "#/definitions/arrayReturning"
             }
           ]
         },
@@ -350,6 +314,31 @@
               "minLength": 1
             }
           }
+        }
+      ]
+    },
+    "singleValueReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/booleanReturning"
+        },
+        {
+          "$ref": "#/definitions/numericReturning"
+        },
+        {
+          "$ref": "#/definitions/stringReturning"
+        },
+        {
+          "$ref": "#/definitions/dateReturning"
+        },
+        {
+          "$ref": "#/definitions/timeReturning"
+        },
+        {
+          "$ref": "#/definitions/dateTimeReturning"
+        },
+        {
+          "$ref": "#/definitions/uuidReturning"
         }
       ]
     },
