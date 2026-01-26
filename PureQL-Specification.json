@@ -1087,8 +1087,8 @@
             "items": {
               "type": "boolean"
             }
-      }
-    },
+          }
+        },
         "required": [
           "type",
           "value"
@@ -1978,8 +1978,8 @@
             "oneOf": [
               {
                 "$ref": "#/definitions/dateTimeArrayReturning"
-        }
-      ]
+              }
+            ]
           }
         }
       },
