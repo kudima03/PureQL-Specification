@@ -467,7 +467,13 @@
     "stringArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/stringField"
+          "$ref": "#/definitions/arrayScalars/stringArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/stringArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/stringArrayParameter"
         }
       ]
     },
