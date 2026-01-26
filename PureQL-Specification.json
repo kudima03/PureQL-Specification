@@ -833,7 +833,7 @@
               "const": "average_datetime"
             },
             "arg": {
-              "$ref": "#/definitions/fields/datetimeField"
+              "$ref": "#/definitions/dateTimeArrayReturning"
             }
           },
           "required": [
