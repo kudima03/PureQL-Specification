@@ -479,7 +479,7 @@
           "$ref": "#/definitions/arrayScalars/booleanArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/booleanArrayField"
+          "$ref": "#/definitions/fields/booleanField"
         },
         {
           "$ref": "#/definitions/arrayParameters/booleanArrayParameter"
@@ -492,7 +492,7 @@
           "$ref": "#/definitions/arrayScalars/numberArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/numberArrayField"
+          "$ref": "#/definitions/fields/numberField"
         },
         {
           "$ref": "#/definitions/arrayParameters/numberArrayParameter"
@@ -505,7 +505,7 @@
           "$ref": "#/definitions/arrayScalars/stringArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/stringArrayField"
+          "$ref": "#/definitions/fields/stringField"
         },
         {
           "$ref": "#/definitions/arrayParameters/stringArrayParameter"
@@ -518,7 +518,7 @@
           "$ref": "#/definitions/arrayScalars/dateArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/dateArrayField"
+          "$ref": "#/definitions/fields/dateField"
         },
         {
           "$ref": "#/definitions/arrayParameters/dateArrayParameter"
@@ -531,7 +531,7 @@
           "$ref": "#/definitions/arrayScalars/timeArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/timeArrayField"
+          "$ref": "#/definitions/fields/timeField"
         },
         {
           "$ref": "#/definitions/arrayParameters/timeArrayParameter"
@@ -544,7 +544,7 @@
           "$ref": "#/definitions/arrayScalars/datetimeArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/datetimeArrayField"
+          "$ref": "#/definitions/fields/datetimeField"
         },
         {
           "$ref": "#/definitions/arrayParameters/datetimeArrayParameter"
@@ -557,7 +557,7 @@
           "$ref": "#/definitions/arrayScalars/uuidArrayScalar"
         },
         {
-          "$ref": "#/definitions/fields/uuidArrayField"
+          "$ref": "#/definitions/fields/uuidField"
         },
         {
           "$ref": "#/definitions/arrayParameters/uuidArrayParameter"
