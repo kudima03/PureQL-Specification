@@ -454,7 +454,13 @@
     "numericArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/numberField"
+          "$ref": "#/definitions/arrayScalars/numberArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/numberArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/numberArrayParameter"
         }
       ]
     },
