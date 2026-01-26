@@ -493,7 +493,13 @@
     "timeArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/timeField"
+          "$ref": "#/definitions/arrayScalars/timeArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/timeArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/timeArrayParameter"
         }
       ]
     },
