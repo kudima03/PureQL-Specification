@@ -987,17 +987,29 @@
     "booleanOperations": {
       "or": {
         "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
         "properties": {
           "operator": {
             "const": "or"
           },
           "conditions": {
+            "oneOf": [
+              {
             "type": "array",
             "items": {
               "$ref": "#/definitions/booleanReturning"
             },
             "minItems": 1
+              },
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
           }
+            ]
+          }
+        }
         },
         "required": [
           "operator",
