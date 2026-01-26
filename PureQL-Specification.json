@@ -318,6 +318,27 @@
             },
             {
               "$ref": "#/definitions/uuidReturning"
+            },
+            {
+              "$ref": "#/definitions/booleanArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/numericArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/stringArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/dateArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/timeArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/dateTimeArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/uuidArrayReturning"
             }
           ]
         },
