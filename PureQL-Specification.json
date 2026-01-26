@@ -677,7 +677,7 @@
               "const": "max_number"
             },
             "arg": {
-              "$ref": "#/definitions/numericReturning"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
