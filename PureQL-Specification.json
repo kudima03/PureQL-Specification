@@ -1796,6 +1796,30 @@
         },
         {
           "$ref": "#/definitions/equalities/uuid_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/boolean_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/number_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/string_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/date_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/time_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/date_time_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/uuid_array_equality"
+        }
+      ]
+    },
     "arrayEqualities": {
       "boolean_array_equality": {
         "type": "object",
