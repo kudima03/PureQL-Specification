@@ -756,7 +756,7 @@
               "const": "max_date"
             },
             "arg": {
-              "$ref": "#/definitions/dateReturning"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
