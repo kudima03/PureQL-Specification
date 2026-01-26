@@ -1796,8 +1796,196 @@
         },
         {
           "$ref": "#/definitions/equalities/uuid_equality"
+    "arrayEqualities": {
+      "boolean_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "number_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "string_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "date_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "time_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "date_time_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
         }
       ]
+          }
+        }
+      },
+      "uuid_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/uuidArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/uuidArrayReturning"
+              }
+            ]
+          }
+        }
+      }
     },
     "equalities": {
       "boolean_equality": {
