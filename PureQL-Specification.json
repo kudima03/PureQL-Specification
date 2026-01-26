@@ -506,7 +506,13 @@
     "dateTimeArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/datetimeField"
+          "$ref": "#/definitions/arrayScalars/datetimeArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/datetimeArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/datetimeArrayParameter"
         }
       ]
     },
