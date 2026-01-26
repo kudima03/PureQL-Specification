@@ -803,7 +803,7 @@
               "const": "max_datetime"
             },
             "arg": {
-              "$ref": "#/definitions/fields/datetimeField"
+              "$ref": "#/definitions/dateTimeArrayReturning"
             }
           },
           "required": [
