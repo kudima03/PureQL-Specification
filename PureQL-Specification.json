@@ -850,7 +850,7 @@
               "const": "max_time"
             },
             "arg": {
-              "$ref": "#/definitions/timeReturning"
+              "$ref": "#/definitions/timeArrayReturning"
             }
           },
           "required": [
