@@ -441,7 +441,13 @@
     "booleanArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/booleanField"
+          "$ref": "#/definitions/arrayScalars/booleanArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/booleanArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/booleanArrayParameter"
         }
       ]
     },
