@@ -880,7 +880,7 @@
               "const": "average_time"
             },
             "arg": {
-              "$ref": "#/definitions/fields/timeField"
+              "$ref": "#/definitions/timeArrayReturning"
             }
           },
           "required": [
