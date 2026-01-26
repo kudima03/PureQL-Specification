@@ -2415,11 +2415,7 @@
     "orderBy": {
       "type": "array",
       "items": {
-        "oneOf": [
-          {
-            "$ref": "#/definitions/field"
-          }
-        ]
+        "$ref": "#/definitions/field"
       }
     },
     "pagination": {
