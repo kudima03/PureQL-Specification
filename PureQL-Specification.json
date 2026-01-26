@@ -724,7 +724,7 @@
               "const": "max_string"
             },
             "arg": {
-              "$ref": "#/definitions/stringReturning"
+              "$ref": "#/definitions/stringArrayReturning"
             }
           },
           "required": [
