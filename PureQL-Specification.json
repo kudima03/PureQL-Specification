@@ -1,6 +1,136 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "definitions": {
+    "arrayParameters": {
+      "stringArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/stringArrayType"
+          }
+        }
+      },
+      "numberArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/numberArrayType"
+          }
+        }
+      },
+      "booleanArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/booleanArrayType"
+          }
+        }
+      },
+      "nullArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/nullArrayType"
+          }
+        }
+      },
+      "dateArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/dateArrayType"
+          }
+        }
+      },
+      "datetimeArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+          }
+        }
+      },
+      "timeArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/timeArrayType"
+          }
+        }
+      },
+      "uuidArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/uuidArrayType"
+          }
+        }
+      }
+    },
     "parameters": {
       "stringParameter": {
         "type": "object",
