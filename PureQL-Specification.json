@@ -1,6 +1,136 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "definitions": {
+    "arrayParameters": {
+      "stringArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/stringArrayType"
+          }
+        }
+      },
+      "numberArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/numberArrayType"
+          }
+        }
+      },
+      "booleanArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/booleanArrayType"
+          }
+        }
+      },
+      "nullArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/nullArrayType"
+          }
+        }
+      },
+      "dateArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/dateArrayType"
+          }
+        }
+      },
+      "datetimeArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+          }
+        }
+      },
+      "timeArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/timeArrayType"
+          }
+        }
+      },
+      "uuidArrayParameter": {
+        "type": "object",
+        "required": [
+          "param_name",
+          "type"
+        ],
+        "properties": {
+          "param_name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "$ref": "#/definitions/arrayTypes/uuidArrayType"
+          }
+        }
+      }
+    },
     "parameters": {
       "stringParameter": {
         "type": "object",
@@ -188,6 +318,27 @@
             },
             {
               "$ref": "#/definitions/uuidReturning"
+            },
+            {
+              "$ref": "#/definitions/booleanArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/numericArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/stringArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/dateArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/timeArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/dateTimeArrayReturning"
+            },
+            {
+              "$ref": "#/definitions/uuidArrayReturning"
             }
           ]
         },
@@ -204,9 +355,6 @@
     },
     "booleanReturning": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/fields/booleanField"
-        },
         {
           "$ref": "#/definitions/scalars/booleanScalar"
         },
@@ -246,17 +394,11 @@
         },
         {
           "$ref": "#/definitions/aggregates/count"
-        },
-        {
-          "$ref": "#/definitions/fields/numberField"
         }
       ]
     },
     "stringReturning": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/fields/stringField"
-        },
         {
           "$ref": "#/definitions/scalars/stringScalar"
         },
@@ -271,9 +413,6 @@
     "dateReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/dateField"
-        },
-        {
           "$ref": "#/definitions/scalars/dateScalar"
         },
         {
@@ -286,9 +425,6 @@
     },
     "timeReturning": {
       "oneOf": [
-        {
-          "$ref": "#/definitions/fields/timeField"
-        },
         {
           "$ref": "#/definitions/scalars/timeScalar"
         },
@@ -303,9 +439,6 @@
     "dateTimeReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/datetimeField"
-        },
-        {
           "$ref": "#/definitions/scalars/datetimeScalar"
         },
         {
@@ -319,13 +452,126 @@
     "uuidReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/uuidField"
-        },
-        {
           "$ref": "#/definitions/scalars/uuidScalar"
         },
         {
           "$ref": "#/definitions/parameters/uuidParameter"
+        }
+      ]
+    },
+    "arrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/booleanArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/numericArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/stringArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/dateArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/timeArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/dateTimeArrayReturning"
+        },
+        {
+          "$ref": "#/definitions/uuidArrayReturning"
+        }
+      ]
+    },
+    "booleanArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/booleanArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/booleanArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/booleanArrayParameter"
+        }
+      ]
+    },
+    "numericArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/numberArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/numberArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/numberArrayParameter"
+        }
+      ]
+    },
+    "stringArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/stringArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/stringArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/stringArrayParameter"
+        }
+      ]
+    },
+    "dateArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/dateArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/dateArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/dateArrayParameter"
+        }
+      ]
+    },
+    "timeArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/timeArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/timeArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/timeArrayParameter"
+        }
+      ]
+    },
+    "dateTimeArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/datetimeArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/datetimeArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/datetimeArrayParameter"
+        }
+      ]
+    },
+    "uuidArrayReturning": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayScalars/uuidArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/uuidArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/uuidArrayParameter"
         }
       ]
     },
@@ -421,7 +667,7 @@
             "const": "count"
           },
           "arg": {
-            "$ref": "#/definitions/field"
+            "$ref": "#/definitions/arrayReturning"
           }
         },
         "required": [
@@ -437,7 +683,7 @@
               "const": "sum"
             },
             "arg": {
-              "$ref": "#/definitions/numericReturning"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
@@ -452,7 +698,7 @@
               "const": "max_number"
             },
             "arg": {
-              "$ref": "#/definitions/numericReturning"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
@@ -467,7 +713,7 @@
               "const": "min_number"
             },
             "arg": {
-              "$ref": "#/definitions/numericReturning"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
@@ -482,7 +728,7 @@
               "const": "average_number"
             },
             "arg": {
-              "$ref": "#/definitions/fields/numberField"
+              "$ref": "#/definitions/numericArrayReturning"
             }
           },
           "required": [
@@ -499,7 +745,7 @@
               "const": "max_string"
             },
             "arg": {
-              "$ref": "#/definitions/stringReturning"
+              "$ref": "#/definitions/stringArrayReturning"
             }
           },
           "required": [
@@ -514,7 +760,7 @@
               "const": "min_string"
             },
             "arg": {
-              "$ref": "#/definitions/stringReturning"
+              "$ref": "#/definitions/stringArrayReturning"
             }
           },
           "required": [
@@ -531,7 +777,7 @@
               "const": "max_date"
             },
             "arg": {
-              "$ref": "#/definitions/dateReturning"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
@@ -546,7 +792,7 @@
               "const": "min_date"
             },
             "arg": {
-              "$ref": "#/definitions/dateReturning"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
@@ -561,7 +807,7 @@
               "const": "average_date"
             },
             "arg": {
-              "$ref": "#/definitions/fields/dateField"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
@@ -578,7 +824,7 @@
               "const": "max_datetime"
             },
             "arg": {
-              "$ref": "#/definitions/fields/datetimeField"
+              "$ref": "#/definitions/dateTimeArrayReturning"
             }
           },
           "required": [
@@ -593,7 +839,7 @@
               "const": "min_datetime"
             },
             "arg": {
-              "$ref": "#/definitions/fields/datetimeField"
+              "$ref": "#/definitions/dateTimeArrayReturning"
             }
           },
           "required": [
@@ -608,7 +854,7 @@
               "const": "average_datetime"
             },
             "arg": {
-              "$ref": "#/definitions/fields/datetimeField"
+              "$ref": "#/definitions/dateTimeArrayReturning"
             }
           },
           "required": [
@@ -625,7 +871,7 @@
               "const": "max_time"
             },
             "arg": {
-              "$ref": "#/definitions/timeReturning"
+              "$ref": "#/definitions/timeArrayReturning"
             }
           },
           "required": [
@@ -640,7 +886,7 @@
               "const": "min_time"
             },
             "arg": {
-              "$ref": "#/definitions/timeReturning"
+              "$ref": "#/definitions/timeArrayReturning"
             }
           },
           "required": [
@@ -655,7 +901,7 @@
               "const": "average_time"
             },
             "arg": {
-              "$ref": "#/definitions/fields/timeField"
+              "$ref": "#/definitions/timeArrayReturning"
             }
           },
           "required": [
@@ -762,41 +1008,55 @@
     "booleanOperations": {
       "or": {
         "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
         "properties": {
           "operator": {
             "const": "or"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/booleanReturning"
-            },
-            "minItems": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/booleanReturning"
+                },
+                "minItems": 1
+              },
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
           }
-        },
-        "required": [
-          "operator",
-          "conditions"
-        ]
+        }
       },
       "and": {
         "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
         "properties": {
           "operator": {
             "const": "and"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/booleanReturning"
-            },
-            "minItems": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/booleanReturning"
+                },
+                "minItems": 1
+              },
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
           }
-        },
-        "required": [
-          "operator",
-          "conditions"
-        ]
+        }
       },
       "not": {
         "type": "object",
@@ -811,6 +1071,156 @@
         "required": [
           "operator",
           "condition"
+        ]
+      }
+    },
+    "arrayScalars": {
+      "stringArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/stringArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "numberArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/numberArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "booleanArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/booleanArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "boolean"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "nullArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/nullArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "null"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "dateArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/dateArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "datetimeArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "timeArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/timeArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "time"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "uuidArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/uuidArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
         ]
       }
     },
@@ -1051,6 +1461,124 @@
         "properties": {
           "name": {
             "const": "uuid"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "arrayType": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/arrayTypes/stringArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/numberArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/booleanArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/nullArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/dateArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/timeArrayType"
+        },
+        {
+          "$ref": "#/definitions/arrayTypes/uuidArrayType"
+        }
+      ]
+    },
+    "arrayTypes": {
+      "stringArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "stringArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "numberArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "numberArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "booleanArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "booleanArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "nullArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "nullArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "dateArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "dateArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "datetimeArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "datetimeArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "timeArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "timeArray"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "uuidArrayType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "const": "uuidArray"
           }
         },
         "required": [
@@ -1303,8 +1831,220 @@
         },
         {
           "$ref": "#/definitions/equalities/uuid_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/boolean_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/number_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/string_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/date_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/time_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/date_time_array_equality"
+        },
+        {
+          "$ref": "#/definitions/arrayEqualities/uuid_array_equality"
         }
       ]
+    },
+    "arrayEqualities": {
+      "boolean_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "number_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "string_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "date_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "time_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "date_time_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "uuid_array_equality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "equal"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/uuidArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/uuidArrayReturning"
+              }
+            ]
+          }
+        }
+      }
     },
     "equalities": {
       "boolean_equality": {
@@ -1675,11 +2415,7 @@
     "orderBy": {
       "type": "array",
       "items": {
-        "oneOf": [
-          {
-            "$ref": "#/definitions/field"
-          }
-        ]
+        "$ref": "#/definitions/field"
       }
     },
     "pagination": {
