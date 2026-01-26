@@ -842,6 +842,156 @@
         ]
       }
     },
+    "arrayScalars": {
+      "stringArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/stringArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "numberArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/numberArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "booleanArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/booleanArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "boolean"
+            }
+      }
+    },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "nullArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/nullArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "null"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "dateArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/dateArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "datetimeArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/datetimeArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "timeArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/timeArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "time"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "uuidArrayScalar": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/definitions/arrayTypes/uuidArrayType"
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      }
+    },
     "scalars": {
       "stringScalar": {
         "type": "object",
