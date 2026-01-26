@@ -786,7 +786,7 @@
               "const": "average_date"
             },
             "arg": {
-              "$ref": "#/definitions/fields/dateField"
+              "$ref": "#/definitions/dateArrayReturning"
             }
           },
           "required": [
