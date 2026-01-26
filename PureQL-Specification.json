@@ -998,42 +998,44 @@
           "conditions": {
             "oneOf": [
               {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/booleanReturning"
-            },
-            "minItems": 1
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/booleanReturning"
+                },
+                "minItems": 1
               },
               {
                 "$ref": "#/definitions/booleanArrayReturning"
-          }
+              }
             ]
           }
         }
-        },
-        "required": [
-          "operator",
-          "conditions"
-        ]
       },
       "and": {
         "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
         "properties": {
           "operator": {
             "const": "and"
           },
           "conditions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/booleanReturning"
-            },
-            "minItems": 1
+            "oneOf": [
+              {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/booleanReturning"
+                },
+                "minItems": 1
+              },
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
           }
-        },
-        "required": [
-          "operator",
-          "conditions"
-        ]
+        }
       },
       "not": {
         "type": "object",
