@@ -519,7 +519,13 @@
     "uuidArrayReturning": {
       "oneOf": [
         {
-          "$ref": "#/definitions/fields/uuidField"
+          "$ref": "#/definitions/arrayScalars/uuidArrayScalar"
+        },
+        {
+          "$ref": "#/definitions/fields/uuidArrayField"
+        },
+        {
+          "$ref": "#/definitions/arrayParameters/uuidArrayParameter"
         }
       ]
     },
