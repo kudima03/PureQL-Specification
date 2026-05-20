@@ -1,0 +1,43 @@
+{
+  "from": { "entity": "products" },
+  "select": [
+    { "entity": "products", "field": "id",       "type": { "name": "uuid" } },
+    { "entity": "products", "field": "name",     "type": { "name": "string" } },
+    { "entity": "products", "field": "brand",    "type": { "name": "string" } },
+    { "entity": "products", "field": "category", "type": { "name": "string" } },
+    { "entity": "products", "field": "price",    "type": { "name": "number" } }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "equal",
+        "left":  { "entity": "products", "field": "category", "type": { "name": "string" } },
+        "right": { "type": { "name": "stringArray" }, "value": ["electronics"] }
+      },
+      {
+        "operator": "not",
+        "condition": {
+          "operator": "equal",
+          "left":  { "entity": "products", "field": "is_discontinued", "type": { "name": "boolean" } },
+          "right": { "type": { "name": "booleanArray" }, "value": [true] }
+        }
+      },
+      {
+        "operator": "or",
+        "conditions": [
+          {
+            "operator": "equal",
+            "left":  { "entity": "products", "field": "brand", "type": { "name": "string" } },
+            "right": { "type": { "name": "stringArray" }, "value": ["Sony"] }
+          },
+          {
+            "operator": "equal",
+            "left":  { "entity": "products", "field": "brand", "type": { "name": "string" } },
+            "right": { "type": { "name": "stringArray" }, "value": ["Samsung"] }
+          }
+        ]
+      }
+    ]
+  }
+}

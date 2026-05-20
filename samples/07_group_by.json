@@ -1,0 +1,34 @@
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "entity": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+    {
+      "operator": "count",
+      "arg": { "entity": "order_items", "field": "id", "type": { "name": "uuid" } },
+      "alias": "times_ordered"
+    },
+    {
+      "operator": "sum",
+      "arg": { "entity": "order_items", "field": "quantity", "type": { "name": "number" } },
+      "alias": "total_units_sold"
+    },
+    {
+      "operator": "average_number",
+      "arg": { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+      "alias": "avg_sell_price"
+    },
+    {
+      "operator": "min_number",
+      "arg": { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+      "alias": "min_sell_price"
+    },
+    {
+      "operator": "max_number",
+      "arg": { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+      "alias": "max_sell_price"
+    }
+  ],
+  "groupBy": [
+    { "entity": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+  ]
+}

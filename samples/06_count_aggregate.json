@@ -1,0 +1,15 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "operator": "count",
+      "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } },
+      "alias": "total_orders"
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left":  { "entity": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "stringArray" }, "value": ["completed"] }
+  }
+}

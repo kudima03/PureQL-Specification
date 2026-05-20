@@ -1,0 +1,28 @@
+{
+  "from": { "entity": "order_items", "alias": "oi" },
+  "distinct": true,
+  "select": [
+    { "entity": "products", "field": "id",       "type": { "name": "uuid" },   "alias": "product_id" },
+    { "entity": "products", "field": "name",     "type": { "name": "string" }, "alias": "product_name" },
+    { "entity": "products", "field": "category", "type": { "name": "string" } }
+  ],
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "left":  { "entity": "oi",       "field": "product_id", "type": { "name": "uuid" } },
+        "right": { "entity": "products", "field": "id",         "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left":  { "entity": "oi", "field": "order_id", "type": { "name": "uuid" } },
+    "right": {
+      "type": { "name": "uuidArray" },
+      "value": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890"]
+    }
+  }
+}

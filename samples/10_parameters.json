@@ -1,0 +1,42 @@
+{
+  "from": { "entity": "orders", "alias": "o" },
+  "select": [
+    { "entity": "o",     "field": "id",           "type": { "name": "uuid" } },
+    { "entity": "o",     "field": "status",        "type": { "name": "string" } },
+    { "entity": "o",     "field": "total_amount",  "type": { "name": "number" } },
+    { "entity": "o",     "field": "order_date",    "type": { "name": "date" } },
+    { "entity": "users", "field": "name",           "type": { "name": "string" }, "alias": "customer_name" }
+  ],
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "left":  { "entity": "o",     "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "entity": "users", "field": "id",      "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "equal",
+        "left":  { "entity": "o", "field": "status", "type": { "name": "string" } },
+        "right": { "param_name": "order_status", "type": { "name": "stringArray" } }
+      },
+      {
+        "operator": "equal",
+        "left":  { "entity": "users", "field": "is_verified", "type": { "name": "boolean" } },
+        "right": { "param_name": "only_verified", "type": { "name": "booleanArray" } }
+      },
+      {
+        "operator": "equal",
+        "left":  { "entity": "o", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param_name": "target_date", "type": { "name": "dateArray" } }
+      }
+    ]
+  },
+  "pagination": { "skip": 0, "take": 50 }
+}
