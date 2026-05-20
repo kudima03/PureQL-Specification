@@ -209,6 +209,27 @@ Supported types: `number`, `string`, `date`, `time`, `datetime`.
 }
 ```
 
+### Per-row comparison operators (`each*`)
+
+The `each*` operators compare an **array-returning** expression against a single scalar value per row, producing a **boolean-returning** result. Use these in `where` to filter rows by a column value — the equivalent of `WHERE price > 100` in SQL.
+
+| Operator                 | Meaning |
+|--------------------------|---------|
+| `eachGreaterThan`        | `>`     |
+| `eachLessThan`           | `<`     |
+| `eachGreaterThanOrEqual` | `>=`    |
+| `eachLessThanOrEqual`    | `<=`    |
+
+The `left` operand is an array-returning expression (e.g., a field reference); the `right` is a matching single-value-returning expression (scalar or parameter). Supported types: `number`, `string`, `date`, `time`, `datetime`.
+
+```json
+{
+  "operator": "eachGreaterThan",
+  "left":  { "entity": "orders", "field": "total", "type": { "name": "number" } },
+  "right": { "type": { "name": "number" }, "value": 100 }
+}
+```
+
 ### Arithmetic operators
 
 Arithmetic works on **numeric single-value-returning** expressions. Use aggregates to bridge field data into arithmetic.
@@ -282,3 +303,4 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`10_parameters.json`](samples/10_parameters.json) | Named parameters for dynamic query execution |
 | [`11_distinct.json`](samples/11_distinct.json) | `distinct: true` to deduplicate results |
 | [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, where, groupBy, having, arithmetic, parameters, orderBy, pagination |
+| [`13_range_filter.json`](samples/13_range_filter.json) | `eachGreaterThan` and `eachLessThan` on a number field and a datetime field in the same `where` clause |
