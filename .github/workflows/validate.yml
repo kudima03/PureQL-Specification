@@ -1,0 +1,35 @@
+name: Validate
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate all samples against schema
+        run: |
+          pip install jsonschema --quiet
+          python3 - <<'PYEOF'
+          import json, glob, sys
+          from jsonschema import Draft202012Validator
+
+          spec = json.load(open("PureQL-Specification.json"))
+          validator = Draft202012Validator(spec)
+          failed = False
+          for path in sorted(glob.glob("samples/*.json")):
+              doc = json.load(open(path))
+              errors = list(validator.iter_errors(doc))
+              if errors:
+                  print(f"FAIL {path}:")
+                  for e in errors:
+                      print(f"  {e.message}")
+                  failed = True
+              else:
+                  print(f"OK   {path}")
+          sys.exit(1 if failed else 0)
+          PYEOF
