@@ -14,15 +14,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install ajv-cli and validate samples
+      - name: Validate all samples against schema
         run: |
-          npm install -g ajv-cli
-          failed=0
-          for f in samples/*.json; do
-            echo "Validating $f..."
-            npx ajv-cli validate -s PureQL-Specification.json -d "$f" || failed=1
-          done
-          exit $failed
+          pip install jsonschema --quiet
+          python3 - <<'PYEOF'
+          import json, glob, sys
+          from jsonschema import Draft202012Validator
+
+          spec = json.load(open("PureQL-Specification.json"))
+          validator = Draft202012Validator(spec)
+          failed = False
+          for path in sorted(glob.glob("samples/*.json")):
+              doc = json.load(open(path))
+              errors = list(validator.iter_errors(doc))
+              if errors:
+                  print(f"FAIL {path}:")
+                  for e in errors:
+                      print(f"  {e.message}")
+                  failed = True
+              else:
+                  print(f"OK   {path}")
+          sys.exit(1 if failed else 0)
+          PYEOF
 
       - name: Verify schema version matches tag
         run: |
@@ -36,8 +49,7 @@ jobs:
       - name: Extract changelog notes
         run: |
           python3 - <<'PYEOF' > release_notes.txt
-          import re
-          import os
+          import re, os
 
           tag = os.environ["GITHUB_REF_NAME"]
           content = open("CHANGELOG.md").read()
