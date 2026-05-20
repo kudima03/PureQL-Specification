@@ -1,0 +1,23 @@
+name: Validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+
+      - name: Validate all samples against schema
+        run: |
+          failed=0
+          for f in samples/*.json; do
+            echo "Validating $f..."
+            npx ajv-cli validate -s PureQL-Specification.json -d "$f" || failed=1
+          done
+          exit $failed
