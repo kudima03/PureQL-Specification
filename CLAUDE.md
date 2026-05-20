@@ -73,6 +73,44 @@ Not select expressions — just plain `{ entity, field, type }` field references
 - Never commit directly to `main`. Always create a new branch and open a pull request.
 - Do not mention yourself (Claude) in commit messages. Commit messages describe the change, not the author.
 
+## Release flow
+
+### Version format
+
+| Channel | Format | Example |
+|---|---|---|
+| Stable | `major.minor.patch` | `1.0.0` |
+| Preview | `major.minor.patch-preview.major.minor.patch` | `0.1.0-preview.0.1.0` |
+
+Tags have no `v` prefix.
+
+### Versioning rules
+
+| Change | Bump |
+|---|---|
+| New optional field or expression type | minor |
+| Rename, remove, or tighten any constraint | major |
+| Fix a validation bug without changing intent | patch |
+
+### Steps to release
+
+1. Create a branch and open a PR as normal.
+2. In the same PR, update **both**:
+   - `version` and `$id` in `PureQL-Specification.json` — set them to the new version string. The `$id` URL pattern is `https://github.com/kudima03/PureQL-Specification/releases/download/<version>/PureQL-Specification.json`.
+   - `CHANGELOG.md` — add a new `## [<version>] - YYYY-MM-DD` section above the previous one with `### Added / Changed / Removed / Fixed` entries as appropriate.
+3. Merge the PR into `main`.
+4. Push a tag from `main` matching the version exactly:
+   ```bash
+   git tag 0.1.0-preview.0.1.0
+   git push origin 0.1.0-preview.0.1.0
+   ```
+5. The CD workflow (`release.yml`) fires automatically. It will:
+   - Validate all samples against the schema.
+   - Verify the `version` field in the schema matches the tag (fails fast if they differ).
+   - Extract the matching section from `CHANGELOG.md` as the release body.
+   - Publish a GitHub Release with `PureQL-Specification.json`, `samples.zip`, `CHANGELOG.md`, and `README.md` as assets.
+   - Mark the release as **pre-release** if the tag contains `-preview`.
+
 ## Adding new samples
 
 1. Number the file (`13_my_sample.json`) to keep ordering clear.
