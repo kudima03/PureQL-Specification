@@ -68,6 +68,11 @@ Only the root `from` expression supports an `alias`. Joined entities are always 
 
 Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
 
+## Workflow rules
+
+- Never commit directly to `main`. Always create a new branch and open a pull request.
+- Do not mention yourself (Claude) in commit messages. Commit messages describe the change, not the author.
+
 ## Adding new samples
 
 1. Number the file (`13_my_sample.json`) to keep ordering clear.
