@@ -1,0 +1,42 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } },
+    {
+      "operator": "count",
+      "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } },
+      "alias": "order_count"
+    },
+    {
+      "operator": "sum",
+      "arg": { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+      "alias": "total_spent"
+    },
+    {
+      "operator": "max_date",
+      "arg": { "entity": "orders", "field": "order_date", "type": { "name": "date" } },
+      "alias": "last_order_date"
+    }
+  ],
+  "groupBy": [
+    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } }
+  ],
+  "having": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThan",
+        "left":  { "operator": "count", "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } } },
+        "right": { "type": { "name": "number" }, "value": 3 }
+      },
+      {
+        "operator": "greaterThan",
+        "left": {
+          "operator": "sum",
+          "arg": { "entity": "orders", "field": "total_amount", "type": { "name": "number" } }
+        },
+        "right": { "type": { "name": "number" }, "value": 200 }
+      }
+    ]
+  }
+}

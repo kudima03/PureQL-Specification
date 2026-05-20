@@ -1,0 +1,10 @@
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "entity": "users", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "users", "field": "name",        "type": { "name": "string" } },
+    { "entity": "users", "field": "email",       "type": { "name": "string" } },
+    { "entity": "users", "field": "is_active",   "type": { "name": "boolean" } },
+    { "entity": "users", "field": "created_at",  "type": { "name": "datetime" } }
+  ]
+}

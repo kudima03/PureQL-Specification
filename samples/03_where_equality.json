@@ -1,0 +1,13 @@
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "entity": "users", "field": "id",    "type": { "name": "uuid" } },
+    { "entity": "users", "field": "name",  "type": { "name": "string" } },
+    { "entity": "users", "field": "email", "type": { "name": "string" } }
+  ],
+  "where": {
+    "operator": "equal",
+    "left":  { "entity": "users", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "stringArray" }, "value": ["active"] }
+  }
+}

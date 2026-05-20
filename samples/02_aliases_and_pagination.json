@@ -1,0 +1,11 @@
+{
+  "from": { "entity": "products", "alias": "p" },
+  "select": [
+    { "entity": "p", "field": "id",          "type": { "name": "uuid" },   "alias": "product_id" },
+    { "entity": "p", "field": "name",         "type": { "name": "string" }, "alias": "product_name" },
+    { "entity": "p", "field": "price",        "type": { "name": "number" }, "alias": "unit_price" },
+    { "entity": "p", "field": "stock_count",  "type": { "name": "number" }, "alias": "available_stock" },
+    { "entity": "p", "field": "created_at",   "type": { "name": "datetime" } }
+  ],
+  "pagination": { "skip": 0, "take": 20 }
+}

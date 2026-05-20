@@ -1,0 +1,119 @@
+{
+  "from": { "entity": "orders", "alias": "o" },
+  "select": [
+    { "entity": "users",    "field": "id",           "type": { "name": "uuid" },   "alias": "customer_id" },
+    { "entity": "users",    "field": "name",          "type": { "name": "string" }, "alias": "customer_name" },
+    { "entity": "users",    "field": "email",         "type": { "name": "string" } },
+    { "entity": "users",    "field": "tier",          "type": { "name": "string" }, "alias": "membership_tier" },
+    {
+      "operator": "count",
+      "arg": { "entity": "o", "field": "id", "type": { "name": "uuid" } },
+      "alias": "total_orders"
+    },
+    {
+      "operator": "sum",
+      "arg": { "entity": "o", "field": "total_amount", "type": { "name": "number" } },
+      "alias": "lifetime_value"
+    },
+    {
+      "operator": "average_number",
+      "arg": { "entity": "o", "field": "total_amount", "type": { "name": "number" } },
+      "alias": "avg_order_value"
+    },
+    {
+      "operator": "min_date",
+      "arg": { "entity": "o", "field": "order_date", "type": { "name": "date" } },
+      "alias": "first_order_date"
+    },
+    {
+      "operator": "max_date",
+      "arg": { "entity": "o", "field": "order_date", "type": { "name": "date" } },
+      "alias": "last_order_date"
+    },
+    {
+      "operator": "multiply",
+      "values": [
+        {
+          "operator": "sum",
+          "arg": { "entity": "o", "field": "total_amount", "type": { "name": "number" } }
+        },
+        { "type": { "name": "number" }, "value": 0.05 }
+      ],
+      "alias": "loyalty_points_earned"
+    }
+  ],
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "left":  { "entity": "o",     "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "entity": "users", "field": "id",      "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "type": "left",
+      "entity": "referrals",
+      "on": {
+        "operator": "equal",
+        "left":  { "entity": "users",    "field": "id",          "type": { "name": "uuid" } },
+        "right": { "entity": "referrals","field": "referred_id",  "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "equal",
+        "left":  { "entity": "users", "field": "is_active", "type": { "name": "boolean" } },
+        "right": { "type": { "name": "booleanArray" }, "value": [true] }
+      },
+      {
+        "operator": "not",
+        "condition": {
+          "operator": "equal",
+          "left":  { "entity": "users", "field": "role", "type": { "name": "string" } },
+          "right": { "type": { "name": "stringArray" }, "value": ["banned"] }
+        }
+      },
+      {
+        "operator": "equal",
+        "left":  { "entity": "o", "field": "status", "type": { "name": "string" } },
+        "right": { "param_name": "order_status", "type": { "name": "stringArray" } }
+      }
+    ]
+  },
+  "groupBy": [
+    { "entity": "users", "field": "id",    "type": { "name": "uuid" } },
+    { "entity": "users", "field": "name",  "type": { "name": "string" } },
+    { "entity": "users", "field": "email", "type": { "name": "string" } },
+    { "entity": "users", "field": "tier",  "type": { "name": "string" } }
+  ],
+  "having": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThan",
+        "left": {
+          "operator": "count",
+          "arg": { "entity": "o", "field": "id", "type": { "name": "uuid" } }
+        },
+        "right": { "type": { "name": "number" }, "value": 5 }
+      },
+      {
+        "operator": "greaterThan",
+        "left": {
+          "operator": "sum",
+          "arg": { "entity": "o", "field": "total_amount", "type": { "name": "number" } }
+        },
+        "right": { "param_name": "min_lifetime_value", "type": { "name": "number" } }
+      }
+    ]
+  },
+  "orderBy": [
+    { "entity": "users", "field": "name", "type": { "name": "string" } }
+  ],
+  "pagination": { "skip": 0, "take": 25 }
+}

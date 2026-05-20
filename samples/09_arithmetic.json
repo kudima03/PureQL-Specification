@@ -1,0 +1,60 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "operator": "count",
+      "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } },
+      "alias": "total_orders"
+    },
+    {
+      "operator": "sum",
+      "arg": { "entity": "orders", "field": "subtotal", "type": { "name": "number" } },
+      "alias": "gross_revenue"
+    },
+    {
+      "operator": "multiply",
+      "values": [
+        {
+          "operator": "sum",
+          "arg": { "entity": "orders", "field": "subtotal", "type": { "name": "number" } }
+        },
+        { "type": { "name": "number" }, "value": 0.1 }
+      ],
+      "alias": "estimated_tax"
+    },
+    {
+      "operator": "add",
+      "values": [
+        {
+          "operator": "sum",
+          "arg": { "entity": "orders", "field": "subtotal", "type": { "name": "number" } }
+        },
+        {
+          "operator": "multiply",
+          "values": [
+            {
+              "operator": "sum",
+              "arg": { "entity": "orders", "field": "subtotal", "type": { "name": "number" } }
+            },
+            { "type": { "name": "number" }, "value": 0.1 }
+          ]
+        }
+      ],
+      "alias": "total_with_tax"
+    },
+    {
+      "operator": "divide",
+      "values": [
+        {
+          "operator": "sum",
+          "arg": { "entity": "orders", "field": "subtotal", "type": { "name": "number" } }
+        },
+        {
+          "operator": "count",
+          "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } }
+        }
+      ],
+      "alias": "avg_order_value"
+    }
+  ]
+}
