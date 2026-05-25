@@ -7,6 +7,22 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.0.5.0] - 2026-05-25
+
+Introduces sort direction control for `orderBy`. Previously `orderBy` accepted bare field references, making sort direction implementation-defined. Queries that used bare fields in `orderBy` must be migrated to the new `orderByItem` wrapper.
+
+Tracking issue: #27.
+
+### Added
+
+- **`orderByItem` definition** — object with required `field` (a `$ref` to `#/definitions/field`) and optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
+
+### Changed
+
+- **`orderBy.items`** now references `orderByItem` instead of `field` directly. Bare field objects in `orderBy` are no longer valid; wrap each field in `{ "field": <field>, "direction": "asc" }`.
+
+---
+
 ## [0.1.0-preview.0.4.0] - 2026-05-25
 
 Renames the internal `integer_equality` definition to `number_equality` for consistency with the `number` scalar type.
