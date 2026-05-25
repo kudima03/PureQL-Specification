@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.0.1.0/PureQL-Specification.json",
-  "version": "0.1.0-preview.0.1.0",
+  "$id": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.0.2.0/PureQL-Specification.json",
+  "version": "0.1.0-preview.0.2.0",
   "definitions": {
     "arrayParameters": {
       "stringArrayParameter": {
@@ -485,6 +485,21 @@
         },
         {
           "$ref": "#/definitions/arrayParameters/booleanArrayParameter"
+        },
+        {
+          "$ref": "#/definitions/eachComparison"
+        },
+        {
+          "$ref": "#/definitions/eachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachBooleanOperations/eachAnd"
+        },
+        {
+          "$ref": "#/definitions/eachBooleanOperations/eachOr"
+        },
+        {
+          "$ref": "#/definitions/eachBooleanOperations/eachNot"
         }
       ]
     },
@@ -1796,7 +1811,14 @@
           "minLength": 1
         },
         "on": {
-          "$ref": "#/definitions/booleanReturning"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/booleanReturning"
+            },
+            {
+              "$ref": "#/definitions/booleanArrayReturning"
+            }
+          ]
         }
       }
     },
@@ -2382,6 +2404,446 @@
           }
         }
       }
+    },
+    "eachComparison": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/eachComparisons/numericEachComparison"
+        },
+        {
+          "$ref": "#/definitions/eachComparisons/stringEachComparison"
+        },
+        {
+          "$ref": "#/definitions/eachComparisons/dateEachComparison"
+        },
+        {
+          "$ref": "#/definitions/eachComparisons/datetimeEachComparison"
+        },
+        {
+          "$ref": "#/definitions/eachComparisons/timeEachComparison"
+        }
+      ]
+    },
+    "eachComparisons": {
+      "numericEachComparison": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "enum": [
+              "eachGreaterThan",
+              "eachLessThan",
+              "eachGreaterThanOrEqual",
+              "eachLessThanOrEqual"
+            ]
+          },
+          "left": {
+            "$ref": "#/definitions/numericArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericReturning"
+              },
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "stringEachComparison": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "enum": [
+              "eachGreaterThan",
+              "eachLessThan",
+              "eachGreaterThanOrEqual",
+              "eachLessThanOrEqual"
+            ]
+          },
+          "left": {
+            "$ref": "#/definitions/stringArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringReturning"
+              },
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "dateEachComparison": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "enum": [
+              "eachGreaterThan",
+              "eachLessThan",
+              "eachGreaterThanOrEqual",
+              "eachLessThanOrEqual"
+            ]
+          },
+          "left": {
+            "$ref": "#/definitions/dateArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateReturning"
+              },
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "datetimeEachComparison": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "enum": [
+              "eachGreaterThan",
+              "eachLessThan",
+              "eachGreaterThanOrEqual",
+              "eachLessThanOrEqual"
+            ]
+          },
+          "left": {
+            "$ref": "#/definitions/dateTimeArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              },
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "timeEachComparison": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "enum": [
+              "eachGreaterThan",
+              "eachLessThan",
+              "eachGreaterThanOrEqual",
+              "eachLessThanOrEqual"
+            ]
+          },
+          "left": {
+            "$ref": "#/definitions/timeArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeReturning"
+              },
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eachEquality": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/eachEqualities/booleanEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/numericEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/stringEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/dateEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/timeEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/datetimeEachEquality"
+        },
+        {
+          "$ref": "#/definitions/eachEqualities/uuidEachEquality"
+        }
+      ]
+    },
+    "eachEqualities": {
+      "booleanEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/booleanArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/booleanReturning"
+              },
+              {
+                "$ref": "#/definitions/booleanArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "numericEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/numericArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericReturning"
+              },
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "stringEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/stringArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/stringReturning"
+              },
+              {
+                "$ref": "#/definitions/stringArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "dateEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/dateArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateReturning"
+              },
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "timeEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/timeArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeReturning"
+              },
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "datetimeEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/dateTimeArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              },
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "uuidEachEquality": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachEqual"
+          },
+          "left": {
+            "$ref": "#/definitions/uuidArrayReturning"
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/uuidReturning"
+              },
+              {
+                "$ref": "#/definitions/uuidArrayReturning"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eachBooleanOperations": {
+      "eachAnd": {
+        "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachAnd"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/booleanArrayReturning"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "eachOr": {
+        "type": "object",
+        "required": [
+          "operator",
+          "conditions"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachOr"
+          },
+          "conditions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/booleanArrayReturning"
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "eachNot": {
+        "type": "object",
+        "required": [
+          "operator",
+          "condition"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachNot"
+          },
+          "condition": {
+            "$ref": "#/definitions/booleanArrayReturning"
+          }
+        }
+      }
     }
   },
   "properties": {
@@ -2400,7 +2862,14 @@
       }
     },
     "where": {
-      "$ref": "#/definitions/booleanReturning"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/booleanReturning"
+        },
+        {
+          "$ref": "#/definitions/booleanArrayReturning"
+        }
+      ]
     },
     "joins": {
       "type": "array",

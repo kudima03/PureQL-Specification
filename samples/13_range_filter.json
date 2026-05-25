@@ -1,0 +1,23 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "orders", "field": "total",       "type": { "name": "number" } },
+    { "entity": "orders", "field": "created_at",  "type": { "name": "datetime" } }
+  ],
+  "where": {
+    "operator": "eachAnd",
+    "conditions": [
+      {
+        "operator": "eachGreaterThan",
+        "left":  { "entity": "orders", "field": "total", "type": { "name": "number" } },
+        "right": { "type": { "name": "number" }, "value": 100 }
+      },
+      {
+        "operator": "eachLessThan",
+        "left":  { "entity": "orders", "field": "created_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00Z" }
+      }
+    ]
+  }
+}

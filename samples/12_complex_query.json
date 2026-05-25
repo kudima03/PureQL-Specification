@@ -47,7 +47,7 @@
       "type": "inner",
       "entity": "users",
       "on": {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "o",     "field": "user_id", "type": { "name": "uuid" } },
         "right": { "entity": "users", "field": "id",      "type": { "name": "uuid" } }
       }
@@ -56,32 +56,32 @@
       "type": "left",
       "entity": "referrals",
       "on": {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "users",    "field": "id",          "type": { "name": "uuid" } },
         "right": { "entity": "referrals","field": "referred_id",  "type": { "name": "uuid" } }
       }
     }
   ],
   "where": {
-    "operator": "and",
+    "operator": "eachAnd",
     "conditions": [
       {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "users", "field": "is_active", "type": { "name": "boolean" } },
-        "right": { "type": { "name": "booleanArray" }, "value": [true] }
+        "right": { "type": { "name": "boolean" }, "value": true }
       },
       {
-        "operator": "not",
+        "operator": "eachNot",
         "condition": {
-          "operator": "equal",
+          "operator": "eachEqual",
           "left":  { "entity": "users", "field": "role", "type": { "name": "string" } },
-          "right": { "type": { "name": "stringArray" }, "value": ["banned"] }
+          "right": { "type": { "name": "string" }, "value": "banned" }
         }
       },
       {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "o", "field": "status", "type": { "name": "string" } },
-        "right": { "param_name": "order_status", "type": { "name": "stringArray" } }
+        "right": { "param_name": "order_status", "type": { "name": "string" } }
       }
     ]
   },

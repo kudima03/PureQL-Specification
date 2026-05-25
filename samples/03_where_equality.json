@@ -6,8 +6,8 @@
     { "entity": "users", "field": "email", "type": { "name": "string" } }
   ],
   "where": {
-    "operator": "equal",
+    "operator": "eachEqual",
     "left":  { "entity": "users", "field": "status", "type": { "name": "string" } },
-    "right": { "type": { "name": "stringArray" }, "value": ["active"] }
+    "right": { "type": { "name": "string" }, "value": "active" }
   }
 }

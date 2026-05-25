@@ -12,7 +12,7 @@
       "type": "inner",
       "entity": "users",
       "on": {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "o",     "field": "user_id", "type": { "name": "uuid" } },
         "right": { "entity": "users", "field": "id",      "type": { "name": "uuid" } }
       }
@@ -21,7 +21,7 @@
       "type": "left",
       "entity": "coupons",
       "on": {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "o",       "field": "coupon_id", "type": { "name": "uuid" } },
         "right": { "entity": "coupons", "field": "id",        "type": { "name": "uuid" } }
       }

@@ -1,0 +1,34 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "id",           "type": { "name": "uuid" } },
+    { "entity": "orders", "field": "status",       "type": { "name": "string" } },
+    { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+    { "entity": "orders", "field": "created_at",   "type": { "name": "datetime" } }
+  ],
+  "where": {
+    "operator": "eachAnd",
+    "conditions": [
+      {
+        "operator": "eachOr",
+        "conditions": [
+          {
+            "operator": "eachEqual",
+            "left":  { "entity": "orders", "field": "status", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "pending" }
+          },
+          {
+            "operator": "eachEqual",
+            "left":  { "entity": "orders", "field": "status", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "processing" }
+          }
+        ]
+      },
+      {
+        "operator": "eachGreaterThan",
+        "left":  { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+        "right": { "type": { "name": "number" }, "value": 50 }
+      }
+    ]
+  }
+}
