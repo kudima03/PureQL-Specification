@@ -8,33 +8,33 @@
     { "entity": "products", "field": "price",    "type": { "name": "number" } }
   ],
   "where": {
-    "operator": "and",
+    "operator": "eachAnd",
     "conditions": [
       {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "products", "field": "category", "type": { "name": "string" } },
-        "right": { "type": { "name": "stringArray" }, "value": ["electronics"] }
+        "right": { "type": { "name": "string" }, "value": "electronics" }
       },
       {
-        "operator": "not",
+        "operator": "eachNot",
         "condition": {
-          "operator": "equal",
+          "operator": "eachEqual",
           "left":  { "entity": "products", "field": "is_discontinued", "type": { "name": "boolean" } },
-          "right": { "type": { "name": "booleanArray" }, "value": [true] }
+          "right": { "type": { "name": "boolean" }, "value": true }
         }
       },
       {
-        "operator": "or",
+        "operator": "eachOr",
         "conditions": [
           {
-            "operator": "equal",
+            "operator": "eachEqual",
             "left":  { "entity": "products", "field": "brand", "type": { "name": "string" } },
-            "right": { "type": { "name": "stringArray" }, "value": ["Sony"] }
+            "right": { "type": { "name": "string" }, "value": "Sony" }
           },
           {
-            "operator": "equal",
+            "operator": "eachEqual",
             "left":  { "entity": "products", "field": "brand", "type": { "name": "string" } },
-            "right": { "type": { "name": "stringArray" }, "value": ["Samsung"] }
+            "right": { "type": { "name": "string" }, "value": "Samsung" }
           }
         ]
       }

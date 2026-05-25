@@ -6,7 +6,7 @@
     { "entity": "orders", "field": "created_at",  "type": { "name": "datetime" } }
   ],
   "where": {
-    "operator": "and",
+    "operator": "eachAnd",
     "conditions": [
       {
         "operator": "eachGreaterThan",

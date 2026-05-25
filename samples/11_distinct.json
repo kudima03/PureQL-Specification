@@ -11,18 +11,15 @@
       "type": "inner",
       "entity": "products",
       "on": {
-        "operator": "equal",
+        "operator": "eachEqual",
         "left":  { "entity": "oi",       "field": "product_id", "type": { "name": "uuid" } },
         "right": { "entity": "products", "field": "id",         "type": { "name": "uuid" } }
       }
     }
   ],
   "where": {
-    "operator": "equal",
+    "operator": "eachEqual",
     "left":  { "entity": "oi", "field": "order_id", "type": { "name": "uuid" } },
-    "right": {
-      "type": { "name": "uuidArray" },
-      "value": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890"]
-    }
+    "right": { "type": { "name": "uuid" }, "value": "a1b2c3d4-e5f6-7890-abcd-ef1234567890" }
   }
 }

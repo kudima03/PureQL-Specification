@@ -1,0 +1,14 @@
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "entity": "order_items", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+    { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+    { "entity": "order_items", "field": "sale_price", "type": { "name": "number" } }
+  ],
+  "where": {
+    "operator": "eachGreaterThan",
+    "left":  { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+    "right": { "entity": "order_items", "field": "sale_price", "type": { "name": "number" } }
+  }
+}

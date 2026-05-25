@@ -49,7 +49,7 @@ A field reference selects a column from an entity. The `entity` value should mat
 { "entity": "users", "field": "email", "type": { "name": "string" } }
 ```
 
-Fields carry their type as an **array type** in the schema — they represent a column of values. Use them in `select`, `groupBy`, `orderBy`, `join.on` conditions (via array equality), and as arguments to aggregate functions.
+Fields carry their type as an **array type** in the schema — they represent a column of values. Use them in `select`, `groupBy`, `orderBy`, as operands of per-row predicates (`eachEqual`, `eachGreaterThan`, etc.), and as arguments to aggregate functions.
 
 ### Scalars
 
@@ -101,25 +101,30 @@ Each item in `select` is a value-returning expression (field, scalar, aggregate,
 
 ### `where` / `having`
 
-Both accept any **boolean-returning expression**: a boolean scalar, boolean parameter, boolean operation (`and`/`or`/`not`), an equality, or a comparison.
+They accept different shapes because they evaluate in different scopes:
+
+- **`where`** is evaluated per row. It accepts either a **boolean-returning** expression (single boolean) or a **boolean-array-returning** expression (per-row boolean column). Use the `each*` family for per-row predicates against fields.
+- **`having`** is evaluated per group, after `groupBy`. It accepts only a **boolean-returning** expression. Operands must reduce to a single value per group — typically aggregates compared with `greaterThan` / `equal` / etc. Per-row `each*` operators do **not** fit in `having`.
+
+`where` example using per-row predicates:
 
 ```json
 "where": {
-  "operator": "and",
+  "operator": "eachAnd",
   "conditions": [
-    { "operator": "equal",
+    { "operator": "eachEqual",
       "left":  { "entity": "orders", "field": "status", "type": { "name": "string" } },
-      "right": { "type": { "name": "stringArray" }, "value": ["completed"] } },
-    { "operator": "equal",
+      "right": { "type": { "name": "string" }, "value": "completed" } },
+    { "operator": "eachEqual",
       "left":  { "entity": "orders", "field": "is_paid", "type": { "name": "boolean" } },
-      "right": { "type": { "name": "booleanArray" }, "value": [true] } }
+      "right": { "type": { "name": "boolean" }, "value": true } }
   ]
 }
 ```
 
 ### `joins`
 
-Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to join, and a boolean `on` condition.
+Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to join, and an `on` condition. Like `where`, `on` accepts either a **boolean-returning** or a **boolean-array-returning** expression. For column-to-column matching (the typical join), use `eachEqual`:
 
 ```json
 "joins": [
@@ -127,7 +132,7 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
     "type": "inner",
     "entity": "users",
     "on": {
-      "operator": "equal",
+      "operator": "eachEqual",
       "left":  { "entity": "o",     "field": "user_id", "type": { "name": "uuid" } },
       "right": { "entity": "users", "field": "id",      "type": { "name": "uuid" } }
     }
@@ -158,39 +163,101 @@ Both accept an array of field references.
 
 ## Operations
 
-### Boolean operations
+### Two families of predicates
+
+PureQL has **two parallel predicate families** that you choose between based on whether you're working with single values or with columns/rows:
+
+| Need | Family | Returns | Operators |
+|---|---|---|---|
+| Combine/compare **single-value** expressions (aggregates, scalars) | Single-value family | one boolean | `and`, `or`, `not`, `equal`, `greaterThan`, `lessThan`, … |
+| Filter/compare values **per row** of a column | Per-row (`each*`) family | one boolean **per row** | `eachAnd`, `eachOr`, `eachNot`, `eachEqual`, `eachGreaterThan`, `eachLessThan`, … |
+
+`where` and `join.on` accept either family (they evaluate per row, but a literal `true` is also valid). `having` accepts only the single-value family. `and` / `or` / `not` themselves only accept single-value children — do not mix the two families inside the same boolean operator; use `eachAnd` / `eachOr` / `eachNot` to compose per-row predicates.
+
+### Single-value boolean operations
 
 | Operator | Shape |
 |----------|-------|
-| `and`    | `{ "operator": "and", "conditions": [ ...booleanExpressions ] }` |
-| `or`     | `{ "operator": "or",  "conditions": [ ...booleanExpressions ] }` |
-| `not`    | `{ "operator": "not", "condition": booleanExpression }` |
+| `and`    | `{ "operator": "and", "conditions": [ ...booleanReturning ] }` |
+| `or`     | `{ "operator": "or",  "conditions": [ ...booleanReturning ] }` |
+| `not`    | `{ "operator": "not", "condition": booleanReturning }` |
 
-### Equality
-
-`equal` compares two values of the same type. To compare a **field** to a literal, use an array scalar on the right-hand side.
+Conditions must be **single-boolean** expressions: a boolean scalar, parameter, single-value equality, or single-value comparison. Typical use: combining aggregate comparisons in `having`.
 
 ```json
-{
-  "operator": "equal",
-  "left":  { "entity": "users", "field": "role", "type": { "name": "string" } },
-  "right": { "type": { "name": "stringArray" }, "value": ["admin"] }
+"having": {
+  "operator": "and",
+  "conditions": [
+    { "operator": "greaterThan",
+      "left":  { "operator": "count", "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } } },
+      "right": { "type": { "name": "number" }, "value": 5 } }
+  ]
 }
 ```
 
-To compare two fields (e.g. in a join condition):
+### Per-row boolean operations (`eachAnd` / `eachOr` / `eachNot`)
+
+| Operator  | Shape |
+|-----------|-------|
+| `eachAnd` | `{ "operator": "eachAnd", "conditions": [ ...booleanArrayReturning ] }` |
+| `eachOr`  | `{ "operator": "eachOr",  "conditions": [ ...booleanArrayReturning ] }` |
+| `eachNot` | `{ "operator": "eachNot", "condition": booleanArrayReturning }` |
+
+These combine per-row boolean columns element-wise. The result is also a per-row boolean column. Use them to compose multiple `each*` predicates in `where` or `join.on`. There is no dedicated `eachNotEqual` — express it as `eachNot(eachEqual(...))`.
+
+### Single-value equality (`equal`)
+
+Compares two **single-value** expressions of the same type and returns one boolean. Useful in `having` against aggregates, or anywhere both operands reduce to scalars.
 
 ```json
 {
   "operator": "equal",
+  "left":  { "operator": "max_number", "arg": { "entity": "orders", "field": "total", "type": { "name": "number" } } },
+  "right": { "param_name": "target_max", "type": { "name": "number" } }
+}
+```
+
+### Whole-sequence equality (`equal` on arrays)
+
+The same `equal` operator, when both sides are array-returning expressions of the same type, asks **"are these two sequences equal as wholes?"** and returns one boolean. This is rarely needed; most "field equals value" filtering should use `eachEqual` instead.
+
+```json
+{
+  "operator": "equal",
+  "left":  { "param_name": "expected_ids", "type": { "name": "uuidArray" } },
+  "right": { "param_name": "received_ids", "type": { "name": "uuidArray" } }
+}
+```
+
+### Per-row equality (`eachEqual`)
+
+For each row, returns `true` when `left` equals `right`. The `left` operand is an **array-returning** expression (typically a field). The `right` operand is either a **single-value-returning** expression (the threshold/literal case) or another **array-returning** expression (element-wise field-to-field comparison).
+
+Supported types: `boolean`, `number`, `string`, `date`, `time`, `datetime`, `uuid`.
+
+Field-to-literal:
+
+```json
+{
+  "operator": "eachEqual",
+  "left":  { "entity": "users", "field": "role", "type": { "name": "string" } },
+  "right": { "type": { "name": "string" }, "value": "admin" }
+}
+```
+
+Field-to-field (per-row, used in joins or cross-column filters):
+
+```json
+{
+  "operator": "eachEqual",
   "left":  { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } },
   "right": { "entity": "users",  "field": "id",      "type": { "name": "uuid" } }
 }
 ```
 
-### Comparison operators
+### Single-value range comparisons
 
-Comparisons work on **single-value-returning** expressions (scalars, parameters, aggregates). They return a boolean.
+Range comparisons on **single-value-returning** expressions (scalars, parameters, aggregates). They return a boolean.
 
 | Operator             | Meaning |
 |----------------------|---------|
@@ -209,9 +276,9 @@ Supported types: `number`, `string`, `date`, `time`, `datetime`.
 }
 ```
 
-### Per-row comparison operators (`each*`)
+### Per-row range comparisons (`each*`)
 
-The `each*` operators compare an **array-returning** expression against a single scalar value per row, producing a **boolean-returning** result. Use these in `where` to filter rows by a column value — the equivalent of `WHERE price > 100` in SQL.
+Per-row analogues of the range comparisons. `left` is array-returning (typically a field), `right` is either single-value-returning (one threshold for all rows) or array-returning (element-wise field-to-field).
 
 | Operator                 | Meaning |
 |--------------------------|---------|
@@ -220,13 +287,25 @@ The `each*` operators compare an **array-returning** expression against a single
 | `eachGreaterThanOrEqual` | `>=`    |
 | `eachLessThanOrEqual`    | `<=`    |
 
-The `left` operand is an array-returning expression (e.g., a field reference); the `right` is a matching single-value-returning expression (scalar or parameter). Supported types: `number`, `string`, `date`, `time`, `datetime`.
+Supported types: `number`, `string`, `date`, `time`, `datetime`.
+
+Field vs literal:
 
 ```json
 {
   "operator": "eachGreaterThan",
   "left":  { "entity": "orders", "field": "total", "type": { "name": "number" } },
   "right": { "type": { "name": "number" }, "value": 100 }
+}
+```
+
+Field vs field (per-row):
+
+```json
+{
+  "operator": "eachGreaterThan",
+  "left":  { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+  "right": { "entity": "order_items", "field": "sale_price", "type": { "name": "number" } }
 }
 ```
 
@@ -293,14 +372,17 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 |------|-------------|
 | [`01_simple_select.json`](samples/01_simple_select.json) | Select several fields from a single entity |
 | [`02_aliases_and_pagination.json`](samples/02_aliases_and_pagination.json) | `from` alias, field aliases, and `pagination` |
-| [`03_where_equality.json`](samples/03_where_equality.json) | Filter rows with a single `equal` condition |
-| [`04_boolean_logic.json`](samples/04_boolean_logic.json) | Nested `and` / `or` / `not` conditions |
-| [`05_joins.json`](samples/05_joins.json) | `inner` join and `left` join in one query |
+| [`03_where_equality.json`](samples/03_where_equality.json) | Filter rows with a single `eachEqual` condition |
+| [`04_boolean_logic.json`](samples/04_boolean_logic.json) | Nested `eachAnd` / `eachOr` / `eachNot` over field equalities |
+| [`05_joins.json`](samples/05_joins.json) | `inner` and `left` joins using `eachEqual` for per-row key matching |
 | [`06_count_aggregate.json`](samples/06_count_aggregate.json) | `count` aggregate with a `where` filter |
 | [`07_group_by.json`](samples/07_group_by.json) | Multiple aggregates with `groupBy` |
-| [`08_having.json`](samples/08_having.json) | `having` clause with `and` of two comparisons |
+| [`08_having.json`](samples/08_having.json) | `having` clause with `and` of two aggregate comparisons |
 | [`09_arithmetic.json`](samples/09_arithmetic.json) | `add`, `multiply`, `divide` on aggregate results |
-| [`10_parameters.json`](samples/10_parameters.json) | Named parameters for dynamic query execution |
+| [`10_parameters.json`](samples/10_parameters.json) | Named scalar parameters in per-row predicates |
 | [`11_distinct.json`](samples/11_distinct.json) | `distinct: true` to deduplicate results |
-| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, where, groupBy, having, arithmetic, parameters, orderBy, pagination |
-| [`13_range_filter.json`](samples/13_range_filter.json) | `eachGreaterThan` and `eachLessThan` on a number field and a datetime field in the same `where` clause |
+| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, per-row `where`, groupBy, single-value `having`, arithmetic, parameters, orderBy, pagination |
+| [`13_range_filter.json`](samples/13_range_filter.json) | `eachGreaterThan` and `eachLessThan` combined with `eachAnd` |
+| [`14_each_field_to_field.json`](samples/14_each_field_to_field.json) | Per-row range comparison between two fields (no scalar threshold) |
+| [`15_each_not_equal.json`](samples/15_each_not_equal.json) | `eachNot` wrapping `eachEqual` — the idiom for "field ≠ literal" |
+| [`16_each_or_composition.json`](samples/16_each_or_composition.json) | Mixing `eachEqual` and `eachGreaterThan` via `eachAnd` + `eachOr` |

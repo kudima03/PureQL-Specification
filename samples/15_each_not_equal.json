@@ -1,0 +1,16 @@
+{
+  "from": { "entity": "products" },
+  "select": [
+    { "entity": "products", "field": "id",       "type": { "name": "uuid" } },
+    { "entity": "products", "field": "name",     "type": { "name": "string" } },
+    { "entity": "products", "field": "category", "type": { "name": "string" } }
+  ],
+  "where": {
+    "operator": "eachNot",
+    "condition": {
+      "operator": "eachEqual",
+      "left":  { "entity": "products", "field": "category", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "discontinued" }
+    }
+  }
+}

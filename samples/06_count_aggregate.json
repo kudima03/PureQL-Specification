@@ -8,8 +8,8 @@
     }
   ],
   "where": {
-    "operator": "equal",
+    "operator": "eachEqual",
     "left":  { "entity": "orders", "field": "status", "type": { "name": "string" } },
-    "right": { "type": { "name": "stringArray" }, "value": ["completed"] }
+    "right": { "type": { "name": "string" }, "value": "completed" }
   }
 }
