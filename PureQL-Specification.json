@@ -2197,7 +2197,7 @@
           "$ref": "#/definitions/equalities/boolean_equality"
         },
         {
-          "$ref": "#/definitions/equalities/integer_equality"
+          "$ref": "#/definitions/equalities/number_equality"
         },
         {
           "$ref": "#/definitions/equalities/string_equality"
@@ -2460,7 +2460,7 @@
           }
         }
       },
-      "integer_equality": {
+      "number_equality": {
         "type": "object",
         "required": [
           "operator",
