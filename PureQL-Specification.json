@@ -522,6 +522,9 @@
         },
         {
           "$ref": "#/definitions/eachDatetimeArithmetics/eachDatetimeDiffSeconds"
+        },
+        {
+          "$ref": "#/definitions/eachTimeArithmetics/eachTimeDiffSeconds"
         }
       ]
     },
@@ -564,6 +567,9 @@
         },
         {
           "$ref": "#/definitions/arrayParameters/timeArrayParameter"
+        },
+        {
+          "$ref": "#/definitions/eachTimeArithmetics/eachTimeAddSeconds"
         }
       ]
     },
@@ -1278,6 +1284,74 @@
               },
               {
                 "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eachTimeArithmetics": {
+      "eachTimeAddSeconds": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachTimeAddSeconds"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeReturning"
+              },
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericReturning"
+              },
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "eachTimeDiffSeconds": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachTimeDiffSeconds"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeReturning"
+              },
+              {
+                "$ref": "#/definitions/timeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/timeReturning"
+              },
+              {
+                "$ref": "#/definitions/timeArrayReturning"
               }
             ]
           }

@@ -87,16 +87,30 @@ Two parallel sets, same convention:
 - Single-value: `greaterThan` / `lessThan` / `greaterThanOrEqual` / `lessThanOrEqual` over `numericReturning` / `stringReturning` / `dateReturning` / etc. Use in `having`.
 - Per-row: `eachGreaterThan` / `eachLessThan` / `eachGreaterThanOrEqual` / `eachLessThanOrEqual`. `left` is `*ArrayReturning` (typically a field); `right` is `*Returning` (broadcast scalar) **or** `*ArrayReturning` (element-wise other field). Use in `where` / `join.on`.
 
-### Arithmetic and date math
+### Arithmetic and date / time / datetime math
 
 Same convention:
 
 - Single-value `add` / `subtract` / `multiply` / `divide` — `values` items are `numericReturning` only. Use to combine aggregates and constants (e.g. `multiply(sum(total), 0.05)`).
 - Per-row `eachAdd` / `eachSubtract` / `eachMultiply` / `eachDivide` — `values` items are `numericReturning | numericArrayReturning`. Use for computed per-row columns (e.g. `eachMultiply(unit_price field, quantity field)`).
 - Date math: `eachDateAddDays(date, n_days) → date`, `eachDateDiffDays(date1, date2) → number`.
+- Time math: `eachTimeAddSeconds(time, n_seconds) → time`, `eachTimeDiffSeconds(time1, time2) → number`.
 - Datetime math: `eachDatetimeAddSeconds(datetime, n_seconds) → datetime`, `eachDatetimeDiffSeconds(dt1, dt2) → number`.
 
-Larger date/time units are expressed via composition with `eachMultiply` (e.g. `eachDatetimeAddSeconds(dt, eachMultiply(days, 86400))`). No `interval` type exists.
+Unit choice: days for `date`, seconds for `time` and `datetime`. Larger units are expressed via composition with `eachMultiply` (e.g. `eachDatetimeAddSeconds(dt, eachMultiply(hours, 3600))`). No `interval` type exists. Diff operators evaluate `left - right`, so a positive result means `left` is later. `eachTimeAddSeconds` overflow / wrap behaviour around `00:00:00` is intentionally interpreter-defined.
+
+### Broadcast vs zip: how mixed `*Returning` / `*ArrayReturning` operands evaluate
+
+Every `each*` operator that admits both kinds on the same slot (`values` items in arithmetic, `left` / `right` in date/time math, `right` in comparisons, etc.) uses the same evaluation model:
+
+1. The surrounding row set fixes a row count `N` — determined by `from` + `joins` + `where` for `where` / `select` / `join.on` expressions, or by the group size for expressions inside an aggregate `arg` after `groupBy`.
+2. Each `*Returning` (single-value) operand is **broadcast** — conceptually repeated `N` times so it has one value per row.
+3. Each `*ArrayReturning` operand is already aligned with the same `N` rows by construction (it comes from the same row set).
+4. The operation runs **element-wise across all operands**, producing a length-`N` result vector.
+
+So `eachAdd([fieldA, scalar, fieldB])` over 3 rows with `fieldA = [10, 20, 30]`, `scalar = 5`, `fieldB = [1, 2, 3]` evaluates to `[16, 27, 38]`. Mixing kinds is intended and is how common patterns are expressed: `eachMultiply(unit_price, 1.05)` adds a 5% per-row markup; `eachAdd(base_price, tax, shipping)` sums three columns per row.
+
+This is why `eachX` operators do not collapse to their single-value siblings when handed only scalar operands: the *return type* is still `*ArrayReturning`, aligned with the row set. `eachAdd(2, 3)` in a `select` over a 4-row entity yields the vector `[5, 5, 5, 5]`, not the scalar `5`. Use single-value `add` for purely scalar work; `eachAdd` exists specifically because at least one operand is row-aligned.
 
 ### `joinItem` has no alias
 

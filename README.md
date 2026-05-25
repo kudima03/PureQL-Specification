@@ -170,7 +170,7 @@ Every operator in the schema belongs to one of two parallel families that you ch
 | Family | Operands | Result | Operators |
 |---|---|---|---|
 | **Single-value** | reduce to one value per query (or per group) | one value | `and`, `or`, `not`, `equal`, `greaterThan`/`lessThan`/…, `add`/`subtract`/`multiply`/`divide`, aggregates |
-| **Per-row (`each*`)** | at least one operand is a field or per-row computed column | one value **per row** | `eachAnd`/`eachOr`/`eachNot`, `eachEqual`, `eachGreaterThan`/`eachLessThan`/…, `eachAdd`/`eachSubtract`/`eachMultiply`/`eachDivide`, `eachDateAddDays`/`eachDateDiffDays`, `eachDatetimeAddSeconds`/`eachDatetimeDiffSeconds` |
+| **Per-row (`each*`)** | at least one operand is a field or per-row computed column | one value **per row** | `eachAnd`/`eachOr`/`eachNot`, `eachEqual`, `eachGreaterThan`/`eachLessThan`/…, `eachAdd`/`eachSubtract`/`eachMultiply`/`eachDivide`, `eachDateAddDays`/`eachDateDiffDays`, `eachTimeAddSeconds`/`eachTimeDiffSeconds`, `eachDatetimeAddSeconds`/`eachDatetimeDiffSeconds` |
 
 Where each family fits:
 
@@ -360,6 +360,18 @@ Use in `select` for computed columns, inside aggregates (`sum(eachMultiply(unit_
 }
 ```
 
+#### Broadcast and zip: mixing single-value and array operands
+
+Any `each*` slot that accepts both `*Returning` and `*ArrayReturning` follows the same evaluation rule. The surrounding row set fixes a row count `N` (from `from` + `joins` + `where`, or from the group size when nested inside an aggregate after `groupBy`). Then:
+
+- Each `*Returning` operand is **broadcast** — repeated `N` times so it has one value per row.
+- Each `*ArrayReturning` operand is already aligned with `N` rows by construction (same query context).
+- The operator runs **element-wise** across all operands, producing a length-`N` result vector.
+
+So `eachAdd([fieldA, scalar, fieldB])` over three rows with `fieldA = [10, 20, 30]`, `scalar = 5`, `fieldB = [1, 2, 3]` evaluates to `[16, 27, 38]`. This is what makes patterns like `eachMultiply(unit_price, 1.05)` (5% per-row markup) and `eachAdd(base_price, tax, shipping)` (sum three columns per row) work naturally.
+
+The return type is always `*ArrayReturning` even if every operand is a scalar — `eachAdd(2, 3)` in a `select` over a 4-row table yields the vector `[5, 5, 5, 5]`, not the scalar `5`. Use the single-value `add` for purely scalar work.
+
 ### Date math (`eachDateAddDays` / `eachDateDiffDays`)
 
 Per-row date arithmetic, days as the unit.
@@ -398,6 +410,26 @@ Per-row datetime arithmetic, seconds as the unit. Larger units are expressed by 
     "right": { "entity": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
   },
   "right": { "type": { "name": "number" }, "value": 172800 }
+}
+```
+
+### Time math (`eachTimeAddSeconds` / `eachTimeDiffSeconds`)
+
+Per-row time-of-day arithmetic, seconds as the unit. Same broadcast / zip rules as the rest of the `each*` family.
+
+| Operator | Shape | Returns |
+|---|---|---|
+| `eachTimeAddSeconds` | `{ left: time, right: number }` | `time` (per row) |
+| `eachTimeDiffSeconds` | `{ left: time, right: time }` | `number` (per row) |
+
+`eachTimeAddSeconds` overflow behaviour around `00:00:00` (wrap, saturate, error) is interpreter-defined — the schema doesn't constrain it.
+
+```json
+{
+  "operator": "eachTimeAddSeconds",
+  "left":  { "entity": "shifts", "field": "clock_in", "type": { "name": "time" } },
+  "right": { "type": { "name": "number" }, "value": 1800 },
+  "alias": "break_start"
 }
 ```
 
@@ -458,3 +490,4 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`18_aggregate_of_each_multiply.json`](samples/18_aggregate_of_each_multiply.json) | `sum(eachMultiply(unit_price, quantity))` grouped by user — line-item revenue |
 | [`19_each_date_add_days.json`](samples/19_each_date_add_days.json) | `eachDateAddDays` to derive a `delivery_eta` column from `order_date + 30 days` |
 | [`20_each_datetime_diff_where.json`](samples/20_each_datetime_diff_where.json) | `eachDatetimeDiffSeconds` inside `eachGreaterThan` to filter orders by ship-time |
+| [`21_each_time_math.json`](samples/21_each_time_math.json) | `eachTimeAddSeconds` (time + offset) and `eachTimeDiffSeconds` (shift duration) |

@@ -22,12 +22,16 @@ Tracking issue: #47.
 - **Per-row datetime math**:
   - `eachDatetimeAddSeconds` — `{ left: datetime \| datetimeArray, right: number \| numberArray }` → `dateTimeArrayReturning`. Adds N seconds per row.
   - `eachDatetimeDiffSeconds` — `{ left: datetime \| datetimeArray, right: datetime \| datetimeArray }` → `numericArrayReturning`. Difference in seconds.
-- New schema groups `eachArithmetics`, `eachDateArithmetics`, `eachDatetimeArithmetics`, plus the `eachArithmetic` union. The two diff operators are referenced from `numericArrayReturning`; `eachDateAddDays` from `dateArrayReturning`; `eachDatetimeAddSeconds` from `dateTimeArrayReturning`.
-- Four new reference samples:
+- **Per-row time math**:
+  - `eachTimeAddSeconds` — `{ left: time \| timeArray, right: number \| numberArray }` → `timeArrayReturning`. Adds N seconds per row; wrap/saturate/error behaviour around `00:00:00` is interpreter-defined.
+  - `eachTimeDiffSeconds` — `{ left: time \| timeArray, right: time \| timeArray }` → `numericArrayReturning`. Difference in seconds.
+- New schema groups `eachArithmetics`, `eachDateArithmetics`, `eachTimeArithmetics`, `eachDatetimeArithmetics`, plus the `eachArithmetic` union. The three diff operators are referenced from `numericArrayReturning`; `eachDateAddDays` from `dateArrayReturning`; `eachTimeAddSeconds` from `timeArrayReturning`; `eachDatetimeAddSeconds` from `dateTimeArrayReturning`.
+- Five new reference samples:
   - `17_each_arithmetic_select.json` — `eachMultiply(unit_price, quantity)` as a computed `select` column.
   - `18_aggregate_of_each_multiply.json` — `sum(eachMultiply(unit_price, quantity))` grouped by user — the textbook line-item revenue query.
   - `19_each_date_add_days.json` — `eachDateAddDays(order_date, 30)` derives a `delivery_eta` column.
   - `20_each_datetime_diff_where.json` — `eachDatetimeDiffSeconds` inside `eachGreaterThan` filters orders whose ship time exceeds 48 hours.
+  - `21_each_time_math.json` — `eachTimeAddSeconds` and `eachTimeDiffSeconds` over `clock_in` / `clock_out` time fields.
 
 ### Changed
 
@@ -36,15 +40,29 @@ Tracking issue: #47.
 
 ### Interpreter notes
 
-- **Result type of per-row arithmetic**: every `eachX` arithmetic operator returns a numeric/date/datetime *column* aligned with the current row set. Maps to SQL projection expressions, LINQ row lambdas, or in-memory column transforms — same model as `0.2.0`'s `each*` comparisons.
-- **Operand polymorphism**: `values[i]` (for `eachAdd`/`Subtract`/`Multiply`/`Divide`) and `left` / `right` (for date/datetime math) accept `*Returning` (one value broadcast to every row) or `*ArrayReturning` (zipped element-wise). Dispatch on which `oneOf` arm matched; in column-evaluator backends this is the broadcast-vs-zip distinction.
-- **Subtract / divide ordering**: same as their single-value siblings — left-to-right fold over the `values` array.
-- **Aggregate over per-row arithmetic**: `sum`/`min_*`/`max_*`/`average_*` already accepted `*ArrayReturning` as `arg`; with `eachX` now in that union, the same dispatch covers expressions like `sum(eachMultiply(field_a, field_b))` without additional cases.
-- **Unit choice for date/datetime math**: days for `date`, seconds for `datetime`. Larger units are obtained by composition — e.g. "add N hours to a datetime" is `eachDatetimeAddSeconds(dt, eachMultiply(n, 3600))`. There is intentionally no `interval` type and no per-unit operator family; interpreters should not emulate one. Negative `right` values produce subtraction.
-- **`eachDateDiffDays` / `eachDatetimeDiffSeconds` semantics**: `left - right`, so a positive result means `left` is later. Document or normalize this in the host backend; the schema fixes the convention.
-- **Division by zero / overflow / null propagation**: schema doesn't constrain. Define per-backend.
-- **No `each*` arithmetic on `time` or `string`**: out of scope for this release; addable later without breakage.
-- **CLAUDE.md interpreter rule**: any backend that previously rejected fields under `add`/`multiply`/etc. should keep rejecting them there — the *single-value* arithmetic family is unchanged. Fields now flow exclusively through the per-row family.
+- **Result type of per-row arithmetic**: every `eachX` arithmetic / date / time / datetime operator returns a numeric / date / time / datetime *column* aligned with the current row set. Maps to SQL projection expressions, LINQ row lambdas, or in-memory column transforms — same model as `0.2.0`'s `each*` comparisons.
+- **Broadcast vs zip semantics (mixed `*Returning` and `*ArrayReturning` operands)**: every `each*` slot that admits both kinds uses one shared evaluation rule:
+  1. The surrounding row set fixes a row count `N` — determined by `from` + `joins` + `where` for `where` / `select` / `join.on` expressions, or by the group size for expressions nested inside an aggregate `arg` after `groupBy`.
+  2. Each `*Returning` operand is **broadcast** — repeated `N` times so it has one value per row. (In SQL backends, this is implicit — a scalar in a projection IS the value for every row.)
+  3. Each `*ArrayReturning` operand is already aligned with the same `N` rows by construction (it comes from the same row set / group).
+  4. The operator runs **element-wise across all operands**, producing a length-`N` result vector.
+
+  So `eachAdd([fieldA, scalar, fieldB])` over 3 rows with `fieldA = [10, 20, 30]`, `scalar = 5`, `fieldB = [1, 2, 3]` evaluates to `[16, 27, 38]`. This is what makes `eachMultiply(unit_price, 1.05)` (5% per-row markup) and `eachAdd(base_price, tax, shipping)` (sum three columns per row) work in one place.
+
+  The return type is always `*ArrayReturning` even if every operand is a `*Returning`: `eachAdd(2, 3)` in a `select` over a 4-row table yields `[5, 5, 5, 5]`, not `5`. Interpreters should not optimize this away as a constant — the row-count alignment is structural. Use single-value `add` for purely scalar work.
+
+  Backend implementation hints:
+  - SQL: scalars become literals in the projection / `WHERE` predicate; `*ArrayReturning` operands become column references. The SQL engine handles broadcast natively. No special case needed.
+  - LINQ / row-lambda backends: emit `row => operator(arg1(row), arg2(row), …)` where each `arg_i` resolves to either a captured constant (broadcast) or a row-accessor (zip).
+  - Column-vector backends (in-memory analytics): determine `N` from the parent context; materialize each scalar as a length-`N` vector via broadcast; then run the operator element-wise.
+- **Subtract / divide ordering**: same as their single-value siblings — left-to-right fold over the `values` array. For `eachSubtract([a, b, c])` over `N` rows, position `i` evaluates `a[i] - b[i] - c[i]`.
+- **Aggregate over per-row arithmetic**: `sum` / `min_*` / `max_*` / `average_*` already accepted `*ArrayReturning` as `arg`; with `eachX` now in those unions, the same dispatch covers expressions like `sum(eachMultiply(field_a, field_b))` without additional cases.
+- **Unit choice for date / time / datetime math**: days for `date`; seconds for `time` and `datetime`. Larger units are obtained by composition — e.g. "add N hours to a datetime" is `eachDatetimeAddSeconds(dt, eachMultiply(n, 3600))`. There is intentionally no `interval` type and no per-unit operator family; interpreters should not emulate one. Negative `right` values produce subtraction.
+- **Diff operator direction**: `eachDateDiffDays` / `eachTimeDiffSeconds` / `eachDatetimeDiffSeconds` all compute `left - right`, so a positive result means `left` is later. The schema fixes this convention.
+- **`eachTimeAddSeconds` overflow**: time-of-day is bounded (`00:00:00`–`23:59:59.…`). Wrap / saturate / error behaviour around the day boundary is interpreter-defined — pick one and document it.
+- **Division by zero / numeric overflow / null propagation**: schema doesn't constrain. Define per-backend.
+- **No `each*` arithmetic on `string`**: out of scope for this release; addable later without breakage.
+- **CLAUDE.md interpreter rule**: any backend that previously rejected fields under `add` / `multiply` / etc. should keep rejecting them there — the *single-value* arithmetic family is unchanged. Fields now flow exclusively through the per-row family.
 
 ### Versioning
 
