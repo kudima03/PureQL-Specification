@@ -7,6 +7,18 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.0.4.0] - 2026-05-25
+
+Renames the internal `integer_equality` definition to `number_equality` for consistency with the `number` scalar type.
+
+Tracking issue: #28.
+
+### Changed
+
+- **`integer_equality` renamed to `number_equality`** in `definitions/equalities`. The `$ref` in `singleValueEquality` updated accordingly.
+
+---
+
 ## [0.1.0-preview.0.3.0] - 2026-05-25
 
 Adds the per-row arithmetic and date/datetime math operators to the `each*` family established in `0.2.0`. Together with the existing per-row boolean/comparison operators, this closes the gap that previously made per-row computed columns inexpressible (e.g. `unit_price * quantity AS subtotal`, `sum(unit_price * quantity)`, `order_date + 30 days`, `shipped_at - ordered_at > 48h`). Purely additive on top of `0.2.0`.
