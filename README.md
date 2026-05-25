@@ -142,14 +142,15 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
 
 ### `groupBy` / `orderBy`
 
-Both accept an array of field references.
+`groupBy` accepts an array of field references. `orderBy` accepts an array of `orderByItem` objects, each pairing a `field` with an optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
 
 ```json
 "groupBy": [
   { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } }
 ],
 "orderBy": [
-  { "entity": "users", "field": "name", "type": { "name": "string" } }
+  { "field": { "entity": "users", "field": "name", "type": { "name": "string" } }, "direction": "asc" },
+  { "field": { "entity": "orders", "field": "total", "type": { "name": "number" } }, "direction": "desc" }
 ]
 ```
 
@@ -481,7 +482,7 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`09_arithmetic.json`](samples/09_arithmetic.json) | `add`, `multiply`, `divide` on aggregate results |
 | [`10_parameters.json`](samples/10_parameters.json) | Named scalar parameters in per-row predicates |
 | [`11_distinct.json`](samples/11_distinct.json) | `distinct: true` to deduplicate results |
-| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, per-row `where`, groupBy, single-value `having`, arithmetic, parameters, orderBy, pagination |
+| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, per-row `where`, groupBy, single-value `having`, arithmetic, parameters, orderBy with direction, pagination |
 | [`13_range_filter.json`](samples/13_range_filter.json) | `eachGreaterThan` and `eachLessThan` combined with `eachAnd` |
 | [`14_each_field_to_field.json`](samples/14_each_field_to_field.json) | Per-row range comparison between two fields (no scalar threshold) |
 | [`15_each_not_equal.json`](samples/15_each_not_equal.json) | `eachNot` wrapping `eachEqual` — the idiom for "field ≠ literal" |

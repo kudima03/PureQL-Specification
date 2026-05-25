@@ -7,6 +7,22 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.0.5.0] - 2026-05-25
+
+Introduces sort direction control for `orderBy`. Previously `orderBy` accepted bare field references, making sort direction implementation-defined. Queries that used bare fields in `orderBy` must be migrated to the new `orderByItem` wrapper.
+
+Tracking issue: #27.
+
+### Added
+
+- **`orderByItem` definition** — object with required `field` (a `$ref` to `#/definitions/field`) and optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
+
+### Changed
+
+- **`orderBy.items`** now references `orderByItem` instead of `field` directly. Bare field objects in `orderBy` are no longer valid; wrap each field in `{ "field": <field>, "direction": "asc" }`.
+
+---
+
 ## [0.1.0-preview.0.3.0] - 2026-05-25
 
 Adds the per-row arithmetic and date/datetime math operators to the `each*` family established in `0.2.0`. Together with the existing per-row boolean/comparison operators, this closes the gap that previously made per-row computed columns inexpressible (e.g. `unit_price * quantity AS subtotal`, `sum(unit_price * quantity)`, `order_date + 30 days`, `shipped_at - ordered_at > 48h`). Purely additive on top of `0.2.0`.
