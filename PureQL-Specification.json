@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.0.2.0/PureQL-Specification.json",
-  "version": "0.1.0-preview.0.2.0",
+  "$id": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.0.3.0/PureQL-Specification.json",
+  "version": "0.1.0-preview.0.3.0",
   "definitions": {
     "arrayParameters": {
       "stringArrayParameter": {
@@ -513,6 +513,15 @@
         },
         {
           "$ref": "#/definitions/arrayParameters/numberArrayParameter"
+        },
+        {
+          "$ref": "#/definitions/eachArithmetic"
+        },
+        {
+          "$ref": "#/definitions/eachDateArithmetics/eachDateDiffDays"
+        },
+        {
+          "$ref": "#/definitions/eachDatetimeArithmetics/eachDatetimeDiffSeconds"
         }
       ]
     },
@@ -539,6 +548,9 @@
         },
         {
           "$ref": "#/definitions/arrayParameters/dateArrayParameter"
+        },
+        {
+          "$ref": "#/definitions/eachDateArithmetics/eachDateAddDays"
         }
       ]
     },
@@ -565,6 +577,9 @@
         },
         {
           "$ref": "#/definitions/arrayParameters/datetimeArrayParameter"
+        },
+        {
+          "$ref": "#/definitions/eachDatetimeArithmetics/eachDatetimeAddSeconds"
         }
       ]
     },
@@ -1009,6 +1024,264 @@
           "operator",
           "values"
         ]
+      }
+    },
+    "eachArithmetic": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/eachArithmetics/eachAdd"
+        },
+        {
+          "$ref": "#/definitions/eachArithmetics/eachSubtract"
+        },
+        {
+          "$ref": "#/definitions/eachArithmetics/eachMultiply"
+        },
+        {
+          "$ref": "#/definitions/eachArithmetics/eachDivide"
+        }
+      ]
+    },
+    "eachArithmetics": {
+      "eachAdd": {
+        "type": "object",
+        "required": [
+          "operator",
+          "values"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachAdd"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/numericReturning"
+                },
+                {
+                  "$ref": "#/definitions/numericArrayReturning"
+                }
+              ]
+            },
+            "minItems": 2
+          }
+        }
+      },
+      "eachSubtract": {
+        "type": "object",
+        "required": [
+          "operator",
+          "values"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachSubtract"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/numericReturning"
+                },
+                {
+                  "$ref": "#/definitions/numericArrayReturning"
+                }
+              ]
+            },
+            "minItems": 2
+          }
+        }
+      },
+      "eachMultiply": {
+        "type": "object",
+        "required": [
+          "operator",
+          "values"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachMultiply"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/numericReturning"
+                },
+                {
+                  "$ref": "#/definitions/numericArrayReturning"
+                }
+              ]
+            },
+            "minItems": 2
+          }
+        }
+      },
+      "eachDivide": {
+        "type": "object",
+        "required": [
+          "operator",
+          "values"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachDivide"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/numericReturning"
+                },
+                {
+                  "$ref": "#/definitions/numericArrayReturning"
+                }
+              ]
+            },
+            "minItems": 2
+          }
+        }
+      }
+    },
+    "eachDateArithmetics": {
+      "eachDateAddDays": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachDateAddDays"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateReturning"
+              },
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericReturning"
+              },
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "eachDateDiffDays": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachDateDiffDays"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateReturning"
+              },
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateReturning"
+              },
+              {
+                "$ref": "#/definitions/dateArrayReturning"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "eachDatetimeArithmetics": {
+      "eachDatetimeAddSeconds": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachDatetimeAddSeconds"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              },
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/numericReturning"
+              },
+              {
+                "$ref": "#/definitions/numericArrayReturning"
+              }
+            ]
+          }
+        }
+      },
+      "eachDatetimeDiffSeconds": {
+        "type": "object",
+        "required": [
+          "operator",
+          "left",
+          "right"
+        ],
+        "properties": {
+          "operator": {
+            "const": "eachDatetimeDiffSeconds"
+          },
+          "left": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              },
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          },
+          "right": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/dateTimeReturning"
+              },
+              {
+                "$ref": "#/definitions/dateTimeArrayReturning"
+              }
+            ]
+          }
+        }
       }
     },
     "booleanOperations": {

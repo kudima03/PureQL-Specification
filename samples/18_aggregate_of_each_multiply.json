@@ -1,0 +1,31 @@
+{
+  "from": { "entity": "order_items", "alias": "oi" },
+  "select": [
+    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } },
+    {
+      "operator": "sum",
+      "arg": {
+        "operator": "eachMultiply",
+        "values": [
+          { "entity": "oi", "field": "unit_price", "type": { "name": "number" } },
+          { "entity": "oi", "field": "quantity",   "type": { "name": "number" } }
+        ]
+      },
+      "alias": "line_item_revenue"
+    }
+  ],
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "eachEqual",
+        "left":  { "entity": "oi",     "field": "order_id", "type": { "name": "uuid" } },
+        "right": { "entity": "orders", "field": "id",        "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } }
+  ]
+}
