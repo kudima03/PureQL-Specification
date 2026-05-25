@@ -2169,6 +2169,18 @@
         }
       }
     },
+    "orderByItem": {
+      "type": "object",
+      "required": ["field"],
+      "properties": {
+        "field": { "$ref": "#/definitions/field" },
+        "direction": {
+          "type": "string",
+          "enum": ["asc", "desc"],
+          "default": "asc"
+        }
+      }
+    },
     "equality": {
       "oneOf": [
         {
@@ -3236,7 +3248,7 @@
     "orderBy": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/field"
+        "$ref": "#/definitions/orderByItem"
       }
     },
     "pagination": {

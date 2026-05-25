@@ -113,7 +113,10 @@
     ]
   },
   "orderBy": [
-    { "entity": "users", "field": "name", "type": { "name": "string" } }
+    {
+      "field": { "entity": "users", "field": "name", "type": { "name": "string" } },
+      "direction": "asc"
+    }
   ],
   "pagination": { "skip": 0, "take": 25 }
 }
