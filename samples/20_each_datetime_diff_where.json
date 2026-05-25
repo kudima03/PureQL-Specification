@@ -1,0 +1,17 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    { "entity": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+  ],
+  "where": {
+    "operator": "eachGreaterThan",
+    "left": {
+      "operator": "eachDatetimeDiffSeconds",
+      "left":  { "entity": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+      "right": { "entity": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+    },
+    "right": { "type": { "name": "number" }, "value": 172800 }
+  }
+}

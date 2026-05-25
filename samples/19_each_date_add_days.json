@@ -1,0 +1,13 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "orders", "field": "order_date", "type": { "name": "date" } },
+    {
+      "operator": "eachDateAddDays",
+      "left":  { "entity": "orders", "field": "order_date", "type": { "name": "date" } },
+      "right": { "type": { "name": "number" }, "value": 30 },
+      "alias": "delivery_eta"
+    }
+  ]
+}

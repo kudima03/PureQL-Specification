@@ -1,0 +1,16 @@
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "entity": "order_items", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+    { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } },
+    {
+      "operator": "eachMultiply",
+      "values": [
+        { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+        { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+      ],
+      "alias": "subtotal"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "from": { "entity": "shifts" },
+  "select": [
+    { "entity": "shifts", "field": "id",       "type": { "name": "uuid" } },
+    { "entity": "shifts", "field": "clock_in", "type": { "name": "time" } },
+    { "entity": "shifts", "field": "clock_out","type": { "name": "time" } },
+    {
+      "operator": "eachTimeAddSeconds",
+      "left":  { "entity": "shifts", "field": "clock_in", "type": { "name": "time" } },
+      "right": { "type": { "name": "number" }, "value": 1800 },
+      "alias": "break_start"
+    },
+    {
+      "operator": "eachTimeDiffSeconds",
+      "left":  { "entity": "shifts", "field": "clock_out", "type": { "name": "time" } },
+      "right": { "entity": "shifts", "field": "clock_in",  "type": { "name": "time" } },
+      "alias": "shift_seconds"
+    }
+  ]
+}

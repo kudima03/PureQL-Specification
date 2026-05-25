@@ -163,16 +163,26 @@ Both accept an array of field references.
 
 ## Operations
 
-### Two families of predicates
+### Two operator families
 
-PureQL has **two parallel predicate families** that you choose between based on whether you're working with single values or with columns/rows:
+Every operator in the schema belongs to one of two parallel families that you choose between based on whether you're working with single values or with columns/rows:
 
-| Need | Family | Returns | Operators |
+| Family | Operands | Result | Operators |
 |---|---|---|---|
-| Combine/compare **single-value** expressions (aggregates, scalars) | Single-value family | one boolean | `and`, `or`, `not`, `equal`, `greaterThan`, `lessThan`, … |
-| Filter/compare values **per row** of a column | Per-row (`each*`) family | one boolean **per row** | `eachAnd`, `eachOr`, `eachNot`, `eachEqual`, `eachGreaterThan`, `eachLessThan`, … |
+| **Single-value** | reduce to one value per query (or per group) | one value | `and`, `or`, `not`, `equal`, `greaterThan`/`lessThan`/…, `add`/`subtract`/`multiply`/`divide`, aggregates |
+| **Per-row (`each*`)** | at least one operand is a field or per-row computed column | one value **per row** | `eachAnd`/`eachOr`/`eachNot`, `eachEqual`, `eachGreaterThan`/`eachLessThan`/…, `eachAdd`/`eachSubtract`/`eachMultiply`/`eachDivide`, `eachDateAddDays`/`eachDateDiffDays`, `eachTimeAddSeconds`/`eachTimeDiffSeconds`, `eachDatetimeAddSeconds`/`eachDatetimeDiffSeconds` |
 
-`where` and `join.on` accept either family (they evaluate per row, but a literal `true` is also valid). `having` accepts only the single-value family. `and` / `or` / `not` themselves only accept single-value children — do not mix the two families inside the same boolean operator; use `eachAnd` / `eachOr` / `eachNot` to compose per-row predicates.
+Where each family fits:
+
+| Clause | Accepts |
+|---|---|
+| `where` / `join.on` | per-row boolean (typical) or single-value boolean |
+| `having` | single-value boolean only — non-aggregated fields are structurally rejected |
+| `select` | any value-returning expression, including per-row computed columns |
+| `sum.arg` / `min_*.arg` / `max_*.arg` / `average_*.arg` | any array-returning expression (field, per-row computation) |
+| right operand of any `each*` comparison | matching `*Returning` (broadcast scalar) or `*ArrayReturning` (element-wise) |
+
+**Do not mix families inside the same boolean operator.** `and`/`or`/`not` accept only single-value boolean children; `eachAnd`/`eachOr`/`eachNot` accept only per-row boolean children. The schema enforces this via type.
 
 ### Single-value boolean operations
 
@@ -309,9 +319,9 @@ Field vs field (per-row):
 }
 ```
 
-### Arithmetic operators
+### Single-value arithmetic
 
-Arithmetic works on **numeric single-value-returning** expressions. Use aggregates to bridge field data into arithmetic.
+Combines **single-value-returning** numeric expressions. Use aggregates to bridge field data into single-value arithmetic.
 
 | Operator    | Meaning |
 |-------------|---------|
@@ -320,7 +330,7 @@ Arithmetic works on **numeric single-value-returning** expressions. Use aggregat
 | `multiply`  | `*`     |
 | `divide`    | `/`     |
 
-All operators take a `values` array with at least 2 operands.
+`values` is an array with at least 2 operands. For `subtract` and `divide`, evaluation is left-to-right (`[a, b, c]` means `a - b - c` / `a / b / c`).
 
 ```json
 {
@@ -330,6 +340,96 @@ All operators take a `values` array with at least 2 operands.
     { "type": { "name": "number" }, "value": 0.9 }
   ],
   "alias": "discounted_total"
+}
+```
+
+### Per-row arithmetic (`eachAdd` / `eachSubtract` / `eachMultiply` / `eachDivide`)
+
+Per-row analogues of arithmetic. Each `values[i]` is `numericReturning` (broadcast scalar) or `numericArrayReturning` (zipped per-row column). Result is a numeric column aligned with the row set.
+
+Use in `select` for computed columns, inside aggregates (`sum(eachMultiply(unit_price, quantity))`), or on the right side of any `each*` comparison.
+
+```json
+{
+  "operator": "eachMultiply",
+  "values": [
+    { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+    { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+  ],
+  "alias": "subtotal"
+}
+```
+
+#### Broadcast and zip: mixing single-value and array operands
+
+Any `each*` slot that accepts both `*Returning` and `*ArrayReturning` follows the same evaluation rule. The surrounding row set fixes a row count `N` (from `from` + `joins` + `where`, or from the group size when nested inside an aggregate after `groupBy`). Then:
+
+- Each `*Returning` operand is **broadcast** — repeated `N` times so it has one value per row.
+- Each `*ArrayReturning` operand is already aligned with `N` rows by construction (same query context).
+- The operator runs **element-wise** across all operands, producing a length-`N` result vector.
+
+So `eachAdd([fieldA, scalar, fieldB])` over three rows with `fieldA = [10, 20, 30]`, `scalar = 5`, `fieldB = [1, 2, 3]` evaluates to `[16, 27, 38]`. This is what makes patterns like `eachMultiply(unit_price, 1.05)` (5% per-row markup) and `eachAdd(base_price, tax, shipping)` (sum three columns per row) work naturally.
+
+The return type is always `*ArrayReturning` even if every operand is a scalar — `eachAdd(2, 3)` in a `select` over a 4-row table yields the vector `[5, 5, 5, 5]`, not the scalar `5`. Use the single-value `add` for purely scalar work.
+
+### Date math (`eachDateAddDays` / `eachDateDiffDays`)
+
+Per-row date arithmetic, days as the unit.
+
+| Operator | Shape | Returns |
+|---|---|---|
+| `eachDateAddDays` | `{ left: date, right: number }` | `date` (per row) |
+| `eachDateDiffDays` | `{ left: date, right: date }` | `number` (per row) |
+
+`left` / `right` accept the broadcast vs zipped polymorphism (`*Returning | *ArrayReturning`).
+
+```json
+{
+  "operator": "eachDateAddDays",
+  "left":  { "entity": "orders", "field": "order_date", "type": { "name": "date" } },
+  "right": { "type": { "name": "number" }, "value": 30 },
+  "alias": "delivery_eta"
+}
+```
+
+### Datetime math (`eachDatetimeAddSeconds` / `eachDatetimeDiffSeconds`)
+
+Per-row datetime arithmetic, seconds as the unit. Larger units are expressed by composing with `eachMultiply` (e.g. add `N` hours via `eachDatetimeAddSeconds(dt, eachMultiply(n, 3600))`).
+
+| Operator | Shape | Returns |
+|---|---|---|
+| `eachDatetimeAddSeconds` | `{ left: datetime, right: number }` | `datetime` (per row) |
+| `eachDatetimeDiffSeconds` | `{ left: datetime, right: datetime }` | `number` (per row) |
+
+```json
+{
+  "operator": "eachGreaterThan",
+  "left": {
+    "operator": "eachDatetimeDiffSeconds",
+    "left":  { "entity": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+    "right": { "entity": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+  },
+  "right": { "type": { "name": "number" }, "value": 172800 }
+}
+```
+
+### Time math (`eachTimeAddSeconds` / `eachTimeDiffSeconds`)
+
+Per-row time-of-day arithmetic, seconds as the unit. Same broadcast / zip rules as the rest of the `each*` family.
+
+| Operator | Shape | Returns |
+|---|---|---|
+| `eachTimeAddSeconds` | `{ left: time, right: number }` | `time` (per row) |
+| `eachTimeDiffSeconds` | `{ left: time, right: time }` | `number` (per row) |
+
+`eachTimeAddSeconds` overflow behaviour around `00:00:00` (wrap, saturate, error) is interpreter-defined — the schema doesn't constrain it.
+
+```json
+{
+  "operator": "eachTimeAddSeconds",
+  "left":  { "entity": "shifts", "field": "clock_in", "type": { "name": "time" } },
+  "right": { "type": { "name": "number" }, "value": 1800 },
+  "alias": "break_start"
 }
 ```
 
@@ -386,3 +486,8 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`14_each_field_to_field.json`](samples/14_each_field_to_field.json) | Per-row range comparison between two fields (no scalar threshold) |
 | [`15_each_not_equal.json`](samples/15_each_not_equal.json) | `eachNot` wrapping `eachEqual` — the idiom for "field ≠ literal" |
 | [`16_each_or_composition.json`](samples/16_each_or_composition.json) | Mixing `eachEqual` and `eachGreaterThan` via `eachAnd` + `eachOr` |
+| [`17_each_arithmetic_select.json`](samples/17_each_arithmetic_select.json) | `eachMultiply` of two fields as a computed `select` column (`subtotal`) |
+| [`18_aggregate_of_each_multiply.json`](samples/18_aggregate_of_each_multiply.json) | `sum(eachMultiply(unit_price, quantity))` grouped by user — line-item revenue |
+| [`19_each_date_add_days.json`](samples/19_each_date_add_days.json) | `eachDateAddDays` to derive a `delivery_eta` column from `order_date + 30 days` |
+| [`20_each_datetime_diff_where.json`](samples/20_each_datetime_diff_where.json) | `eachDatetimeDiffSeconds` inside `eachGreaterThan` to filter orders by ship-time |
+| [`21_each_time_math.json`](samples/21_each_time_math.json) | `eachTimeAddSeconds` (time + offset) and `eachTimeDiffSeconds` (shift duration) |
