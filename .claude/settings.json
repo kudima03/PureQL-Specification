@@ -1,0 +1,13 @@
+{
+  "enabledPlugins": {
+    "nuget-publish-skill@kudima03": true
+  },
+  "extraKnownMarketplaces": {
+    "kudima03": {
+      "source": {
+        "source": "github",
+        "repo": "kudima03/claude-plugins"
+      }
+    }
+  }
+}
