@@ -7,7 +7,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
-## [0.1.0-preview.1.0.0] - 2026-09-24
+## [Unreleased]
 
 ### ⚠️ Breaking Changes
 
