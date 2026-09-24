@@ -319,22 +319,6 @@
         }
       ]
     },
-    "singleValueSelectExpression": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/singleValueReturning"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "alias": {
-              "type": "string",
-              "minLength": 1
-            }
-          }
-        }
-      ]
-    },
     "singleValueReturning": {
       "oneOf": [
         {
@@ -3286,7 +3270,7 @@
       "properties": {
         "select": {
           "items": {
-            "$ref": "#/definitions/singleValueSelectExpression"
+            "$ref": "#/definitions/singleValueReturning"
           }
         }
       }
