@@ -10,8 +10,8 @@ PureQL is a JSON-based declarative query language for relational data. Queries a
 | `select`   | yes      | Array of expressions to return |
 | `where`    | no       | Boolean filter applied before grouping |
 | `joins`    | no       | Array of join clauses |
-| `groupBy`  | no       | Fields to group rows by |
-| `having`   | no       | Boolean filter applied after grouping |
+| `groupBy`  | no       | Fields to group rows by (at least one) |
+| `having`   | no       | Boolean filter applied after grouping; requires `groupBy` |
 | `orderBy`  | no       | Fields to order results by |
 | `pagination` | no     | `skip` and `take` for paging |
 | `distinct` | no       | When `true`, deduplicate result rows (default: `false`) |
@@ -104,7 +104,7 @@ Each item in `select` is a value-returning expression (field, scalar, aggregate,
 They accept different shapes because they evaluate in different scopes:
 
 - **`where`** is evaluated per row. It accepts either a **boolean-returning** expression (single boolean) or a **boolean-array-returning** expression (per-row boolean column). Use the `each*` family for per-row predicates against fields.
-- **`having`** is evaluated per group, after `groupBy`. It accepts only a **boolean-returning** expression. Operands must reduce to a single value per group — typically aggregates compared with `greaterThan` / `equal` / etc. Per-row `each*` operators do **not** fit in `having`.
+- **`having`** is evaluated per group, after `groupBy`, and requires a non-empty `groupBy` to be present. It accepts only a **boolean-returning** expression. Operands must reduce to a single value per group — typically aggregates compared with `greaterThan` / `equal` / etc. Per-row `each*` operators do **not** fit in `having`.
 
 `where` example using per-row predicates:
 

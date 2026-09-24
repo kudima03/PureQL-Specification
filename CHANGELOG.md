@@ -7,6 +7,15 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [Unreleased]
+
+### ⚠️ Breaking Changes
+
+- **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
+- **`groupBy` can no longer be empty**: `groupBy` must list at least one field. To skip grouping, leave the clause out.
+
+---
+
 ## [0.1.0-preview.0.5.0] - 2026-05-25
 
 Introduces sort direction control for `orderBy`. Previously `orderBy` accepted bare field references, making sort direction implementation-defined. Queries that used bare fields in `orderBy` must be migrated to the new `orderByItem` wrapper.
