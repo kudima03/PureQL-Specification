@@ -1,7 +1,6 @@
 {
   "from": { "entity": "order_items", "alias": "oi" },
   "select": [
-    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } },
     {
       "operator": "sum",
       "arg": {

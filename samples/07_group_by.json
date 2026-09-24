@@ -1,7 +1,6 @@
 {
   "from": { "entity": "order_items" },
   "select": [
-    { "entity": "order_items", "field": "product_id", "type": { "name": "uuid" } },
     {
       "operator": "count",
       "arg": { "entity": "order_items", "field": "id", "type": { "name": "uuid" } },

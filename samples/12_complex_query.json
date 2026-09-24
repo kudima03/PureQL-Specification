@@ -1,10 +1,6 @@
 {
   "from": { "entity": "orders", "alias": "o" },
   "select": [
-    { "entity": "users",    "field": "id",           "type": { "name": "uuid" },   "alias": "customer_id" },
-    { "entity": "users",    "field": "name",          "type": { "name": "string" }, "alias": "customer_name" },
-    { "entity": "users",    "field": "email",         "type": { "name": "string" } },
-    { "entity": "users",    "field": "tier",          "type": { "name": "string" }, "alias": "membership_tier" },
     {
       "operator": "count",
       "arg": { "entity": "o", "field": "id", "type": { "name": "uuid" } },

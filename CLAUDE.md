@@ -48,7 +48,7 @@ Every operator in the schema belongs to one of two parallel families:
 | `where` | single-value boolean **or** per-row boolean (per-row is the common case) |
 | `join.on` | single-value boolean **or** per-row boolean (per-row equi-join is the common case) |
 | `having` | single-value boolean **only** — operands must reduce to one value per group |
-| `select` | any value-returning expression, including per-row computed columns |
+| `select` | any value-returning expression, including per-row computed columns — **single-value only when `groupBy` is present** |
 | `groupBy` / `orderBy` | field references only |
 
 ### Fields are `arrayReturning`
@@ -119,6 +119,10 @@ Only the root `from` expression supports an `alias`. Joined entities are always 
 ### `groupBy` and `orderBy` take `field` objects
 
 Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
+
+### Grouped `select` is single-value only
+
+When `groupBy` is present, every `select` item must be `singleValueReturning` (enforced via root `dependentSchemas`). Group keys are emitted automatically as the leading result columns, so **never repeat `groupBy` fields in `select`** — the schema rejects them, along with any non-grouped field or `each*` column.
 
 ## Workflow rules
 
