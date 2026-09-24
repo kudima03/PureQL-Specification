@@ -9,14 +9,10 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [0.1.0-preview.1.0.0] - 2026-09-24
 
-Makes `having` without `groupBy` a schema error. `having` filters aggregation groups, so without `groupBy` it has no defined meaning; the schema previously accepted such queries silently.
+### ⚠️ Breaking Changes
 
-Tracking issue: #40.
-
-### Changed
-
-- **`having` now requires `groupBy`**: the root object declares `"dependentRequired": { "having": ["groupBy"] }`. Queries that use `having` without `groupBy` no longer validate.
-- **`groupBy` now requires at least one field** (`minItems: 1`). An empty `groupBy` array no longer validates; omit the clause instead.
+- **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
+- **`groupBy` can no longer be empty**: `groupBy` must list at least one field. To skip grouping, leave the clause out.
 
 ---
 
