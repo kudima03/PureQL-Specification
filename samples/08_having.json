@@ -1,7 +1,6 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } },
     {
       "operator": "count",
       "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } },

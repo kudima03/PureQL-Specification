@@ -10,7 +10,7 @@ PureQL is a JSON-based declarative query language for relational data. Queries a
 | `select`   | yes      | Array of expressions to return |
 | `where`    | no       | Boolean filter applied before grouping |
 | `joins`    | no       | Array of join clauses |
-| `groupBy`  | no       | Fields to group rows by (at least one) |
+| `groupBy`  | no       | Fields to group rows by (at least one); group keys are output automatically |
 | `having`   | no       | Boolean filter applied after grouping; requires `groupBy` |
 | `orderBy`  | no       | Fields to order results by |
 | `pagination` | no     | `skip` and `take` for paging |
@@ -91,6 +91,21 @@ Parameters are named placeholders resolved at execution time, analogous to prepa
 
 Each item in `select` is a value-returning expression (field, scalar, aggregate, arithmetic, boolean expression) with an optional `alias`.
 
+When `groupBy` is present, `select` accepts **single-value expressions only** (aggregates, scalars, parameters, arithmetic over them). Fields and per-row `each*` columns are rejected by the schema, because a group has no single value for them. The `groupBy` fields are output automatically as the leading result columns, in `groupBy` order and named after the field, followed by the `select` entries:
+
+```json
+"select": [
+  { "operator": "count", "arg": { "entity": "orders", "field": "id", "type": { "name": "uuid" } }, "alias": "order_count" }
+],
+"groupBy": [
+  { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } }
+]
+```
+
+Result columns: `user_id`, `order_count`.
+
+Ungrouped example:
+
 ```json
 "select": [
   { "entity": "users", "field": "name",  "type": { "name": "string" } },
@@ -142,7 +157,7 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
 
 ### `groupBy` / `orderBy`
 
-`groupBy` accepts an array of field references. `orderBy` accepts an array of `orderByItem` objects, each pairing a `field` with an optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
+`groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` accepts an array of `orderByItem` objects, each pairing a `field` with an optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
 
 ```json
 "groupBy": [
@@ -179,7 +194,7 @@ Where each family fits:
 |---|---|
 | `where` / `join.on` | per-row boolean (typical) or single-value boolean |
 | `having` | single-value boolean only — non-aggregated fields are structurally rejected |
-| `select` | any value-returning expression, including per-row computed columns |
+| `select` | any value-returning expression, including per-row computed columns; single-value only when `groupBy` is present |
 | `sum.arg` / `min_*.arg` / `max_*.arg` / `average_*.arg` | any array-returning expression (field, per-row computation) |
 | right operand of any `each*` comparison | matching `*Returning` (broadcast scalar) or `*ArrayReturning` (element-wise) |
 
