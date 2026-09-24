@@ -3299,26 +3299,6 @@
       }
     }
   },
-  "anyOf": [
-    {
-      "required": [
-        "groupBy"
-      ]
-    },
-    {
-      "properties": {
-        "orderBy": {
-          "items": {
-            "properties": {
-              "expression": {
-                "$ref": "#/definitions/arrayReturning"
-              }
-            }
-          }
-        }
-      }
-    }
-  ],
   "title": "PureQL specification",
   "type": "object"
 }

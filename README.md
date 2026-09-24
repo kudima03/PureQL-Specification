@@ -166,14 +166,14 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
 
 `groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` is an array of `orderByItem` objects: `{ "expression": <expr>, "direction": "asc" | "desc" }` (`direction` defaults to `"asc"`). Items are applied in order, each one breaking ties left by the previous one.
 
-The sort key has to produce one value per **result row**, so which kind of expression is allowed depends on whether the query groups:
+The sort key produces one value per **result row**, so the kind of expression to use depends on whether the query groups:
 
-| Query | A result row is | `expression` must be | Examples |
+| Query | A result row is | `expression` | Examples |
 |---|---|---|---|
-| without `groupBy` | a row | array-returning | field, `eachMultiply(unit_price, quantity)` |
-| with `groupBy` | a group | single-value | `sum(total)`, `divide(sum(total), count(id))` |
+| without `groupBy` | a row | array-returning (single-value is allowed but is a constant, so it does not change the order) | field, `eachMultiply(unit_price, quantity)` |
+| with `groupBy` | a group | single-value **only** | `sum(total)`, `divide(sum(total), count(id))` |
 
-This is the same split as `where` / `having` and as `select` with and without `groupBy`. The schema rejects the other kind: a single-value key without `groupBy` is a constant and would not sort anything, and a field with `groupBy` has no single value per group.
+This is the same split as `where` / `having` and as `select` with and without `groupBy`. With `groupBy`, the schema rejects fields and `each*` keys, because a group has no single value for them. Without `groupBy`, a single-value key (e.g. `sum(total)`) is valid but is the same for every row, so it leaves the order unchanged, just as `OrderBy(r => 1)` does in LINQ.
 
 To sort by a computed `select` column, repeat the expression rather than referencing its alias. The schema cannot check that an alias exists, but it can validate the expression. To sort groups by a group key, wrap it in an aggregate such as `min_string`; within a group every key value is the same, so the aggregate returns the key itself.
 

@@ -127,7 +127,7 @@ Not select expressions — just plain `{ entity, field, type }` field references
 
 Every item is `orderByItem` — `{ expression, direction }`. There is no `{ field }` form: a field is just an array-returning `expression`.
 
-- Without `groupBy`: `expression` must be `*ArrayReturning` (field, `each*` computation). Single-value keys are constants and are rejected (root `anyOf`).
+- Without `groupBy`: `expression` is normally `*ArrayReturning` (field, `each*` computation). A single-value key validates but is a constant, so it leaves the order unchanged.
 - With `groupBy`: `expression` must be `singleValueReturning` (aggregate, arithmetic over aggregates). Fields and `each*` are rejected (root `dependentSchemas`).
 - Never reference a `select` alias from `orderBy` — repeat the expression. Aliases are name references the schema cannot check.
 - To sort groups by a key, wrap it in an aggregate (e.g. `min_string(users.name)`): every value in a group equals the key.
