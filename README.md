@@ -12,7 +12,7 @@ PureQL is a JSON-based declarative query language for relational data. Queries a
 | `joins`    | no       | Array of join clauses |
 | `groupBy`  | no       | Fields to group rows by (at least one); group keys are output automatically |
 | `having`   | no       | Boolean filter applied after grouping; requires `groupBy` |
-| `orderBy`  | no       | Fields to order results by; single-value expressions when `groupBy` is present |
+| `orderBy`  | no       | Expressions to order results by: per-row without `groupBy`, single-value with it |
 | `pagination` | no     | `skip` and `take` for paging |
 | `distinct` | no       | When `true`, deduplicate result rows (default: `false`) |
 
@@ -164,18 +164,38 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
 
 ### `groupBy` / `orderBy`
 
-`groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` items have an optional `direction` (`"asc"` | `"desc"`, default `"asc"`). The sort key is written differently depending on `groupBy`:
+`groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` is an array of `orderByItem` objects: `{ "expression": <expr>, "direction": "asc" | "desc" }` (`direction` defaults to `"asc"`). Items are applied in order, each one breaking ties left by the previous one.
 
-**Without `groupBy`**: each item pairs a `field` with a direction (`orderByItem`).
+The sort key has to produce one value per **result row**, so which kind of expression is allowed depends on whether the query groups:
+
+| Query | A result row is | `expression` must be | Examples |
+|---|---|---|---|
+| without `groupBy` | a row | array-returning | field, `eachMultiply(unit_price, quantity)` |
+| with `groupBy` | a group | single-value | `sum(total)`, `divide(sum(total), count(id))` |
+
+This is the same split as `where` / `having` and as `select` with and without `groupBy`. The schema rejects the other kind: a single-value key without `groupBy` is a constant and would not sort anything, and a field with `groupBy` has no single value per group.
+
+To sort by a computed `select` column, repeat the expression rather than referencing its alias. The schema cannot check that an alias exists, but it can validate the expression. To sort groups by a group key, wrap it in an aggregate such as `min_string`; within a group every key value is the same, so the aggregate returns the key itself.
+
+Without `groupBy` (see [`23_order_by_computed.json`](samples/23_order_by_computed.json)):
 
 ```json
 "orderBy": [
-  { "field": { "entity": "users", "field": "name", "type": { "name": "string" } }, "direction": "asc" },
-  { "field": { "entity": "orders", "field": "total", "type": { "name": "number" } }, "direction": "desc" }
+  {
+    "expression": {
+      "operator": "eachMultiply",
+      "values": [
+        { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+        { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+      ]
+    },
+    "direction": "desc"
+  },
+  { "expression": { "entity": "order_items", "field": "id", "type": { "name": "uuid" } } }
 ]
 ```
 
-**With `groupBy`**: each item holds a single-value `expression` (`expressionOrderByItem`), usually an aggregate. Fields are rejected, because a group has no single value for a field. To sort by an aggregate that is also selected, repeat the expression rather than referencing its alias, so that the schema can validate it. To sort by a group key, wrap it in an aggregate such as `min_string`; within a group every key value is the same, so the aggregate returns the key itself.
+With `groupBy`:
 
 ```json
 "groupBy": [
@@ -525,3 +545,4 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`20_each_datetime_diff_where.json`](samples/20_each_datetime_diff_where.json) | `eachDatetimeDiffSeconds` inside `eachGreaterThan` to filter orders by ship-time |
 | [`21_each_time_math.json`](samples/21_each_time_math.json) | `eachTimeAddSeconds` (time + offset) and `eachTimeDiffSeconds` (shift duration) |
 | [`22_select_broadcast.json`](samples/22_select_broadcast.json) | Fields next to an aggregate in `select` — `sum` broadcast to every row, plus `eachDivide(total, sum(total))` as a share-of-total column |
+| [`23_order_by_computed.json`](samples/23_order_by_computed.json) | `orderBy` on a computed per-row expression (`eachMultiply(unit_price, quantity)` desc), then `id` as a tie-breaker |

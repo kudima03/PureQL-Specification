@@ -2171,24 +2171,19 @@
     },
     "orderByItem": {
       "type": "object",
-      "required": ["field"],
-      "properties": {
-        "field": { "$ref": "#/definitions/field" },
-        "direction": {
-          "type": "string",
-          "enum": ["asc", "desc"],
-          "default": "asc"
-        }
-      }
-    },
-    "expressionOrderByItem": {
-      "type": "object",
       "required": [
         "expression"
       ],
       "properties": {
         "expression": {
-          "$ref": "#/definitions/singleValueReturning"
+          "oneOf": [
+            {
+              "$ref": "#/definitions/singleValueReturning"
+            },
+            {
+              "$ref": "#/definitions/arrayReturning"
+            }
+          ]
         },
         "direction": {
           "type": "string",
@@ -3268,14 +3263,7 @@
     "orderBy": {
       "type": "array",
       "items": {
-        "oneOf": [
-          {
-            "$ref": "#/definitions/orderByItem"
-          },
-          {
-            "$ref": "#/definitions/expressionOrderByItem"
-          }
-        ]
+        "$ref": "#/definitions/orderByItem"
       }
     },
     "pagination": {
@@ -3301,7 +3289,11 @@
         },
         "orderBy": {
           "items": {
-            "$ref": "#/definitions/expressionOrderByItem"
+            "properties": {
+              "expression": {
+                "$ref": "#/definitions/singleValueReturning"
+              }
+            }
           }
         }
       }
@@ -3317,7 +3309,11 @@
       "properties": {
         "orderBy": {
           "items": {
-            "$ref": "#/definitions/orderByItem"
+            "properties": {
+              "expression": {
+                "$ref": "#/definitions/arrayReturning"
+              }
+            }
           }
         }
       }

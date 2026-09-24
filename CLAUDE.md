@@ -50,7 +50,7 @@ Every operator in the schema belongs to one of two parallel families:
 | `having` | single-value boolean **only** — operands must reduce to one value per group |
 | `select` | any value-returning expression, including per-row computed columns — **single-value only when `groupBy` is present** |
 | `groupBy` | field references only |
-| `orderBy` | `{ field, direction }` without `groupBy`; `{ expression: <single-value>, direction }` with `groupBy` |
+| `orderBy` | `{ expression, direction }` — per-row expression without `groupBy`, single-value expression with `groupBy` |
 
 ### Fields are `arrayReturning`
 
@@ -123,10 +123,12 @@ Only the root `from` expression supports an `alias`. Joined entities are always 
 
 Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
 
-### `orderBy` shape depends on `groupBy`
+### `orderBy` keys follow the query's context
 
-- Without `groupBy`: items are `orderByItem` — `{ field, direction }`. Expression items are rejected (root `anyOf`).
-- With `groupBy`: items are `expressionOrderByItem` — `{ expression, direction }` where `expression` is `singleValueReturning` (typically an aggregate). Field items are rejected (root `dependentSchemas`).
+Every item is `orderByItem` — `{ expression, direction }`. There is no `{ field }` form: a field is just an array-returning `expression`.
+
+- Without `groupBy`: `expression` must be `*ArrayReturning` (field, `each*` computation). Single-value keys are constants and are rejected (root `anyOf`).
+- With `groupBy`: `expression` must be `singleValueReturning` (aggregate, arithmetic over aggregates). Fields and `each*` are rejected (root `dependentSchemas`).
 - Never reference a `select` alias from `orderBy` — repeat the expression. Aliases are name references the schema cannot check.
 - To sort groups by a key, wrap it in an aggregate (e.g. `min_string(users.name)`): every value in a group equals the key.
 

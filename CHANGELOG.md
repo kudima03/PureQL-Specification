@@ -11,6 +11,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ### 🔧 Improvements
 
+- **Sort by computed values**: `orderBy` can sort by any per-row calculation, e.g. line total (`unit_price × quantity`), and grouped queries can sort by any aggregate or arithmetic over aggregates, e.g. average order value.
 - **Defined results for fields mixed with aggregates in `select`**: A query without `groupBy` can list fields next to aggregates. The aggregate's value is repeated on every row, e.g. an order total next to the grand total of all orders. Aggregates are always calculated over every matching row, before pagination. (#52)
 
 ### ⚠️ Breaking Changes
@@ -18,7 +19,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 - **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
 - **`groupBy` can no longer be empty**: `groupBy` must list at least one field. To skip grouping, leave the clause out.
 - **Grouped queries select only single values**: When a query has `groupBy`, `select` accepts only aggregates, scalars, parameters and arithmetic over them. The `groupBy` fields now appear in the result automatically as the first columns, so remove them from `select`. Fields that aren't grouped and per-row `each*` columns are rejected, because a group has no single value for them. (#52)
-- **Grouped queries sort by expressions**: When a query has `groupBy`, each `orderBy` item holds an `expression` (usually an aggregate such as `sum(...)`) in place of a `field`. To sort groups by a key, wrap it in an aggregate, e.g. `min_string(users.name)`. Queries without `groupBy` keep sorting by `field`.
+- **`orderBy` items hold an expression in place of a field**: Each item is now `{ "expression": ..., "direction": ... }`. Replace `{ "field": X }` with `{ "expression": X }`. Without `groupBy`, the expression is per-row: a field, or a computed value such as `eachMultiply(unit_price, quantity)`. With `groupBy`, it's a single value per group, such as `sum(total)`. To sort groups by a key, wrap it in an aggregate, e.g. `min_string(users.name)`.
 
 ---
 
