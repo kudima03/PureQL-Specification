@@ -91,7 +91,7 @@ Parameters are named placeholders resolved at execution time, analogous to prepa
 
 Each item in `select` is a value-returning expression (field, scalar, aggregate, arithmetic, boolean expression) with an optional `alias`.
 
-When `groupBy` is present, `select` accepts **single-value expressions only** (aggregates, scalars, parameters, arithmetic over them). Fields and per-row `each*` columns are rejected by the schema, because a group has no single value for them. The `groupBy` fields are output automatically as the leading result columns, in `groupBy` order and named after the field, followed by the `select` entries:
+**With `groupBy`**, `select` accepts **single-value expressions only** (aggregates, scalars, parameters, arithmetic over them). Fields and per-row `each*` columns are rejected by the schema, because a group has no single value for them. The `groupBy` fields are output automatically as the leading result columns, in `groupBy` order and named after the field, followed by the `select` entries:
 
 ```json
 "select": [
@@ -104,7 +104,14 @@ When `groupBy` is present, `select` accepts **single-value expressions only** (a
 
 Result columns: `user_id`, `order_count`.
 
-Ungrouped example:
+**Without `groupBy`**, `select` may mix single-value and array-returning items. The result shape is:
+
+- **At least one array-returning item** (field or `each*` column): the result has `N` rows, where `N` is the row count after `from` + `joins` + `where`. Every single-value item (aggregate, scalar, parameter, arithmetic) is **broadcast**: the same value is repeated in every row. If `N = 0`, the result is empty.
+- **Only single-value items**: the result has exactly one row.
+
+Aggregates are computed over all `N` rows before `distinct` and `pagination` apply, so `take: 10` pages the rows but does not change `sum(...)`. See [`22_select_broadcast.json`](samples/22_select_broadcast.json).
+
+Example: `name` and `email` are fields, so `order_count` is repeated on every row:
 
 ```json
 "select": [
@@ -507,3 +514,4 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`19_each_date_add_days.json`](samples/19_each_date_add_days.json) | `eachDateAddDays` to derive a `delivery_eta` column from `order_date + 30 days` |
 | [`20_each_datetime_diff_where.json`](samples/20_each_datetime_diff_where.json) | `eachDatetimeDiffSeconds` inside `eachGreaterThan` to filter orders by ship-time |
 | [`21_each_time_math.json`](samples/21_each_time_math.json) | `eachTimeAddSeconds` (time + offset) and `eachTimeDiffSeconds` (shift duration) |
+| [`22_select_broadcast.json`](samples/22_select_broadcast.json) | Fields next to an aggregate in `select` — `sum` broadcast to every row, plus `eachDivide(total, sum(total))` as a share-of-total column |

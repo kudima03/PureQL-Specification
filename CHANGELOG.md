@@ -9,6 +9,10 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [Unreleased]
 
+### 🔧 Improvements
+
+- **Defined results for fields mixed with aggregates in `select`**: A query without `groupBy` can list fields next to aggregates. The aggregate's value is repeated on every row, e.g. an order total next to the grand total of all orders. Aggregates are always calculated over every matching row, before pagination. (#52)
+
 ### ⚠️ Breaking Changes
 
 - **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
