@@ -7,6 +7,19 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.1.0.0] - 2026-09-24
+
+Makes `having` without `groupBy` a schema error. `having` filters aggregation groups, so without `groupBy` it has no defined meaning; the schema previously accepted such queries silently.
+
+Tracking issue: #40.
+
+### Changed
+
+- **`having` now requires `groupBy`**: the root object declares `"dependentRequired": { "having": ["groupBy"] }`. Queries that use `having` without `groupBy` no longer validate.
+- **`groupBy` now requires at least one field** (`minItems: 1`). An empty `groupBy` array no longer validates; omit the clause instead.
+
+---
+
 ## [0.1.0-preview.0.5.0] - 2026-05-25
 
 Introduces sort direction control for `orderBy`. Previously `orderBy` accepted bare field references, making sort direction implementation-defined. Queries that used bare fields in `orderBy` must be migrated to the new `orderByItem` wrapper.
