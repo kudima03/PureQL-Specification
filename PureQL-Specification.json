@@ -2171,12 +2171,26 @@
     },
     "orderByItem": {
       "type": "object",
-      "required": ["field"],
+      "required": [
+        "expression"
+      ],
       "properties": {
-        "field": { "$ref": "#/definitions/field" },
+        "expression": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/singleValueReturning"
+            },
+            {
+              "$ref": "#/definitions/arrayReturning"
+            }
+          ]
+        },
         "direction": {
           "type": "string",
-          "enum": ["asc", "desc"],
+          "enum": [
+            "asc",
+            "desc"
+          ],
           "default": "asc"
         }
       }
@@ -3271,6 +3285,15 @@
         "select": {
           "items": {
             "$ref": "#/definitions/singleValueReturning"
+          }
+        },
+        "orderBy": {
+          "items": {
+            "properties": {
+              "expression": {
+                "$ref": "#/definitions/singleValueReturning"
+              }
+            }
           }
         }
       }

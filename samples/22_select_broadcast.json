@@ -1,0 +1,24 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "entity": "orders", "field": "id",           "type": { "name": "uuid" } },
+    { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+    {
+      "operator": "sum",
+      "arg": { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+      "alias": "grand_total"
+    },
+    {
+      "operator": "eachDivide",
+      "values": [
+        { "entity": "orders", "field": "total_amount", "type": { "name": "number" } },
+        {
+          "operator": "sum",
+          "arg": { "entity": "orders", "field": "total_amount", "type": { "name": "number" } }
+        }
+      ],
+      "alias": "share_of_total"
+    }
+  ],
+  "pagination": { "skip": 0, "take": 10 }
+}

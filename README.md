@@ -12,7 +12,7 @@ PureQL is a JSON-based declarative query language for relational data. Queries a
 | `joins`    | no       | Array of join clauses |
 | `groupBy`  | no       | Fields to group rows by (at least one); group keys are output automatically |
 | `having`   | no       | Boolean filter applied after grouping; requires `groupBy` |
-| `orderBy`  | no       | Fields to order results by |
+| `orderBy`  | no       | Expressions to order results by: per-row without `groupBy`, single-value with it |
 | `pagination` | no     | `skip` and `take` for paging |
 | `distinct` | no       | When `true`, deduplicate result rows (default: `false`) |
 
@@ -91,7 +91,7 @@ Parameters are named placeholders resolved at execution time, analogous to prepa
 
 Each item in `select` is a value-returning expression (field, scalar, aggregate, arithmetic, boolean expression) with an optional `alias`.
 
-When `groupBy` is present, `select` accepts **single-value expressions only** (aggregates, scalars, parameters, arithmetic over them). Fields and per-row `each*` columns are rejected by the schema, because a group has no single value for them. The `groupBy` fields are output automatically as the leading result columns, in `groupBy` order and named after the field, followed by the `select` entries:
+**With `groupBy`**, `select` accepts **single-value expressions only** (aggregates, scalars, parameters, arithmetic over them). Fields and per-row `each*` columns are rejected by the schema, because a group has no single value for them. The `groupBy` fields are output automatically as the leading result columns, in `groupBy` order and named after the field, followed by the `select` entries:
 
 ```json
 "select": [
@@ -104,7 +104,14 @@ When `groupBy` is present, `select` accepts **single-value expressions only** (a
 
 Result columns: `user_id`, `order_count`.
 
-Ungrouped example:
+**Without `groupBy`**, `select` may mix single-value and array-returning items. The result shape is:
+
+- **At least one array-returning item** (field or `each*` column): the result has `N` rows, where `N` is the row count after `from` + `joins` + `where`. Every single-value item (aggregate, scalar, parameter, arithmetic) is **broadcast**: the same value is repeated in every row. If `N = 0`, the result is empty.
+- **Only single-value items**: the result has exactly one row.
+
+Aggregates are computed over all `N` rows before `distinct` and `pagination` apply, so `take: 10` pages the rows but does not change `sum(...)`. See [`22_select_broadcast.json`](samples/22_select_broadcast.json).
+
+Example: `name` and `email` are fields, so `order_count` is repeated on every row:
 
 ```json
 "select": [
@@ -157,15 +164,45 @@ Each join specifies its type (`inner`, `left`, `right`, `full`), the entity to j
 
 ### `groupBy` / `orderBy`
 
-`groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` accepts an array of `orderByItem` objects, each pairing a `field` with an optional `direction` (`"asc"` | `"desc"`, default `"asc"`).
+`groupBy` accepts an array of field references. Group keys are added to the result automatically, so they are not repeated in `select`. `orderBy` is an array of `orderByItem` objects: `{ "expression": <expr>, "direction": "asc" | "desc" }` (`direction` defaults to `"asc"`). Items are applied in order, each one breaking ties left by the previous one.
+
+The sort key produces one value per **result row**, so the kind of expression to use depends on whether the query groups:
+
+| Query | A result row is | `expression` | Examples |
+|---|---|---|---|
+| without `groupBy` | a row | array-returning (single-value is allowed but is a constant, so it does not change the order) | field, `eachMultiply(unit_price, quantity)` |
+| with `groupBy` | a group | single-value **only** | `sum(total)`, `divide(sum(total), count(id))` |
+
+This is the same split as `where` / `having` and as `select` with and without `groupBy`. With `groupBy`, the schema rejects fields and `each*` keys, because a group has no single value for them. Without `groupBy`, a single-value key (e.g. `sum(total)`) is valid but is the same for every row, so it leaves the order unchanged, just as `OrderBy(r => 1)` does in LINQ.
+
+To sort by a computed `select` column, repeat the expression rather than referencing its alias. The schema cannot check that an alias exists, but it can validate the expression. To sort groups by a group key, wrap it in an aggregate such as `min_string`; within a group every key value is the same, so the aggregate returns the key itself.
+
+Without `groupBy` (see [`23_order_by_computed.json`](samples/23_order_by_computed.json)):
+
+```json
+"orderBy": [
+  {
+    "expression": {
+      "operator": "eachMultiply",
+      "values": [
+        { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+        { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+      ]
+    },
+    "direction": "desc"
+  },
+  { "expression": { "entity": "order_items", "field": "id", "type": { "name": "uuid" } } }
+]
+```
+
+With `groupBy`:
 
 ```json
 "groupBy": [
   { "entity": "orders", "field": "user_id", "type": { "name": "uuid" } }
 ],
 "orderBy": [
-  { "field": { "entity": "users", "field": "name", "type": { "name": "string" } }, "direction": "asc" },
-  { "field": { "entity": "orders", "field": "total", "type": { "name": "number" } }, "direction": "desc" }
+  { "expression": { "operator": "sum", "arg": { "entity": "orders", "field": "total", "type": { "name": "number" } } }, "direction": "desc" }
 ]
 ```
 
@@ -497,7 +534,7 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`09_arithmetic.json`](samples/09_arithmetic.json) | `add`, `multiply`, `divide` on aggregate results |
 | [`10_parameters.json`](samples/10_parameters.json) | Named scalar parameters in per-row predicates |
 | [`11_distinct.json`](samples/11_distinct.json) | `distinct: true` to deduplicate results |
-| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, per-row `where`, groupBy, single-value `having`, arithmetic, parameters, orderBy with direction, pagination |
+| [`12_complex_query.json`](samples/12_complex_query.json) | Full query: joins, per-row `where`, groupBy, single-value `having`, arithmetic, parameters, grouped `orderBy` by aggregate expressions, pagination |
 | [`13_range_filter.json`](samples/13_range_filter.json) | `eachGreaterThan` and `eachLessThan` combined with `eachAnd` |
 | [`14_each_field_to_field.json`](samples/14_each_field_to_field.json) | Per-row range comparison between two fields (no scalar threshold) |
 | [`15_each_not_equal.json`](samples/15_each_not_equal.json) | `eachNot` wrapping `eachEqual` — the idiom for "field ≠ literal" |
@@ -507,3 +544,5 @@ The [`samples/`](samples/) directory contains query examples ordered by complexi
 | [`19_each_date_add_days.json`](samples/19_each_date_add_days.json) | `eachDateAddDays` to derive a `delivery_eta` column from `order_date + 30 days` |
 | [`20_each_datetime_diff_where.json`](samples/20_each_datetime_diff_where.json) | `eachDatetimeDiffSeconds` inside `eachGreaterThan` to filter orders by ship-time |
 | [`21_each_time_math.json`](samples/21_each_time_math.json) | `eachTimeAddSeconds` (time + offset) and `eachTimeDiffSeconds` (shift duration) |
+| [`22_select_broadcast.json`](samples/22_select_broadcast.json) | Fields next to an aggregate in `select` — `sum` broadcast to every row, plus `eachDivide(total, sum(total))` as a share-of-total column |
+| [`23_order_by_computed.json`](samples/23_order_by_computed.json) | `orderBy` on a computed per-row expression (`eachMultiply(unit_price, quantity)` desc), then `id` as a tie-breaker |

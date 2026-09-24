@@ -110,7 +110,17 @@
   },
   "orderBy": [
     {
-      "field": { "entity": "users", "field": "name", "type": { "name": "string" } },
+      "expression": {
+        "operator": "sum",
+        "arg": { "entity": "o", "field": "total_amount", "type": { "name": "number" } }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "operator": "min_string",
+        "arg": { "entity": "users", "field": "name", "type": { "name": "string" } }
+      },
       "direction": "asc"
     }
   ],

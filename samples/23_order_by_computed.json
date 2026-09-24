@@ -1,0 +1,33 @@
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "entity": "order_items", "field": "id",         "type": { "name": "uuid" } },
+    { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+    { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } },
+    {
+      "operator": "eachMultiply",
+      "values": [
+        { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+        { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+      ],
+      "alias": "subtotal"
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "eachMultiply",
+        "values": [
+          { "entity": "order_items", "field": "unit_price", "type": { "name": "number" } },
+          { "entity": "order_items", "field": "quantity",   "type": { "name": "number" } }
+        ]
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": { "entity": "order_items", "field": "id", "type": { "name": "uuid" } },
+      "direction": "asc"
+    }
+  ],
+  "pagination": { "skip": 0, "take": 20 }
+}

@@ -49,7 +49,8 @@ Every operator in the schema belongs to one of two parallel families:
 | `join.on` | single-value boolean **or** per-row boolean (per-row equi-join is the common case) |
 | `having` | single-value boolean **only** — operands must reduce to one value per group |
 | `select` | any value-returning expression, including per-row computed columns — **single-value only when `groupBy` is present** |
-| `groupBy` / `orderBy` | field references only |
+| `groupBy` | field references only |
+| `orderBy` | `{ expression, direction }` — per-row expression without `groupBy`, single-value expression with `groupBy` |
 
 ### Fields are `arrayReturning`
 
@@ -112,13 +113,24 @@ So `eachAdd([fieldA, scalar, fieldB])` over 3 rows with `fieldA = [10, 20, 30]`,
 
 This is why `eachX` operators do not collapse to their single-value siblings when handed only scalar operands: the *return type* is still `*ArrayReturning`, aligned with the row set. `eachAdd(2, 3)` in a `select` over a 4-row entity yields the vector `[5, 5, 5, 5]`, not the scalar `5`. Use single-value `add` for purely scalar work; `eachAdd` exists specifically because at least one operand is row-aligned.
 
+The same model applies to `select` itself when it mixes kinds (without `groupBy`): if any item is `*ArrayReturning`, the result has `N` rows and every single-value item (e.g. `sum(total)`) is broadcast to each row; if all items are single-value, the result is one row. Aggregates see all `N` rows — they are computed before `distinct` and `pagination`. So `[field, sum(field)]` without `groupBy` is valid and well-defined, not an error.
+
 ### `joinItem` has no alias
 
 Only the root `from` expression supports an `alias`. Joined entities are always referenced by their `entity` name string.
 
-### `groupBy` and `orderBy` take `field` objects
+### `groupBy` takes `field` objects
 
 Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
+
+### `orderBy` keys follow the query's context
+
+Every item is `orderByItem` — `{ expression, direction }`. There is no `{ field }` form: a field is just an array-returning `expression`.
+
+- Without `groupBy`: `expression` is normally `*ArrayReturning` (field, `each*` computation). A single-value key validates but is a constant, so it leaves the order unchanged.
+- With `groupBy`: `expression` must be `singleValueReturning` (aggregate, arithmetic over aggregates). Fields and `each*` are rejected (root `dependentSchemas`).
+- Never reference a `select` alias from `orderBy` — repeat the expression. Aliases are name references the schema cannot check.
+- To sort groups by a key, wrap it in an aggregate (e.g. `min_string(users.name)`): every value in a group equals the key.
 
 ### Grouped `select` is single-value only
 
