@@ -18,6 +18,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 - **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
 - **`groupBy` can no longer be empty**: `groupBy` must list at least one field. To skip grouping, leave the clause out.
 - **Grouped queries select only single values**: When a query has `groupBy`, `select` accepts only aggregates, scalars, parameters and arithmetic over them. The `groupBy` fields now appear in the result automatically as the first columns, so remove them from `select`. Fields that aren't grouped and per-row `each*` columns are rejected, because a group has no single value for them. (#52)
+- **Grouped queries sort by expressions**: When a query has `groupBy`, each `orderBy` item holds an `expression` (usually an aggregate such as `sum(...)`) in place of a `field`. To sort groups by a key, wrap it in an aggregate, e.g. `min_string(users.name)`. Queries without `groupBy` keep sorting by `field`.
 
 ---
 

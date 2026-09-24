@@ -2181,6 +2181,25 @@
         }
       }
     },
+    "expressionOrderByItem": {
+      "type": "object",
+      "required": [
+        "expression"
+      ],
+      "properties": {
+        "expression": {
+          "$ref": "#/definitions/singleValueReturning"
+        },
+        "direction": {
+          "type": "string",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "default": "asc"
+        }
+      }
+    },
     "equality": {
       "oneOf": [
         {
@@ -3249,7 +3268,14 @@
     "orderBy": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/orderByItem"
+        "oneOf": [
+          {
+            "$ref": "#/definitions/orderByItem"
+          },
+          {
+            "$ref": "#/definitions/expressionOrderByItem"
+          }
+        ]
       }
     },
     "pagination": {
@@ -3272,10 +3298,31 @@
           "items": {
             "$ref": "#/definitions/singleValueReturning"
           }
+        },
+        "orderBy": {
+          "items": {
+            "$ref": "#/definitions/expressionOrderByItem"
+          }
         }
       }
     }
   },
+  "anyOf": [
+    {
+      "required": [
+        "groupBy"
+      ]
+    },
+    {
+      "properties": {
+        "orderBy": {
+          "items": {
+            "$ref": "#/definitions/orderByItem"
+          }
+        }
+      }
+    }
+  ],
   "title": "PureQL specification",
   "type": "object"
 }

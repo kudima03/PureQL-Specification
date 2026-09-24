@@ -49,7 +49,8 @@ Every operator in the schema belongs to one of two parallel families:
 | `join.on` | single-value boolean **or** per-row boolean (per-row equi-join is the common case) |
 | `having` | single-value boolean **only** — operands must reduce to one value per group |
 | `select` | any value-returning expression, including per-row computed columns — **single-value only when `groupBy` is present** |
-| `groupBy` / `orderBy` | field references only |
+| `groupBy` | field references only |
+| `orderBy` | `{ field, direction }` without `groupBy`; `{ expression: <single-value>, direction }` with `groupBy` |
 
 ### Fields are `arrayReturning`
 
@@ -118,9 +119,16 @@ The same model applies to `select` itself when it mixes kinds (without `groupBy`
 
 Only the root `from` expression supports an `alias`. Joined entities are always referenced by their `entity` name string.
 
-### `groupBy` and `orderBy` take `field` objects
+### `groupBy` takes `field` objects
 
 Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
+
+### `orderBy` shape depends on `groupBy`
+
+- Without `groupBy`: items are `orderByItem` — `{ field, direction }`. Expression items are rejected (root `anyOf`).
+- With `groupBy`: items are `expressionOrderByItem` — `{ expression, direction }` where `expression` is `singleValueReturning` (typically an aggregate). Field items are rejected (root `dependentSchemas`).
+- Never reference a `select` alias from `orderBy` — repeat the expression. Aliases are name references the schema cannot check.
+- To sort groups by a key, wrap it in an aggregate (e.g. `min_string(users.name)`): every value in a group equals the key.
 
 ### Grouped `select` is single-value only
 
