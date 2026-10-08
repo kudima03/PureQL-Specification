@@ -1,0 +1,49 @@
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "delivery_window_end",
+      "type": { "name": "time" },
+      "expression": {
+        "operator": "timeAddSeconds",
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": {
+          "operator": "multiply",
+          "values": [
+            { "param_name": "window_hours", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 3600 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "seconds_to_ship",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00Z" }
+      },
+      {
+        "operator": "lessThan",
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "type": { "name": "time" }, "value": "18:30:00" }
+      }
+    ]
+  }
+}

@@ -9,17 +9,40 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [Unreleased]
 
+PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Semantics follow LINQ to Objects. Every existing query needs migrating; the 54 new samples show the new forms.
+
+### ✨ New Features
+
+- **Conditional aggregates and Any / All**: aggregates take an optional `predicate`, e.g. count refunded orders per user or sum only paid totals. `any` and `all` test a condition across a group or all rows.
+- **Subqueries**: a query can declare named `subqueries` and read from them with `from` / `join`, or test membership with `in` over one of their columns (semi-join and anti-join).
+- **Self-joins**: joins can have an `alias`, so the same table can be joined more than once.
+- **Computed group keys**: `groupBy` accepts any row expression, e.g. a price bucket or days to ship. Keys can be selected, compared, used in arithmetic and sorted on directly.
+- **Nullable types and typed null**: every type has a nullable form, and `null` literals carry their type. Arithmetic and functions propagate null as in C#; comparisons return true / false.
+- **New types and operators**: `integer` and `decimal` replace `number`; `time` and `datetime` math is available everywhere. New operators: `if`, `coalesce`, `concat`, `in`, `notEqual`, `integerDivide`, `modulo`, `floor`, `ceiling`, `round`.
+- **Typed result columns**: every `select` column declares its type, and the schema checks it, so each query has a verified result schema.
+
 ### 🔧 Improvements
 
-- **Sort by computed values**: `orderBy` can sort by any per-row calculation, e.g. line total (`unit_price × quantity`), and grouped queries can sort by any aggregate or arithmetic over aggregates, e.g. average order value.
-- **Defined results for fields mixed with aggregates in `select`**: A query without `groupBy` can list fields next to aggregates. The aggregate's value is repeated on every row, e.g. an order total next to the grand total of all orders. Aggregates are always calculated over every matching row, before pagination. (#52)
+- **One set of operators**: `equal`, `add`, `dateDiffDays` and the rest work in filters, columns, `having` and sorting alike. The schema picks the rules from where the expression stands.
+- **Mistakes caught by the validator**: a field in `having`, an aggregate in `where` or `join.on`, nested aggregates, a nullable boolean used as a condition, a list used as a value, misspelled keys and malformed dates, times or UUIDs are all rejected before a query runs.
+- **Same result in every validator**: date, time and UUID literals are checked with patterns that behave identically in Python and JavaScript validators.
+- **Schema generated from source**: `PureQL-Specification.json` is produced by `tools/generate_schema.py`. 131 invalid test queries in `tests/invalid/` document what is rejected, and CI checks that both are up to date.
 
 ### ⚠️ Breaking Changes
 
-- **`having` now requires `groupBy`**: Queries that filter with `having` must also group their rows with `groupBy`. Previously the schema accepted `having` on its own, even though it has no meaning without groups. (#40)
-- **`groupBy` can no longer be empty**: `groupBy` must list at least one field. To skip grouping, leave the clause out.
-- **Grouped queries select only single values**: When a query has `groupBy`, `select` accepts only aggregates, scalars, parameters and arithmetic over them. The `groupBy` fields now appear in the result automatically as the first columns, so remove them from `select`. Fields that aren't grouped and per-row `each*` columns are rejected, because a group has no single value for them. (#52)
-- **`orderBy` items hold an expression in place of a field**: Each item is now `{ "expression": ..., "direction": ... }`. Replace `{ "field": X }` with `{ "expression": X }`. Without `groupBy`, the expression is per-row: a field, or a computed value such as `eachMultiply(unit_price, quantity)`. With `groupBy`, it's a single value per group, such as `sum(total)`. To sort groups by a key, wrap it in an aggregate, e.g. `min_string(users.name)`.
+- **`each*` operators removed**: use `equal`, `greaterThan`, `add`, `dateAddDays`, … everywhere. Whole-array `equal` between two columns is gone.
+- **Aggregates reshaped**: `{ "operator": "sum", "arg": X }` becomes `{ "operator": "sum", "over": "group", "selector": X }`. Use `over: "all"` to aggregate every row. Typed names merge: `min_number` / `min_date` / `min_string` become `min`, and likewise for `max` and `average`.
+- **`number` split into `integer` and `decimal`**, and `divide` always returns `decimal`.
+- **The `null` type is removed**: write `{ "type": { "name": T, "nullable": true }, "value": null }`.
+- **`datetime` literals need an offset**: `Z` or `±hh:mm`; `-00:00` is rejected.
+- **Field references use `source`**: `{ "entity": …, "field": …, "type": … }` becomes `{ "source": …, "field": …, "type": … }`.
+- **`select` columns declare alias and type**: each item is `{ "alias": …, "type": …, "expression": … }`.
+- **Group keys are explicit**: `groupBy` items are `{ "expression": … }`, and keys no longer appear in the result automatically. Select them with `{ "key": i, "type": … }`.
+- **`orderBy` items are `{ "expression": …, "direction": … }`**: with `groupBy`, sort by a group key or an aggregate.
+- **Lists are values, not columns**: `stringArray` and the other array types become `stringList` etc. and are accepted only by `in`.
+- **`having` requires `groupBy`**, `groupBy` cannot be empty, and fields cannot appear in grouped `select`, `having` or `orderBy` outside an aggregate.
+- **Aggregates are rejected in `where` and `join.on`.**
+- **Unknown keys are rejected everywhere.**
 
 ---
 

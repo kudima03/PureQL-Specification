@@ -1,0 +1,11 @@
+{
+  "from": { "entity": "orders" },
+  "distinct": true,
+  "select": [
+    {
+      "alias": "status",
+      "type": { "name": "string" },
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}

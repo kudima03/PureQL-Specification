@@ -1,0 +1,75 @@
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "completed" }
+  },
+  "groupBy": [
+    {
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+      "alias": "user_id"
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": {
+          "operator": "multiply",
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "line_items",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    },
+    {
+      "alias": "share_of_all_lines",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "divide",
+        "values": [{ "operator": "count", "over": "group" }, { "operator": "count", "over": "all" }]
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "left": {
+      "operator": "sum",
+      "over": "group",
+      "selector": {
+        "operator": "multiply",
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    "right": { "type": { "name": "decimal" }, "value": 1000 }
+  },
+  "orderBy": [
+    { "expression": { "operator": "count", "over": "group" }, "direction": "desc" },
+    { "expression": { "key": 0, "type": { "name": "uuid" } } }
+  ]
+}

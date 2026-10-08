@@ -1,0 +1,52 @@
+{
+  "from": { "entity": "orders" },
+  "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+  "having": {
+    "operator": "or",
+    "conditions": [
+      {
+        "operator": "and",
+        "conditions": [
+          {
+            "operator": "greaterThan",
+            "left": {
+              "operator": "sum",
+              "over": "group",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 1000 }
+          },
+          {
+            "operator": "not",
+            "condition": {
+              "operator": "any",
+              "over": "group",
+              "predicate": {
+                "operator": "equal",
+                "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+                "right": { "type": { "name": "string" }, "value": "refunded" }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operator": "greaterThanOrEqual",
+        "left": { "operator": "count", "over": "group" },
+        "right": { "param_name": "min_orders", "type": { "name": "integer" } }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

@@ -11,25 +11,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate all samples against schema
-        run: |
-          pip install jsonschema --quiet
-          python3 - <<'PYEOF'
-          import json, glob, sys
-          from jsonschema import Draft202012Validator
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-          spec = json.load(open("PureQL-Specification.json"))
-          validator = Draft202012Validator(spec)
-          failed = False
-          for path in sorted(glob.glob("samples/*.json")):
-              doc = json.load(open(path))
-              errors = list(validator.iter_errors(doc))
-              if errors:
-                  print(f"FAIL {path}:")
-                  for e in errors:
-                      print(f"  {e.message}")
-                  failed = True
-              else:
-                  print(f"OK   {path}")
-          sys.exit(1 if failed else 0)
-          PYEOF
+      - name: Install jsonschema
+        run: pip install jsonschema --quiet
+
+      - name: Check generated files are up to date
+        run: |
+          python3 tools/generate_schema.py
+          python3 tools/make_invalid_tests.py
+          if ! git diff --exit-code -- PureQL-Specification.json tests/invalid \
+             || [ -n "$(git status --porcelain -- PureQL-Specification.json tests/invalid)" ]; then
+            echo "::error::PureQL-Specification.json or tests/invalid is out of date. Run tools/generate_schema.py and tools/make_invalid_tests.py and commit the result."
+            exit 1
+          fi
+
+      - name: Validate samples (must pass) and invalid tests (must fail)
+        run: python3 tools/run_tests.py

@@ -1,0 +1,24 @@
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "notEqual",
+        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "cancelled" }
+      },
+      {
+        "operator": "not",
+        "condition": { "source": "orders", "field": "is_test", "type": { "name": "boolean" } }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

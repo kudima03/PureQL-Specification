@@ -1,0 +1,28 @@
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "display_name",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "first_name", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "anonymous" }
+        ]
+      }
+    },
+    {
+      "alias": "phone",
+      "type": { "name": "string", "nullable": true },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "landline", "type": { "name": "string", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "subqueries": [
+    {
+      "name": "user_totals",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "equal",
+          "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "right": { "type": { "name": "string" }, "value": "completed" }
+        },
+        "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+        "select": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "key": 0, "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "total",
+            "type": { "name": "decimal" },
+            "expression": {
+              "operator": "sum",
+              "over": "group",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "orders",
+            "type": { "name": "integer" },
+            "expression": { "operator": "count", "over": "group" }
+          }
+        ]
+      }
+    },
+    {
+      "name": "big_spenders",
+      "query": {
+        "from": { "subquery": "user_totals" },
+        "where": {
+          "operator": "greaterThan",
+          "left": { "source": "user_totals", "field": "total", "type": { "name": "decimal" } },
+          "right": { "param_name": "min_total", "type": { "name": "decimal" } }
+        },
+        "select": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "user_totals", "field": "user_id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "total",
+            "type": { "name": "decimal" },
+            "expression": { "source": "user_totals", "field": "total", "type": { "name": "decimal" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "type": "inner",
+      "subquery": "big_spenders",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "big_spenders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "name",
+      "type": { "name": "string" },
+      "expression": { "source": "users", "field": "name", "type": { "name": "string" } }
+    },
+    {
+      "alias": "total",
+      "type": { "name": "decimal" },
+      "expression": { "source": "big_spenders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "big_spenders", "field": "total", "type": { "name": "decimal" } },
+      "direction": "desc"
+    }
+  ]
+}

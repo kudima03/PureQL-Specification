@@ -1,0 +1,81 @@
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "type": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+      "alias": "user_id"
+    },
+    {
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
+      "alias": "coupon"
+    },
+    {
+      "expression": {
+        "operator": "dateDiffDays",
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      },
+      "alias": "days_to_ship"
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "coupon",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "key": 1, "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "no coupon" }
+        ]
+      }
+    },
+    {
+      "alias": "hours_to_ship",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "multiply",
+        "values": [
+          { "key": 2, "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 24 }
+        ]
+      }
+    },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    }
+  ],
+  "having": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "notEqual",
+        "left": { "key": 1, "type": { "name": "string", "nullable": true } },
+        "right": { "type": { "name": "string", "nullable": true }, "value": null }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "left": { "key": 2, "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    ]
+  },
+  "orderBy": [
+    { "expression": { "key": 2, "type": { "name": "integer" } } },
+    { "expression": { "operator": "count", "over": "group" }, "direction": "desc" }
+  ]
+}
