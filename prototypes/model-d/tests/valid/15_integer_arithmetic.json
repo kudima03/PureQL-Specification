@@ -1,0 +1,47 @@
+{
+  "description": "add / subtract / multiply over integers stay integer",
+  "query": {
+    "from": { "entity": "order_items" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "double_quantity",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "multiply",
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 2 }
+          ]
+        }
+      },
+      {
+        "alias": "kept",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "subtract",
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+          ]
+        }
+      },
+      {
+        "alias": "with_bonus",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "add",
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 },
+            { "param_name": "bonus", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    ]
+  }
+}

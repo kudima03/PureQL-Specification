@@ -1,0 +1,17 @@
+{
+  "description": "timeDiffSeconds(time, datetime)",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "timeDiffSeconds",
+          "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
+          "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    ]
+  }
+}

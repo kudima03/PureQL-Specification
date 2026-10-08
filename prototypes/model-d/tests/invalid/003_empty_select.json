@@ -1,0 +1,1 @@
+{ "description": "select with no columns", "query": { "from": { "entity": "orders" }, "select": [] } }

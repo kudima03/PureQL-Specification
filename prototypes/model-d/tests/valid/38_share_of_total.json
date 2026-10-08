@@ -1,0 +1,33 @@
+{
+  "description": "Non-grouped select: per-row column divided by an aggregate over all rows (broadcast)",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "total",
+        "type": { "name": "decimal" },
+        "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      },
+      {
+        "alias": "share_of_total",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "divide",
+          "values": [
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            {
+              "operator": "sum",
+              "over": "all",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

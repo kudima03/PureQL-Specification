@@ -1,0 +1,47 @@
+{
+  "description": "A nullable boolean becomes a condition via equal(…, true) or coalesce(…, false)",
+  "query": {
+    "from": { "entity": "users" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "is_verified",
+        "type": { "name": "boolean", "nullable": true },
+        "expression": {
+          "source": "users",
+          "field": "is_verified",
+          "type": { "name": "boolean", "nullable": true }
+        }
+      }
+    ],
+    "where": {
+      "operator": "and",
+      "conditions": [
+        {
+          "operator": "equal",
+          "left": {
+            "source": "users",
+            "field": "is_verified",
+            "type": { "name": "boolean", "nullable": true }
+          },
+          "right": { "type": { "name": "boolean" }, "value": true }
+        },
+        {
+          "operator": "coalesce",
+          "values": [
+            {
+              "source": "users",
+              "field": "accepts_marketing",
+              "type": { "name": "boolean", "nullable": true }
+            },
+            { "type": { "name": "boolean" }, "value": false }
+          ]
+        }
+      ]
+    }
+  }
+}

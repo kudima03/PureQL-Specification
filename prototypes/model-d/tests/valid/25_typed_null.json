@@ -1,0 +1,34 @@
+{
+  "description": "Typed null literals: as an if branch, and integer? widened to decimal? in lifted arithmetic",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "paid_total",
+        "type": { "name": "decimal", "nullable": true },
+        "expression": {
+          "operator": "if",
+          "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+          "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "else": { "type": { "name": "decimal", "nullable": true }, "value": null }
+        }
+      },
+      {
+        "alias": "always_null",
+        "type": { "name": "decimal", "nullable": true },
+        "expression": {
+          "operator": "subtract",
+          "values": [
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            { "type": { "name": "integer", "nullable": true }, "value": null }
+          ]
+        }
+      }
+    ]
+  }
+}

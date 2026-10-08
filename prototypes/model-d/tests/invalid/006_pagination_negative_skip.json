@@ -1,0 +1,14 @@
+{
+  "description": "pagination.skip is negative",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    ],
+    "pagination": { "skip": -1, "take": 10 }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "description": "Field reference with an empty field name",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "", "type": { "name": "uuid" } }
+      }
+    ]
+  }
+}

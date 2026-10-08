@@ -1,0 +1,18 @@
+{
+  "description": "if.condition is a string",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "string" },
+        "expression": {
+          "operator": "if",
+          "condition": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "then": { "type": { "name": "string" }, "value": "a" },
+          "else": { "type": { "name": "string" }, "value": "b" }
+        }
+      }
+    ]
+  }
+}

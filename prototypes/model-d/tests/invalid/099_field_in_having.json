@@ -1,0 +1,24 @@
+{
+  "description": "Bare field in having (group context has no fields)",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "user_id",
+        "type": { "name": "uuid" },
+        "expression": { "key": 0, "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "orders",
+        "type": { "name": "integer" },
+        "expression": { "operator": "count", "over": "group" }
+      }
+    ],
+    "having": {
+      "operator": "equal",
+      "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "paid" }
+    }
+  }
+}

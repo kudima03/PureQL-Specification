@@ -1,0 +1,19 @@
+{
+  "description": "Column declared integer, expression is decimal (divide)",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "divide",
+          "values": [
+            { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 2 }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "description": "Column declared non-null, but a filtered min over a group is nullable",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "min",
+          "over": "group",
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      }
+    ]
+  }
+}

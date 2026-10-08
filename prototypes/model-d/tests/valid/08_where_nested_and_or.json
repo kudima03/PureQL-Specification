@@ -1,0 +1,49 @@
+{
+  "description": "Nested and / or",
+  "query": {
+    "from": { "entity": "orders" },
+    "where": {
+      "operator": "or",
+      "conditions": [
+        {
+          "operator": "and",
+          "conditions": [
+            {
+              "operator": "equal",
+              "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+              "right": { "type": { "name": "string" }, "value": "paid" }
+            },
+            {
+              "operator": "greaterThan",
+              "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "right": { "type": { "name": "integer" }, "value": 100 }
+            }
+          ]
+        },
+        {
+          "operator": "and",
+          "conditions": [
+            {
+              "operator": "equal",
+              "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+              "right": { "type": { "name": "string" }, "value": "pending" }
+            },
+            { "source": "orders", "field": "is_priority", "type": { "name": "boolean" } }
+          ]
+        }
+      ]
+    },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "status",
+        "type": { "name": "string" },
+        "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    ]
+  }
+}

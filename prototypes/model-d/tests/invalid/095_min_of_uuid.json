@@ -1,0 +1,18 @@
+{
+  "description": "min over a uuid selector",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "uuid" },
+        "expression": {
+          "operator": "min",
+          "over": "group",
+          "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        }
+      }
+    ]
+  }
+}

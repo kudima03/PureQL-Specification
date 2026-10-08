@@ -1,0 +1,53 @@
+{
+  "description": "A literal of every type as a column next to a field",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "an_integer",
+        "type": { "name": "integer" },
+        "expression": { "type": { "name": "integer" }, "value": 42 }
+      },
+      {
+        "alias": "a_decimal",
+        "type": { "name": "decimal" },
+        "expression": { "type": { "name": "decimal" }, "value": 19.99 }
+      },
+      {
+        "alias": "a_string",
+        "type": { "name": "string" },
+        "expression": { "type": { "name": "string" }, "value": "hello" }
+      },
+      {
+        "alias": "a_boolean",
+        "type": { "name": "boolean" },
+        "expression": { "type": { "name": "boolean" }, "value": true }
+      },
+      {
+        "alias": "a_date",
+        "type": { "name": "date" },
+        "expression": { "type": { "name": "date" }, "value": "2024-01-31" }
+      },
+      {
+        "alias": "a_time",
+        "type": { "name": "time" },
+        "expression": { "type": { "name": "time" }, "value": "18:30:00" }
+      },
+      {
+        "alias": "a_datetime",
+        "type": { "name": "datetime" },
+        "expression": { "type": { "name": "datetime" }, "value": "2024-01-31T18:30:00Z" }
+      },
+      {
+        "alias": "a_uuid",
+        "type": { "name": "uuid" },
+        "expression": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    ]
+  }
+}

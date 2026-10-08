@@ -1,0 +1,13 @@
+{
+  "description": "Column declared string, expression is decimal",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "string" },
+        "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    ]
+  }
+}

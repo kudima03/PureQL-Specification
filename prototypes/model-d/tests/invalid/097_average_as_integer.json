@@ -1,0 +1,26 @@
+{
+  "description": "average (always decimal) used where integer days are required",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "date" },
+        "expression": {
+          "operator": "dateAddDays",
+          "left": {
+            "operator": "max",
+            "over": "group",
+            "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "right": {
+            "operator": "average",
+            "over": "group",
+            "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+          }
+        }
+      }
+    ]
+  }
+}

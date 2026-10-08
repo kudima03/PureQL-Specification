@@ -1,0 +1,43 @@
+{
+  "description": "if as a column; an integer branch widens to decimal",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "size",
+        "type": { "name": "string" },
+        "expression": {
+          "operator": "if",
+          "condition": {
+            "operator": "greaterThan",
+            "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "right": { "type": { "name": "integer" }, "value": 100 }
+          },
+          "then": { "type": { "name": "string" }, "value": "large" },
+          "else": { "type": { "name": "string" }, "value": "small" }
+        }
+      },
+      {
+        "alias": "discount",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "if",
+          "condition": { "source": "orders", "field": "is_vip", "type": { "name": "boolean" } },
+          "then": {
+            "operator": "multiply",
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "type": { "name": "decimal" }, "value": 0.1 }
+            ]
+          },
+          "else": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    ]
+  }
+}

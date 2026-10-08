@@ -1,0 +1,85 @@
+{
+  "description": "Left join to a subquery: its columns are referenced as nullable and coalesced back to non-null",
+  "query": {
+    "subqueries": [
+      {
+        "name": "user_totals",
+        "query": {
+          "from": { "entity": "orders" },
+          "where": {
+            "operator": "equal",
+            "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "completed" }
+          },
+          "groupBy": [
+            { "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }
+          ],
+          "select": [
+            {
+              "alias": "user_id",
+              "type": { "name": "uuid" },
+              "expression": { "key": 0, "type": { "name": "uuid" } }
+            },
+            {
+              "alias": "total",
+              "type": { "name": "decimal" },
+              "expression": {
+                "operator": "sum",
+                "over": "group",
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              }
+            },
+            {
+              "alias": "orders",
+              "type": { "name": "integer" },
+              "expression": { "operator": "count", "over": "group" }
+            }
+          ]
+        }
+      }
+    ],
+    "from": { "entity": "users" },
+    "joins": [
+      {
+        "type": "left",
+        "subquery": "user_totals",
+        "on": {
+          "operator": "equal",
+          "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+          "right": {
+            "source": "user_totals",
+            "field": "user_id",
+            "type": { "name": "uuid", "nullable": true }
+          }
+        }
+      }
+    ],
+    "select": [
+      {
+        "alias": "name",
+        "type": { "name": "string" },
+        "expression": { "source": "users", "field": "name", "type": { "name": "string" } }
+      },
+      {
+        "alias": "orders",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "coalesce",
+          "values": [
+            { "source": "user_totals", "field": "orders", "type": { "name": "integer", "nullable": true } },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      },
+      {
+        "alias": "total",
+        "type": { "name": "decimal", "nullable": true },
+        "expression": {
+          "source": "user_totals",
+          "field": "total",
+          "type": { "name": "decimal", "nullable": true }
+        }
+      }
+    ]
+  }
+}

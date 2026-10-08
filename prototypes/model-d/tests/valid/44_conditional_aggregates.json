@@ -1,0 +1,69 @@
+{
+  "description": "Count/Sum with a predicate, Sum over a conditional, Any/All — including All as the having condition",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "user_id",
+        "type": { "name": "uuid" },
+        "expression": { "key": 0, "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "refunds",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "count",
+          "over": "group",
+          "predicate": {
+            "operator": "equal",
+            "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "refunded" }
+          }
+        }
+      },
+      {
+        "alias": "paid_total",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "sum",
+          "over": "group",
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      },
+      {
+        "alias": "paid_total_via_if",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "sum",
+          "over": "group",
+          "selector": {
+            "operator": "if",
+            "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+            "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "else": { "type": { "name": "integer" }, "value": 0 }
+          }
+        }
+      },
+      {
+        "alias": "has_dispute",
+        "type": { "name": "boolean" },
+        "expression": {
+          "operator": "any",
+          "over": "group",
+          "predicate": {
+            "operator": "equal",
+            "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "disputed" }
+          }
+        }
+      }
+    ],
+    "having": {
+      "operator": "all",
+      "over": "group",
+      "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+    }
+  }
+}

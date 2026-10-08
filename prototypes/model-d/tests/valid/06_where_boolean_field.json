@@ -1,0 +1,14 @@
+{
+  "description": "A boolean field is a condition on its own",
+  "query": {
+    "from": { "entity": "users" },
+    "where": { "source": "users", "field": "is_active", "type": { "name": "boolean" } },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    ]
+  }
+}

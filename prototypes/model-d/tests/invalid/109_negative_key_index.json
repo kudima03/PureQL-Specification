@@ -1,0 +1,14 @@
+{
+  "description": "Group key with a negative index",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "user_id",
+        "type": { "name": "uuid" },
+        "expression": { "key": -1, "type": { "name": "uuid" } }
+      }
+    ]
+  }
+}

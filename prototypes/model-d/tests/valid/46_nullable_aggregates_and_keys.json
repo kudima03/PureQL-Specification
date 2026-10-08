@@ -1,0 +1,74 @@
+{
+  "description": "Nullable group key; unfiltered aggregates over a group are non-null, filtered ones are nullable and coalesced",
+  "query": {
+    "from": { "entity": "orders" },
+    "joins": [
+      {
+        "type": "left",
+        "entity": "coupons",
+        "on": {
+          "operator": "equal",
+          "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+        }
+      }
+    ],
+    "groupBy": [
+      {
+        "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
+        "alias": "coupon_code"
+      }
+    ],
+    "select": [
+      {
+        "alias": "coupon_code",
+        "type": { "name": "string", "nullable": true },
+        "expression": { "key": 0, "type": { "name": "string", "nullable": true } }
+      },
+      {
+        "alias": "last_order_at",
+        "type": { "name": "datetime" },
+        "expression": {
+          "operator": "max",
+          "over": "group",
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      },
+      {
+        "alias": "avg_order_at",
+        "type": { "name": "datetime" },
+        "expression": {
+          "operator": "average",
+          "over": "group",
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      },
+      {
+        "alias": "min_paid_total",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "coalesce",
+          "values": [
+            {
+              "operator": "min",
+              "over": "group",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+            },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    ],
+    "having": {
+      "operator": "greaterThan",
+      "left": {
+        "operator": "max",
+        "over": "group",
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      },
+      "right": { "param_name": "since", "type": { "name": "datetime" } }
+    },
+    "orderBy": [{ "expression": { "key": 0, "type": { "name": "string", "nullable": true } } }]
+  }
+}

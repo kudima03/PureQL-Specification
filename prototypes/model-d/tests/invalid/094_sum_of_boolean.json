@@ -1,0 +1,18 @@
+{
+  "description": "sum over a boolean selector",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "decimal" },
+        "expression": {
+          "operator": "sum",
+          "over": "group",
+          "selector": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      }
+    ]
+  }
+}

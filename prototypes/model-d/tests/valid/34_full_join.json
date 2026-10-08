@@ -1,0 +1,42 @@
+{
+  "description": "Full join: both sides nullable, coalesced into one key",
+  "query": {
+    "from": { "entity": "stock", "alias": "s" },
+    "joins": [
+      {
+        "type": "full",
+        "entity": "catalog",
+        "alias": "c",
+        "on": {
+          "operator": "equal",
+          "left": { "source": "s", "field": "product_id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "source": "c", "field": "product_id", "type": { "name": "uuid", "nullable": true } }
+        }
+      }
+    ],
+    "select": [
+      {
+        "alias": "product_id",
+        "type": { "name": "uuid", "nullable": true },
+        "expression": {
+          "operator": "coalesce",
+          "values": [
+            { "source": "s", "field": "product_id", "type": { "name": "uuid", "nullable": true } },
+            { "source": "c", "field": "product_id", "type": { "name": "uuid", "nullable": true } }
+          ]
+        }
+      },
+      {
+        "alias": "in_stock",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "coalesce",
+          "values": [
+            { "source": "s", "field": "quantity", "type": { "name": "integer", "nullable": true } },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    ]
+  }
+}

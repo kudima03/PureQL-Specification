@@ -1,0 +1,18 @@
+{
+  "description": "equal(uuid field, string literal)",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    ],
+    "where": {
+      "operator": "equal",
+      "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+      "right": { "type": { "name": "string" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+    }
+  }
+}

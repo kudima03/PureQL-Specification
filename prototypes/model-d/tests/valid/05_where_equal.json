@@ -1,0 +1,23 @@
+{
+  "description": "Filter on equality with a string literal",
+  "query": {
+    "from": { "entity": "users" },
+    "where": {
+      "operator": "equal",
+      "left": { "source": "users", "field": "status", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "active" }
+    },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "alias": "name",
+        "type": { "name": "string" },
+        "expression": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    ]
+  }
+}

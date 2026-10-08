@@ -1,0 +1,13 @@
+{
+  "description": "from with only an alias",
+  "query": {
+    "from": { "alias": "o" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    ]
+  }
+}

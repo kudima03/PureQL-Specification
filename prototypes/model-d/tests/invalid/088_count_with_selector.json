@@ -1,0 +1,18 @@
+{
+  "description": "count does not take a selector",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "integer" },
+        "expression": {
+          "operator": "count",
+          "over": "group",
+          "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        }
+      }
+    ]
+  }
+}

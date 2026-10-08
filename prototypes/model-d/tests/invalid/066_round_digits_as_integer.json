@@ -1,0 +1,21 @@
+{
+  "description": "round with digits is decimal, so not usable as integer days",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "date" },
+        "expression": {
+          "operator": "dateAddDays",
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": {
+            "operator": "round",
+            "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "digits": { "type": { "name": "integer" }, "value": 0 }
+          }
+        }
+      }
+    ]
+  }
+}

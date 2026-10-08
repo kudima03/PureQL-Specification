@@ -1,0 +1,13 @@
+{
+  "description": "Type name number (split into integer / decimal)",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "c",
+        "type": { "name": "decimal" },
+        "expression": { "source": "orders", "field": "total", "type": { "name": "number" } }
+      }
+    ]
+  }
+}

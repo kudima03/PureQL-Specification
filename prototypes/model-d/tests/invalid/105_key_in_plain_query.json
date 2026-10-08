@@ -1,0 +1,9 @@
+{
+  "description": "Group key reference in a query without groupBy",
+  "query": {
+    "from": { "entity": "orders" },
+    "select": [
+      { "alias": "c", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+    ]
+  }
+}

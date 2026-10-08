@@ -1,0 +1,10 @@
+{
+  "description": "any without a predicate",
+  "query": {
+    "from": { "entity": "orders" },
+    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "select": [
+      { "alias": "c", "type": { "name": "boolean" }, "expression": { "operator": "any", "over": "group" } }
+    ]
+  }
+}
