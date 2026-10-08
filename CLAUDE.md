@@ -2,7 +2,7 @@
 
 ## What this project is
 
-A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language with LINQ-like semantics. The goal is a type system enforced by the schema alone: every typing and placement rule is checked by a JSON Schema validator, and only name resolution (entities, fields, parameters, group keys, subqueries) is left to the interpreter. `samples/` holds queries that must stay valid; `tests/invalid/` holds queries that must stay invalid.
+A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language. The goal is a type system enforced by the schema alone: every typing and placement rule is checked by a JSON Schema validator, and only name resolution (entities, fields, parameters, group keys, subqueries) is left to the interpreter. `samples/` holds queries that must stay valid; `tests/invalid/` holds queries that must stay invalid.
 
 ## Key files
 
@@ -47,7 +47,7 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
 - Invariant: the type of an expression is determined by its subtree alone. Never add a rule that infers a type from the context.
-- C# null semantics. Arithmetic, `concat`, date math, `if`, `round` / `floor` / `ceiling` are lifted. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
+- Null semantics: arithmetic, `concat`, date math, `if`, `round` / `floor` / `ceiling` are lifted. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
 - `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
 - `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, and no lookahead.
 

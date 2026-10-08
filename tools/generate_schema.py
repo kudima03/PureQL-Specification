@@ -18,7 +18,7 @@ Contexts:
 
 Subtyping (each arrow means "accepted wherever the right side is expected"):
   T -> T.nullable                      a non-null value is a valid T?
-  integer -> decimal                   implicit widening, as in C#
+  integer -> decimal                   implicit widening
 
 There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
@@ -31,7 +31,7 @@ its alias and type, and the validator checks the expression against that
 type, so each subquery has a verified output schema. Matching a reference to
 that schema is name resolution and is left to the interpreter.
 
-Null semantics follow C# / LINQ to Objects:
+Null semantics:
   - arithmetic, concat, date/time math, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
@@ -297,7 +297,7 @@ for ctx, rules in CONTEXTS.items():
 
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the
-    # selector are skipped, as in Enumerable.Sum / Min / Max over T?.
+    # selector are skipped.
     if rules["over"]:
         over = {"enum": rules["over"]}
         predicate = expr("boolean", "row")
