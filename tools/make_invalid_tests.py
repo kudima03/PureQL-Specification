@@ -36,6 +36,11 @@ def col(t, expression, alias="c", nullable=False):
     return {"alias": alias, "type": T(t, nullable), "expression": expression}
 
 
+def group_key(t, expression, nullable=False):
+    """A groupBy item; `t` is the type the key would have if the expression were valid."""
+    return {"type": T(t, nullable), "expression": expression}
+
+
 def op(name, **operands):
     return {"operator": name, **operands}
 
@@ -52,7 +57,7 @@ count = agg("count")
 plain = {"from": {"entity": "orders"}, "select": [col("uuid", F("id", "uuid"), "id")]}
 grouped = {
     "from": {"entity": "orders"},
-    "groupBy": [{"expression": F("user_id", "uuid")}],
+    "groupBy": [group_key("uuid", F("user_id", "uuid"))],
     "select": [col("uuid", key0, "user_id"), col("integer", count, "orders")],
 }
 subquery = {"name": "recent", "query": plain}
@@ -255,7 +260,7 @@ CASES = [
         q(plain, joins=[{"type": "inner", "entity": "users",
                          "on": op("greaterThan", left=F("score", "integer", "users"), right=agg("count", "all"))}])),
     ("aggregate_in_group_key", "Aggregate as a groupBy key",
-        q(grouped, groupBy=[{"expression": agg("count", "all")}])),
+        q(grouped, groupBy=[group_key("integer", agg("count", "all"))])),
     ("over_group_in_plain_query", "over: group in a query without groupBy", select("integer", agg("count", "group"))),
     ("aggregate_without_over", "Aggregate without over", select("integer", op("count"), grouped)),
     ("unknown_over_value", "over: window", select("integer", agg("count", "window"), grouped)),
@@ -279,6 +284,16 @@ CASES = [
                           right=agg("average", selector=F("quantity", "integer"))), grouped)),
 
     # --- grouping and keys --------------------------------------------------
+    ("group_key_without_type", "groupBy item without a declared type",
+        q(grouped, groupBy=[{"expression": F("user_id", "uuid")}])),
+    ("group_key_type_mismatch", "groupBy key declared string, expression is a date",
+        q(grouped, groupBy=[group_key("string", F("order_date", "date"))])),
+    ("group_key_type_too_narrow", "groupBy key declared integer, expression is decimal (divide)",
+        q(grouped, groupBy=[group_key("integer", op("divide", values=[F("quantity", "integer"), L("integer", 2)]))])),
+    ("group_key_non_null_for_nullable", "groupBy key declared non-null, expression is a nullable field",
+        q(grouped, groupBy=[group_key("string", F("coupon_code", "string", nullable=True))])),
+    ("group_key_list_type", "groupBy key declared as a list type",
+        q(grouped, groupBy=[{"type": T("uuidList"), "expression": F("user_id", "uuid")}])),
     ("having_without_group_by", "having without groupBy",
         q(plain, having=op("greaterThan", left=agg("count", "all"), right=L("integer", 1)))),
     ("field_in_having", "Bare field in having (group context has no fields)", having(eq_status)),
@@ -293,7 +308,7 @@ CASES = [
         q(grouped, orderBy=[{"expression": F("total", "decimal")}])),
     ("key_in_plain_query", "Group key reference in a query without groupBy", select("uuid", key0)),
     ("key_in_where", "Group key reference in where", q(grouped, where=op("equal", left=key0, right=key0))),
-    ("key_in_group_by", "Group key reference inside groupBy itself", q(grouped, groupBy=[{"expression": key0}])),
+    ("key_in_group_by", "Group key reference inside groupBy itself", q(grouped, groupBy=[group_key("uuid", key0)])),
     ("key_in_aggregate_selector", "Group key inside an aggregate selector (row context)",
         select("integer", agg("sum", selector={"key": 0, "type": T("integer")}), grouped)),
     ("negative_key_index", "Group key with a negative index",

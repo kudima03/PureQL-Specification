@@ -1,8 +1,8 @@
 {
-  "description": "Group key reference in where",
+  "description": "Group key reference inside groupBy itself",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [{ "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }],
     "select": [
       {
         "alias": "user_id",
@@ -14,11 +14,6 @@
         "type": { "name": "integer" },
         "expression": { "operator": "count", "over": "group" }
       }
-    ],
-    "where": {
-      "operator": "equal",
-      "left": { "key": 0, "type": { "name": "uuid" } },
-      "right": { "key": 0, "type": { "name": "uuid" } }
-    }
+    ]
   }
 }

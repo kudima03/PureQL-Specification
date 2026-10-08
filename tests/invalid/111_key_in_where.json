@@ -1,8 +1,13 @@
 {
-  "description": "Bare field in having (group context has no fields)",
+  "description": "Group key reference in where",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",
@@ -15,10 +20,10 @@
         "expression": { "operator": "count", "over": "group" }
       }
     ],
-    "having": {
+    "where": {
       "operator": "equal",
-      "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-      "right": { "type": { "name": "string" }, "value": "paid" }
+      "left": { "key": 0, "type": { "name": "uuid" } },
+      "right": { "key": 0, "type": { "name": "uuid" } }
     }
   }
 }

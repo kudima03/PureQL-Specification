@@ -13,20 +13,23 @@
   ],
   "groupBy": [
     {
-      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
-      "alias": "user_id"
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     },
     {
-      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
-      "alias": "coupon"
+      "alias": "coupon",
+      "type": { "name": "string", "nullable": true },
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
     },
     {
+      "alias": "days_to_ship",
+      "type": { "name": "integer" },
       "expression": {
         "operator": "dateDiffDays",
         "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
         "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
-      },
-      "alias": "days_to_ship"
+      }
     }
   ],
   "select": [

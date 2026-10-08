@@ -14,7 +14,7 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `from` | yes | Source to read: `{ "entity": … }` or `{ "subquery": … }`, with an optional `alias` |
 | `joins` | no | Further sources, each with a join type and an `on` condition |
 | `where` | no | Row filter, before grouping |
-| `groupBy` | no | Group keys: any row expressions |
+| `groupBy` | no | Group keys, each `{ alias?, type, expression }` with any row expression |
 | `having` | no | Group filter; only with `groupBy` |
 | `select` | yes | Result columns, each `{ alias, type, expression }` |
 | `orderBy` | no | Sort keys, each `{ expression, direction }` |
@@ -106,7 +106,7 @@ Literal patterns use `[0-9]`, never `\d`, and no lookahead. Python's `re` treats
 | Literal | `{ "type": { "name": "string" }, "value": "active" }` | Always non-null unless `value` is `null` |
 | Parameter | `{ "param_name": "since", "type": { "name": "datetime" } }` | Bound at execution time; may be nullable |
 | List | `{ "type": { "name": "stringList" }, "value": ["a", "b"] }`, a list parameter, or a subquery column | A value, not a column. Accepted only by `in` |
-| Group key | `{ "key": 0, "type": { "name": "uuid" } }` | Index into `groupBy`; only in grouped `select`, `having` and `orderBy` |
+| Group key | `{ "key": 0, "type": { "name": "uuid" } }` | Index into `groupBy`, repeating that key's declared type; only in grouped `select`, `having` and `orderBy` |
 | Operator | `{ "operator": "add", "values": [ … ] }` | See [Operators](#operators) |
 
 Fields, parameters and group keys declare their type at the point of use, including nullability. For example, a field read from the optional side of an outer join is declared nullable.
@@ -156,7 +156,20 @@ A non-null boolean in row context, evaluated per row after the joins. A boolean 
 
 ### `groupBy` and group keys
 
-`groupBy` lists one or more keys, each `{ "expression": <row expression>, "alias"?: … }`. A key may be computed, for example a `dateDiffDays` or an `if` bucket. Keys are referenced by index as `{ "key": i, "type": … }` and behave like ordinary values of their type: they can be selected, compared, used in arithmetic and sorted. Keys are **not** added to the result automatically; select the ones you need.
+`groupBy` lists one or more keys:
+
+```json
+{ "alias": "days_to_ship", "type": { "name": "integer" },
+  "expression": { "operator": "dateDiffDays",
+                  "left":  { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+                  "right": { "source": "orders", "field": "order_date",   "type": { "name": "date" } } } }
+```
+
+- **Expression.** A key may be any row expression, including a computed one such as a `dateDiffDays` or an `if` bucket.
+- **Type.** The `type` is required and checked against the expression exactly like a `select` column.
+- **Referencing.** Keys are referenced by index as `{ "key": i, "type": … }`, and the reference repeats the key's declared type exactly. Matching the two is therefore a plain lookup.
+- **Use.** A key behaves like an ordinary value of its type: it can be selected, compared, used in arithmetic and sorted.
+- **Result.** Keys are **not** added to the result automatically; select the ones you need.
 
 ### `having`
 
@@ -282,16 +295,16 @@ Everything except name resolution is checked by the schema:
 | Shape of every node, literal formats, unknown keys | schema |
 | Operand and result types, nullability, implicit conversions | schema |
 | Where fields, keys and aggregates may appear (contexts) | schema |
-| Each `select` column's expression against its declared type | schema |
+| Each `select` column's and `groupBy` key's expression against its declared type | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
 | Entities, fields and parameters exist and have the declared types | interpreter |
 | Fields from the optional side of an outer join are declared nullable after the join | interpreter |
-| Group key indexes exist and match the declared key types | interpreter |
+| A group key reference points to an existing key and repeats its declared type | interpreter |
 | Subquery names are unique; a subquery reads only from earlier ones | interpreter |
 | Referenced subquery columns exist with the declared types | interpreter |
 | Column aliases are unique within a `select` | interpreter |
 
-The interpreter's part is a lookup: names and declared types are compared against the catalog and the subquery headers. No type inference is needed, because every expression's type follows from its subtree and every column's type is declared.
+The interpreter's part is a lookup that needs no type inference. Every expression that is referenced from elsewhere declares its type, and the schema has already checked that declaration: `select` columns (referenced as subquery columns) and `groupBy` keys (referenced as `{ "key": i }`). The interpreter only compares names and declared types against the catalog, the `groupBy` list and the subquery headers.
 
 ### Not specified yet
 

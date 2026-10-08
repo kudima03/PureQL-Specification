@@ -57,7 +57,8 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
 - Inside `join.on`, fields keep their stored nullability. After an outer join, fields of the optional side are declared nullable.
 - `select` columns are `{ alias, type, expression }` with alias and type required. The schema checks the expression against the declared type.
-- `groupBy` items are `{ expression, alias? }`, and any row expression can be a key. Keys are referenced as `{ "key": i, "type": … }` and are never emitted automatically.
+- `groupBy` items are `{ alias?, type, expression }`: any row expression can be a key, and its declared type is checked like a `select` column. Keys are referenced as `{ "key": i, "type": … }`, repeating that declared type exactly, and are never emitted automatically.
+- Anything referenced from elsewhere (subquery columns, group keys) must declare its type and have it checked by the schema. Otherwise the interpreter would need type inference, which breaks the design goal.
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.

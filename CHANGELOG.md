@@ -37,7 +37,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **`datetime` literals need an offset**: `Z` or `±hh:mm`; `-00:00` is rejected.
 - **Field references use `source`**: `{ "entity": …, "field": …, "type": … }` becomes `{ "source": …, "field": …, "type": … }`.
 - **`select` columns declare alias and type**: each item is `{ "alias": …, "type": …, "expression": … }`.
-- **Group keys are explicit**: `groupBy` items are `{ "expression": … }`, and keys no longer appear in the result automatically. Select them with `{ "key": i, "type": … }`.
+- **Group keys are explicit and typed**: `groupBy` items are `{ "type": …, "expression": … }` with an optional `alias`, and keys no longer appear in the result automatically. Select them with `{ "key": i, "type": … }`, repeating the key's type.
 - **`orderBy` items are `{ "expression": …, "direction": … }`**: with `groupBy`, sort by a group key or an aggregate.
 - **Lists are values, not columns**: `stringArray` and the other array types become `stringList` etc. and are accepted only by `in`.
 - **`having` requires `groupBy`**, `groupBy` cannot be empty, and fields cannot appear in grouped `select`, `having` or `orderBy` outside an aggregate.

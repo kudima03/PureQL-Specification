@@ -2,7 +2,12 @@
   "description": "Aggregate inside an aggregate selector (old ambiguity B2)",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "c",

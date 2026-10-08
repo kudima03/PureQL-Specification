@@ -1,8 +1,17 @@
 {
-  "description": "Group key reference inside groupBy itself",
+  "description": "groupBy key declared non-null, expression is a nullable field",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "key": 0, "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "string" },
+        "expression": {
+          "source": "orders",
+          "field": "coupon_code",
+          "type": { "name": "string", "nullable": true }
+        }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",

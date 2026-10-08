@@ -20,7 +20,12 @@
     },
     "right": { "type": { "name": "integer" }, "value": 0 }
   },
-  "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
   "select": [
     { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
     {

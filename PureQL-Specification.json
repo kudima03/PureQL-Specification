@@ -9488,18 +9488,375 @@
     "groupKey": {
       "type": "object",
       "required": [
+        "type",
         "expression"
       ],
       "properties": {
-        "expression": {
-          "$ref": "#/$defs/value@row"
-        },
         "alias": {
           "type": "string",
           "minLength": 1
-        }
+        },
+        "type": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/type.integer"
+            },
+            {
+              "$ref": "#/$defs/type.integer.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.decimal"
+            },
+            {
+              "$ref": "#/$defs/type.decimal.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.string"
+            },
+            {
+              "$ref": "#/$defs/type.string.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.boolean"
+            },
+            {
+              "$ref": "#/$defs/type.boolean.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.date"
+            },
+            {
+              "$ref": "#/$defs/type.date.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.time"
+            },
+            {
+              "$ref": "#/$defs/type.time.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.datetime"
+            },
+            {
+              "$ref": "#/$defs/type.datetime.nullable"
+            },
+            {
+              "$ref": "#/$defs/type.uuid"
+            },
+            {
+              "$ref": "#/$defs/type.uuid.nullable"
+            }
+          ]
+        },
+        "expression": true
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.integer"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/integer@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.integer.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/integer.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.decimal"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/decimal@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.decimal.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/decimal.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.string"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/string@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/string.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.boolean"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/boolean@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.boolean.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/boolean.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.date"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/date@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/date.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.time"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/time@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/time.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.datetime"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/datetime@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/datetime.nullable@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.uuid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/uuid@row"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "$ref": "#/$defs/type.uuid.nullable"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/uuid.nullable@row"
+              }
+            }
+          }
+        }
+      ]
     },
     "groupedQuery": {
       "type": "object",

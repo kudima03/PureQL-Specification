@@ -1,8 +1,13 @@
 {
-  "description": "Aggregate as a groupBy key",
+  "description": "having is a count",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "type": { "name": "integer" }, "expression": { "operator": "count", "over": "all" } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",
@@ -14,6 +19,7 @@
         "type": { "name": "integer" },
         "expression": { "operator": "count", "over": "group" }
       }
-    ]
+    ],
+    "having": { "operator": "count", "over": "group" }
   }
 }

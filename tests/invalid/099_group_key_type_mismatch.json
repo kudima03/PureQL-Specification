@@ -1,8 +1,13 @@
 {
-  "description": "having is a count",
+  "description": "groupBy key declared string, expression is a date",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "string" },
+        "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",
@@ -14,7 +19,6 @@
         "type": { "name": "integer" },
         "expression": { "operator": "count", "over": "group" }
       }
-    ],
-    "having": { "operator": "count", "over": "group" }
+    ]
   }
 }

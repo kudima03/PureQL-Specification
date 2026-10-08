@@ -1,8 +1,13 @@
 {
-  "description": "Field as grouped orderBy key",
+  "description": "Nullable boolean group key as the having condition",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",
@@ -15,6 +20,6 @@
         "expression": { "operator": "count", "over": "group" }
       }
     ],
-    "orderBy": [{ "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } }]
+    "having": { "key": 0, "type": { "name": "boolean", "nullable": true } }
   }
 }

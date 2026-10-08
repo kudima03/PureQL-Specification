@@ -2,7 +2,12 @@
   "description": "Non-key field in grouped select",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",

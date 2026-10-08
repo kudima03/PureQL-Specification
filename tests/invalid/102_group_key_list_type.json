@@ -1,8 +1,13 @@
 {
-  "description": "Nullable boolean group key as the having condition",
+  "description": "groupBy key declared as a list type",
   "query": {
     "from": { "entity": "orders" },
-    "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+    "groupBy": [
+      {
+        "type": { "name": "uuidList" },
+        "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    ],
     "select": [
       {
         "alias": "user_id",
@@ -14,7 +19,6 @@
         "type": { "name": "integer" },
         "expression": { "operator": "count", "over": "group" }
       }
-    ],
-    "having": { "key": 0, "type": { "name": "boolean", "nullable": true } }
+    ]
   }
 }

@@ -1,5 +1,5 @@
 {
-  "description": "and.conditions given a row predicate instead of an array (old hole A1)",
+  "description": "groupBy item without a declared type",
   "query": {
     "from": { "entity": "orders" },
     "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
@@ -14,14 +14,6 @@
         "type": { "name": "integer" },
         "expression": { "operator": "count", "over": "group" }
       }
-    ],
-    "having": {
-      "operator": "and",
-      "conditions": {
-        "operator": "equal",
-        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-        "right": { "type": { "name": "string" }, "value": "paid" }
-      }
-    }
+    ]
   }
 }

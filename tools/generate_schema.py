@@ -415,16 +415,19 @@ defs["pagination"] = obj(
         "take": {"type": "integer", "minimum": 1},
     },
 )
-defs["groupKey"] = obj(["expression"], {"expression": ref("value@row"), "alias": NAME})
-
 ALL_TYPES = [f"type.{t}{suffix(n)}" for t in TYPES for n in [False, True]]
 
-for ctx in ["projection", "group"]:
-    # The expression is checked against the declared type (narrower types and
-    # non-null values are accepted: an integer expression in a decimal column).
-    defs[f"selectItem@{ctx}"] = {
+
+def typed_item(ctx, required):
+    """{ alias, type, expression }: the expression is checked against the declared type.
+
+    Narrower types and non-null values are accepted (an integer expression in a
+    decimal column). Declaring the type is what lets a reference to the item
+    (a subquery column, a group key) be checked by lookup, without inference.
+    """
+    return {
         **obj(
-            ["alias", "type", "expression"],
+            required,
             {"alias": NAME, "type": {"anyOf": [ref(d) for d in ALL_TYPES]}, "expression": True},
         ),
         "allOf": [
@@ -436,6 +439,13 @@ for ctx in ["projection", "group"]:
             for n in [False, True]
         ],
     }
+
+
+# A group key declares its type; `{ "key": i, "type": … }` must repeat it exactly.
+defs["groupKey"] = typed_item("row", ["type", "expression"])
+
+for ctx in ["projection", "group"]:
+    defs[f"selectItem@{ctx}"] = typed_item(ctx, ["alias", "type", "expression"])
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"value@{ctx}"), "direction": DIRECTION}
     )

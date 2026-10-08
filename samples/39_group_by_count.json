@@ -1,6 +1,11 @@
 {
   "from": { "entity": "orders" },
-  "groupBy": [{ "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }],
+  "groupBy": [
+    {
+      "type": { "name": "string" },
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
   "select": [
     {
       "alias": "status",

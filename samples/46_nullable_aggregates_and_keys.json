@@ -13,8 +13,9 @@
   ],
   "groupBy": [
     {
-      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
-      "alias": "coupon_code"
+      "alias": "coupon_code",
+      "type": { "name": "string", "nullable": true },
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
     }
   ],
   "select": [

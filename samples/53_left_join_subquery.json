@@ -9,7 +9,12 @@
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
           "right": { "type": { "name": "string" }, "value": "completed" }
         },
-        "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+        "groupBy": [
+          {
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
         "select": [
           {
             "alias": "user_id",

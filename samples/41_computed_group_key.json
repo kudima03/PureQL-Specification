@@ -2,6 +2,8 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
+      "alias": "size_bucket",
+      "type": { "name": "string" },
       "expression": {
         "operator": "if",
         "condition": {
@@ -11,8 +13,7 @@
         },
         "then": { "type": { "name": "string" }, "value": "large" },
         "else": { "type": { "name": "string" }, "value": "small" }
-      },
-      "alias": "size_bucket"
+      }
     }
   ],
   "select": [

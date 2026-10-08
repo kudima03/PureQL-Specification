@@ -41,7 +41,10 @@
       "query": {
         "from": { "subquery": "paid_lines" },
         "groupBy": [
-          { "expression": { "source": "paid_lines", "field": "user_id", "type": { "name": "uuid" } } }
+          {
+            "type": { "name": "uuid" },
+            "expression": { "source": "paid_lines", "field": "user_id", "type": { "name": "uuid" } }
+          }
         ],
         "having": {
           "operator": "greaterThan",
