@@ -1,0 +1,26 @@
+// A subquery without groupBy selecting an aggregate over group
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "integer" },
+            "expression": { "operator": "count", "over": "group" }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

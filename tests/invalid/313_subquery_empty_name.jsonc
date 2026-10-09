@@ -1,0 +1,26 @@
+// Subquery with an empty name
+{
+  "subqueries": [
+    {
+      "name": "",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

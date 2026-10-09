@@ -1,0 +1,25 @@
+// A subquery without from
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

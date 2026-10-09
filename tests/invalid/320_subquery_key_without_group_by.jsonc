@@ -1,0 +1,26 @@
+// A subquery without groupBy selecting a group key
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "key": 0, "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

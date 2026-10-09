@@ -1,0 +1,23 @@
+// from an inline query (subqueries must be declared and named)
+{
+  "from": {
+    "query": {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "type": { "name": "uuid" },
+          "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    "alias": "recent"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}
