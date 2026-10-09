@@ -11,6 +11,15 @@ jobs:
     permissions:
       contents: write
 
+    # ajv prints every file it checks to stdout, and for an invalid query the
+    # whole error list: over 10 000 lines. Steps below discard stdout. A file
+    # that fails its test is reported on stderr, which stays in the log
+    # (with the errors of a valid query that was rejected), so only failures
+    # are shown, plus one summary line per step.
+    # npm deprecation notices come from ajv-cli's own dependencies; hide them.
+    env:
+      npm_config_loglevel: error
+
     steps:
       # Fetch the tagged commit.
       - uses: actions/checkout@v4
@@ -18,15 +27,17 @@ jobs:
       # Same checks as validate.yml, so nothing broken is ever released:
       # every sample and every query in tests/valid must be accepted.
       - name: Valid queries must pass
-        run: >
-          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false
-          -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
+        run: |
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid > /dev/null
+          echo "$(ls samples/*.json tests/valid/*.jsonc | wc -l) valid queries accepted"
 
       # Every query in tests/invalid must be rejected, each file on its own.
       - name: Invalid queries must fail
-        run: >
-          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false
-          -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
+        run: |
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid > /dev/null
+          echo "$(ls tests/invalid/*.jsonc | wc -l) invalid queries rejected"
 
       # The tag must equal the `version` field of the schema, so a release
       # never ships a schema that names another version. jq is preinstalled
