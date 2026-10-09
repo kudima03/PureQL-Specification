@@ -423,7 +423,6 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 | Path | Purpose |
 |---|---|
 | `tools/generate_schema.py` | Generates `PureQL-Specification.json`. Edit this file, never the schema |
-| `tools/jsonfmt.py` | Compact JSON formatting for samples and tests |
 
 ```bash
 python3 tools/generate_schema.py   # after changing the generator

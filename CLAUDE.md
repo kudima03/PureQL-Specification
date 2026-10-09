@@ -8,7 +8,6 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 
 - `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
 - `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
-- `tools/jsonfmt.py` — compact JSON formatting used for samples and tests
 - `samples/` — valid queries, numbered from simple to complex
 - `tests/valid/` — valid queries that are not samples (`001_deep_nesting.jsonc` guards against exponential validation)
 - `tests/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
@@ -119,8 +118,8 @@ What an interpreter computes is defined under **Semantics** in `README.md`: eval
 
 ## Adding samples and tests
 
-1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Use `tools/jsonfmt.py` formatting, declare every column's type by hand, and update the samples table in `README.md`.
-2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query in `tools/jsonfmt.py` formatting. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
+1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it like the existing samples (2-space indent, an object or array on one line while it fits in 110 columns), declare every column's type by hand, and update the samples table in `README.md`.
+2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query, formatted like the samples. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
 3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
 4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
 5. Run both ajv commands from [Schema validation](#schema-validation) before committing.
