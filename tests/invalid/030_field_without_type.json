@@ -1,9 +1,0 @@
-{
-  "description": "Field reference without a type",
-  "query": {
-    "from": { "entity": "orders" },
-    "select": [
-      { "alias": "c", "type": { "name": "uuid" }, "expression": { "source": "orders", "field": "id" } }
-    ]
-  }
-}

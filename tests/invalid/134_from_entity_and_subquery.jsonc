@@ -1,0 +1,11 @@
+// from naming both an entity and a subquery
+{
+  "from": { "entity": "orders", "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

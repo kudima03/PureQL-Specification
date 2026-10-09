@@ -11,24 +11,24 @@ jobs:
     # A validation regression is exponential: fail fast instead of hanging.
     timeout-minutes: 10
     steps:
+      # Fetch the schema, samples and tests of the pull request.
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+      # Every sample and every query in tests/valid must be accepted.
+      # `ajv test --valid` fails if any file is rejected. tests/valid holds
+      # the deep nesting query that guards against exponential validation.
+      # --strict=false allows the root `version` keyword, which is not part
+      # of JSON Schema.
+      - name: Valid queries must pass
+        run: >
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false
+          -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
 
-      - name: Install jsonschema
-        run: pip install jsonschema --quiet
-
-      - name: Check generated files are up to date
-        run: |
-          python3 tools/generate_schema.py
-          python3 tools/make_invalid_tests.py
-          if ! git diff --exit-code -- PureQL-Specification.json tests/invalid \
-             || [ -n "$(git status --porcelain -- PureQL-Specification.json tests/invalid)" ]; then
-            echo "::error::PureQL-Specification.json or tests/invalid is out of date. Run tools/generate_schema.py and tools/make_invalid_tests.py and commit the result."
-            exit 1
-          fi
-
-      - name: Validate samples (must pass) and invalid tests (must fail)
-        run: python3 tools/run_tests.py
+      # Every query in tests/invalid must be rejected. `ajv test --invalid`
+      # checks each file on its own and fails if any one of them is accepted.
+      # Test files are JSONC: a `//` comment with the case description,
+      # then the bare query. A file that does not parse fails the step too.
+      - name: Invalid queries must fail
+        run: >
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false
+          -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid

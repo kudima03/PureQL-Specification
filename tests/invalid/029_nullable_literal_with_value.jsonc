@@ -1,0 +1,11 @@
+// Literal typed decimal? with a non-null value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": { "type": { "name": "decimal", "nullable": true }, "value": 5 }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+// Subquery entry without a query
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "subqueries": [{ "name": "recent" }]
+}

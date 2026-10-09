@@ -1,0 +1,24 @@
+// subqueries given an object
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "subqueries": {
+    "name": "recent",
+    "query": {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "type": { "name": "uuid" },
+          "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,11 @@
+// Field declared with type null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": { "source": "orders", "field": "legacy", "type": { "name": "null" } }
+    }
+  ]
+}

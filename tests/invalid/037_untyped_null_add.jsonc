@@ -1,0 +1,17 @@
+// Regression: add over untyped nulls (type would come from nowhere)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "add",
+        "values": [
+          { "type": { "name": "null" }, "value": null },
+          { "type": { "name": "null" }, "value": null }
+        ]
+      }
+    }
+  ]
+}

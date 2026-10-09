@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Writes tests/invalid/*.json: each case is a valid base query with exactly one thing broken.
+"""Writes tests/invalid/*.jsonc: each case is a valid base query with exactly one thing broken.
 
 Cases are numbered in the order of CASES, from structural mistakes to context,
-grouping and subquery rules.
+grouping and subquery rules. A file is the bare query, so a validator checks it
+directly, preceded by a `//` comment with the case description (JSONC).
 """
 import copy
 from pathlib import Path
@@ -363,8 +364,8 @@ CASES = [
 out = Path(__file__).resolve().parent.parent / "tests" / "invalid"
 names = [name for name, _, _ in CASES]
 assert len(names) == len(set(names)), "duplicate case names"
-for old in out.glob("*.json"):
+for old in [*out.glob("*.json"), *out.glob("*.jsonc")]:
     old.unlink()
 for i, (name, description, query) in enumerate(CASES, 1):
-    (out / f"{i:03d}_{name}.json").write_text(dumps({"description": description, "query": query}) + "\n")
+    (out / f"{i:03d}_{name}.jsonc").write_text(f"// {description}\n{dumps(query)}\n")
 print(f"{len(CASES)} invalid cases written")

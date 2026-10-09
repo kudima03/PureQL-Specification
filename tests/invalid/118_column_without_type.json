@@ -1,9 +1,0 @@
-{
-  "description": "Select column without a declared type",
-  "query": {
-    "from": { "entity": "orders" },
-    "select": [
-      { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
-    ]
-  }
-}

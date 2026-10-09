@@ -1,0 +1,17 @@
+// equal with an unexpected third operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "paid" },
+    "other": { "type": { "name": "string" }, "value": "x" }
+  }
+}

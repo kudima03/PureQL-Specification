@@ -1,0 +1,11 @@
+// Misspelled alias key on a select item
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alais": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

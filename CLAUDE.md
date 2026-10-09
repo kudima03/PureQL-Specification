@@ -9,19 +9,23 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 - `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
 - `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
 - `tools/make_invalid_tests.py` — generates `tests/invalid/` from its ordered case list
-- `tools/run_tests.py` — validates `samples/` (must pass) and `tests/invalid/` (must fail)
 - `tools/jsonfmt.py` — compact JSON formatting used for samples and tests
 - `samples/` — valid queries, numbered from simple to complex
-- `tests/invalid/` — invalid queries, each a valid base with exactly one thing broken
+- `tests/valid/` — valid queries that are not samples (`001_deep_nesting.jsonc` guards against exponential validation)
+- `tests/invalid/` — invalid queries, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
 
 ## Schema validation
 
+Regenerate after changing a generator (Python is needed only for this), then validate with ajv, exactly as CI does:
+
 ```bash
-python3 tools/generate_schema.py && python3 tools/make_invalid_tests.py && python3 tools/run_tests.py
+python3 tools/generate_schema.py && python3 tools/make_invalid_tests.py
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-CI (`validate.yml`) regenerates both artifacts and fails if they differ from the committed files, then runs the tests. After changing a generator, always commit the regenerated output. To cross-check with a second validator, use ajv 8 in draft 2020-12 mode with `strict: false`.
+CI (`validate.yml`, and `release.yml` before publishing) runs only the two ajv commands: valid queries must pass, then invalid ones must fail. It does not regenerate anything, so always commit the regenerated schema and tests together with the generator change.
 
 ## Critical design rules (read before editing the generator, samples or tests)
 
@@ -35,7 +39,7 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 | `projection` | `select` / `orderBy` without `groupBy` | yes | no | `over: "all"` |
 | `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | `over: "group"` or `"all"` |
 
-The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tools/run_tests.py` checks.
+The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tests/valid/001_deep_nesting.jsonc` checks under the CI timeout.
 
 ### Aggregates
 
@@ -102,7 +106,7 @@ Tags have no `v` prefix.
    git push origin 0.1.0-preview.0.1.0
    ```
 5. The CD workflow (`release.yml`) fires automatically. It will:
-   - Validate all samples against the schema.
+   - Validate `samples/` and `tests/valid/` (must pass) and `tests/invalid/` (must fail) with ajv.
    - Verify the `version` field in the schema matches the tag (fails fast if they differ).
    - Extract the matching section from `CHANGELOG.md` as the release body.
    - Publish a GitHub Release with `PureQL-Specification.json`, `samples.zip`, `CHANGELOG.md`, and `README.md` as assets.
@@ -111,6 +115,6 @@ Tags have no `v` prefix.
 ## Adding samples and tests
 
 1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Use `tools/jsonfmt.py` formatting, declare every column's type by hand, and update the samples table in `README.md`.
-2. **Invalid test:** add a case to the ordered `CASES` list in `tools/make_invalid_tests.py`, then rerun it; numbering follows the list. Break exactly one thing in a valid base, and check with `tools/run_tests.py` that it is rejected at the intended node.
+2. **Invalid test:** add a case to the ordered `CASES` list in `tools/make_invalid_tests.py`, then rerun it; numbering follows the list. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
 3. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
-4. Run `tools/run_tests.py` before committing.
+4. Run both ajv commands from [Schema validation](#schema-validation) before committing.

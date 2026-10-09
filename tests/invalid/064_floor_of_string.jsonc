@@ -1,0 +1,14 @@
+// floor over a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "floor",
+        "value": { "source": "orders", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// having without groupBy
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "left": { "operator": "count", "over": "all" },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  }
+}

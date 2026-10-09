@@ -1,0 +1,15 @@
+// timeAddSeconds applied to a date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "time" },
+      "expression": {
+        "operator": "timeAddSeconds",
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "integer" }, "value": 60 }
+      }
+    }
+  ]
+}

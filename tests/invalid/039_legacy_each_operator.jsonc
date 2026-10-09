@@ -1,0 +1,16 @@
+// eachEqual (each* operators are gone)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "eachEqual",
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "paid" }
+  }
+}

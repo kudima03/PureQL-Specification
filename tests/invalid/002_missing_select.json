@@ -1,1 +1,0 @@
-{ "description": "Query without select", "query": { "from": { "entity": "orders" } } }

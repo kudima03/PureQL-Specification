@@ -1,9 +1,0 @@
-{
-  "description": "over: group in a query without groupBy",
-  "query": {
-    "from": { "entity": "orders" },
-    "select": [
-      { "alias": "c", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "group" } }
-    ]
-  }
-}

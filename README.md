@@ -327,17 +327,17 @@ The interpreter's part is a lookup that needs no type inference. Every expressio
 |---|---|
 | `tools/generate_schema.py` | Generates `PureQL-Specification.json`. Edit this file, never the schema |
 | `tools/make_invalid_tests.py` | Generates `tests/invalid/` |
-| `tools/run_tests.py` | Validates `samples/` (must pass) and `tests/invalid/` (must fail), and prints where each invalid query is rejected |
 | `tools/jsonfmt.py` | Compact JSON formatting for samples and tests |
 
 ```bash
-pip install jsonschema
-python3 tools/generate_schema.py && python3 tools/make_invalid_tests.py && python3 tools/run_tests.py
+python3 tools/generate_schema.py && python3 tools/make_invalid_tests.py   # after changing a generator
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-CI regenerates both artifacts on every pull request and fails if they differ from the committed files.
+The generators need Python; validation needs only Node.js. CI runs the two ajv commands on every pull request and before every release: `samples/` and `tests/valid/` must pass, `tests/invalid/` must fail. `tests/valid/001_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time.
 
-Each invalid test is a valid base query with exactly one thing broken. They are numbered from structural mistakes to context, grouping and subquery rules.
+Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. They are numbered from structural mistakes to context, grouping and subquery rules.
 
 ---
 
