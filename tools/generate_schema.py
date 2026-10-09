@@ -524,11 +524,14 @@ defs["join"] = {
     ),
     **ONE_SOURCE,
 }
+# skip / take are a number or a non-null integer parameter, so a page can be
+# chosen at execution time. The schema checks a number's range; a parameter's
+# value is checked by the interpreter when it is bound.
 defs["pagination"] = obj(
     ["skip", "take"],
     {
-        "skip": {"type": "integer", "minimum": 0},
-        "take": {"type": "integer", "minimum": 1},
+        "skip": {"anyOf": [{"type": "integer", "minimum": 0}, ref("param.integer")]},
+        "take": {"anyOf": [{"type": "integer", "minimum": 1}, ref("param.integer")]},
     },
 )
 ALL_TYPES = [f"type.{t}{suffix(n)}" for t in TYPES for n in [False, True]]

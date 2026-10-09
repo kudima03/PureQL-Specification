@@ -1,0 +1,13 @@
+// pagination take as an integerList parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
+  "pagination": { "skip": 0, "take": { "param_name": "sizes", "type": { "name": "integerList" } } }
+}

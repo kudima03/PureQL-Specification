@@ -19971,12 +19971,26 @@
       ],
       "properties": {
         "skip": {
-          "type": "integer",
-          "minimum": 0
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "$ref": "#/$defs/param.integer"
+            }
+          ]
         },
         "take": {
-          "type": "integer",
-          "minimum": 1
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1
+            },
+            {
+              "$ref": "#/$defs/param.integer"
+            }
+          ]
         }
       },
       "additionalProperties": false

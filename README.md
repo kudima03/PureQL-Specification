@@ -19,7 +19,7 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `select` | yes | Result columns, each `{ alias, type, expression }` |
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
 | `distinct` | no | When `true`, remove duplicate result rows |
-| `pagination` | no | `{ skip, take }` |
+| `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter |
 
 A query with `groupBy` is a **grouped query**; without it, a **plain query**. The two have different rules for `select`, `having` and `orderBy` (see [Contexts](#contexts)).
 
@@ -204,7 +204,7 @@ Each item is `{ "expression": …, "direction": "asc" | "desc" }`, with `directi
 
 ### `distinct` and `pagination`
 
-`distinct: true` removes duplicate result rows. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }`. Aggregates over all rows are computed before `distinct` and `pagination`.
+`distinct: true` removes duplicate result rows. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }`. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param_name": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
 
 ### Subqueries
 
@@ -306,6 +306,7 @@ Everything except name resolution is checked by the schema:
 | Each `select` column's and `groupBy` key's expression against its declared type | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
 | Entities, fields and parameters exist and have the declared types | interpreter |
+| A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |
 | Each field reference declares exactly the nullability the field has at that point, outer joins included | interpreter |
 | A group key reference points to an existing key and repeats its declared type | interpreter |
 | Subquery names are unique; a subquery reads only from earlier ones | interpreter |

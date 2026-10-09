@@ -1,0 +1,22 @@
+// pagination take as an expression (only a number or a parameter)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
+  "pagination": {
+    "skip": 0,
+    "take": {
+      "operator": "multiply",
+      "values": [
+        { "param_name": "page_size", "type": { "name": "integer" } },
+        { "type": { "name": "integer" }, "value": 2 }
+      ]
+    }
+  }
+}

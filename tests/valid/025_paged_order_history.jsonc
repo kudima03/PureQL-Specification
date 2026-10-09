@@ -1,0 +1,39 @@
+// A user's order history, one page at a time: skip and take are integer parameters, so the client picks the page
+// (offset = page_index * page_size) without changing the query. The id tie-breaker after ordered_at keeps the
+// order total, so consecutive pages neither repeat nor skip an order.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+    "right": { "param_name": "user_id", "type": { "name": "uuid" } }
+  },
+  "select": [
+    {
+      "alias": "order_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "ordered_at",
+      "type": { "name": "datetime" },
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+    },
+    {
+      "alias": "total",
+      "type": { "name": "decimal" },
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }, "direction": "asc" }
+  ],
+  "pagination": {
+    "skip": { "param_name": "offset", "type": { "name": "integer" } },
+    "take": { "param_name": "page_size", "type": { "name": "integer" } }
+  }
+}

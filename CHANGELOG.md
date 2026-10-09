@@ -19,6 +19,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **Computed group keys**: `groupBy` accepts any row expression, e.g. a price bucket or days to ship. Keys can be selected, compared, used in arithmetic and sorted on directly.
 - **Nullable types and typed null**: every type has a nullable form, and `null` literals carry their type. Arithmetic and functions propagate null; comparisons return true / false, and two nulls are equal, in `join.on` too.
 - **New types and operators**: `integer` and `decimal` replace `number`; `time` and `datetime` math is available everywhere. New operators: `if`, `coalesce`, `concat`, `in`, `notEqual`, `integerDivide`, `modulo`, `floor`, `ceiling`, `round`.
+- **Parameterized pagination**: `skip` and `take` accept a non-null `integer` parameter as well as a number, so a page can be chosen at execution time.
 - **Typed result columns**: every `select` column declares its type, and the schema checks it, so each query has a verified result schema.
 
 ### 🔧 Improvements
@@ -26,7 +27,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **One set of operators**: `equal`, `add`, `dateDiffDays` and the rest work in filters, columns, `having` and sorting alike. The schema picks the rules from where the expression stands.
 - **Mistakes caught by the validator**: a field in `having`, an aggregate in `where` or `join.on`, nested aggregates, a nullable boolean used as a condition, a list used as a value, misspelled keys and malformed dates, times or UUIDs are all rejected before a query runs.
 - **Same result in every validator**: date, time and UUID literals are checked with patterns that behave identically in Python and JavaScript validators.
-- **Schema generated from source**: `PureQL-Specification.json` is produced by `tools/generate_schema.py`. 131 invalid test queries in `tests/invalid/` document what is rejected, and CI checks that both are up to date.
+- **Schema generated from source**: `PureQL-Specification.json` is produced by `tools/generate_schema.py`. Invalid queries in `tests/invalid/` document what is rejected and valid ones in `tests/valid/` show worked examples; CI validates both with ajv.
 
 ### ⚠️ Breaking Changes
 
