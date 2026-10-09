@@ -30,7 +30,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": {
           "operator": "multiply",
           "values": [
@@ -40,17 +39,13 @@
         }
       }
     },
-    {
-      "alias": "line_items",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    },
+    { "alias": "line_items", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "share_of_all_lines",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "divide",
-        "values": [{ "operator": "count", "over": "group" }, { "operator": "count", "over": "all" }]
+        "values": [{ "operator": "count" }, { "operator": "count", "over": "all" }]
       }
     }
   ],
@@ -58,7 +53,6 @@
     "operator": "greaterThan",
     "left": {
       "operator": "sum",
-      "over": "group",
       "selector": {
         "operator": "multiply",
         "values": [
@@ -70,7 +64,7 @@
     "right": { "type": { "name": "decimal" }, "value": 1000 }
   },
   "orderBy": [
-    { "expression": { "operator": "count", "over": "group" }, "direction": "desc" },
+    { "expression": { "operator": "count" }, "direction": "desc" },
     { "expression": { "key": 0, "type": { "name": "uuid" } } }
   ]
 }

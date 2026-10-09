@@ -16,7 +16,6 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -25,7 +24,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }

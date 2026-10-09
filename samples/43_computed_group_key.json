@@ -22,17 +22,12 @@
       "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "avg_total",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

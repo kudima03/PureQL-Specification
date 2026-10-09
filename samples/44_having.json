@@ -8,15 +8,11 @@
   ],
   "having": {
     "operator": "greaterThanOrEqual",
-    "left": { "operator": "count", "over": "group" },
+    "left": { "operator": "count" },
     "right": { "type": { "name": "integer" }, "value": 5 }
   },
   "select": [
     { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    }
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } }
   ]
 }

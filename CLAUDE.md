@@ -35,21 +35,21 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 | Context | Used in | Fields | Group keys | Aggregates |
 |---|---|---|---|---|
 | `row` | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
-| `projection` | `select` / `orderBy` without `groupBy` | yes | no | `over: "all"` |
-| `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | `over: "group"` or `"all"` |
+| `projection` | `select` / `orderBy` without `groupBy` | yes | no | over all rows (default) |
+| `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | over the group (default) or `over: "all"` |
 
 The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). Probes require the operand and its `type` to be objects and match one family at most, so a malformed node cannot fan out. Subtypes are merged into their supertype's definition (`decimal@ctx` holds the `integer` leaves and the integer-only operators), never added as a separate `anyOf` branch: ajv in draft 2020-12 mode evaluates every branch, so a duplicated branch doubles the work at each level. So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tests/valid/001_deep_nesting.jsonc` checks under the CI timeout.
 
 ### Aggregates
 
-`{ "operator": "sum", "over": "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only with `over: "group"`, no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
+`{ "operator": "sum", "over"?: "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `over` defaults to `"group"` in a grouped query and `"all"` otherwise; samples and examples omit it unless it is `"all"` inside a grouped query. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only over a group (omitted or `"group"` over, in a grouped query), with no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
 
 ### Types and nulls
 
 - Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`).
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
-- Invariant: the type of an expression is determined by its subtree alone. Never add a rule that infers a type from the context.
+- Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`). The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
 - Null semantics: arithmetic, `concat`, date math, `if`, `round` / `floor` / `ceiling` are lifted. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
 - `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
 - `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, no lookahead, and go through `pattern()`, which rejects newlines (Python's `$` matches before a final one).

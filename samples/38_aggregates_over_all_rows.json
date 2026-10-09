@@ -1,13 +1,12 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "all" } },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "revenue",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -16,7 +15,6 @@
       "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "min",
-        "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -25,7 +23,6 @@
       "type": { "name": "datetime", "nullable": true },
       "expression": {
         "operator": "max",
-        "over": "all",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },
@@ -34,7 +31,6 @@
       "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "average",
-        "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -43,7 +39,6 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "any",
-        "over": "all",
         "predicate": {
           "operator": "equal",
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
@@ -56,7 +51,6 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "all",
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     }

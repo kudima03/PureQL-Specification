@@ -26,15 +26,10 @@
             "type": { "name": "decimal" },
             "expression": {
               "operator": "sum",
-              "over": "group",
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             }
           },
-          {
-            "alias": "orders",
-            "type": { "name": "integer" },
-            "expression": { "operator": "count", "over": "group" }
-          }
+          { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } }
         ]
       }
     }

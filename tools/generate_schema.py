@@ -12,9 +12,11 @@ Contexts:
   row         where, join.on, groupBy keys, aggregate selector/predicate.
               Fields allowed, aggregates not.
   projection  select / orderBy of a non-grouped query.
-              Fields allowed, aggregates over "all" rows (broadcast).
+              Fields allowed, aggregates over all rows (broadcast); `over`
+              may be omitted, it can only be "all".
   group       select / having / orderBy of a grouped query.
-              No fields; group keys and aggregates over "group" or "all" rows.
+              No fields; group keys and aggregates over the group (the
+              default when `over` is omitted) or over "all" rows.
 
 Subtyping (each arrow means "accepted wherever the right side is expected"):
   T -> T.nullable                      a non-null value is a valid T?
@@ -22,7 +24,9 @@ Subtyping (each arrow means "accepted wherever the right side is expected"):
 
 There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
-every expression is determined by its subtree alone, never by its context.
+every expression is determined by its subtree and its context, never inferred
+from surrounding expressions. The context only decides the rows of an
+aggregate without `over`, and so whether min / max / average can be null.
 
 A document is the main query plus optional `subqueries`: named queries the
 main query and later subqueries can read from (`from` / `join` with
@@ -106,8 +110,8 @@ VALUE = {
 
 CONTEXTS = {
     "row": {"fields": True, "keys": False, "over": []},
-    "projection": {"fields": True, "keys": False, "over": ["all"]},
-    "group": {"fields": False, "keys": True, "over": ["group", "all"]},
+    "projection": {"fields": True, "keys": False, "over": ["all"], "default_over": "all"},
+    "group": {"fields": False, "keys": True, "over": ["group", "all"], "default_over": "group"},
 }
 
 # An entity, field, alias, parameter or subquery name: not empty, no leading
@@ -355,7 +359,9 @@ for ctx, rules in CONTEXTS.items():
 
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the
-    # selector are skipped.
+    # selector are skipped. `over` is optional: without it an aggregate runs
+    # over the group in a grouped query and over all rows otherwise, so it is
+    # written only for a total over all rows inside a grouped query.
     if rules["over"]:
         over = {"enum": rules["over"]}
         predicate = expr("boolean", "row")
@@ -363,7 +369,7 @@ for ctx, rules in CONTEXTS.items():
         def aggregate(name, selector_t, result_t):
             # May see no rows (predicate, over "all", all-null selector) -> T?.
             op(name, result_t, True, f"{name}.{selector_t}.nullable@{ctx}", obj(
-                ["operator", "over", "selector"],
+                ["operator", "selector"],
                 {
                     "operator": {"const": name},
                     "over": over,
@@ -371,10 +377,11 @@ for ctx, rules in CONTEXTS.items():
                     "predicate": predicate,
                 },
             ))
-            # A group is never empty, so an unfiltered non-null selector gives T.
-            if "group" in rules["over"]:
+            # A group is never empty, so an unfiltered non-null selector over the
+            # group (explicit or by default) gives T.
+            if rules["default_over"] == "group":
                 op(name, result_t, False, f"{name}.{selector_t}@{ctx}", obj(
-                    ["operator", "over", "selector"],
+                    ["operator", "selector"],
                     {
                         "operator": {"const": name},
                         "over": {"const": "group"},
@@ -383,13 +390,13 @@ for ctx, rules in CONTEXTS.items():
                 ))
 
         op("count", "integer", False, f"count@{ctx}", obj(
-            ["operator", "over"],
+            ["operator"],
             {"operator": {"const": "count"}, "over": over, "predicate": predicate},
         ))
         for t in ["integer", "decimal"]:
             # Sum of no rows is 0, never null.
             op("sum", t, False, f"sum.{t}@{ctx}", obj(
-                ["operator", "over", "selector"],
+                ["operator", "selector"],
                 {
                     "operator": {"const": "sum"},
                     "over": over,
@@ -404,7 +411,7 @@ for ctx, rules in CONTEXTS.items():
             aggregate("max", t, t)
         for name in ["any", "all"]:
             op(name, "boolean", False, f"{name}@{ctx}", obj(
-                ["operator", "over", "predicate"],
+                ["operator", "predicate"],
                 {"operator": {"const": name}, "over": over, "predicate": predicate},
             ))
 

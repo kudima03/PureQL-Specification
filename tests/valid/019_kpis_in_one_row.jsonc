@@ -4,13 +4,12 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "all" } },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "paid_orders",
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -21,7 +20,7 @@
         "operator": "if",
         "condition": {
           "operator": "equal",
-          "left": { "operator": "count", "over": "all" },
+          "left": { "operator": "count" },
           "right": { "type": { "name": "integer" }, "value": 0 }
         },
         "then": { "type": { "name": "integer" }, "value": 0 },
@@ -30,10 +29,9 @@
           "values": [
             {
               "operator": "count",
-              "over": "all",
               "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
             },
-            { "operator": "count", "over": "all" }
+            { "operator": "count" }
           ]
         }
       }
@@ -43,7 +41,6 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "any",
-        "over": "all",
         "predicate": {
           "operator": "equal",
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
@@ -56,7 +53,6 @@
       "type": { "name": "datetime", "nullable": true },
       "expression": {
         "operator": "max",
-        "over": "all",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     }

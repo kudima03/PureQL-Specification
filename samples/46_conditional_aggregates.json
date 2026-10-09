@@ -13,7 +13,6 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
-        "over": "group",
         "predicate": {
           "operator": "equal",
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
@@ -26,7 +25,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
@@ -36,7 +34,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": {
           "operator": "if",
           "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
@@ -50,7 +47,6 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "any",
-        "over": "group",
         "predicate": {
           "operator": "equal",
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
@@ -61,7 +57,6 @@
   ],
   "having": {
     "operator": "all",
-    "over": "group",
     "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
   }
 }

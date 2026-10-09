@@ -56,11 +56,7 @@
         ]
       }
     },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    }
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } }
   ],
   "having": {
     "operator": "and",
@@ -79,6 +75,6 @@
   },
   "orderBy": [
     { "expression": { "key": 2, "type": { "name": "integer", "nullable": true } } },
-    { "expression": { "operator": "count", "over": "group" }, "direction": "desc" }
+    { "expression": { "operator": "count" }, "direction": "desc" }
   ]
 }

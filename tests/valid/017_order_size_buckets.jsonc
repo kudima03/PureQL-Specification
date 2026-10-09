@@ -34,17 +34,12 @@
       "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "revenue",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -55,7 +50,7 @@
         "operator": "round",
         "value": {
           "operator": "divide",
-          "values": [{ "operator": "count", "over": "group" }, { "operator": "count", "over": "all" }]
+          "values": [{ "operator": "count" }, { "operator": "count", "over": "all" }]
         },
         "digits": { "type": { "name": "integer" }, "value": 3 }
       }
@@ -65,7 +60,6 @@
     {
       "expression": {
         "operator": "min",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "asc"

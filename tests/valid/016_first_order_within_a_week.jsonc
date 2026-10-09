@@ -25,7 +25,6 @@
             "type": { "name": "datetime" },
             "expression": {
               "operator": "min",
-              "over": "group",
               "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
             }
           }

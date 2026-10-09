@@ -33,17 +33,12 @@
       "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "paid_orders",
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
-        "over": "group",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -52,7 +47,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": {
           "operator": "if",
           "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
@@ -66,7 +60,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }
@@ -75,7 +68,6 @@
     {
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "desc"

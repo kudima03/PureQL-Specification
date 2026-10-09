@@ -16,7 +16,6 @@
             "operator": "greaterThan",
             "left": {
               "operator": "sum",
-              "over": "group",
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             },
             "right": { "type": { "name": "integer" }, "value": 1000 }
@@ -25,7 +24,6 @@
             "operator": "not",
             "condition": {
               "operator": "any",
-              "over": "group",
               "predicate": {
                 "operator": "equal",
                 "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
@@ -37,7 +35,7 @@
       },
       {
         "operator": "greaterThanOrEqual",
-        "left": { "operator": "count", "over": "group" },
+        "left": { "operator": "count" },
         "right": { "param_name": "min_orders", "type": { "name": "integer" } }
       }
     ]
@@ -49,7 +47,6 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

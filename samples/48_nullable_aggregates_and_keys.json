@@ -29,7 +29,6 @@
       "type": { "name": "datetime" },
       "expression": {
         "operator": "max",
-        "over": "group",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },
@@ -38,7 +37,6 @@
       "type": { "name": "datetime" },
       "expression": {
         "operator": "average",
-        "over": "group",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },
@@ -50,7 +48,6 @@
         "values": [
           {
             "operator": "min",
-            "over": "group",
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
             "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
           },
@@ -63,7 +60,6 @@
     "operator": "greaterThan",
     "left": {
       "operator": "max",
-      "over": "group",
       "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
     },
     "right": { "param_name": "since", "type": { "name": "datetime" } }

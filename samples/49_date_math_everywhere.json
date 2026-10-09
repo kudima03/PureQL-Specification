@@ -24,12 +24,10 @@
         "operator": "dateDiffDays",
         "left": {
           "operator": "max",
-          "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": {
           "operator": "min",
-          "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         }
       }
@@ -39,7 +37,6 @@
     "operator": "greaterThanOrEqual",
     "left": {
       "operator": "max",
-      "over": "group",
       "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
     },
     "right": {

@@ -1,0 +1,22 @@
+// min over all rows inside a grouped query declared non-null: over all rows it is nullable, the default over the group is not
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "smallest",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "min",
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

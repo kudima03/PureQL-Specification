@@ -25,7 +25,6 @@
             "type": { "name": "decimal" },
             "expression": {
               "operator": "average",
-              "over": "group",
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             }
           }

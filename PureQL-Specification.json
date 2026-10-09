@@ -259,7 +259,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "predicate"
       ],
       "properties": {
@@ -282,7 +281,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "predicate"
       ],
       "properties": {
@@ -364,7 +362,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "predicate"
       ],
       "properties": {
@@ -387,7 +384,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "predicate"
       ],
       "properties": {
@@ -409,7 +405,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -435,7 +430,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -460,7 +454,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -480,7 +473,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -506,7 +498,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -531,7 +522,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -551,7 +541,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -577,7 +566,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -602,7 +590,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -622,7 +609,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -648,7 +634,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -673,7 +658,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -4341,8 +4325,7 @@
     "count@group": {
       "type": "object",
       "required": [
-        "operator",
-        "over"
+        "operator"
       ],
       "properties": {
         "operator": {
@@ -4363,8 +4346,7 @@
     "count@projection": {
       "type": "object",
       "required": [
-        "operator",
-        "over"
+        "operator"
       ],
       "properties": {
         "operator": {
@@ -18189,7 +18171,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18215,7 +18196,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18240,7 +18220,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18260,7 +18239,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18286,7 +18264,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18311,7 +18288,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18331,7 +18307,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18357,7 +18332,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18382,7 +18356,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18402,7 +18375,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18428,7 +18400,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18453,7 +18424,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18473,7 +18443,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18499,7 +18468,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18524,7 +18492,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18544,7 +18511,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18570,7 +18536,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18595,7 +18560,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18615,7 +18579,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18641,7 +18604,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18666,7 +18628,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18686,7 +18647,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18712,7 +18672,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18737,7 +18696,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18757,7 +18715,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18783,7 +18740,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18808,7 +18764,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18828,7 +18783,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18854,7 +18808,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18879,7 +18832,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18899,7 +18851,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18925,7 +18876,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18950,7 +18900,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18970,7 +18919,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -18996,7 +18944,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -19021,7 +18968,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -22974,7 +22920,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -23000,7 +22945,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -23025,7 +22969,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {
@@ -23051,7 +22994,6 @@
       "type": "object",
       "required": [
         "operator",
-        "over",
         "selector"
       ],
       "properties": {

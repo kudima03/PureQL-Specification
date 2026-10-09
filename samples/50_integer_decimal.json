@@ -33,7 +33,6 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
       }
     },
@@ -44,7 +43,6 @@
         "operator": "round",
         "value": {
           "operator": "sum",
-          "over": "group",
           "selector": {
             "operator": "multiply",
             "values": [
@@ -61,7 +59,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "integerDivide",
-        "left": { "operator": "count", "over": "group" },
+        "left": { "operator": "count" },
         "right": { "type": { "name": "integer" }, "value": 10 }
       }
     },
@@ -72,14 +70,12 @@
         "operator": "dateAddDays",
         "left": {
           "operator": "max",
-          "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": {
           "operator": "floor",
           "value": {
             "operator": "average",
-            "over": "group",
             "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
           }
         }

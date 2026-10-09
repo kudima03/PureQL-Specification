@@ -32,7 +32,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 ### ⚠️ Breaking Changes
 
 - **`each*` operators removed**: use `equal`, `greaterThan`, `add`, `dateAddDays`, … everywhere. Whole-array `equal` between two columns is gone.
-- **Aggregates reshaped**: `{ "operator": "sum", "arg": X }` becomes `{ "operator": "sum", "over": "group", "selector": X }`. Use `over: "all"` to aggregate every row. Typed names merge: `min_number` / `min_date` / `min_string` become `min`, and likewise for `max` and `average`.
+- **Aggregates reshaped**: `{ "operator": "sum", "arg": X }` becomes `{ "operator": "sum", "selector": X }`. An aggregate runs over the group in a grouped query and over all rows otherwise; write `"over": "all"` in a grouped query to aggregate every row. Typed names merge: `min_number` / `min_date` / `min_string` become `min`, and likewise for `max` and `average`.
 - **`number` split into `integer` and `decimal`**, and `divide` always returns `decimal`.
 - **The `null` type is removed**: write `{ "type": { "name": T, "nullable": true }, "value": null }`.
 - **`datetime` literals need an offset**: `Z` or `±hh:mm`; `-00:00` is rejected.

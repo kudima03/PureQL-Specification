@@ -45,7 +45,6 @@
     "operator": "greaterThanOrEqual",
     "left": {
       "operator": "sum",
-      "over": "group",
       "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     },
     "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
@@ -61,21 +60,15 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
-    {
-      "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
-    },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
     {
       "alias": "average_order",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }
@@ -84,7 +77,6 @@
     {
       "expression": {
         "operator": "sum",
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "desc"

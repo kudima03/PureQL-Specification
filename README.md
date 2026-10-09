@@ -55,7 +55,7 @@ There is no `null` type. A null literal always carries its type, and a literal i
 { "type": { "name": "uuid", "nullable": true }, "value": null }
 ```
 
-**Invariant:** the type of every expression is determined by its subtree alone, never by where it appears. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`.
+**Invariant:** the type of every expression is determined by its subtree and its context (row, projection or group, fixed by its position), never inferred from its surroundings. The context matters only for an aggregate without `over`, whose rows and so whose nullability depend on whether the query is grouped. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`.
 
 ### Implicit conversions
 
@@ -122,8 +122,8 @@ There is one set of operators. Where an expression may appear is decided by its 
 | Context | Used in | Fields | Group keys | Aggregates |
 |---|---|---|---|---|
 | row | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
-| projection | `select` / `orderBy` of a plain query | yes | no | `over: "all"` |
-| group | `select` / `having` / `orderBy` of a grouped query | no | yes | `over: "group"` or `"all"` |
+| projection | `select` / `orderBy` of a plain query | yes | no | over all rows (the default) |
+| group | `select` / `having` / `orderBy` of a grouped query | no | yes | over the group (the default) or `over: "all"` |
 
 Consequences, all enforced by the schema:
 
@@ -189,13 +189,13 @@ Every column declares its alias and type:
 
 ```json
 { "alias": "revenue", "type": { "name": "decimal" },
-  "expression": { "operator": "sum", "over": "group",
+  "expression": { "operator": "sum",
                   "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } } } }
 ```
 
 The schema checks the expression against the declared type, allowing the implicit conversions: an `integer` expression fits a `decimal` column, and a non-null expression fits a nullable column. So every query has a declared and verified result schema.
 
-- **Plain query:** a column that references a field outside an aggregate makes the result one row per input row. Aggregates (`over: "all"`) are then repeated on every row. If no column references a field outside an aggregate, the result is a single row.
+- **Plain query:** a column that references a field outside an aggregate makes the result one row per input row. Aggregates, which run over all rows, are then repeated on every row. If no column references a field outside an aggregate, the result is a single row.
 - **Grouped query:** one row per group.
 
 ### `orderBy`
@@ -276,7 +276,7 @@ Larger units are composed, for example `datetimeAddSeconds(dt, multiply(hours, 3
 ### Aggregates
 
 ```json
-{ "operator": "sum", "over": "group", "selector": <row expression>, "predicate": <row boolean> }
+{ "operator": "sum", "over"?: "group" | "all", "selector": <row expression>, "predicate"?: <row boolean> }
 ```
 
 | Operator | Selector | Result |
@@ -287,10 +287,10 @@ Larger units are composed, for example `datetimeAddSeconds(dt, multiply(hours, 3
 | `min`, `max` | `integer`, `decimal`, `string`, `date`, `time`, `datetime` | type of the selector |
 | `any`, `all` | none; `predicate` required | `boolean` |
 
-- `over` is `"group"` (the current group, only in grouped queries) or `"all"` (every row after `where`).
+- `over` is optional. Without it an aggregate runs over the current group in a grouped query and over every row after `where` in a plain one, as in SQL. Write `over: "all"` in a grouped query for a total over every row, e.g. a group's share of all revenue; `over: "group"` is accepted in grouped queries but never needed.
 - `predicate` filters the rows the aggregate sees, as in `g.Count(x => …)`.
 - `null` values from the selector are skipped.
-- `average`, `min` and `max` are non-null only with `over: "group"`, no `predicate` and a non-null selector, because a group always has at least one row. Otherwise they are nullable.
+- `average`, `min` and `max` are non-null only over a group (no `over` or `over: "group"` in a grouped query), with no `predicate` and a non-null selector, because a group always has at least one row. Otherwise they are nullable: in a plain query there may be no rows at all.
 
 ---
 

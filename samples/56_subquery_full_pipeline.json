@@ -50,7 +50,6 @@
           "operator": "greaterThan",
           "left": {
             "operator": "sum",
-            "over": "group",
             "selector": { "source": "paid_lines", "field": "line_total", "type": { "name": "decimal" } }
           },
           "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
@@ -66,15 +65,10 @@
             "type": { "name": "decimal" },
             "expression": {
               "operator": "sum",
-              "over": "group",
               "selector": { "source": "paid_lines", "field": "line_total", "type": { "name": "decimal" } }
             }
           },
-          {
-            "alias": "lines",
-            "type": { "name": "integer" },
-            "expression": { "operator": "count", "over": "group" }
-          }
+          { "alias": "lines", "type": { "name": "integer" }, "expression": { "operator": "count" } }
         ]
       }
     },
