@@ -1,0 +1,11 @@
+// select alias with a trailing space
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id ",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

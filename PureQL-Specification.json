@@ -9177,11 +9177,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.boolean"
@@ -9199,11 +9205,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.boolean.nullable"
@@ -9221,11 +9233,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.date"
@@ -9243,11 +9261,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.date.nullable"
@@ -9265,11 +9289,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.datetime"
@@ -9287,11 +9317,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.datetime.nullable"
@@ -9309,11 +9345,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.decimal"
@@ -9331,11 +9373,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.decimal.nullable"
@@ -9353,11 +9401,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.integer"
@@ -9375,11 +9429,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.integer.nullable"
@@ -9397,11 +9457,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.string"
@@ -9419,11 +9485,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.string.nullable"
@@ -9441,11 +9513,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.time"
@@ -9463,11 +9541,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.time.nullable"
@@ -9485,11 +9569,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.uuid"
@@ -9507,11 +9597,17 @@
       "properties": {
         "source": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "field": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.uuid.nullable"
@@ -9621,15 +9717,24 @@
       "properties": {
         "entity": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "subquery": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "alias": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         }
       },
       "additionalProperties": false,
@@ -10255,7 +10360,10 @@
       "properties": {
         "alias": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "anyOf": [
@@ -10634,7 +10742,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/join"
-          }
+          },
+          "minItems": 1
         },
         "where": {
           "$ref": "#/$defs/boolean@row"
@@ -10667,7 +10776,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/orderItem@group"
-          }
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false
@@ -16138,15 +16248,24 @@
         },
         "entity": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "subquery": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "alias": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "on": {
           "$ref": "#/$defs/boolean@row"
@@ -17068,7 +17187,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.booleanList"
@@ -17086,11 +17208,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17141,7 +17269,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.dateList"
@@ -17159,11 +17290,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17214,7 +17351,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.datetimeList"
@@ -17232,11 +17372,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17283,7 +17429,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.decimalList"
@@ -17301,11 +17450,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17355,7 +17510,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.integerList"
@@ -17373,11 +17531,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17424,7 +17588,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.stringList"
@@ -17442,11 +17609,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17497,7 +17670,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.timeList"
@@ -17515,11 +17691,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17570,7 +17752,10 @@
           "properties": {
             "param_name": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "$ref": "#/$defs/type.uuidList"
@@ -17588,11 +17773,17 @@
           "properties": {
             "subquery": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "field": {
               "type": "string",
-              "minLength": 1
+              "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+              "not": {
+                "pattern": "\\n"
+              }
             },
             "type": {
               "anyOf": [
@@ -17903,7 +18094,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/join"
-          }
+          },
+          "minItems": 1
         },
         "where": {
           "$ref": "#/$defs/boolean@row"
@@ -17936,7 +18128,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/orderItem@group"
-          }
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false
@@ -17962,7 +18155,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/join"
-          }
+          },
+          "minItems": 1
         },
         "where": {
           "$ref": "#/$defs/boolean@row"
@@ -17985,7 +18179,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/orderItem@projection"
-          }
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false
@@ -19795,7 +19990,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.boolean"
@@ -19812,7 +20010,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.boolean.nullable"
@@ -19829,7 +20030,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.date"
@@ -19846,7 +20050,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.date.nullable"
@@ -19863,7 +20070,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.datetime"
@@ -19880,7 +20090,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.datetime.nullable"
@@ -19897,7 +20110,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.decimal"
@@ -19914,7 +20130,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.decimal.nullable"
@@ -19931,7 +20150,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.integer"
@@ -19948,7 +20170,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.integer.nullable"
@@ -19965,7 +20190,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.string"
@@ -19982,7 +20210,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.string.nullable"
@@ -19999,7 +20230,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.time"
@@ -20016,7 +20250,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.time.nullable"
@@ -20033,7 +20270,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.uuid"
@@ -20050,7 +20290,10 @@
       "properties": {
         "param_name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "$ref": "#/$defs/type.uuid.nullable"
@@ -20072,7 +20315,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/join"
-          }
+          },
+          "minItems": 1
         },
         "where": {
           "$ref": "#/$defs/boolean@row"
@@ -20095,7 +20339,8 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/orderItem@projection"
-          }
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false
@@ -21038,7 +21283,10 @@
       "properties": {
         "alias": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "anyOf": [
@@ -21412,7 +21660,10 @@
       "properties": {
         "alias": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "type": {
           "anyOf": [
@@ -22454,7 +22705,10 @@
       "properties": {
         "name": {
           "type": "string",
-          "minLength": 1
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "pattern": "\\n"
+          }
         },
         "query": {
           "$ref": "#/$defs/query"

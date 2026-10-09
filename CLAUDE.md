@@ -66,7 +66,8 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
-- Every object has `additionalProperties: false`.
+- Every object has `additionalProperties: false`. Every array (`select`, `joins`, `groupBy`, `orderBy`, `subqueries`) has at least one item: an absent clause is omitted, never empty.
+- Names (`NAME`) are non-empty with no leading or trailing space or tab and no line break; inner spaces are allowed.
 
 ## Workflow rules
 

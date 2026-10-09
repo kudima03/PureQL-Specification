@@ -12,12 +12,12 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 |---|---|---|
 | `subqueries` | no | Named helper queries the main query can read from. See [Subqueries](#subqueries) |
 | `from` | yes | Source to read: `{ "entity": … }` or `{ "subquery": … }`, with an optional `alias` |
-| `joins` | no | Further sources, each with a join type and an `on` condition |
+| `joins` | no | Further sources, each with a join type and an `on` condition. Omit rather than leave empty |
 | `where` | no | Row filter, before grouping |
 | `groupBy` | no | Group keys, each `{ alias?, type, expression }` with any row expression |
 | `having` | no | Group filter; only with `groupBy` |
 | `select` | yes | Result columns, each `{ alias, type, expression }` |
-| `orderBy` | no | Sort keys, each `{ expression, direction }` |
+| `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
 | `distinct` | no | When `true`, remove duplicate result rows |
 | `pagination` | no | `{ skip, take }` |
 
@@ -110,6 +110,8 @@ Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines expl
 | Operator | `{ "operator": "add", "values": [ … ] }` | See [Operators](#operators) |
 
 Fields, parameters and group keys declare their type at the point of use, including nullability, and the declaration must match exactly. For example, a field read from the optional side of an outer join is declared nullable, and a non-null field elsewhere is declared non-null.
+
+Names of entities, fields, aliases, parameters and subqueries are non-empty, have no leading or trailing space or tab, and contain no line break. Inner spaces and any other characters are allowed, e.g. `"order items"`.
 
 ---
 

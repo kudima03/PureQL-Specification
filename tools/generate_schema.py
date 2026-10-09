@@ -110,7 +110,10 @@ CONTEXTS = {
     "group": {"fields": False, "keys": True, "over": ["group", "all"]},
 }
 
-NAME = {"type": "string", "minLength": 1}
+# An entity, field, alias, parameter or subquery name: not empty, no leading
+# or trailing space or tab, no line break. Inner spaces and any other
+# characters are allowed, so stored names that need quoting stay expressible.
+NAME = pattern(r"[^ \t\n\r]([^\n\r]*[^ \t\n\r])?")
 
 defs = {}
 # definition name -> (property, family): the variant applies only when that
@@ -565,20 +568,20 @@ for ctx in ["projection", "group"]:
 
 common = {
     "from": ref("from"),
-    "joins": {"type": "array", "items": ref("join")},
+    "joins": array_of(ref("join"), 1),
     "where": expr("boolean", "row"),
     "distinct": {"type": "boolean", "default": False},
     "pagination": ref("pagination"),
 }
 plain = {
     "select": array_of(ref("selectItem@projection"), 1),
-    "orderBy": {"type": "array", "items": ref("orderItem@projection")},
+    "orderBy": array_of(ref("orderItem@projection"), 1),
 }
 grouped = {
     "groupBy": array_of(ref("groupKey"), 1),
     "having": expr("boolean", "group"),
     "select": array_of(ref("selectItem@group"), 1),
-    "orderBy": {"type": "array", "items": ref("orderItem@group")},
+    "orderBy": array_of(ref("orderItem@group"), 1),
 }
 # Subqueries are flat: only the main query may declare them.
 main = {"subqueries": array_of(ref("subquery"), 1)}
