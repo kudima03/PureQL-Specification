@@ -109,7 +109,7 @@ Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines expl
 | Group key | `{ "key": 0, "type": { "name": "uuid" } }` | Index into `groupBy`, repeating that key's declared type; only in grouped `select`, `having` and `orderBy` |
 | Operator | `{ "operator": "add", "values": [ … ] }` | See [Operators](#operators) |
 
-Fields, parameters and group keys declare their type at the point of use, including nullability. For example, a field read from the optional side of an outer join is declared nullable.
+Fields, parameters and group keys declare their type at the point of use, including nullability, and the declaration must match exactly. For example, a field read from the optional side of an outer join is declared nullable, and a non-null field elsewhere is declared non-null.
 
 ---
 
@@ -150,7 +150,11 @@ Consequences, all enforced by the schema:
 - `on` is a non-null boolean in row context.
 - **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`33_join_on_nullable_key.json`](samples/33_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
 - **Translating to SQL.** `equal` with at least one non-null operand is plain `=`. With two nullable operands it is `IS NOT DISTINCT FROM`, which some databases cannot use for hash joins or indexes, so a `notEqual(key, null)` guard also lets the interpreter emit `=`.
-- **Nullability after an outer join.** Inside `on`, fields keep the nullability they have in their source, because the condition is evaluated on real rows. After the join, in `where`, `select` and later clauses, every field of an optional side is nullable: the joined source for `left`, the earlier sources for `right`, and both sides for `full`. References declare this. In the example, `coupons.id` is non-null in `on` but nullable everywhere after it.
+- **Nullability after an outer join.** A field is nullable at a point of the query if it is stored nullable, or if its source is on the optional side of an outer join that precedes that point: the joined source for `left`, every earlier source for `right`, both for `full`.
+  - A join's own `on` precedes the join itself, so it sees the joined source's real rows. In the example, `coupons.id` is non-null in its own `on` and nullable everywhere after it.
+  - The `on` of a later join, `where`, `groupBy`, `select` and every later clause come after the join. A field that is non-null in storage is therefore nullable in the next join's `on` if its source was joined with `left` before, as in [`37_outer_join_chain.json`](samples/37_outer_join_chain.json).
+  - An `on` is never affected by joins that come after it: a `right` join makes the earlier sources nullable only from that join on.
+  - References declare exactly this nullability, no more and no less: declaring a non-null field nullable is an error too.
 
 ### `where`
 
@@ -300,7 +304,7 @@ Everything except name resolution is checked by the schema:
 | Each `select` column's and `groupBy` key's expression against its declared type | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
 | Entities, fields and parameters exist and have the declared types | interpreter |
-| Fields from the optional side of an outer join are declared nullable after the join | interpreter |
+| Each field reference declares exactly the nullability the field has at that point, outer joins included | interpreter |
 | A group key reference points to an existing key and repeats its declared type | interpreter |
 | Subquery names are unique; a subquery reads only from earlier ones | interpreter |
 | Referenced subquery columns exist with the declared types | interpreter |
@@ -379,22 +383,23 @@ The [`samples/`](samples/) directory holds valid queries ordered from simple to 
 | [`34_right_join.json`](samples/34_right_join.json) | Right join: the left side becomes nullable |
 | [`35_full_join.json`](samples/35_full_join.json) | Full join: both sides nullable, coalesced into one key |
 | [`36_multiple_joins.json`](samples/36_multiple_joins.json) | Several joins of different kinds |
-| [`37_aggregates_over_all_rows.json`](samples/37_aggregates_over_all_rows.json) | Aggregates over all rows: `count` / `sum` non-null, `min` / `max` / `average` nullable |
-| [`38_aggregate_with_predicate_broadcast.json`](samples/38_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
-| [`39_share_of_total.json`](samples/39_share_of_total.json) | A row value divided by an aggregate over all rows |
-| [`40_group_by_count.json`](samples/40_group_by_count.json) | Group by one field and count |
-| [`41_group_by_multiple_keys.json`](samples/41_group_by_multiple_keys.json) | Group by two fields |
-| [`42_computed_group_key.json`](samples/42_computed_group_key.json) | Group by a computed key, select it and order groups by it |
-| [`43_having.json`](samples/43_having.json) | `having` on an aggregate |
-| [`44_having_boolean_logic.json`](samples/44_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
-| [`45_conditional_aggregates.json`](samples/45_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
-| [`46_group_key_usage.json`](samples/46_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
-| [`47_nullable_aggregates_and_keys.json`](samples/47_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
-| [`48_date_math_everywhere.json`](samples/48_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
-| [`49_integer_decimal.json`](samples/49_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
-| [`50_grouped_revenue.json`](samples/50_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
-| [`51_subquery_from.json`](samples/51_subquery_from.json) | Main query reading from one subquery |
-| [`52_in_subquery.json`](samples/52_in_subquery.json) | Semi-join: `in` over one column of a subquery |
-| [`53_subquery_chain.json`](samples/53_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
-| [`54_left_join_subquery.json`](samples/54_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
-| [`55_subquery_full_pipeline.json`](samples/55_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |
+| [`37_outer_join_chain.json`](samples/37_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
+| [`38_aggregates_over_all_rows.json`](samples/38_aggregates_over_all_rows.json) | Aggregates over all rows: `count` / `sum` non-null, `min` / `max` / `average` nullable |
+| [`39_aggregate_with_predicate_broadcast.json`](samples/39_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
+| [`40_share_of_total.json`](samples/40_share_of_total.json) | A row value divided by an aggregate over all rows |
+| [`41_group_by_count.json`](samples/41_group_by_count.json) | Group by one field and count |
+| [`42_group_by_multiple_keys.json`](samples/42_group_by_multiple_keys.json) | Group by two fields |
+| [`43_computed_group_key.json`](samples/43_computed_group_key.json) | Group by a computed key, select it and order groups by it |
+| [`44_having.json`](samples/44_having.json) | `having` on an aggregate |
+| [`45_having_boolean_logic.json`](samples/45_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
+| [`46_conditional_aggregates.json`](samples/46_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
+| [`47_group_key_usage.json`](samples/47_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
+| [`48_nullable_aggregates_and_keys.json`](samples/48_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
+| [`49_date_math_everywhere.json`](samples/49_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
+| [`50_integer_decimal.json`](samples/50_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
+| [`51_grouped_revenue.json`](samples/51_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
+| [`52_subquery_from.json`](samples/52_subquery_from.json) | Main query reading from one subquery |
+| [`53_in_subquery.json`](samples/53_in_subquery.json) | Semi-join: `in` over one column of a subquery |
+| [`54_subquery_chain.json`](samples/54_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
+| [`55_left_join_subquery.json`](samples/55_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
+| [`56_subquery_full_pipeline.json`](samples/56_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |

@@ -56,7 +56,7 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - Field reference: `{ "source": <entity, subquery or alias>, "field": …, "type": … }`.
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
-- Inside `join.on`, fields keep their stored nullability. After an outer join, fields of the optional side are declared nullable.
+- A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
 - `select` columns are `{ alias, type, expression }` with alias and type required. The schema checks the expression against the declared type.
 - `groupBy` items are `{ alias?, type, expression }`: any row expression can be a key, and its declared type is checked like a `select` column. Keys are referenced as `{ "key": i, "type": … }`, repeating that declared type exactly, and are never emitted automatically.
 - Anything referenced from elsewhere (subquery columns, group keys) must declare its type and have it checked by the schema. Otherwise the interpreter would need type inference, which breaks the design goal.

@@ -9,7 +9,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [Unreleased]
 
-PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Every existing query needs migrating; the 55 new samples show the new forms.
+PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Every existing query needs migrating; the 56 new samples show the new forms.
 
 ### ✨ New Features
 

@@ -8,8 +8,7 @@
         "operator": "coalesce",
         "values": [
           { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
-          { "source": "users", "field": "first_name", "type": { "name": "string", "nullable": true } },
-          { "type": { "name": "string" }, "value": "anonymous" }
+          { "source": "users", "field": "first_name", "type": { "name": "string" } }
         ]
       }
     },
