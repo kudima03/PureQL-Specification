@@ -1,0 +1,12 @@
+// Field reference with an empty source
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": { "source": "", "field": "is_paid", "type": { "name": "boolean" } }
+}

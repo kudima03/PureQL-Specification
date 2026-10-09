@@ -1,0 +1,12 @@
+// Field reference without a source
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": { "field": "is_paid", "type": { "name": "boolean" } }
+}

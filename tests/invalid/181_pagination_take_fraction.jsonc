@@ -1,0 +1,12 @@
+// pagination.take is 1.5
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "pagination": { "skip": 0, "take": 1.5 }
+}

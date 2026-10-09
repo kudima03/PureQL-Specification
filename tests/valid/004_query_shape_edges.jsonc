@@ -1,0 +1,46 @@
+// Accepted query shapes at their edges: from a subquery through an alias, a boolean parameter as where,
+// distinct false, pagination with skip 0 / take 1, orderBy keys of every kind of type (boolean, uuid, a typed null,
+// count over all rows in a plain query), a nullable column filled by a non-null field.
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": { "param_name": "only_paid", "type": { "name": "boolean" } },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "is_paid",
+            "type": { "name": "boolean" },
+            "expression": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent", "alias": "r" },
+  "where": { "source": "r", "field": "is_paid", "type": { "name": "boolean" } },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid", "nullable": true },
+      "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "r", "field": "is_paid", "type": { "name": "boolean" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } },
+    { "expression": { "type": { "name": "date", "nullable": true }, "value": null }, "direction": "asc" },
+    { "expression": { "operator": "count", "over": "all" } }
+  ],
+  "distinct": false,
+  "pagination": { "skip": 0, "take": 1 }
+}

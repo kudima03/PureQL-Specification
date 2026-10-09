@@ -1,0 +1,11 @@
+// select column type given as a bare string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": "uuid",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

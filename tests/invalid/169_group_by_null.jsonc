@@ -1,0 +1,8 @@
+// groupBy is null (present, so the query is treated as grouped)
+{
+  "from": { "entity": "orders" },
+  "groupBy": null,
+  "select": [
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "all" } }
+  ]
+}

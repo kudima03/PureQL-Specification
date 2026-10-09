@@ -1,0 +1,12 @@
+// A subquery column reference (list form) as where
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": { "subquery": "flags", "field": "is_active", "type": { "name": "boolean" } }
+}

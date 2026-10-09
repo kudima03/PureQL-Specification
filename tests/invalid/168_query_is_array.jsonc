@@ -1,0 +1,14 @@
+// The query is a JSON array, not an object
+[
+  {
+    "from": { "entity": "orders" },
+    "select": [
+      {
+        "alias": "id",
+        "type": { "name": "uuid" },
+        "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    ],
+    "distinct": true
+  }
+]

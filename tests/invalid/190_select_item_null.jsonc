@@ -1,0 +1,2 @@
+// select item is null
+{ "from": { "entity": "orders" }, "select": [null] }
