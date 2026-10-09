@@ -7,7 +7,7 @@
       "type": { "name": "date" },
       "expression": {
         "operator": "dateDiffDays",
-        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
         "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }
     }

@@ -24,10 +24,10 @@
     },
     {
       "alias": "days_to_ship",
-      "type": { "name": "integer" },
+      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "dateDiffDays",
-        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
         "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }
     }
@@ -47,11 +47,11 @@
     },
     {
       "alias": "hours_to_ship",
-      "type": { "name": "integer" },
+      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "multiply",
         "values": [
-          { "key": 2, "type": { "name": "integer" } },
+          { "key": 2, "type": { "name": "integer", "nullable": true } },
           { "type": { "name": "integer" }, "value": 24 }
         ]
       }
@@ -72,13 +72,13 @@
       },
       {
         "operator": "lessThanOrEqual",
-        "left": { "key": 2, "type": { "name": "integer" } },
+        "left": { "key": 2, "type": { "name": "integer", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 3 }
       }
     ]
   },
   "orderBy": [
-    { "expression": { "key": 2, "type": { "name": "integer" } } },
+    { "expression": { "key": 2, "type": { "name": "integer", "nullable": true } } },
     { "expression": { "operator": "count", "over": "group" }, "direction": "desc" }
   ]
 }

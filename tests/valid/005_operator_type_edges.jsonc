@@ -1,4 +1,4 @@
-// Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays in a decimal
+// Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays in a decimal?
 // column, an integer number of seconds, three-operand add, single-condition or, equal as a nullable column,
 // comparisons between typed nulls and across integer / decimal, if over uuid, coalesce with the non-null operand last,
 // coalesce(integer?, decimal) as decimal, integer? widened to decimal?, a boolean expression as a column.
@@ -83,10 +83,10 @@
     },
     {
       "alias": "days_as_decimal",
-      "type": { "name": "decimal" },
+      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "dateDiffDays",
-        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
         "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }
     },

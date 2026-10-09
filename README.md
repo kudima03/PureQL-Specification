@@ -167,14 +167,14 @@ A non-null boolean in row context, evaluated per row after the joins. A boolean 
 `groupBy` lists one or more keys:
 
 ```json
-{ "alias": "days_to_ship", "type": { "name": "integer" },
+{ "alias": "days_to_ship", "type": { "name": "integer", "nullable": true },
   "expression": { "operator": "dateDiffDays",
-                  "left":  { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+                  "left":  { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
                   "right": { "source": "orders", "field": "order_date",   "type": { "name": "date" } } } }
 ```
 
 - **Expression.** A key may be any row expression, including a computed one such as a `dateDiffDays` or an `if` bucket.
-- **Type.** The `type` is required and checked against the expression exactly like a `select` column.
+- **Type.** The `type` is required and checked against the expression exactly like a `select` column. Here `shipped_date` is null until an order ships, so the lifted `dateDiffDays` and the key are `integer?`, and unshipped orders form one group with a `null` key.
 - **Referencing.** Keys are referenced by index as `{ "key": i, "type": … }`, and the reference repeats the key's declared type exactly. Matching the two is therefore a plain lookup.
 - **Use.** A key behaves like an ordinary value of its type: it can be selected, compared, used in arithmetic and sorted.
 - **Result.** Keys are **not** added to the result automatically; select the ones you need.

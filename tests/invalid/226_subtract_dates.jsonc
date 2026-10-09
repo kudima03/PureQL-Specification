@@ -8,7 +8,7 @@
       "expression": {
         "operator": "subtract",
         "values": [
-          { "source": "orders", "field": "shipped_date", "type": { "name": "date" } },
+          { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
           { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         ]
       }
