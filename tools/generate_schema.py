@@ -619,5 +619,7 @@ schema = {
 }
 
 out = Path(__file__).resolve().parent.parent / "PureQL-Specification.json"
-out.write_text(json.dumps(schema, indent=2) + "\n")
+# The same text as JSON.stringify(schema, null, 2) + "\n", which CI checks:
+# 2-space indent, non-ASCII characters written as is, a final newline.
+out.write_text(json.dumps(schema, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 print(f"{out.name}: {len(defs)} definitions")

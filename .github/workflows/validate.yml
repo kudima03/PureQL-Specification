@@ -24,6 +24,19 @@ jobs:
       # Fetch the schema, samples and tests of the pull request.
       - uses: actions/checkout@v4
 
+      # The schema must be exactly what the generator writes: the text of
+      # JSON.stringify(schema, null, 2) plus a final newline. A hand edit,
+      # a broken indent or a duplicate key (JSON.parse keeps only the last)
+      # changes it, and the step fails with a diff against the canonical form.
+      - name: Schema is formatted
+        run: |
+          node -e '
+            const fs = require("fs");
+            const schema = JSON.parse(fs.readFileSync("PureQL-Specification.json", "utf8"));
+            fs.writeFileSync(process.argv[1], JSON.stringify(schema, null, 2) + "\n");
+          ' "$RUNNER_TEMP/formatted.json"
+          diff -u PureQL-Specification.json "$RUNNER_TEMP/formatted.json"
+
       # Every sample and every query in tests/valid must be accepted.
       # `ajv test --valid` fails if any file is rejected. tests/valid holds
       # the deep nesting query that guards against exponential validation.
