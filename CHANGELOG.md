@@ -9,7 +9,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [Unreleased]
 
-PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Every existing query needs migrating; the 54 new samples show the new forms.
+PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Every existing query needs migrating; the 55 new samples show the new forms.
 
 ### ✨ New Features
 
@@ -17,7 +17,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **Subqueries**: a query can declare named `subqueries` and read from them with `from` / `join`, or test membership with `in` over one of their columns (semi-join and anti-join).
 - **Self-joins**: joins can have an `alias`, so the same table can be joined more than once.
 - **Computed group keys**: `groupBy` accepts any row expression, e.g. a price bucket or days to ship. Keys can be selected, compared, used in arithmetic and sorted on directly.
-- **Nullable types and typed null**: every type has a nullable form, and `null` literals carry their type. Arithmetic and functions propagate null; comparisons return true / false.
+- **Nullable types and typed null**: every type has a nullable form, and `null` literals carry their type. Arithmetic and functions propagate null; comparisons return true / false, and two nulls are equal, in `join.on` too.
 - **New types and operators**: `integer` and `decimal` replace `number`; `time` and `datetime` math is available everywhere. New operators: `if`, `coalesce`, `concat`, `in`, `notEqual`, `integerDivide`, `modulo`, `floor`, `ceiling`, `round`.
 - **Typed result columns**: every `select` column declares its type, and the schema checks it, so each query has a verified result schema.
 
