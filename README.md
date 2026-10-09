@@ -35,7 +35,7 @@ A query with `groupBy` is a **grouped query**; without it, a **plain query**. Th
 | `decimal` | JSON number | `19.99` |
 | `string` | JSON string | `"active"` |
 | `boolean` | `true` / `false` | `true` |
-| `date` | `YYYY-MM-DD` | `"2024-01-31"` |
+| `date` | `YYYY-MM-DD`, a real calendar date (February 29 only in leap years) | `"2024-01-31"` |
 | `time` | `hh:mm:ss[.fraction]` | `"18:30:00.125"` |
 | `datetime` | `YYYY-MM-DDThh:mm:ss[.fraction]` + offset | `"2024-01-31T18:30:00+03:00"` |
 | `uuid` | canonical UUID | `"3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f"` |

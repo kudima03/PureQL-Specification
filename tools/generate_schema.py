@@ -66,7 +66,15 @@ SPINE = {"if": "then", "coalesce": "values", "min": "selector", "max": "selector
 
 # [0-9] rather than \d: in Python's `re` \d also matches non-ASCII digits,
 # in ECMA-262 it does not. No lookahead, for the same portability reason.
-DATE = r"[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])"
+# A real calendar date: 31-day and 30-day months, February up to the 28th, and
+# February 29 only in leap years (divisible by 4, centuries only by 400).
+MONTH_DAY = (
+    r"(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])"
+    r"|(0[469]|11)-(0[1-9]|[12][0-9]|30)"
+    r"|02-(0[1-9]|1[0-9]|2[0-8])"
+)
+LEAP_YEAR = r"[0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00"
+DATE = rf"([0-9]{{4}}-({MONTH_DAY})|({LEAP_YEAR})-02-29)"
 TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{1,9})?"
 # Mandatory, RFC 3339 range. -00:00 ("offset unknown") is excluded; +00:00 is Z.
 OFFSET = (
