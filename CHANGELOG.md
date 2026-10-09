@@ -9,7 +9,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [Unreleased]
 
-PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter only resolves names. Every existing query needs migrating; the 56 new samples show the new forms.
+PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter resolves names and makes a few checks that need no type inference. Every existing query needs migrating; the 56 new samples show the new forms.
 
 ### ✨ New Features
 
@@ -25,7 +25,8 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 ### 🔧 Improvements
 
 - **One set of operators**: `equal`, `add`, `dateDiffDays` and the rest work in filters, columns, `having` and sorting alike. The schema picks the rules from where the expression stands.
-- **Mistakes caught by the validator**: a field in `having`, an aggregate in `where` or `join.on`, nested aggregates, a nullable boolean used as a condition, a list used as a value, misspelled keys and malformed dates, times or UUIDs are all rejected before a query runs.
+- **Mistakes caught by the validator**: a field in `having`, an aggregate in `where` or `join.on`, nested aggregates, a nullable boolean used as a condition, a list used as a value, misspelled keys, malformed dates, times or UUIDs and impossible calendar dates such as `2023-02-29` are all rejected before a query runs.
+- **Execution semantics specified**: the README now defines what an interpreter computes: evaluation order and lazy `if` / `coalesce` / `and` / `or`, execution errors, 64-bit `integer`, exact `decimal` with half-away-from-zero rounding, truncating `integerDivide`, code-point string order, the order of `boolean` and `uuid`, nanosecond `time` and `datetime` with `time` wrapping at midnight and `datetime` results in UTC, aggregate results on no rows, parameter binding and source naming.
 - **Same result in every validator**: date, time and UUID literals are checked with patterns that behave identically in Python and JavaScript validators.
 - **Schema generated from source**: `PureQL-Specification.json` is produced by `tools/generate_schema.py`. Invalid queries in `tests/invalid/` document what is rejected and valid ones in `tests/valid/` show worked examples; CI validates both with ajv.
 
@@ -41,6 +42,7 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **Group keys are explicit and typed**: `groupBy` items are `{ "type": …, "expression": … }` with an optional `alias`, and keys no longer appear in the result automatically. Select them with `{ "key": i, "type": … }`, repeating the key's type.
 - **`orderBy` items are `{ "expression": …, "direction": … }`**: with `groupBy`, sort by a group key or an aggregate.
 - **Lists are values, not columns**: `stringArray` and the other array types become `stringList` etc. and are accepted only by `in`.
+- **Stricter shapes**: `joins` and `orderBy` cannot be empty, and names (entities, fields, aliases, parameters, subqueries) cannot be blank, start or end with a space or tab, or contain a line break.
 - **`having` requires `groupBy`**, `groupBy` cannot be empty, and fields cannot appear in grouped `select`, `having` or `orderBy` outside an aggregate.
 - **Aggregates are rejected in `where` and `join.on`.**
 - **Unknown keys are rejected everywhere.**

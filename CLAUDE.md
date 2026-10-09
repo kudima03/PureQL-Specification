@@ -2,7 +2,7 @@
 
 ## What this project is
 
-A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language. The goal is a type system enforced by the schema alone: every typing and placement rule is checked by a JSON Schema validator, and only name resolution (entities, fields, parameters, group keys, subqueries) is left to the interpreter. `samples/` holds queries that must stay valid; `tests/invalid/` holds queries that must stay invalid.
+A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language. The goal is a type system enforced by the schema alone: every typing and placement rule is checked by a JSON Schema validator. The interpreter is left with name resolution (entities, fields, parameters, group keys, subqueries) and a few checks that need no type inference, listed under Validation in `README.md`. `samples/` holds queries that must stay valid; `tests/invalid/` holds queries that must stay invalid.
 
 ## Key files
 
@@ -50,7 +50,7 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
 - Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`). The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
-- Null semantics: arithmetic, `concat`, date math, `if`, `round` / `floor` / `ceiling` are lifted. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
+- Null semantics: arithmetic, `concat`, date math, `round` / `floor` / `ceiling` are lifted (null if any operand is null). `if` is nullable when either branch is, and yields the branch taken. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
 - `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
 - `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, no lookahead, and go through `pattern()`, which rejects newlines (Python's `$` matches before a final one).
 
@@ -111,6 +111,10 @@ Tags have no `v` prefix.
    - Extract the matching section from `CHANGELOG.md` as the release body.
    - Publish a GitHub Release with `PureQL-Specification.json`, `samples.zip`, `CHANGELOG.md`, and `README.md` as assets.
    - Mark the release as **pre-release** if the tag contains `-preview`.
+
+### Execution semantics
+
+What an interpreter computes is defined under **Semantics** in `README.md`: evaluation order and laziness, execution errors, 64-bit `integer` and exact `decimal` arithmetic, code-point strings, the order of every type, nanosecond times with wrap-around, aggregate results on no rows, parameter binding and source names. Change it there, never only in a sample. Samples and tests must not depend on anything listed under *Not specified yet*, and every query in `samples/` and `tests/valid/` should also pass name resolution: declared subqueries, unique source names, aliased sources referenced by alias.
 
 ## Adding samples and tests
 
