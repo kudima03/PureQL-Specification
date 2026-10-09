@@ -7,7 +7,7 @@
       "alias": "referrer",
       "on": {
         "operator": "equal",
-        "left": { "source": "u", "field": "referrer_id", "type": { "name": "uuid" } },
+        "left": { "source": "u", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "referrer", "field": "id", "type": { "name": "uuid" } }
       }
     }
@@ -20,8 +20,8 @@
     },
     {
       "alias": "referrer_name",
-      "type": { "name": "string" },
-      "expression": { "source": "referrer", "field": "name", "type": { "name": "string" } }
+      "type": { "name": "string", "nullable": true },
+      "expression": { "source": "referrer", "field": "name", "type": { "name": "string", "nullable": true } }
     }
   ]
 }
