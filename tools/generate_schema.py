@@ -76,18 +76,24 @@ OFFSET = (
     r"|-00:(0[1-9]|[1-5][0-9]))"
 )
 
+
+
+def pattern(body):
+    """A whole-string pattern. In Python's `re`, `$` also matches before a final
+    newline, so "2024-01-01\\n" would pass there and fail in ECMA-262: the
+    explicit newline check keeps both in agreement."""
+    return {"type": "string", "pattern": f"^{body}$", "not": {"pattern": r"\n"}}
+
+
 VALUE = {
     "integer": {"type": "integer"},
     "decimal": {"type": "number"},
     "string": {"type": "string"},
     "boolean": {"type": "boolean"},
-    "date": {"type": "string", "pattern": f"^{DATE}$"},
-    "time": {"type": "string", "pattern": f"^{TIME}$"},
-    "datetime": {"type": "string", "pattern": f"^{DATE}T{TIME}{OFFSET}$"},
-    "uuid": {
-        "type": "string",
-        "pattern": r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-    },
+    "date": pattern(DATE),
+    "time": pattern(TIME),
+    "datetime": pattern(f"{DATE}T{TIME}{OFFSET}"),
+    "uuid": pattern(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"),
 }
 
 CONTEXTS = {

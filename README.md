@@ -94,7 +94,7 @@ PureQL uses the following null semantics:
   - Comparison, `equal`, `*DiffSeconds`, `min` / `max`, `orderBy`, `groupBy` and `distinct` all work on the instant, so `03:00+03:00` equals `00:00Z`. The offset only affects how a value is written, and an interpreter may normalise results to `Z`.
   - A `datetime` parameter bound without an offset is an error. If storage holds naive timestamps, how they map to instants is interpreter configuration and is never guessed.
 
-Literal patterns use `[0-9]`, never `\d`, and no lookahead. Python's `re` treats `\d` as any Unicode digit while ECMA-262 does not, and lookahead support varies, so these rules keep every validator in agreement.
+Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines explicitly. Python's `re` treats `\d` as any Unicode digit and lets `$` match before a final newline, while ECMA-262 does neither, and lookahead support varies, so these rules keep every validator in agreement.
 
 ---
 

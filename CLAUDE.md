@@ -49,7 +49,7 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - Invariant: the type of an expression is determined by its subtree alone. Never add a rule that infers a type from the context.
 - Null semantics: arithmetic, `concat`, date math, `if`, `round` / `floor` / `ceiling` are lifted. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
 - `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
-- `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, and no lookahead.
+- `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, no lookahead, and go through `pattern()`, which rejects newlines (Python's `$` matches before a final one).
 
 ### Query structure
 
