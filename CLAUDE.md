@@ -20,11 +20,12 @@ Regenerate the schema after changing the generator (Python is needed only for th
 
 ```bash
 python3 tools/generate_schema.py
+npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline --no-duplicate-keys PureQL-Specification.json
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-On every pull request, `validate.yml` first checks that the schema is formatted exactly as the generator writes it (the text of `JSON.stringify(schema, null, 2)` plus a final newline), then runs the two ajv commands: valid queries must pass, then invalid ones must fail. `release.yml` runs the ajv commands before publishing. CI does not regenerate anything, so always commit the regenerated schema together with the generator change, and never edit the schema by hand.
+On every pull request, `validate.yml` first checks that the schema is formatted exactly as the generator writes it (`jsonlint --check`: 2-space indent, final newline, no duplicate keys), then runs the two ajv commands: valid queries must pass, then invalid ones must fail. `release.yml` runs the ajv commands before publishing. CI does not regenerate anything, so always commit the regenerated schema together with the generator change, and never edit the schema by hand.
 
 ## Critical design rules (read before editing the generator, samples or tests)
 

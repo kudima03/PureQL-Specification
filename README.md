@@ -427,11 +427,12 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 
 ```bash
 python3 tools/generate_schema.py   # after changing the generator
+npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline --no-duplicate-keys PureQL-Specification.json
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, the text of `JSON.stringify(schema, null, 2)` plus a final newline, and fails with a diff otherwise. It runs the two ajv commands on every pull request and before every release: `samples/` and `tests/valid/` must pass, `tests/invalid/` must fail. `tests/valid/001_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time.
+The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and fails with a diff otherwise. It runs the two ajv commands on every pull request and before every release: `samples/` and `tests/valid/` must pass, `tests/invalid/` must fail. `tests/valid/001_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time.
 
 Tests are written by hand. Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number.
 
