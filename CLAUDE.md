@@ -8,24 +8,23 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 
 - `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
 - `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
-- `tools/make_invalid_tests.py` — generates `tests/invalid/` from its ordered case list
 - `tools/jsonfmt.py` — compact JSON formatting used for samples and tests
 - `samples/` — valid queries, numbered from simple to complex
 - `tests/valid/` — valid queries that are not samples (`001_deep_nesting.jsonc` guards against exponential validation)
-- `tests/invalid/` — invalid queries, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
+- `tests/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
 
 ## Schema validation
 
-Regenerate after changing a generator (Python is needed only for this), then validate with ajv, exactly as CI does:
+Regenerate the schema after changing the generator (Python is needed only for this), then validate with ajv, exactly as CI does:
 
 ```bash
-python3 tools/generate_schema.py && python3 tools/make_invalid_tests.py
+python3 tools/generate_schema.py
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-CI (`validate.yml`, and `release.yml` before publishing) runs only the two ajv commands: valid queries must pass, then invalid ones must fail. It does not regenerate anything, so always commit the regenerated schema and tests together with the generator change.
+CI (`validate.yml`, and `release.yml` before publishing) runs only the two ajv commands: valid queries must pass, then invalid ones must fail. It does not regenerate anything, so always commit the regenerated schema together with the generator change.
 
 ## Critical design rules (read before editing the generator, samples or tests)
 
@@ -115,6 +114,7 @@ Tags have no `v` prefix.
 ## Adding samples and tests
 
 1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Use `tools/jsonfmt.py` formatting, declare every column's type by hand, and update the samples table in `README.md`.
-2. **Invalid test:** add a case to the ordered `CASES` list in `tools/make_invalid_tests.py`, then rerun it; numbering follows the list. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
-3. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
-4. Run both ajv commands from [Schema validation](#schema-validation) before committing.
+2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query in `tools/jsonfmt.py` formatting. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
+3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
+4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
+5. Run both ajv commands from [Schema validation](#schema-validation) before committing.
