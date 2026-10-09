@@ -7,7 +7,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
-## [Unreleased]
+## [0.1.0-preview.1.0.0] - 2026-10-09
 
 PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter resolves names and makes a few checks that need no type inference. Every existing query needs migrating; the 56 new samples show the new forms.
 
@@ -46,6 +46,10 @@ PureQL moves to a type system enforced by the schema alone. Where an expression 
 - **`having` requires `groupBy`**, `groupBy` cannot be empty, and fields cannot appear in grouped `select`, `having` or `orderBy` outside an aggregate.
 - **Aggregates are rejected in `where` and `join.on`.**
 - **Unknown keys are rejected everywhere.**
+
+### Versioning
+
+Major preview bump (`0.1.0-preview.0.5.0` → `0.1.0-preview.1.0.0`). The expression model is replaced, so every existing query must be migrated; see Breaking Changes. Both `version` and `$id` updated.
 
 ---
 

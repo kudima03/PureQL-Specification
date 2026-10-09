@@ -46,7 +46,7 @@ Null semantics:
 import json
 from pathlib import Path
 
-VERSION = "0.1.0-preview.0.5.0"
+VERSION = "0.1.0-preview.1.0.0"
 SCHEMA_ID = f"https://github.com/kudima03/PureQL-Specification/releases/download/{VERSION}/PureQL-Specification.json"
 
 TYPES = ["integer", "decimal", "string", "boolean", "date", "time", "datetime", "uuid"]
