@@ -1,0 +1,16 @@
+// dateList literal with a datetime element
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "in",
+    "value": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "list": { "type": { "name": "dateList" }, "value": ["2024-01-01", "2024-01-02T00:00:00Z"] }
+  }
+}

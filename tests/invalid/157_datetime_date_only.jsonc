@@ -1,0 +1,16 @@
+// datetime literal with the date part only
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": { "type": { "name": "datetime" }, "value": "2024-01-01" }
+  }
+}
