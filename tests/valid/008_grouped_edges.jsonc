@@ -1,0 +1,247 @@
+// A grouped query at its edges: keys of a nullable field, a date, a boolean declared nullable, a literal, a parameter and
+// a coalesce declared non-null; a non-null boolean key as part of having; a field inside an aggregate predicate in having;
+// non-null and nullable aggregates; group keys and aggregates combined through equal / in / date math / concat;
+// orderBy on aggregates over all rows and on a coalesce of an aggregate and a key.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "points",
+      "type": { "name": "integer", "nullable": true },
+      "expression": {
+        "source": "orders",
+        "field": "bonus_points",
+        "type": { "name": "integer", "nullable": true }
+      }
+    },
+    {
+      "alias": "day",
+      "type": { "name": "date" },
+      "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+    },
+    {
+      "alias": "paid",
+      "type": { "name": "boolean" },
+      "expression": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+    },
+    {
+      "alias": "verified",
+      "type": { "name": "boolean", "nullable": true },
+      "expression": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+    },
+    {
+      "alias": "one",
+      "type": { "name": "integer" },
+      "expression": { "type": { "name": "integer" }, "value": 1 }
+    },
+    {
+      "alias": "bucket",
+      "type": { "name": "string" },
+      "expression": { "param_name": "bucket", "type": { "name": "string" } }
+    },
+    {
+      "alias": "discount",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ],
+  "having": {
+    "operator": "and",
+    "conditions": [
+      { "key": 2, "type": { "name": "boolean" } },
+      {
+        "operator": "any",
+        "over": "group",
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      },
+      {
+        "operator": "greaterThan",
+        "left": { "operator": "count", "over": "group" },
+        "right": { "operator": "count", "over": "all" }
+      },
+      {
+        "operator": "greaterThan",
+        "left": {
+          "operator": "max",
+          "over": "all",
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 100 }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "avg_quantity",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "average",
+        "over": "group",
+        "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "avg_discount",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": {
+        "operator": "average",
+        "over": "group",
+        "selector": {
+          "source": "orders",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        }
+      }
+    },
+    {
+      "alias": "last_name",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "max",
+        "over": "group",
+        "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "min_quantity",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "min",
+        "over": "group",
+        "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "bucket_param",
+      "type": { "name": "string" },
+      "expression": { "param_name": "bucket", "type": { "name": "string" } }
+    },
+    {
+      "alias": "points_match",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "equal",
+        "left": { "key": 0, "type": { "name": "integer", "nullable": true } },
+        "right": {
+          "operator": "sum",
+          "over": "group",
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "verified_key",
+      "type": { "name": "boolean", "nullable": true },
+      "expression": { "key": 3, "type": { "name": "boolean", "nullable": true } }
+    },
+    {
+      "alias": "span_end",
+      "type": { "name": "date" },
+      "expression": {
+        "operator": "dateAddDays",
+        "left": {
+          "operator": "min",
+          "over": "group",
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "right": {
+          "operator": "dateDiffDays",
+          "left": {
+            "operator": "max",
+            "over": "group",
+            "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "right": { "key": 1, "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "label",
+      "type": { "name": "string", "nullable": true },
+      "expression": {
+        "operator": "concat",
+        "values": [
+          {
+            "operator": "if",
+            "condition": { "key": 2, "type": { "name": "boolean" } },
+            "then": { "type": { "name": "string" }, "value": "paid " },
+            "else": { "type": { "name": "string" }, "value": "open " }
+          },
+          {
+            "operator": "max",
+            "over": "all",
+            "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "min_points_is_key",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "equal",
+        "left": {
+          "operator": "min",
+          "over": "group",
+          "selector": {
+            "operator": "if",
+            "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+            "then": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+            "else": { "type": { "name": "integer" }, "value": 0 }
+          }
+        },
+        "right": { "key": 0, "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "late_day_listed",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "in",
+        "value": {
+          "operator": "max",
+          "over": "group",
+          "selector": {
+            "operator": "dateAddDays",
+            "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+            "right": { "type": { "name": "integer" }, "value": 1 }
+          }
+        },
+        "list": { "param_name": "holidays", "type": { "name": "dateList" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sum",
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          {
+            "operator": "min",
+            "over": "all",
+            "selector": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            }
+          },
+          { "key": 1, "type": { "name": "date" } }
+        ]
+      },
+      "direction": "desc"
+    }
+  ]
+}

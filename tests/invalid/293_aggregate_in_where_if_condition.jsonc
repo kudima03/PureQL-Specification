@@ -1,0 +1,21 @@
+// Aggregate hidden in an if.condition inside where
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "if",
+    "condition": {
+      "operator": "greaterThan",
+      "left": { "operator": "count", "over": "all" },
+      "right": { "type": { "name": "integer" }, "value": 1 }
+    },
+    "then": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+    "else": { "type": { "name": "boolean" }, "value": true }
+  }
+}

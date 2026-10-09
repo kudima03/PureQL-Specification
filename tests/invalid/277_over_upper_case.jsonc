@@ -1,0 +1,7 @@
+// over: ALL in upper case
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "ALL" } }
+  ]
+}

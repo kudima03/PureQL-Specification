@@ -1,0 +1,26 @@
+// average over a group of a nullable selector, declared non-null
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "average",
+        "over": "group",
+        "selector": {
+          "source": "orders",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        }
+      }
+    }
+  ]
+}

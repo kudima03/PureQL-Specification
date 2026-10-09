@@ -1,0 +1,26 @@
+// having with an aggregate inside an aggregate predicate
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+  ],
+  "having": {
+    "operator": "any",
+    "over": "group",
+    "predicate": {
+      "operator": "greaterThan",
+      "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "right": {
+        "operator": "average",
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  }
+}

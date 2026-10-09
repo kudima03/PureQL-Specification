@@ -1,0 +1,14 @@
+// groupBy key with a direction (that belongs to orderBy)
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+      "direction": "asc"
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+  ]
+}

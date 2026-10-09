@@ -1,0 +1,24 @@
+// Field hidden in a coalesce in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "type": { "name": "decimal", "nullable": true }, "value": null },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

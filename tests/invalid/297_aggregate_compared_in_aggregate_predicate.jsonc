@@ -1,0 +1,23 @@
+// count filtered by comparing a field with an average over all rows (aggregate in a row context)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "count",
+        "over": "all",
+        "predicate": {
+          "operator": "greaterThan",
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": {
+            "operator": "average",
+            "over": "all",
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        }
+      }
+    }
+  ]
+}

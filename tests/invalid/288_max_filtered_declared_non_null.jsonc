@@ -1,0 +1,23 @@
+// max over a group with a predicate is nullable, declared non-null
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "max",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

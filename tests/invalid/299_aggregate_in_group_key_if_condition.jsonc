@@ -1,0 +1,30 @@
+// Aggregate hidden in an if.condition inside a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "greaterThan",
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": {
+            "operator": "average",
+            "over": "all",
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        },
+        "then": { "type": { "name": "string" }, "value": "big" },
+        "else": { "type": { "name": "string" }, "value": "small" }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "bucket",
+      "type": { "name": "string" },
+      "expression": { "key": 0, "type": { "name": "string" } }
+    }
+  ]
+}

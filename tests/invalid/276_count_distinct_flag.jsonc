@@ -1,0 +1,11 @@
+// count with an unknown distinct key
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "all", "distinct": true }
+    }
+  ]
+}
