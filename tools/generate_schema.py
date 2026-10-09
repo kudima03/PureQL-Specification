@@ -55,6 +55,15 @@ ORDERED = ["integer", "decimal", "string", "date", "time", "datetime"]
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
+# A type and its subtypes form a family: every operator that is generated per
+# operand type (equal, in, comparisons) has one variant per family, and the
+# variant for `decimal` also takes `integer` operands.
+FAMILIES = {t: [t] + SUBTYPES.get(t, []) for t in TYPES if not any(t in s for s in SUBTYPES.values())}
+FAMILY = {member: f for f, members in FAMILIES.items() for member in members}
+# Operators whose result type depends on an operand: the property that
+# carries that type. Every other operator has a fixed result family.
+SPINE = {"if": "then", "coalesce": "values", "min": "selector", "max": "selector", "average": "selector"}
+
 # [0-9] rather than \d: in Python's `re` \d also matches non-ASCII digits,
 # in ECMA-262 it does not. No lookahead, for the same portability reason.
 DATE = r"[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])"
@@ -90,6 +99,11 @@ CONTEXTS = {
 NAME = {"type": "string", "minLength": 1}
 
 defs = {}
+# definition name -> (property, family): the variant applies only when that
+# property is an expression of that family (see `probe.<family>`).
+guards = {}
+# operator name -> families of its result, over every context
+results = {}
 
 
 def ref(name):
@@ -169,13 +183,36 @@ for t in TYPES:
 
 # --- operators, per context -----------------------------------------------
 
+
+def guarded(def_name):
+    """A variant chosen by the family of one operand, probed before it is validated.
+
+    Without the probe, `equal` would validate its `left` once per family, and
+    an `if` or `coalesce` inside it once more per family at every level, which
+    makes validation exponential in nesting depth.
+    """
+    if def_name not in guards:
+        return ref(def_name)
+    prop, family = guards[def_name]
+    name = f"guarded.{def_name}"
+    defs[name] = {
+        "if": {"required": [prop], "properties": {prop: ref(f"probe.{family}")}},
+        "then": ref(def_name),
+        "else": False,
+    }
+    return ref(name)
+
+
 for ctx, rules in CONTEXTS.items():
     # operator name -> list of (result type, result nullable, definition name)
     ops = {}
 
-    def op(name, t, nullable, def_name, schema):
+    def op(name, t, nullable, def_name, schema, guard=None):
         defs[def_name] = schema
         ops.setdefault(name, []).append((t, nullable, def_name))
+        results.setdefault(name, set()).add(FAMILY[t])
+        if guard:
+            guards[def_name] = guard
 
     def lifted(name, t, build, tag=None):
         """Strict variant (non-null operands -> T) and lifted one (nullable operands -> T?)."""
@@ -254,11 +291,11 @@ for ctx, rules in CONTEXTS.items():
                     "left": expr(t, ctx, True),
                     "right": expr(t, ctx, True),
                 },
-            ))
+            ), guard=("left", t))
         op("in", "boolean", False, f"in.{t}@{ctx}", obj(
             ["operator", "value", "list"],
             {"operator": {"const": "in"}, "value": expr(t, ctx, True), "list": ref(f"list.{t}")},
-        ))
+        ), guard=("value", t))
 
     for t in COMPARABLE:
         for name in ["greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual"]:
@@ -269,7 +306,7 @@ for ctx, rules in CONTEXTS.items():
                     "left": expr(t, ctx, True),
                     "right": expr(t, ctx, True),
                 },
-            ))
+            ), guard=("left", t))
 
     # conditional and null handling, for every type
     for t in TYPES:
@@ -381,7 +418,7 @@ for ctx, rules in CONTEXTS.items():
                 "allOf": [
                     {
                         "if": {"required": ["operator"], "properties": {"operator": {"const": name}}},
-                        "then": {"anyOf": [ref(d) for d in chosen]},
+                        "then": {"anyOf": [guarded(d) for d in chosen]},
                     }
                     for name, chosen in dispatch_to.items()
                 ],
@@ -389,7 +426,41 @@ for ctx, rules in CONTEXTS.items():
             subtypes = [expr(sub, ctx, nullable) for sub in SUBTYPES.get(t, [])]
             defs[f"{t}{suffix(nullable)}@{ctx}"] = {"anyOf": leaves + [dispatch] + subtypes}
 
-    defs[f"value@{ctx}"] = {"anyOf": [expr(t, ctx, True) for t in TYPES]}
+    defs[f"value@{ctx}"] = {
+        "anyOf": [
+            {"if": ref(f"probe.{f}"), "then": expr(f, ctx, True), "else": False} for f in FAMILIES
+        ]
+    }
+
+# --- probes ---------------------------------------------------------------
+# `probe.<family>` tells cheaply which family an expression belongs to,
+# without validating it. It follows only the operand that decides the result
+# type (`SPINE`), so it costs one walk down that path, and the expression is
+# then validated in full once, against the matching family. Probes decide
+# nothing about validity: a wrong expression still fails that validation.
+
+for name, families in results.items():
+    assert len(families) == 1 or name in SPINE, f"{name}: result family depends on an operand"
+
+for f, members in FAMILIES.items():
+    fixed = [name for name, families in results.items() if name not in SPINE and families == {f}]
+    branches = [
+        # a field, parameter, literal or group key declares its type
+        {
+            "required": ["type"],
+            "properties": {"type": {"required": ["name"], "properties": {"name": {"enum": members}}}},
+        }
+    ]
+    if fixed:
+        branches.append({"required": ["operator"], "properties": {"operator": {"enum": fixed}}})
+    for prop in dict.fromkeys(SPINE.values()):
+        names = [name for name, p in SPINE.items() if p == prop]
+        target = {"type": "array", "prefixItems": [ref(f"probe.{f}")]} if prop == "values" else ref(f"probe.{f}")
+        branches.append({
+            "required": ["operator", prop],
+            "properties": {"operator": {"enum": names}, prop: target},
+        })
+    defs[f"probe.{f}"] = {"anyOf": branches}
 
 # --- query ----------------------------------------------------------------
 

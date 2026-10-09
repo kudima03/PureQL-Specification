@@ -35,7 +35,7 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 | `projection` | `select` / `orderBy` without `groupBy` | yes | no | `over: "all"` |
 | `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | `over: "group"` or `"all"` |
 
-The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`), so validation never tries every branch. Keep this dispatch when adding operators, or validation becomes exponential in query depth.
+The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tools/run_tests.py` checks.
 
 ### Aggregates
 

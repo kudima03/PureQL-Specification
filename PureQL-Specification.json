@@ -806,25 +806,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@group"
+                    "$ref": "#/$defs/guarded.equal.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@group"
+                    "$ref": "#/$defs/guarded.equal.string@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@group"
+                    "$ref": "#/$defs/guarded.equal.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@group"
+                    "$ref": "#/$defs/guarded.equal.date@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@group"
+                    "$ref": "#/$defs/guarded.equal.time@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@group"
+                    "$ref": "#/$defs/guarded.equal.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@group"
+                    "$ref": "#/$defs/guarded.equal.uuid@group"
                   }
                 ]
               }
@@ -843,25 +843,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@group"
+                    "$ref": "#/$defs/guarded.notEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@group"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@group"
+                    "$ref": "#/$defs/guarded.notEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@group"
+                    "$ref": "#/$defs/guarded.notEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@group"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@group"
                   }
                 ]
               }
@@ -880,25 +880,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@group"
+                    "$ref": "#/$defs/guarded.in.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/in.string@group"
+                    "$ref": "#/$defs/guarded.in.string@group"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@group"
+                    "$ref": "#/$defs/guarded.in.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/in.date@group"
+                    "$ref": "#/$defs/guarded.in.date@group"
                   },
                   {
-                    "$ref": "#/$defs/in.time@group"
+                    "$ref": "#/$defs/guarded.in.time@group"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@group"
+                    "$ref": "#/$defs/guarded.in.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@group"
+                    "$ref": "#/$defs/guarded.in.uuid@group"
                   }
                 ]
               }
@@ -917,19 +917,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@group"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@group"
+                    "$ref": "#/$defs/guarded.greaterThan.string@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@group"
+                    "$ref": "#/$defs/guarded.greaterThan.date@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@group"
+                    "$ref": "#/$defs/guarded.greaterThan.time@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@group"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@group"
                   }
                 ]
               }
@@ -948,19 +948,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@group"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@group"
+                    "$ref": "#/$defs/guarded.lessThan.string@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@group"
+                    "$ref": "#/$defs/guarded.lessThan.date@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@group"
+                    "$ref": "#/$defs/guarded.lessThan.time@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@group"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@group"
                   }
                 ]
               }
@@ -979,19 +979,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@group"
                   }
                 ]
               }
@@ -1010,19 +1010,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@group"
                   }
                 ]
               }
@@ -1224,25 +1224,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@projection"
+                    "$ref": "#/$defs/guarded.equal.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@projection"
+                    "$ref": "#/$defs/guarded.equal.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@projection"
+                    "$ref": "#/$defs/guarded.equal.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@projection"
+                    "$ref": "#/$defs/guarded.equal.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@projection"
+                    "$ref": "#/$defs/guarded.equal.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@projection"
+                    "$ref": "#/$defs/guarded.equal.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@projection"
+                    "$ref": "#/$defs/guarded.equal.uuid@projection"
                   }
                 ]
               }
@@ -1261,25 +1261,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@projection"
+                    "$ref": "#/$defs/guarded.notEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@projection"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@projection"
+                    "$ref": "#/$defs/guarded.notEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@projection"
+                    "$ref": "#/$defs/guarded.notEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@projection"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@projection"
                   }
                 ]
               }
@@ -1298,25 +1298,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@projection"
+                    "$ref": "#/$defs/guarded.in.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.string@projection"
+                    "$ref": "#/$defs/guarded.in.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@projection"
+                    "$ref": "#/$defs/guarded.in.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.date@projection"
+                    "$ref": "#/$defs/guarded.in.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.time@projection"
+                    "$ref": "#/$defs/guarded.in.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@projection"
+                    "$ref": "#/$defs/guarded.in.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@projection"
+                    "$ref": "#/$defs/guarded.in.uuid@projection"
                   }
                 ]
               }
@@ -1335,19 +1335,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@projection"
                   }
                 ]
               }
@@ -1366,19 +1366,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@projection"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@projection"
+                    "$ref": "#/$defs/guarded.lessThan.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@projection"
+                    "$ref": "#/$defs/guarded.lessThan.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@projection"
+                    "$ref": "#/$defs/guarded.lessThan.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@projection"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@projection"
                   }
                 ]
               }
@@ -1397,19 +1397,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@projection"
                   }
                 ]
               }
@@ -1428,19 +1428,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@projection"
                   }
                 ]
               }
@@ -1640,25 +1640,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@row"
+                    "$ref": "#/$defs/guarded.equal.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@row"
+                    "$ref": "#/$defs/guarded.equal.string@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@row"
+                    "$ref": "#/$defs/guarded.equal.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@row"
+                    "$ref": "#/$defs/guarded.equal.date@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@row"
+                    "$ref": "#/$defs/guarded.equal.time@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@row"
+                    "$ref": "#/$defs/guarded.equal.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@row"
+                    "$ref": "#/$defs/guarded.equal.uuid@row"
                   }
                 ]
               }
@@ -1677,25 +1677,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@row"
+                    "$ref": "#/$defs/guarded.notEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@row"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@row"
+                    "$ref": "#/$defs/guarded.notEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@row"
+                    "$ref": "#/$defs/guarded.notEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@row"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@row"
                   }
                 ]
               }
@@ -1714,25 +1714,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@row"
+                    "$ref": "#/$defs/guarded.in.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/in.string@row"
+                    "$ref": "#/$defs/guarded.in.string@row"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@row"
+                    "$ref": "#/$defs/guarded.in.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/in.date@row"
+                    "$ref": "#/$defs/guarded.in.date@row"
                   },
                   {
-                    "$ref": "#/$defs/in.time@row"
+                    "$ref": "#/$defs/guarded.in.time@row"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@row"
+                    "$ref": "#/$defs/guarded.in.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@row"
+                    "$ref": "#/$defs/guarded.in.uuid@row"
                   }
                 ]
               }
@@ -1751,19 +1751,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@row"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@row"
+                    "$ref": "#/$defs/guarded.greaterThan.string@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@row"
+                    "$ref": "#/$defs/guarded.greaterThan.date@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@row"
+                    "$ref": "#/$defs/guarded.greaterThan.time@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@row"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@row"
                   }
                 ]
               }
@@ -1782,19 +1782,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@row"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@row"
+                    "$ref": "#/$defs/guarded.lessThan.string@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@row"
+                    "$ref": "#/$defs/guarded.lessThan.date@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@row"
+                    "$ref": "#/$defs/guarded.lessThan.time@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@row"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@row"
                   }
                 ]
               }
@@ -1813,19 +1813,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@row"
                   }
                 ]
               }
@@ -1844,19 +1844,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@row"
                   }
                 ]
               }
@@ -2011,25 +2011,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@group"
+                    "$ref": "#/$defs/guarded.equal.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@group"
+                    "$ref": "#/$defs/guarded.equal.string@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@group"
+                    "$ref": "#/$defs/guarded.equal.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@group"
+                    "$ref": "#/$defs/guarded.equal.date@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@group"
+                    "$ref": "#/$defs/guarded.equal.time@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@group"
+                    "$ref": "#/$defs/guarded.equal.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@group"
+                    "$ref": "#/$defs/guarded.equal.uuid@group"
                   }
                 ]
               }
@@ -2048,25 +2048,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@group"
+                    "$ref": "#/$defs/guarded.notEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@group"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@group"
+                    "$ref": "#/$defs/guarded.notEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@group"
+                    "$ref": "#/$defs/guarded.notEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@group"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@group"
                   }
                 ]
               }
@@ -2085,25 +2085,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@group"
+                    "$ref": "#/$defs/guarded.in.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/in.string@group"
+                    "$ref": "#/$defs/guarded.in.string@group"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@group"
+                    "$ref": "#/$defs/guarded.in.boolean@group"
                   },
                   {
-                    "$ref": "#/$defs/in.date@group"
+                    "$ref": "#/$defs/guarded.in.date@group"
                   },
                   {
-                    "$ref": "#/$defs/in.time@group"
+                    "$ref": "#/$defs/guarded.in.time@group"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@group"
+                    "$ref": "#/$defs/guarded.in.datetime@group"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@group"
+                    "$ref": "#/$defs/guarded.in.uuid@group"
                   }
                 ]
               }
@@ -2122,19 +2122,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@group"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@group"
+                    "$ref": "#/$defs/guarded.greaterThan.string@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@group"
+                    "$ref": "#/$defs/guarded.greaterThan.date@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@group"
+                    "$ref": "#/$defs/guarded.greaterThan.time@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@group"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@group"
                   }
                 ]
               }
@@ -2153,19 +2153,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@group"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@group"
+                    "$ref": "#/$defs/guarded.lessThan.string@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@group"
+                    "$ref": "#/$defs/guarded.lessThan.date@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@group"
+                    "$ref": "#/$defs/guarded.lessThan.time@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@group"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@group"
                   }
                 ]
               }
@@ -2184,19 +2184,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@group"
                   }
                 ]
               }
@@ -2215,19 +2215,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@group"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@group"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@group"
                   }
                 ]
               }
@@ -2420,25 +2420,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@projection"
+                    "$ref": "#/$defs/guarded.equal.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@projection"
+                    "$ref": "#/$defs/guarded.equal.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@projection"
+                    "$ref": "#/$defs/guarded.equal.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@projection"
+                    "$ref": "#/$defs/guarded.equal.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@projection"
+                    "$ref": "#/$defs/guarded.equal.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@projection"
+                    "$ref": "#/$defs/guarded.equal.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@projection"
+                    "$ref": "#/$defs/guarded.equal.uuid@projection"
                   }
                 ]
               }
@@ -2457,25 +2457,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@projection"
+                    "$ref": "#/$defs/guarded.notEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@projection"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@projection"
+                    "$ref": "#/$defs/guarded.notEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@projection"
+                    "$ref": "#/$defs/guarded.notEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@projection"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@projection"
                   }
                 ]
               }
@@ -2494,25 +2494,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@projection"
+                    "$ref": "#/$defs/guarded.in.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.string@projection"
+                    "$ref": "#/$defs/guarded.in.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@projection"
+                    "$ref": "#/$defs/guarded.in.boolean@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.date@projection"
+                    "$ref": "#/$defs/guarded.in.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.time@projection"
+                    "$ref": "#/$defs/guarded.in.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@projection"
+                    "$ref": "#/$defs/guarded.in.datetime@projection"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@projection"
+                    "$ref": "#/$defs/guarded.in.uuid@projection"
                   }
                 ]
               }
@@ -2531,19 +2531,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@projection"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@projection"
                   }
                 ]
               }
@@ -2562,19 +2562,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@projection"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@projection"
+                    "$ref": "#/$defs/guarded.lessThan.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@projection"
+                    "$ref": "#/$defs/guarded.lessThan.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@projection"
+                    "$ref": "#/$defs/guarded.lessThan.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@projection"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@projection"
                   }
                 ]
               }
@@ -2593,19 +2593,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@projection"
                   }
                 ]
               }
@@ -2624,19 +2624,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@projection"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@projection"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@projection"
                   }
                 ]
               }
@@ -2827,25 +2827,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/equal.decimal@row"
+                    "$ref": "#/$defs/guarded.equal.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.string@row"
+                    "$ref": "#/$defs/guarded.equal.string@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.boolean@row"
+                    "$ref": "#/$defs/guarded.equal.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.date@row"
+                    "$ref": "#/$defs/guarded.equal.date@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.time@row"
+                    "$ref": "#/$defs/guarded.equal.time@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.datetime@row"
+                    "$ref": "#/$defs/guarded.equal.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/equal.uuid@row"
+                    "$ref": "#/$defs/guarded.equal.uuid@row"
                   }
                 ]
               }
@@ -2864,25 +2864,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/notEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.notEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.string@row"
+                    "$ref": "#/$defs/guarded.notEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.boolean@row"
+                    "$ref": "#/$defs/guarded.notEqual.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.date@row"
+                    "$ref": "#/$defs/guarded.notEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.time@row"
+                    "$ref": "#/$defs/guarded.notEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.notEqual.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/notEqual.uuid@row"
+                    "$ref": "#/$defs/guarded.notEqual.uuid@row"
                   }
                 ]
               }
@@ -2901,25 +2901,25 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/in.decimal@row"
+                    "$ref": "#/$defs/guarded.in.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/in.string@row"
+                    "$ref": "#/$defs/guarded.in.string@row"
                   },
                   {
-                    "$ref": "#/$defs/in.boolean@row"
+                    "$ref": "#/$defs/guarded.in.boolean@row"
                   },
                   {
-                    "$ref": "#/$defs/in.date@row"
+                    "$ref": "#/$defs/guarded.in.date@row"
                   },
                   {
-                    "$ref": "#/$defs/in.time@row"
+                    "$ref": "#/$defs/guarded.in.time@row"
                   },
                   {
-                    "$ref": "#/$defs/in.datetime@row"
+                    "$ref": "#/$defs/guarded.in.datetime@row"
                   },
                   {
-                    "$ref": "#/$defs/in.uuid@row"
+                    "$ref": "#/$defs/guarded.in.uuid@row"
                   }
                 ]
               }
@@ -2938,19 +2938,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThan.decimal@row"
+                    "$ref": "#/$defs/guarded.greaterThan.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.string@row"
+                    "$ref": "#/$defs/guarded.greaterThan.string@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.date@row"
+                    "$ref": "#/$defs/guarded.greaterThan.date@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.time@row"
+                    "$ref": "#/$defs/guarded.greaterThan.time@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThan.datetime@row"
+                    "$ref": "#/$defs/guarded.greaterThan.datetime@row"
                   }
                 ]
               }
@@ -2969,19 +2969,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThan.decimal@row"
+                    "$ref": "#/$defs/guarded.lessThan.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.string@row"
+                    "$ref": "#/$defs/guarded.lessThan.string@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.date@row"
+                    "$ref": "#/$defs/guarded.lessThan.date@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.time@row"
+                    "$ref": "#/$defs/guarded.lessThan.time@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThan.datetime@row"
+                    "$ref": "#/$defs/guarded.lessThan.datetime@row"
                   }
                 ]
               }
@@ -3000,19 +3000,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.string@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.date@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.time@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/greaterThanOrEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.greaterThanOrEqual.datetime@row"
                   }
                 ]
               }
@@ -3031,19 +3031,19 @@
               "then": {
                 "anyOf": [
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.decimal@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.decimal@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.string@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.string@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.date@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.date@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.time@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.time@row"
                   },
                   {
-                    "$ref": "#/$defs/lessThanOrEqual.datetime@row"
+                    "$ref": "#/$defs/guarded.lessThanOrEqual.datetime@row"
                   }
                 ]
               }
@@ -9910,6 +9910,1974 @@
         }
       },
       "additionalProperties": false
+    },
+    "guarded.equal.boolean@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.boolean@group"
+      },
+      "else": false
+    },
+    "guarded.equal.boolean@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.boolean@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.boolean@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.boolean@row"
+      },
+      "else": false
+    },
+    "guarded.equal.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.date@group"
+      },
+      "else": false
+    },
+    "guarded.equal.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.date@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.date@row"
+      },
+      "else": false
+    },
+    "guarded.equal.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.equal.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.equal.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.equal.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.equal.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.string@group"
+      },
+      "else": false
+    },
+    "guarded.equal.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.string@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.string@row"
+      },
+      "else": false
+    },
+    "guarded.equal.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.time@group"
+      },
+      "else": false
+    },
+    "guarded.equal.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.time@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.time@row"
+      },
+      "else": false
+    },
+    "guarded.equal.uuid@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.uuid@group"
+      },
+      "else": false
+    },
+    "guarded.equal.uuid@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.uuid@projection"
+      },
+      "else": false
+    },
+    "guarded.equal.uuid@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/equal.uuid@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.date@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.date@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.date@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.string@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.string@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.string@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.time@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.time@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThan.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThan.time@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.date@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.date@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.date@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.string@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.string@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.string@row"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.time@group"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.time@projection"
+      },
+      "else": false
+    },
+    "guarded.greaterThanOrEqual.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/greaterThanOrEqual.time@row"
+      },
+      "else": false
+    },
+    "guarded.in.boolean@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.boolean@group"
+      },
+      "else": false
+    },
+    "guarded.in.boolean@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.boolean@projection"
+      },
+      "else": false
+    },
+    "guarded.in.boolean@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.boolean@row"
+      },
+      "else": false
+    },
+    "guarded.in.date@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.date@group"
+      },
+      "else": false
+    },
+    "guarded.in.date@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.date@projection"
+      },
+      "else": false
+    },
+    "guarded.in.date@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.date@row"
+      },
+      "else": false
+    },
+    "guarded.in.datetime@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.in.datetime@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.in.datetime@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.in.decimal@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.in.decimal@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.in.decimal@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.in.string@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.string@group"
+      },
+      "else": false
+    },
+    "guarded.in.string@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.string@projection"
+      },
+      "else": false
+    },
+    "guarded.in.string@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.string@row"
+      },
+      "else": false
+    },
+    "guarded.in.time@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.time@group"
+      },
+      "else": false
+    },
+    "guarded.in.time@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.time@projection"
+      },
+      "else": false
+    },
+    "guarded.in.time@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.time@row"
+      },
+      "else": false
+    },
+    "guarded.in.uuid@group": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.uuid@group"
+      },
+      "else": false
+    },
+    "guarded.in.uuid@projection": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.uuid@projection"
+      },
+      "else": false
+    },
+    "guarded.in.uuid@row": {
+      "if": {
+        "required": [
+          "value"
+        ],
+        "properties": {
+          "value": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/in.uuid@row"
+      },
+      "else": false
+    },
+    "guarded.lessThan.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.date@group"
+      },
+      "else": false
+    },
+    "guarded.lessThan.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.date@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThan.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.date@row"
+      },
+      "else": false
+    },
+    "guarded.lessThan.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.lessThan.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThan.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.lessThan.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.lessThan.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThan.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.lessThan.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.string@group"
+      },
+      "else": false
+    },
+    "guarded.lessThan.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.string@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThan.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.string@row"
+      },
+      "else": false
+    },
+    "guarded.lessThan.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.time@group"
+      },
+      "else": false
+    },
+    "guarded.lessThan.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.time@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThan.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThan.time@row"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.date@group"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.date@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.date@row"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.string@group"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.string@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.string@row"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.time@group"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.time@projection"
+      },
+      "else": false
+    },
+    "guarded.lessThanOrEqual.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/lessThanOrEqual.time@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.boolean@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.boolean@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.boolean@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.boolean@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.boolean@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.boolean"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.boolean@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.date@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.date@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.date@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.date@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.date@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.date"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.date@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.datetime@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.datetime@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.datetime@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.datetime@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.datetime@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.datetime"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.datetime@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.decimal@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.decimal@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.decimal@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.decimal@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.decimal@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.decimal"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.decimal@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.string@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.string@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.string@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.string@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.string@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.string"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.string@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.time@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.time@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.time@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.time@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.time@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.time"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.time@row"
+      },
+      "else": false
+    },
+    "guarded.notEqual.uuid@group": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.uuid@group"
+      },
+      "else": false
+    },
+    "guarded.notEqual.uuid@projection": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.uuid@projection"
+      },
+      "else": false
+    },
+    "guarded.notEqual.uuid@row": {
+      "if": {
+        "required": [
+          "left"
+        ],
+        "properties": {
+          "left": {
+            "$ref": "#/$defs/probe.uuid"
+          }
+        }
+      },
+      "then": {
+        "$ref": "#/$defs/notEqual.uuid@row"
+      },
+      "else": false
     },
     "if.boolean.nullable@group": {
       "type": "object",
@@ -17347,6 +19315,649 @@
       },
       "additionalProperties": false
     },
+    "probe.boolean": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "boolean"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "and",
+                "or",
+                "not",
+                "equal",
+                "notEqual",
+                "in",
+                "greaterThan",
+                "lessThan",
+                "greaterThanOrEqual",
+                "lessThanOrEqual",
+                "any",
+                "all"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.boolean"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.boolean"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.boolean"
+            }
+          }
+        }
+      ]
+    },
+    "probe.date": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "date"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "dateAddDays"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.date"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.date"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.date"
+            }
+          }
+        }
+      ]
+    },
+    "probe.datetime": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "datetime"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "datetimeAddSeconds"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.datetime"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.datetime"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.datetime"
+            }
+          }
+        }
+      ]
+    },
+    "probe.decimal": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "decimal",
+                    "integer"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "add",
+                "subtract",
+                "multiply",
+                "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
+                "round",
+                "dateDiffDays",
+                "timeDiffSeconds",
+                "datetimeDiffSeconds",
+                "count",
+                "sum"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.decimal"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.decimal"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.decimal"
+            }
+          }
+        }
+      ]
+    },
+    "probe.string": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "concat"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.string"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.string"
+            }
+          }
+        }
+      ]
+    },
+    "probe.time": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "time"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "timeAddSeconds"
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.time"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.time"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.time"
+            }
+          }
+        }
+      ]
+    },
+    "probe.uuid": {
+      "anyOf": [
+        {
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "enum": [
+                    "uuid"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "then"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "if"
+              ]
+            },
+            "then": {
+              "$ref": "#/$defs/probe.uuid"
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "values"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "coalesce"
+              ]
+            },
+            "values": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "$ref": "#/$defs/probe.uuid"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "required": [
+            "operator",
+            "selector"
+          ],
+          "properties": {
+            "operator": {
+              "enum": [
+                "min",
+                "max",
+                "average"
+              ]
+            },
+            "selector": {
+              "$ref": "#/$defs/probe.uuid"
+            }
+          }
+        }
+      ]
+    },
     "query": {
       "if": {
         "required": [
@@ -21097,84 +23708,201 @@
     "value@group": {
       "anyOf": [
         {
-          "$ref": "#/$defs/integer.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/decimal.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/decimal.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.string"
+          },
+          "then": {
+            "$ref": "#/$defs/string.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/string.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/boolean.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/boolean.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.date"
+          },
+          "then": {
+            "$ref": "#/$defs/date.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/date.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.time"
+          },
+          "then": {
+            "$ref": "#/$defs/time.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/time.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetime.nullable@group"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/datetime.nullable@group"
-        },
-        {
-          "$ref": "#/$defs/uuid.nullable@group"
+          "if": {
+            "$ref": "#/$defs/probe.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/uuid.nullable@group"
+          },
+          "else": false
         }
       ]
     },
     "value@projection": {
       "anyOf": [
         {
-          "$ref": "#/$defs/integer.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/decimal.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/decimal.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.string"
+          },
+          "then": {
+            "$ref": "#/$defs/string.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/string.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/boolean.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/boolean.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.date"
+          },
+          "then": {
+            "$ref": "#/$defs/date.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/date.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.time"
+          },
+          "then": {
+            "$ref": "#/$defs/time.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/time.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetime.nullable@projection"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/datetime.nullable@projection"
-        },
-        {
-          "$ref": "#/$defs/uuid.nullable@projection"
+          "if": {
+            "$ref": "#/$defs/probe.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/uuid.nullable@projection"
+          },
+          "else": false
         }
       ]
     },
     "value@row": {
       "anyOf": [
         {
-          "$ref": "#/$defs/integer.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/decimal.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/decimal.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.string"
+          },
+          "then": {
+            "$ref": "#/$defs/string.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/string.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/boolean.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/boolean.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.date"
+          },
+          "then": {
+            "$ref": "#/$defs/date.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/date.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.time"
+          },
+          "then": {
+            "$ref": "#/$defs/time.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/time.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetime.nullable@row"
+          },
+          "else": false
         },
         {
-          "$ref": "#/$defs/datetime.nullable@row"
-        },
-        {
-          "$ref": "#/$defs/uuid.nullable@row"
+          "if": {
+            "$ref": "#/$defs/probe.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/uuid.nullable@row"
+          },
+          "else": false
         }
       ]
     }
