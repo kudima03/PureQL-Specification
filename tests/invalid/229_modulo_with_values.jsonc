@@ -1,0 +1,17 @@
+// modulo written with values instead of left / right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "modulo",
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

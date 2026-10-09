@@ -1,0 +1,17 @@
+// coalesce with a list parameter as an operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string", "nullable": true },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
+          { "param_name": "codes", "type": { "name": "stringList" } }
+        ]
+      }
+    }
+  ]
+}

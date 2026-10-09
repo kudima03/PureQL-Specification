@@ -1,0 +1,15 @@
+// timeDiffSeconds is decimal, declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "timeDiffSeconds",
+        "left": { "source": "orders", "field": "window_end", "type": { "name": "time" } },
+        "right": { "source": "orders", "field": "window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

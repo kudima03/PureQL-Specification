@@ -1,0 +1,17 @@
+// add.values given an object
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "add",
+        "values": {
+          "a": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          "b": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// if with list parameters as branches
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "then": { "param_name": "a", "type": { "name": "stringList" } },
+        "else": { "param_name": "b", "type": { "name": "stringList" } }
+      }
+    }
+  ]
+}

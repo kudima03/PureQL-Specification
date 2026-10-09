@@ -1,0 +1,15 @@
+// round.digits given a nullable integer parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": {
+        "operator": "round",
+        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "param_name": "digits", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

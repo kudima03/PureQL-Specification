@@ -1,0 +1,17 @@
+// add(boolean, integer)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "add",
+        "values": [
+          { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

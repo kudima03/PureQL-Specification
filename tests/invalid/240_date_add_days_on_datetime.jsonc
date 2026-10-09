@@ -1,0 +1,15 @@
+// dateAddDays applied to a datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "datetime" },
+      "expression": {
+        "operator": "dateAddDays",
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

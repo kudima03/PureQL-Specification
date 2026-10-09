@@ -1,0 +1,16 @@
+// lessThanOrEqual on uuid
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "lessThanOrEqual",
+    "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+    "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+  }
+}

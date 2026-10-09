@@ -1,0 +1,14 @@
+// coalesce.values given a single operand instead of an array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "coalesce",
+        "values": { "source": "orders", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

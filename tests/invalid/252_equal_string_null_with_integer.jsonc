@@ -1,0 +1,16 @@
+// equal(null string?, integer)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left": { "type": { "name": "string", "nullable": true }, "value": null },
+    "right": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+  }
+}

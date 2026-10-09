@@ -1,0 +1,17 @@
+// coalesce of nullable operands only, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

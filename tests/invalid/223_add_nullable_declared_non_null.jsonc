@@ -1,0 +1,17 @@
+// add with a nullable operand is nullable, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "add",
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

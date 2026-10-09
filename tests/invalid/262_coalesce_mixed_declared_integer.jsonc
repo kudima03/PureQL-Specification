@@ -1,0 +1,17 @@
+// coalesce(integer?, decimal) is decimal, declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

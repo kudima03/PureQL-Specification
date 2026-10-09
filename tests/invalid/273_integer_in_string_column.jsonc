@@ -1,0 +1,11 @@
+// integer literal in a string column
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": { "type": { "name": "integer" }, "value": 1 }
+    }
+  ]
+}
