@@ -6340,6 +6340,24 @@
           "$ref": "#/$defs/literal.decimal.nullable"
         },
         {
+          "$ref": "#/$defs/key.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
+          "$ref": "#/$defs/key.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/param.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/literal.integer.nullable"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -6351,11 +6369,17 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
                 "coalesce",
+                "count",
                 "sum",
                 "average",
                 "min",
@@ -6447,6 +6471,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer.nullable@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer.nullable@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer.nullable@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer.nullable@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -6455,6 +6555,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits.nullable@group"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer.nullable@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer.nullable@group"
                   }
                 ]
               }
@@ -6542,6 +6664,25 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "count"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/count@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "sum"
                   }
                 }
@@ -6612,9 +6753,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer.nullable@group"
         }
       ]
     },
@@ -6639,6 +6777,24 @@
           "$ref": "#/$defs/literal.decimal.nullable"
         },
         {
+          "$ref": "#/$defs/field.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
+          "$ref": "#/$defs/field.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/param.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/literal.integer.nullable"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -6650,11 +6806,17 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
                 "coalesce",
+                "count",
                 "sum",
                 "average",
                 "min",
@@ -6746,6 +6908,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer.nullable@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer.nullable@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer.nullable@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer.nullable@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -6754,6 +6992,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits.nullable@projection"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer.nullable@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer.nullable@projection"
                   }
                 ]
               }
@@ -6841,6 +7101,25 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "count"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/count@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "sum"
                   }
                 }
@@ -6911,9 +7190,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer.nullable@projection"
         }
       ]
     },
@@ -6938,6 +7214,24 @@
           "$ref": "#/$defs/literal.decimal.nullable"
         },
         {
+          "$ref": "#/$defs/field.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
+          "$ref": "#/$defs/field.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/param.integer.nullable"
+        },
+        {
+          "$ref": "#/$defs/literal.integer.nullable"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -6949,7 +7243,12 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
@@ -7041,6 +7340,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer.nullable@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer.nullable@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer.nullable@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer.nullable@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -7049,6 +7424,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits.nullable@row"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer.nullable@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer.nullable@row"
                   }
                 ]
               }
@@ -7130,9 +7527,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer.nullable@row"
         }
       ]
     },
@@ -7148,6 +7542,15 @@
           "$ref": "#/$defs/literal.decimal"
         },
         {
+          "$ref": "#/$defs/key.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -7159,11 +7562,17 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
                 "coalesce",
+                "count",
                 "sum",
                 "average",
                 "min",
@@ -7255,6 +7664,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -7263,6 +7748,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits@group"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer@group"
                   }
                 ]
               }
@@ -7350,6 +7857,25 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "count"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/count@group"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "sum"
                   }
                 }
@@ -7420,9 +7946,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer@group"
         }
       ]
     },
@@ -7438,6 +7961,15 @@
           "$ref": "#/$defs/literal.decimal"
         },
         {
+          "$ref": "#/$defs/field.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -7449,11 +7981,17 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
                 "coalesce",
+                "count",
                 "sum"
               ]
             }
@@ -7542,6 +8080,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -7550,6 +8164,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits@projection"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer@projection"
                   }
                 ]
               }
@@ -7637,6 +8273,25 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "count"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/count@projection"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "sum"
                   }
                 }
@@ -7650,9 +8305,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer@projection"
         }
       ]
     },
@@ -7668,6 +8320,15 @@
           "$ref": "#/$defs/literal.decimal"
         },
         {
+          "$ref": "#/$defs/field.integer"
+        },
+        {
+          "$ref": "#/$defs/param.integer"
+        },
+        {
+          "$ref": "#/$defs/literal.integer"
+        },
+        {
           "type": "object",
           "required": [
             "operator"
@@ -7679,7 +8340,12 @@
                 "subtract",
                 "multiply",
                 "divide",
+                "integerDivide",
+                "modulo",
+                "floor",
+                "ceiling",
                 "round",
+                "dateDiffDays",
                 "timeDiffSeconds",
                 "datetimeDiffSeconds",
                 "if",
@@ -7771,6 +8437,82 @@
                 ],
                 "properties": {
                   "operator": {
+                    "const": "integerDivide"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/integerDivide.integer@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "modulo"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/modulo.integer@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "floor"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/floor.integer@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "ceiling"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ceiling.integer@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
                     "const": "round"
                   }
                 }
@@ -7779,6 +8521,28 @@
                 "anyOf": [
                   {
                     "$ref": "#/$defs/round.decimal.digits@row"
+                  },
+                  {
+                    "$ref": "#/$defs/round.integer@row"
+                  }
+                ]
+              }
+            },
+            {
+              "if": {
+                "required": [
+                  "operator"
+                ],
+                "properties": {
+                  "operator": {
+                    "const": "dateDiffDays"
+                  }
+                }
+              },
+              "then": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/dateDiffDays.integer@row"
                   }
                 ]
               }
@@ -7860,9 +8624,6 @@
               }
             }
           ]
-        },
-        {
-          "$ref": "#/$defs/integer@row"
         }
       ]
     },
@@ -19340,13 +20101,20 @@
       "additionalProperties": false
     },
     "probe.boolean": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19412,6 +20180,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.boolean"
@@ -19441,13 +20210,20 @@
       ]
     },
     "probe.date": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19502,6 +20278,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.date"
@@ -19531,13 +20308,20 @@
       ]
     },
     "probe.datetime": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19592,6 +20376,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.datetime"
@@ -19621,13 +20406,20 @@
       ]
     },
     "probe.decimal": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19696,6 +20488,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.decimal"
@@ -19725,13 +20518,20 @@
       ]
     },
     "probe.string": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19786,6 +20586,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.string"
@@ -19815,13 +20616,20 @@
       ]
     },
     "probe.time": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19876,6 +20684,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.time"
@@ -19905,13 +20714,20 @@
       ]
     },
     "probe.uuid": {
+      "type": "object",
       "anyOf": [
         {
           "required": [
             "type"
           ],
+          "not": {
+            "required": [
+              "operator"
+            ]
+          },
           "properties": {
             "type": {
+              "type": "object",
               "required": [
                 "name"
               ],
@@ -19954,6 +20770,7 @@
             },
             "values": {
               "type": "array",
+              "minItems": 1,
               "prefixItems": [
                 {
                   "$ref": "#/$defs/probe.uuid"

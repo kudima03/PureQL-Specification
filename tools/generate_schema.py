@@ -209,6 +209,10 @@ def guarded(def_name):
     return ref(name)
 
 
+def same_shape(a, b):
+    return defs[a]["properties"].keys() == defs[b]["properties"].keys()
+
+
 for ctx, rules in CONTEXTS.items():
     # operator name -> list of (result type, result nullable, definition name)
     ops = {}
@@ -393,27 +397,41 @@ for ctx, rules in CONTEXTS.items():
                 {"operator": {"const": name}, "over": over, "predicate": predicate},
             ))
 
-    # `<type>[.nullable]@<ctx>`: leaves, subtypes, plus operators dispatched on
-    # `operator` so the validator only tries the definitions of that operator.
+    # `<type>[.nullable]@<ctx>`: leaves and operators of the type and of its
+    # subtypes, operators dispatched on `operator` so the validator only tries
+    # the definitions of that operator. Subtypes are merged in rather than
+    # referenced as a separate branch: ajv in draft 2020-12 mode evaluates every
+    # anyOf branch, so a separate `integer` branch would validate each `if` or
+    # `add` in a `decimal` position twice, and nested ones exponentially.
     for t in TYPES:
+        members = [t] + SUBTYPES.get(t, [])
         for nullable in [False, True]:
             leaves = []
-            for leaf_nullable in [False, True] if nullable else [False]:
-                s = suffix(leaf_nullable)
-                if rules["keys"]:
-                    leaves.append(ref(f"key.{t}{s}"))
-                if rules["fields"]:
-                    leaves.append(ref(f"field.{t}{s}"))
-                leaves.append(ref(f"param.{t}{s}"))
-                leaves.append(ref(f"literal.{t}{s}"))
+            for m in members:
+                for leaf_nullable in [False, True] if nullable else [False]:
+                    s = suffix(leaf_nullable)
+                    if rules["keys"]:
+                        leaves.append(ref(f"key.{m}{s}"))
+                    if rules["fields"]:
+                        leaves.append(ref(f"field.{m}{s}"))
+                    leaves.append(ref(f"param.{m}{s}"))
+                    leaves.append(ref(f"literal.{m}{s}"))
 
             dispatch_to = {}
             for name, impls in ops.items():
-                strict = [d for r, n, d in impls if r == t and not n]
-                lifted_ = [d for r, n, d in impls if r == t and n]
-                # In a nullable position the lifted variant accepts everything
-                # the strict one does, so it alone is enough.
-                chosen = (lifted_ or strict) if nullable else strict
+                chosen = []
+                for m in members:
+                    strict = [d for r, n, d in impls if r == m and not n]
+                    lifted_ = [d for r, n, d in impls if r == m and n]
+                    # In a nullable position the lifted variant accepts everything
+                    # the strict one does, so it alone is enough.
+                    picked = (lifted_ or strict) if nullable else strict
+                    # A variant of the wider type with the same properties takes
+                    # wider operands, so it accepts everything the subtype's
+                    # variant does (add, if, coalesce, sum, min, …). The subtype's
+                    # variant is kept only when its shape differs (round without
+                    # digits) or the operator has no wider variant (count, floor).
+                    chosen += [d for d in picked if not any(same_shape(d, c) for c in chosen)]
                 if chosen:
                     dispatch_to[name] = chosen
 
@@ -429,8 +447,7 @@ for ctx, rules in CONTEXTS.items():
                     for name, chosen in dispatch_to.items()
                 ],
             }
-            subtypes = [expr(sub, ctx, nullable) for sub in SUBTYPES.get(t, [])]
-            defs[f"{t}{suffix(nullable)}@{ctx}"] = {"anyOf": leaves + [dispatch] + subtypes}
+            defs[f"{t}{suffix(nullable)}@{ctx}"] = {"anyOf": leaves + [dispatch]}
 
     defs[f"value@{ctx}"] = {
         "anyOf": [
@@ -454,19 +471,30 @@ for f, members in FAMILIES.items():
         # a field, parameter, literal or group key declares its type
         {
             "required": ["type"],
-            "properties": {"type": {"required": ["name"], "properties": {"name": {"enum": members}}}},
+            "not": {"required": ["operator"]},
+            "properties": {
+                "type": {"type": "object", "required": ["name"], "properties": {"name": {"enum": members}}}
+            },
         }
     ]
     if fixed:
         branches.append({"required": ["operator"], "properties": {"operator": {"enum": fixed}}})
     for prop in dict.fromkeys(SPINE.values()):
         names = [name for name, p in SPINE.items() if p == prop]
-        target = {"type": "array", "prefixItems": [ref(f"probe.{f}")]} if prop == "values" else ref(f"probe.{f}")
+        target = (
+            {"type": "array", "minItems": 1, "prefixItems": [ref(f"probe.{f}")]}
+            if prop == "values"
+            else ref(f"probe.{f}")
+        )
         branches.append({
             "required": ["operator", prop],
             "properties": {"operator": {"enum": names}, prop: target},
         })
-    defs[f"probe.{f}"] = {"anyOf": branches}
+    # `type: object` everywhere: `required` and `properties` pass vacuously on a
+    # string or null, and a probe that matches every family validates the node
+    # once per family, at every level. Branches are exclusive (a leaf has no
+    # `operator`), so a well-formed or malformed node matches one family at most.
+    defs[f"probe.{f}"] = {"type": "object", "anyOf": branches}
 
 # --- query ----------------------------------------------------------------
 
