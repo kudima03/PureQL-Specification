@@ -1,18 +1,34 @@
 {
-  "from": { "entity": "users" },
+  "from": {
+    "entity": "users"
+  },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "is_verified",
-      "type": { "name": "boolean", "nullable": true },
+      "type": {
+        "name": "boolean",
+        "nullable": true
+      },
       "expression": {
         "source": "users",
         "field": "is_verified",
-        "type": { "name": "boolean", "nullable": true }
+        "type": {
+          "name": "boolean",
+          "nullable": true
+        }
       }
     }
   ],
@@ -21,14 +37,38 @@
     "conditions": [
       {
         "operator": "equal",
-        "left": { "source": "users", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
-        "right": { "type": { "name": "boolean" }, "value": true }
+        "left": {
+          "source": "users",
+          "field": "is_verified",
+          "type": {
+            "name": "boolean",
+            "nullable": true
+          }
+        },
+        "right": {
+          "type": {
+            "name": "boolean"
+          },
+          "value": true
+        }
       },
       {
         "operator": "coalesce",
         "values": [
-          { "source": "users", "field": "accepts_marketing", "type": { "name": "boolean", "nullable": true } },
-          { "type": { "name": "boolean" }, "value": false }
+          {
+            "source": "users",
+            "field": "accepts_marketing",
+            "type": {
+              "name": "boolean",
+              "nullable": true
+            }
+          },
+          {
+            "type": {
+              "name": "boolean"
+            },
+            "value": false
+          }
         ]
       }
     ]

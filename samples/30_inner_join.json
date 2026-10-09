@@ -1,26 +1,56 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "joins": [
     {
       "type": "inner",
       "entity": "users",
       "on": {
         "operator": "equal",
-        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
-        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+        "left": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
       }
     }
   ],
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "email",
-      "type": { "name": "string" },
-      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "users",
+        "field": "email",
+        "type": {
+          "name": "string"
+        }
+      }
     }
   ]
 }

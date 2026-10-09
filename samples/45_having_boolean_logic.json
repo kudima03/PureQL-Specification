@@ -1,9 +1,19 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     }
   ],
   "having": {
@@ -16,9 +26,20 @@
             "operator": "greaterThan",
             "left": {
               "operator": "sum",
-              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              "selector": {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              }
             },
-            "right": { "type": { "name": "integer" }, "value": 1000 }
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1000
+            }
           },
           {
             "operator": "not",
@@ -26,8 +47,19 @@
               "operator": "any",
               "predicate": {
                 "operator": "equal",
-                "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-                "right": { "type": { "name": "string" }, "value": "refunded" }
+                "left": {
+                  "source": "orders",
+                  "field": "status",
+                  "type": {
+                    "name": "string"
+                  }
+                },
+                "right": {
+                  "type": {
+                    "name": "string"
+                  },
+                  "value": "refunded"
+                }
               }
             }
           }
@@ -35,19 +67,45 @@
       },
       {
         "operator": "greaterThanOrEqual",
-        "left": { "operator": "count" },
-        "right": { "param_name": "min_orders", "type": { "name": "integer" } }
+        "left": {
+          "operator": "count"
+        },
+        "right": {
+          "param_name": "min_orders",
+          "type": {
+            "name": "integer"
+          }
+        }
       }
     ]
   },
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "user_id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
     {
       "alias": "revenue",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "sum",
-        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     }
   ]

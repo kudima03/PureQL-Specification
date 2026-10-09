@@ -1,31 +1,71 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
-      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
     },
     {
       "alias": "paid_orders",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "count",
-        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
       }
     },
     {
       "alias": "paid_revenue",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "sum",
-        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
       }
     }
   ]

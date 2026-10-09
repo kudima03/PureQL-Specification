@@ -1,40 +1,103 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "where": {
     "operator": "and",
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "type": { "name": "decimal" }, "value": 10.5 }
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": 10.5
+        }
       },
       {
         "operator": "lessThan",
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "type": { "name": "integer" }, "value": 1000 }
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1000
+        }
       },
       {
         "operator": "greaterThan",
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "param_name": "min_total", "type": { "name": "decimal" } }
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "param_name": "min_total",
+          "type": {
+            "name": "decimal"
+          }
+        }
       },
       {
         "operator": "lessThanOrEqual",
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "source": "orders",
+          "field": "credit_limit",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     ]
   },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
-      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
     }
   ]
 }

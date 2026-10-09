@@ -1,25 +1,59 @@
 {
-  "from": { "entity": "users" },
+  "from": {
+    "entity": "users"
+  },
   "select": [
     {
       "alias": "display_name",
-      "type": { "name": "string" },
+      "type": {
+        "name": "string"
+      },
       "expression": {
         "operator": "coalesce",
         "values": [
-          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
-          { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          {
+            "source": "users",
+            "field": "nickname",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          {
+            "source": "users",
+            "field": "first_name",
+            "type": {
+              "name": "string"
+            }
+          }
         ]
       }
     },
     {
       "alias": "phone",
-      "type": { "name": "string", "nullable": true },
+      "type": {
+        "name": "string",
+        "nullable": true
+      },
       "expression": {
         "operator": "coalesce",
         "values": [
-          { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
-          { "source": "users", "field": "landline", "type": { "name": "string", "nullable": true } }
+          {
+            "source": "users",
+            "field": "mobile",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          {
+            "source": "users",
+            "field": "landline",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          }
         ]
       }
     }

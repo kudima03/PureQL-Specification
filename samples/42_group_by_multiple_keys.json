@@ -1,29 +1,81 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
-      "type": { "name": "string" },
-      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "user_id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
     {
       "alias": "status",
-      "type": { "name": "string" },
-      "expression": { "key": 1, "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "key": 1,
+        "type": {
+          "name": "string"
+        }
+      }
     },
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "orders",
+      "type": {
+        "name": "integer"
+      },
+      "expression": {
+        "operator": "count"
+      }
+    },
     {
       "alias": "revenue",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "sum",
-        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     }
   ]

@@ -1,19 +1,43 @@
 {
-  "from": { "entity": "order_items" },
+  "from": {
+    "entity": "order_items"
+  },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "subtotal",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "multiply",
         "values": [
-          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
-          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          {
+            "source": "order_items",
+            "field": "unit_price",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          }
         ]
       }
     }
@@ -23,8 +47,20 @@
       "expression": {
         "operator": "multiply",
         "values": [
-          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
-          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          {
+            "source": "order_items",
+            "field": "unit_price",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          }
         ]
       },
       "direction": "desc"

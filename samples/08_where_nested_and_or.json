@@ -1,5 +1,7 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "where": {
     "operator": "or",
     "conditions": [
@@ -8,13 +10,35 @@
         "conditions": [
           {
             "operator": "equal",
-            "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-            "right": { "type": { "name": "string" }, "value": "paid" }
+            "left": {
+              "source": "orders",
+              "field": "status",
+              "type": {
+                "name": "string"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "string"
+              },
+              "value": "paid"
+            }
           },
           {
             "operator": "greaterThan",
-            "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-            "right": { "type": { "name": "integer" }, "value": 100 }
+            "left": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 100
+            }
           }
         ]
       },
@@ -23,10 +47,27 @@
         "conditions": [
           {
             "operator": "equal",
-            "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-            "right": { "type": { "name": "string" }, "value": "pending" }
+            "left": {
+              "source": "orders",
+              "field": "status",
+              "type": {
+                "name": "string"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "string"
+              },
+              "value": "pending"
+            }
           },
-          { "source": "orders", "field": "is_priority", "type": { "name": "boolean" } }
+          {
+            "source": "orders",
+            "field": "is_priority",
+            "type": {
+              "name": "boolean"
+            }
+          }
         ]
       }
     ]
@@ -34,13 +75,29 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "status",
-      "type": { "name": "string" },
-      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
     }
   ]
 }

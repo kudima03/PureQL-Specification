@@ -1,62 +1,148 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "user_id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
     {
       "alias": "refunds",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "count",
         "predicate": {
           "operator": "equal",
-          "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-          "right": { "type": { "name": "string" }, "value": "refunded" }
+          "left": {
+            "source": "orders",
+            "field": "status",
+            "type": {
+              "name": "string"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "string"
+            },
+            "value": "refunded"
+          }
         }
       }
     },
     {
       "alias": "paid_total",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "sum",
-        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
       }
     },
     {
       "alias": "paid_total_via_if",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "sum",
         "selector": {
           "operator": "if",
-          "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
-          "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-          "else": { "type": { "name": "integer" }, "value": 0 }
+          "condition": {
+            "source": "orders",
+            "field": "is_paid",
+            "type": {
+              "name": "boolean"
+            }
+          },
+          "then": {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "else": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 0
+          }
         }
       }
     },
     {
       "alias": "has_dispute",
-      "type": { "name": "boolean" },
+      "type": {
+        "name": "boolean"
+      },
       "expression": {
         "operator": "any",
         "predicate": {
           "operator": "equal",
-          "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-          "right": { "type": { "name": "string" }, "value": "disputed" }
+          "left": {
+            "source": "orders",
+            "field": "status",
+            "type": {
+              "name": "string"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "string"
+            },
+            "value": "disputed"
+          }
         }
       }
     }
   ],
   "having": {
     "operator": "all",
-    "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+    "predicate": {
+      "source": "orders",
+      "field": "is_paid",
+      "type": {
+        "name": "boolean"
+      }
+    }
   }
 }

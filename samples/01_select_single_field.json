@@ -1,10 +1,20 @@
 {
-  "from": { "entity": "users" },
+  "from": {
+    "entity": "users"
+  },
   "select": [
     {
       "alias": "name",
-      "type": { "name": "string" },
-      "expression": { "source": "users", "field": "name", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
     }
   ]
 }

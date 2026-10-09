@@ -33,6 +33,14 @@ jobs:
           npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline
           --no-duplicate-keys PureQL-Specification.json
 
+      # Samples are formatted the same way as the schema: 2-space indent,
+      # every object and array expanded, a final newline, no duplicate keys.
+      # --continue reports every file that differs, not only the first.
+      - name: Samples are formatted
+        run: >
+          npx --yes @prantlf/jsonlint@17.0.1 --check --continue --indent 2 --trailing-newline
+          --no-duplicate-keys "samples/*.json"
+
       # Every sample and every query in tests/valid must be accepted.
       # `ajv test --valid` fails if any file is rejected. tests/valid holds
       # the deep nesting query that guards against exponential validation.

@@ -1,29 +1,61 @@
 {
-  "from": { "entity": "users" },
+  "from": {
+    "entity": "users"
+  },
   "where": {
     "operator": "and",
     "conditions": [
       {
         "operator": "equal",
-        "left": { "source": "users", "field": "deleted_at", "type": { "name": "datetime", "nullable": true } },
-        "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
+        "left": {
+          "source": "users",
+          "field": "deleted_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        },
+        "right": {
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          },
+          "value": null
+        }
       },
       {
         "operator": "notEqual",
         "left": {
           "source": "users",
           "field": "email_verified_at",
-          "type": { "name": "datetime", "nullable": true }
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
         },
-        "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
+        "right": {
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          },
+          "value": null
+        }
       }
     ]
   },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     }
   ]
 }

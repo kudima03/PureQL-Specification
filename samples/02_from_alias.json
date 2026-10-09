@@ -1,20 +1,47 @@
 {
-  "from": { "entity": "orders", "alias": "o" },
+  "from": {
+    "entity": "orders",
+    "alias": "o"
+  },
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "o", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "o",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "ordered_at",
-      "type": { "name": "datetime" },
-      "expression": { "source": "o", "field": "ordered_at", "type": { "name": "datetime" } }
+      "type": {
+        "name": "datetime"
+      },
+      "expression": {
+        "source": "o",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
     },
     {
       "alias": "amount",
-      "type": { "name": "decimal" },
-      "expression": { "source": "o", "field": "total", "type": { "name": "decimal" } }
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "source": "o",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
     }
   ]
 }

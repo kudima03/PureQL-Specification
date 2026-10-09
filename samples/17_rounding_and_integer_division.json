@@ -1,55 +1,120 @@
 {
-  "from": { "entity": "order_items" },
+  "from": {
+    "entity": "order_items"
+  },
   "select": [
     {
       "alias": "price_floor",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "floor",
-        "value": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        "value": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     },
     {
       "alias": "price_ceiling",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "ceiling",
-        "value": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        "value": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     },
     {
       "alias": "price_rounded",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "round",
-        "value": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        "value": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     },
     {
       "alias": "price_cents",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "round",
-        "value": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
-        "digits": { "type": { "name": "integer" }, "value": 2 }
+        "value": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
       }
     },
     {
       "alias": "packs",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "integerDivide",
-        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-        "right": { "type": { "name": "integer" }, "value": 6 }
+        "left": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 6
+        }
       }
     },
     {
       "alias": "loose",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "modulo",
-        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-        "right": { "type": { "name": "integer" }, "value": 6 }
+        "left": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 6
+        }
       }
     }
   ]

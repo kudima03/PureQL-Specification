@@ -1,39 +1,94 @@
 {
-  "from": { "entity": "users" },
+  "from": {
+    "entity": "users"
+  },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "trial_end",
-      "type": { "name": "date", "nullable": true },
+      "type": {
+        "name": "date",
+        "nullable": true
+      },
       "expression": {
         "operator": "dateAddDays",
-        "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
-        "right": { "type": { "name": "integer" }, "value": 30 }
+        "left": {
+          "source": "users",
+          "field": "trial_start",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 30
+        }
       }
     },
     {
       "alias": "greeting",
-      "type": { "name": "string", "nullable": true },
+      "type": {
+        "name": "string",
+        "nullable": true
+      },
       "expression": {
         "operator": "concat",
         "values": [
-          { "type": { "name": "string" }, "value": "Hi " },
-          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "Hi "
+          },
+          {
+            "source": "users",
+            "field": "nickname",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          }
         ]
       }
     },
     {
       "alias": "age_next_year",
-      "type": { "name": "integer", "nullable": true },
+      "type": {
+        "name": "integer",
+        "nullable": true
+      },
       "expression": {
         "operator": "add",
         "values": [
-          { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
-          { "type": { "name": "integer" }, "value": 1 }
+          {
+            "source": "users",
+            "field": "age",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
         ]
       }
     }

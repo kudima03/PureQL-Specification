@@ -20,11 +20,12 @@ Regenerate the schema after changing the generator (Python is needed only for th
 ```bash
 python3 tools/generate_schema.py
 npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline --no-duplicate-keys PureQL-Specification.json
+npx --yes @prantlf/jsonlint@17.0.1 --check --continue --indent 2 --trailing-newline --no-duplicate-keys "samples/*.json"
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-On every pull request, `validate.yml` first checks that the schema is formatted exactly as the generator writes it (`jsonlint --check`: 2-space indent, final newline, no duplicate keys), then runs the two ajv commands: valid queries must pass, then invalid ones must fail. `release.yml` runs the ajv commands before publishing. CI does not regenerate anything, so always commit the regenerated schema together with the generator change, and never edit the schema by hand.
+On every pull request, `validate.yml` first checks that the schema is formatted exactly as the generator writes it and that every sample has the same format (`jsonlint --check`: 2-space indent, every object and array expanded, final newline, no duplicate keys), then runs the two ajv commands: valid queries must pass, then invalid ones must fail. `release.yml` runs the ajv commands before publishing. CI does not regenerate anything, so always commit the regenerated schema together with the generator change, and never edit the schema by hand.
 
 ## Critical design rules (read before editing the generator, samples or tests)
 
@@ -118,8 +119,8 @@ What an interpreter computes is defined under **Semantics** in `README.md`: eval
 
 ## Adding samples and tests
 
-1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it like the existing samples (2-space indent, an object or array on one line while it fits in 110 columns), declare every column's type by hand, and update the samples table in `README.md`.
-2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query, formatted like the samples. Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
+1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every column's type by hand, and update the samples table in `README.md`.
+2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query. Test formatting is not checked; keep the compact style of the existing tests (an object or array on one line while it fits in 110 columns). Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
 3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
 4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
 5. Run both ajv commands from [Schema validation](#schema-validation) before committing.

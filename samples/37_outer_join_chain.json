@@ -1,13 +1,28 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "joins": [
     {
       "type": "left",
       "entity": "coupons",
       "on": {
         "operator": "equal",
-        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
-        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+        "left": {
+          "source": "orders",
+          "field": "coupon_id",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "coupons",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
       }
     },
     {
@@ -16,26 +31,67 @@
       "alias": "issuer",
       "on": {
         "operator": "equal",
-        "left": { "source": "coupons", "field": "issued_by", "type": { "name": "uuid", "nullable": true } },
-        "right": { "source": "issuer", "field": "id", "type": { "name": "uuid" } }
+        "left": {
+          "source": "coupons",
+          "field": "issued_by",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "issuer",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
       }
     }
   ],
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "coupon",
-      "type": { "name": "string", "nullable": true },
-      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+      "type": {
+        "name": "string",
+        "nullable": true
+      },
+      "expression": {
+        "source": "coupons",
+        "field": "code",
+        "type": {
+          "name": "string",
+          "nullable": true
+        }
+      }
     },
     {
       "alias": "issued_by",
-      "type": { "name": "string", "nullable": true },
-      "expression": { "source": "issuer", "field": "name", "type": { "name": "string", "nullable": true } }
+      "type": {
+        "name": "string",
+        "nullable": true
+      },
+      "expression": {
+        "source": "issuer",
+        "field": "name",
+        "type": {
+          "name": "string",
+          "nullable": true
+        }
+      }
     }
   ]
 }

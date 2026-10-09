@@ -1,13 +1,27 @@
 {
-  "from": { "entity": "order_items" },
+  "from": {
+    "entity": "order_items"
+  },
   "joins": [
     {
       "type": "inner",
       "entity": "orders",
       "on": {
         "operator": "equal",
-        "left": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
-        "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        "left": {
+          "source": "order_items",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "orders",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
       }
     }
   ],
@@ -15,30 +29,75 @@
     "operator": "equal",
     "left": {
       "operator": "modulo",
-      "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-      "right": { "type": { "name": "integer" }, "value": 2 }
+      "left": {
+        "source": "order_items",
+        "field": "quantity",
+        "type": {
+          "name": "integer"
+        }
+      },
+      "right": {
+        "type": {
+          "name": "integer"
+        },
+        "value": 2
+      }
     },
-    "right": { "type": { "name": "integer" }, "value": 0 }
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 0
+    }
   },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "user_id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
     {
       "alias": "units",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "sum",
-        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        "selector": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        }
       }
     },
     {
       "alias": "revenue",
-      "type": { "name": "decimal" },
+      "type": {
+        "name": "decimal"
+      },
       "expression": {
         "operator": "round",
         "value": {
@@ -46,37 +105,77 @@
           "selector": {
             "operator": "multiply",
             "values": [
-              { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+              {
+                "source": "order_items",
+                "field": "quantity",
+                "type": {
+                  "name": "integer"
+                }
+              },
+              {
+                "source": "order_items",
+                "field": "unit_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
             ]
           }
         },
-        "digits": { "type": { "name": "integer" }, "value": 2 }
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
       }
     },
     {
       "alias": "tens_of_lines",
-      "type": { "name": "integer" },
+      "type": {
+        "name": "integer"
+      },
       "expression": {
         "operator": "integerDivide",
-        "left": { "operator": "count" },
-        "right": { "type": { "name": "integer" }, "value": 10 }
+        "left": {
+          "operator": "count"
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 10
+        }
       }
     },
     {
       "alias": "reorder_estimate",
-      "type": { "name": "date" },
+      "type": {
+        "name": "date"
+      },
       "expression": {
         "operator": "dateAddDays",
         "left": {
           "operator": "max",
-          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          "selector": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
         },
         "right": {
           "operator": "floor",
           "value": {
             "operator": "average",
-            "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            "selector": {
+              "source": "order_items",
+              "field": "quantity",
+              "type": {
+                "name": "integer"
+              }
+            }
           }
         }
       }

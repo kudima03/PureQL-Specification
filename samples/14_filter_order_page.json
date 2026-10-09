@@ -1,15 +1,33 @@
 {
-  "from": { "entity": "orders" },
+  "from": {
+    "entity": "orders"
+  },
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
     },
     {
       "alias": "amount",
-      "type": { "name": "decimal" },
-      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
     }
   ],
   "where": {
@@ -17,22 +35,61 @@
     "conditions": [
       {
         "operator": "equal",
-        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-        "right": { "type": { "name": "string" }, "value": "completed" }
+        "left": {
+          "source": "orders",
+          "field": "status",
+          "type": {
+            "name": "string"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "string"
+          },
+          "value": "completed"
+        }
       },
       {
         "operator": "greaterThan",
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "param_name": "min_total", "type": { "name": "decimal" } }
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "param_name": "min_total",
+          "type": {
+            "name": "decimal"
+          }
+        }
       }
     ]
   },
   "orderBy": [
     {
-      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      },
       "direction": "desc"
     },
-    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
   ],
-  "pagination": { "skip": 0, "take": 20 }
+  "pagination": {
+    "skip": 0,
+    "take": 20
+  }
 }

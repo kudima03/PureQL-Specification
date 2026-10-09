@@ -1,5 +1,8 @@
 {
-  "from": { "entity": "users", "alias": "a" },
+  "from": {
+    "entity": "users",
+    "alias": "a"
+  },
   "joins": [
     {
       "type": "inner",
@@ -10,18 +13,57 @@
         "conditions": [
           {
             "operator": "equal",
-            "left": { "source": "a", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
-            "right": { "source": "b", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } }
+            "left": {
+              "source": "a",
+              "field": "referrer_id",
+              "type": {
+                "name": "uuid",
+                "nullable": true
+              }
+            },
+            "right": {
+              "source": "b",
+              "field": "referrer_id",
+              "type": {
+                "name": "uuid",
+                "nullable": true
+              }
+            }
           },
           {
             "operator": "notEqual",
-            "left": { "source": "a", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
-            "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+            "left": {
+              "source": "a",
+              "field": "referrer_id",
+              "type": {
+                "name": "uuid",
+                "nullable": true
+              }
+            },
+            "right": {
+              "type": {
+                "name": "uuid",
+                "nullable": true
+              },
+              "value": null
+            }
           },
           {
             "operator": "notEqual",
-            "left": { "source": "a", "field": "id", "type": { "name": "uuid" } },
-            "right": { "source": "b", "field": "id", "type": { "name": "uuid" } }
+            "left": {
+              "source": "a",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "source": "b",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
           }
         ]
       }
@@ -30,13 +72,29 @@
   "select": [
     {
       "alias": "user",
-      "type": { "name": "string" },
-      "expression": { "source": "a", "field": "name", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "a",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
     },
     {
       "alias": "referred_with",
-      "type": { "name": "string" },
-      "expression": { "source": "b", "field": "name", "type": { "name": "string" } }
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "b",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
     }
   ]
 }
