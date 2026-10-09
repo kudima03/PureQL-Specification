@@ -1,6 +1,25 @@
 // in over every kind of list: an empty literal, booleanList, integer value against decimalList and decimal value
 // against integerList (both through integer -> decimal), a typed null value, and a nullable subquery column.
 {
+  "subqueries": [
+    {
+      "name": "referrers",
+      "query": {
+        "from": { "entity": "users" },
+        "select": [
+          {
+            "alias": "referrer_id",
+            "type": { "name": "uuid", "nullable": true },
+            "expression": {
+              "source": "users",
+              "field": "referrer_id",
+              "type": { "name": "uuid", "nullable": true }
+            }
+          }
+        ]
+      }
+    }
+  ],
   "from": { "entity": "orders" },
   "select": [
     {

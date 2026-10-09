@@ -2,6 +2,25 @@
 // is chosen through if.then, coalesce.values[0] and aggregate selectors: typed nulls first, integer next to decimal,
 // fixed-type operators (round, floor, dateDiffDays, count) and aggregates over all rows.
 {
+  "subqueries": [
+    {
+      "name": "codes",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "code",
+            "type": { "name": "string", "nullable": true },
+            "expression": {
+              "source": "orders",
+              "field": "coupon_code",
+              "type": { "name": "string", "nullable": true }
+            }
+          }
+        ]
+      }
+    }
+  ],
   "from": { "entity": "orders" },
   "select": [
     {
@@ -66,7 +85,11 @@
         "operator": "lessThan",
         "left": {
           "operator": "dateDiffDays",
-          "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
           "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": { "type": { "name": "decimal" }, "value": 1.5 }
