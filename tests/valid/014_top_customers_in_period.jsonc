@@ -1,0 +1,95 @@
+// Top 10 customers by revenue in a period, with at least a minimum revenue.
+// Two group keys (id and email), keys selected explicitly, having on an aggregate against a parameter, groups sorted
+// by the aggregate with the email key as a tie-breaker. average over a group with no predicate is non-null.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "param_name": "since", "type": { "name": "datetime" } }
+      },
+      {
+        "operator": "lessThan",
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "param_name": "until", "type": { "name": "datetime" } }
+      }
+    ]
+  },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "email",
+      "type": { "name": "string" },
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThanOrEqual",
+    "left": {
+      "operator": "sum",
+      "over": "group",
+      "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
+  },
+  "select": [
+    {
+      "alias": "email",
+      "type": { "name": "string" },
+      "expression": { "key": 1, "type": { "name": "string" } }
+    },
+    {
+      "alias": "revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    },
+    {
+      "alias": "average_order",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "average",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": 1, "type": { "name": "string" } }, "direction": "asc" }
+  ],
+  "pagination": { "skip": 0, "take": 10 }
+}

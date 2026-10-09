@@ -1,0 +1,74 @@
+// Orders split into size buckets, with each bucket's share of all orders.
+// The group key is a computed if chain; count over the group divided by count over all rows gives the share; buckets
+// are sorted by their smallest order, since min of the total orders them the same way the buckets were cut.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "bucket",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "lessThan",
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 50 }
+        },
+        "then": { "type": { "name": "string" }, "value": "small" },
+        "else": {
+          "operator": "if",
+          "condition": {
+            "operator": "lessThan",
+            "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "right": { "type": { "name": "integer" }, "value": 200 }
+          },
+          "then": { "type": { "name": "string" }, "value": "medium" },
+          "else": { "type": { "name": "string" }, "value": "large" }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "bucket",
+      "type": { "name": "string" },
+      "expression": { "key": 0, "type": { "name": "string" } }
+    },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    },
+    {
+      "alias": "revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "share_of_orders",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "round",
+        "value": {
+          "operator": "divide",
+          "values": [{ "operator": "count", "over": "group" }, { "operator": "count", "over": "all" }]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "min",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      },
+      "direction": "asc"
+    }
+  ]
+}

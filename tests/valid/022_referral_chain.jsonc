@@ -1,0 +1,79 @@
+// Each user with their referrer and their referrer's referrer, through two left joins of users under aliases.
+// Fields of both aliases are nullable after their joins, and in the second on the referrer's own referrer_id is read
+// from a source joined with left before it. The depth column counts how far the chain goes.
+{
+  "from": { "entity": "users", "alias": "u" },
+  "joins": [
+    {
+      "type": "left",
+      "entity": "users",
+      "alias": "referrer",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "u", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "referrer", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "type": "left",
+      "entity": "users",
+      "alias": "grand_referrer",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "referrer", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "grand_referrer", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user",
+      "type": { "name": "string" },
+      "expression": { "source": "u", "field": "name", "type": { "name": "string" } }
+    },
+    {
+      "alias": "referrer",
+      "type": { "name": "string", "nullable": true },
+      "expression": { "source": "referrer", "field": "name", "type": { "name": "string", "nullable": true } }
+    },
+    {
+      "alias": "grand_referrer",
+      "type": { "name": "string", "nullable": true },
+      "expression": {
+        "source": "grand_referrer",
+        "field": "name",
+        "type": { "name": "string", "nullable": true }
+      }
+    },
+    {
+      "alias": "chain_depth",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "equal",
+          "left": { "source": "referrer", "field": "id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+        },
+        "then": { "type": { "name": "integer" }, "value": 0 },
+        "else": {
+          "operator": "if",
+          "condition": {
+            "operator": "equal",
+            "left": {
+              "source": "grand_referrer",
+              "field": "id",
+              "type": { "name": "uuid", "nullable": true }
+            },
+            "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+          },
+          "then": { "type": { "name": "integer" }, "value": 1 },
+          "else": { "type": { "name": "integer" }, "value": 2 }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "u", "field": "name", "type": { "name": "string" } }, "direction": "asc" }
+  ]
+}

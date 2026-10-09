@@ -1,0 +1,94 @@
+// Users whose first order came within 7 days of signing up.
+// A grouped subquery finds each user's first order (min over a group of a non-null selector is non-null), the main
+// query joins it and compares datetimeDiffSeconds with a week written as multiply(7, 86400).
+{
+  "subqueries": [
+    {
+      "name": "first_orders",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "key": 0, "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "first_order_at",
+            "type": { "name": "datetime" },
+            "expression": {
+              "operator": "min",
+              "over": "group",
+              "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "type": "inner",
+      "subquery": "first_orders",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "first_orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "lessThanOrEqual",
+    "left": {
+      "operator": "datetimeDiffSeconds",
+      "left": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } },
+      "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+    },
+    "right": {
+      "operator": "multiply",
+      "values": [
+        { "type": { "name": "integer" }, "value": 7 },
+        { "type": { "name": "integer" }, "value": 86400 }
+      ]
+    }
+  },
+  "select": [
+    {
+      "alias": "email",
+      "type": { "name": "string" },
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    },
+    {
+      "alias": "first_order_at",
+      "type": { "name": "datetime" },
+      "expression": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } }
+    },
+    {
+      "alias": "hours_to_first_order",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "round",
+        "value": {
+          "operator": "divide",
+          "values": [
+            {
+              "operator": "datetimeDiffSeconds",
+              "left": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } },
+              "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+            },
+            { "type": { "name": "integer" }, "value": 3600 }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

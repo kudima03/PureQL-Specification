@@ -1,0 +1,84 @@
+// Revenue and paid rate per coupon, with orders without a coupon in their own "no coupon" group.
+// The coupon code is nullable after the left join; coalesce in the group key makes the key non-null. Conditional
+// aggregates: count with a predicate, and sum over if to add up only paid totals.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "type": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "coupon",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "no coupon" }
+        ]
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "coupon",
+      "type": { "name": "string" },
+      "expression": { "key": 0, "type": { "name": "string" } }
+    },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    },
+    {
+      "alias": "paid_orders",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "count",
+        "over": "group",
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "paid_revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": {
+          "operator": "if",
+          "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+          "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "else": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "average_order",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "average",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      },
+      "direction": "desc"
+    }
+  ]
+}

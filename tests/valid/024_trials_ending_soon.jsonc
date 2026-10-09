@@ -1,0 +1,67 @@
+// Users whose 14-day trial ends within the next 3 days.
+// trial_start is nullable, so the lifted dateAddDays and dateDiffDays give nullable results; comparing null is false,
+// so users without a trial drop out of where on their own. The column stays date?: a filter does not narrow types.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "left": {
+          "operator": "dateAddDays",
+          "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+          "right": { "type": { "name": "integer" }, "value": 14 }
+        },
+        "right": { "param_name": "today", "type": { "name": "date" } }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "left": {
+          "operator": "dateDiffDays",
+          "left": {
+            "operator": "dateAddDays",
+            "left": {
+              "source": "users",
+              "field": "trial_start",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "type": { "name": "integer" }, "value": 14 }
+          },
+          "right": { "param_name": "today", "type": { "name": "date" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "email",
+      "type": { "name": "string" },
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    },
+    {
+      "alias": "trial_ends_on",
+      "type": { "name": "date", "nullable": true },
+      "expression": {
+        "operator": "dateAddDays",
+        "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 14 }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "dateAddDays",
+        "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 14 }
+      },
+      "direction": "asc"
+    },
+    {
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } },
+      "direction": "asc"
+    }
+  ]
+}

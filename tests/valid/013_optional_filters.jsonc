@@ -1,0 +1,60 @@
+// Search users with optional filters: a filter whose parameter is bound to null is switched off.
+// Each filter is or(equal(param, null), <condition>): with a typed nullable parameter the same query serves every
+// combination of filters, and greaterThanOrEqual against null is simply false, never an error.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "or",
+        "conditions": [
+          {
+            "operator": "equal",
+            "left": { "param_name": "country", "type": { "name": "string", "nullable": true } },
+            "right": { "type": { "name": "string", "nullable": true }, "value": null }
+          },
+          {
+            "operator": "equal",
+            "left": { "source": "users", "field": "country", "type": { "name": "string" } },
+            "right": { "param_name": "country", "type": { "name": "string", "nullable": true } }
+          }
+        ]
+      },
+      {
+        "operator": "or",
+        "conditions": [
+          {
+            "operator": "equal",
+            "left": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } },
+            "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
+          },
+          {
+            "operator": "greaterThanOrEqual",
+            "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "right": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } }
+          }
+        ]
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "email",
+      "type": { "name": "string" },
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    }
+  ],
+  "pagination": { "skip": 0, "take": 50 }
+}

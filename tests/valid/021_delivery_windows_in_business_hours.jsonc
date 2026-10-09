@@ -1,0 +1,69 @@
+// Deliveries whose two-hour window starts within business hours, with the window end and the time left until closing.
+// time literals compare directly; timeAddSeconds and timeDiffSeconds work in seconds, so hours are composed with
+// multiply and divide.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "type": { "name": "time" }, "value": "09:00:00" }
+      },
+      {
+        "operator": "lessThan",
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "type": { "name": "time" }, "value": "18:00:00" }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "order_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "window_start",
+      "type": { "name": "time" },
+      "expression": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+    },
+    {
+      "alias": "window_end",
+      "type": { "name": "time" },
+      "expression": {
+        "operator": "timeAddSeconds",
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": {
+          "operator": "multiply",
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "type": { "name": "integer" }, "value": 3600 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "hours_until_closing",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "divide",
+        "values": [
+          {
+            "operator": "timeDiffSeconds",
+            "left": { "type": { "name": "time" }, "value": "18:00:00" },
+            "right": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+          },
+          { "type": { "name": "integer" }, "value": 3600 }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+      "direction": "asc"
+    }
+  ]
+}
