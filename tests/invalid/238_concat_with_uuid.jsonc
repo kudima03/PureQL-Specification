@@ -1,0 +1,17 @@
+// concat(string, uuid): no implicit conversion to string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "concat",
+        "values": [
+          { "type": { "name": "string" }, "value": "order-" },
+          { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+        ]
+      }
+    }
+  ]
+}

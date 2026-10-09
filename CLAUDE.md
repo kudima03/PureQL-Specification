@@ -2,139 +2,73 @@
 
 ## What this project is
 
-A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language. The spec is the source of truth; `samples/` holds reference queries that must remain valid against it.
+A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relational query language. The goal is a type system enforced by the schema alone: every typing and placement rule is checked by a JSON Schema validator. The interpreter is left with name resolution (entities, fields, parameters, group keys, subqueries) and a few checks that need no type inference, listed under Validation in `README.md`. `samples/` holds queries that must stay valid; `tests/invalid/` holds queries that must stay invalid.
 
 ## Key files
 
-- `PureQL-Specification.json` — the JSON Schema (draft 2020-12)
-- `samples/` — example queries, numbered by complexity
+- `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
+- `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
+- `samples/` — valid queries, numbered from simple to complex
+- `tests/valid/` — valid queries that are not samples (`001_deep_nesting.jsonc` guards against exponential validation)
+- `tests/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
 
 ## Schema validation
 
-To validate a sample against the spec (requires `ajv-cli`):
+Regenerate the schema after changing the generator (Python is needed only for this), then validate with ajv, exactly as CI does:
 
 ```bash
-npx ajv-cli validate -s PureQL-Specification.json -d samples/01_simple_select.json
+python3 tools/generate_schema.py
+npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline --no-duplicate-keys PureQL-Specification.json
+npx --yes @prantlf/jsonlint@17.0.1 --check --continue --indent 2 --trailing-newline --no-duplicate-keys "samples/*.json"
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid
+npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid
 ```
 
-Or with Python's `jsonschema`:
+On every pull request, `validate.yml` first checks that the schema is formatted exactly as the generator writes it and that every sample has the same format (`jsonlint --check`: 2-space indent, every object and array expanded, final newline, no duplicate keys), then runs the two ajv commands: valid queries must pass, then invalid ones must fail. `release.yml` runs the ajv commands before publishing. CI does not regenerate anything, so always commit the regenerated schema together with the generator change, and never edit the schema by hand.
 
-```bash
-python3 -c "
-import json, jsonschema
-spec = json.load(open('PureQL-Specification.json'))
-doc  = json.load(open('samples/12_complex_query.json'))
-jsonschema.validate(doc, spec)
-print('valid')
-"
-```
+## Critical design rules (read before editing the generator, samples or tests)
 
-## Critical design rules (read before editing samples)
+### One operator set, contexts by position
 
-### Two predicate / expression families
+There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDiffDays`, …) exists once. Where it may appear and what its operands may be is fixed by the **context**, which the schema passes down through `$ref`. Each expression definition is generated as `<type>@<context>` or `<type>.nullable@<context>`.
 
-Every operator in the schema belongs to one of two parallel families:
+| Context | Used in | Fields | Group keys | Aggregates |
+|---|---|---|---|---|
+| `row` | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
+| `projection` | `select` / `orderBy` without `groupBy` | yes | no | over all rows (default) |
+| `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | over the group (default) or `over: "all"` |
 
-- **Single-value family** (`and`, `or`, `not`, `equal`, `greaterThan`, …, `add`, `subtract`, `multiply`, `divide`) — operands and result are single values. Use when both sides reduce to one value per query (or per group, inside `having`): typically scalars, parameters, aggregates, or arithmetic over them.
-- **Per-row (`each*`) family** (`eachAnd`, `eachOr`, `eachNot`, `eachEqual`, `eachGreaterThan`, …, `eachAdd`, `eachMultiply`, `eachDateAddDays`, `eachDatetimeDiffSeconds`, …) — operate per row of the current row set; result is a vector aligned with the input rows. Use when at least one operand is a field, or to build computed per-row columns.
+The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). Probes require the operand and its `type` to be objects and match one family at most, so a malformed node cannot fan out. Subtypes are merged into their supertype's definition (`decimal@ctx` holds the `integer` leaves and the integer-only operators), never added as a separate `anyOf` branch: ajv in draft 2020-12 mode evaluates every branch, so a duplicated branch doubles the work at each level. So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tests/valid/001_deep_nesting.jsonc` checks under the CI timeout.
 
-**Do not mix families inside the same boolean operator.** `and`/`or`/`not` take only single-boolean children; `eachAnd`/`eachOr`/`eachNot` take only per-row boolean children.
+### Aggregates
 
-### Where each family fits
+`{ "operator": "sum", "over"?: "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `over` defaults to `"group"` in a grouped query and `"all"` otherwise; samples and examples omit it unless it is `"all"` inside a grouped query. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only over a group (omitted or `"group"` over, in a grouped query), with no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
 
-| Clause | Accepts |
-|---|---|
-| `where` | single-value boolean **or** per-row boolean (per-row is the common case) |
-| `join.on` | single-value boolean **or** per-row boolean (per-row equi-join is the common case) |
-| `having` | single-value boolean **only** — operands must reduce to one value per group |
-| `select` | any value-returning expression, including per-row computed columns — **single-value only when `groupBy` is present** |
-| `groupBy` | field references only |
-| `orderBy` | `{ expression, direction }` — per-row expression without `groupBy`, single-value expression with `groupBy` |
+### Types and nulls
 
-### Fields are `arrayReturning`
+- Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`).
+- Implicit conversions: `T → T?` and `integer → decimal`. No others.
+- Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
+- Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`). The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
+- Null semantics: arithmetic, `concat`, date math, `round` / `floor` / `ceiling` are lifted (null if any operand is null). `if` is nullable when either branch is, and yields the branch taken. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
+- `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
+- `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, no lookahead, and go through `pattern()`, which rejects newlines (Python's `$` matches before a final one).
 
-A field reference (`{ entity, field, type }`) is an **array-returning** expression — it represents a whole column. Fields:
+### Query structure
 
-- Go in `select`, `groupBy`, `orderBy`, as `arg` to aggregate functions, and as operands of any `each*` operator.
-- **Cannot** appear directly in single-value `add`/`multiply`/`greaterThan`/`equal`/etc. — use the per-row `eachX` variant for the row context, or reduce with an aggregate (`sum`, `count`, `max_*`, …) for the single-value context.
-
-### Field equality: prefer `eachEqual` over `arrayEquality`
-
-For "field = literal" or "field = field" filtering, use **`eachEqual`** with an unwrapped scalar on the right:
-
-```json
-{
-  "operator": "eachEqual",
-  "left":  { "entity": "users", "field": "status", "type": { "name": "string" } },
-  "right": { "type": { "name": "string" }, "value": "active" }
-}
-```
-
-`arrayEquality` (the `equal` operator with `*ArrayReturning` on both sides) still validates and is semantically distinct — it asks "are these two **whole sequences** equal as wholes?" and returns one boolean. Reserve it for that intent (e.g. comparing two parameter arrays). The historical idiom of `equal(field, [singleValue])` as a per-row filter has been migrated out of all bundled samples.
-
-### Per-row equality vs single-value equality
-
-| Operator | Operands | Result | Typical placement |
-|---|---|---|---|
-| `equal` (single-value) | two `*Returning` | one boolean | `having` against aggregates |
-| `equal` (whole-array) | two `*ArrayReturning` | one boolean | rare — whole-sequence equality |
-| `eachEqual` | `*ArrayReturning` left, `*Returning` or `*ArrayReturning` right | one boolean per row | `where`, `join.on` |
-
-### Range comparisons
-
-Two parallel sets, same convention:
-
-- Single-value: `greaterThan` / `lessThan` / `greaterThanOrEqual` / `lessThanOrEqual` over `numericReturning` / `stringReturning` / `dateReturning` / etc. Use in `having`.
-- Per-row: `eachGreaterThan` / `eachLessThan` / `eachGreaterThanOrEqual` / `eachLessThanOrEqual`. `left` is `*ArrayReturning` (typically a field); `right` is `*Returning` (broadcast scalar) **or** `*ArrayReturning` (element-wise other field). Use in `where` / `join.on`.
-
-### Arithmetic and date / time / datetime math
-
-Same convention:
-
-- Single-value `add` / `subtract` / `multiply` / `divide` — `values` items are `numericReturning` only. Use to combine aggregates and constants (e.g. `multiply(sum(total), 0.05)`).
-- Per-row `eachAdd` / `eachSubtract` / `eachMultiply` / `eachDivide` — `values` items are `numericReturning | numericArrayReturning`. Use for computed per-row columns (e.g. `eachMultiply(unit_price field, quantity field)`).
-- Date math: `eachDateAddDays(date, n_days) → date`, `eachDateDiffDays(date1, date2) → number`.
-- Time math: `eachTimeAddSeconds(time, n_seconds) → time`, `eachTimeDiffSeconds(time1, time2) → number`.
-- Datetime math: `eachDatetimeAddSeconds(datetime, n_seconds) → datetime`, `eachDatetimeDiffSeconds(dt1, dt2) → number`.
-
-Unit choice: days for `date`, seconds for `time` and `datetime`. Larger units are expressed via composition with `eachMultiply` (e.g. `eachDatetimeAddSeconds(dt, eachMultiply(hours, 3600))`). No `interval` type exists. Diff operators evaluate `left - right`, so a positive result means `left` is later. `eachTimeAddSeconds` overflow / wrap behaviour around `00:00:00` is intentionally interpreter-defined.
-
-### Broadcast vs zip: how mixed `*Returning` / `*ArrayReturning` operands evaluate
-
-Every `each*` operator that admits both kinds on the same slot (`values` items in arithmetic, `left` / `right` in date/time math, `right` in comparisons, etc.) uses the same evaluation model:
-
-1. The surrounding row set fixes a row count `N` — determined by `from` + `joins` + `where` for `where` / `select` / `join.on` expressions, or by the group size for expressions inside an aggregate `arg` after `groupBy`.
-2. Each `*Returning` (single-value) operand is **broadcast** — conceptually repeated `N` times so it has one value per row.
-3. Each `*ArrayReturning` operand is already aligned with the same `N` rows by construction (it comes from the same row set).
-4. The operation runs **element-wise across all operands**, producing a length-`N` result vector.
-
-So `eachAdd([fieldA, scalar, fieldB])` over 3 rows with `fieldA = [10, 20, 30]`, `scalar = 5`, `fieldB = [1, 2, 3]` evaluates to `[16, 27, 38]`. Mixing kinds is intended and is how common patterns are expressed: `eachMultiply(unit_price, 1.05)` adds a 5% per-row markup; `eachAdd(base_price, tax, shipping)` sums three columns per row.
-
-This is why `eachX` operators do not collapse to their single-value siblings when handed only scalar operands: the *return type* is still `*ArrayReturning`, aligned with the row set. `eachAdd(2, 3)` in a `select` over a 4-row entity yields the vector `[5, 5, 5, 5]`, not the scalar `5`. Use single-value `add` for purely scalar work; `eachAdd` exists specifically because at least one operand is row-aligned.
-
-The same model applies to `select` itself when it mixes kinds (without `groupBy`): if any item is `*ArrayReturning`, the result has `N` rows and every single-value item (e.g. `sum(total)`) is broadcast to each row; if all items are single-value, the result is one row. Aggregates see all `N` rows — they are computed before `distinct` and `pagination`. So `[field, sum(field)]` without `groupBy` is valid and well-defined, not an error.
-
-### `joinItem` has no alias
-
-Only the root `from` expression supports an `alias`. Joined entities are always referenced by their `entity` name string.
-
-### `groupBy` takes `field` objects
-
-Not select expressions — just plain `{ entity, field, type }` field references. No aliases, no operators.
-
-### `orderBy` keys follow the query's context
-
-Every item is `orderByItem` — `{ expression, direction }`. There is no `{ field }` form: a field is just an array-returning `expression`.
-
-- Without `groupBy`: `expression` is normally `*ArrayReturning` (field, `each*` computation). A single-value key validates but is a constant, so it leaves the order unchanged.
-- With `groupBy`: `expression` must be `singleValueReturning` (aggregate, arithmetic over aggregates). Fields and `each*` are rejected (root `dependentSchemas`).
-- Never reference a `select` alias from `orderBy` — repeat the expression. Aliases are name references the schema cannot check.
-- To sort groups by a key, wrap it in an aggregate (e.g. `min_string(users.name)`): every value in a group equals the key.
-
-### Grouped `select` is single-value only
-
-When `groupBy` is present, every `select` item must be `singleValueReturning` (enforced via root `dependentSchemas`). Group keys are emitted automatically as the leading result columns, so **never repeat `groupBy` fields in `select`** — the schema rejects them, along with any non-grouped field or `each*` column.
+- Field reference: `{ "source": <entity, subquery or alias>, "field": …, "type": … }`.
+- `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
+- `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
+- A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
+- `select` columns are `{ alias, type, expression }` with alias and type required. The schema checks the expression against the declared type.
+- `groupBy` items are `{ alias?, type, expression }`: any row expression can be a key, and its declared type is checked like a `select` column. Keys are referenced as `{ "key": i, "type": … }`, repeating that declared type exactly, and are never emitted automatically.
+- Anything referenced from elsewhere (subquery columns, group keys) must declare its type and have it checked by the schema. Otherwise the interpreter would need type inference, which breaks the design goal.
+- `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
+- Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
+- `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
+- Every object has `additionalProperties: false`. Every array (`select`, `joins`, `groupBy`, `orderBy`, `subqueries`) has at least one item: an absent clause is omitted, never empty.
+- Names (`NAME`) are non-empty with no leading or trailing space or tab and no line break; inner spaces are allowed.
 
 ## Workflow rules
 
@@ -164,7 +98,7 @@ Tags have no `v` prefix.
 
 1. Create a branch and open a PR as normal.
 2. In the same PR, update **both**:
-   - `version` and `$id` in `PureQL-Specification.json` — set them to the new version string. The `$id` URL pattern is `https://github.com/kudima03/PureQL-Specification/releases/download/<version>/PureQL-Specification.json`.
+   - `VERSION` in `tools/generate_schema.py`, then rerun it. This sets `version` and `$id` in `PureQL-Specification.json`; the `$id` URL pattern is `https://github.com/kudima03/PureQL-Specification/releases/download/<version>/PureQL-Specification.json`.
    - `CHANGELOG.md` — add a new `## [<version>] - YYYY-MM-DD` section above the previous one with `### Added / Changed / Removed / Fixed` entries as appropriate.
 3. Merge the PR into `main`.
 4. Push a tag from `main` matching the version exactly:
@@ -173,15 +107,20 @@ Tags have no `v` prefix.
    git push origin 0.1.0-preview.0.1.0
    ```
 5. The CD workflow (`release.yml`) fires automatically. It will:
-   - Validate all samples against the schema.
+   - Validate `samples/` and `tests/valid/` (must pass) and `tests/invalid/` (must fail) with ajv.
    - Verify the `version` field in the schema matches the tag (fails fast if they differ).
    - Extract the matching section from `CHANGELOG.md` as the release body.
    - Publish a GitHub Release with `PureQL-Specification.json`, `samples.zip`, `CHANGELOG.md`, and `README.md` as assets.
    - Mark the release as **pre-release** if the tag contains `-preview`.
 
-## Adding new samples
+### Execution semantics
 
-1. Number the file (`13_my_sample.json`) to keep ordering clear.
-2. Run schema validation before committing.
-3. Update the samples table in `README.md`.
-4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency with existing samples.
+What an interpreter computes is defined under **Semantics** in `README.md`: evaluation order and laziness, execution errors, 64-bit `integer` and exact `decimal` arithmetic, code-point strings, the order of every type, nanosecond times with wrap-around, aggregate results on no rows, parameter binding and source names. Change it there, never only in a sample. Samples and tests must not depend on anything listed under *Not specified yet*, and every query in `samples/` and `tests/valid/` should also pass name resolution: declared subqueries, unique source names, aliased sources referenced by alias.
+
+## Adding samples and tests
+
+1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every column's type by hand, and update the samples table in `README.md`.
+2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query. Test formatting is not checked; keep the compact style of the existing tests (an object or array on one line while it fits in 110 columns). Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
+3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
+4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
+5. Run both ajv commands from [Schema validation](#schema-validation) before committing.

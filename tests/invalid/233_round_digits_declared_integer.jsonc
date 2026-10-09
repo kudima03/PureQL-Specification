@@ -1,0 +1,15 @@
+// round with digits is decimal, declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "round",
+        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

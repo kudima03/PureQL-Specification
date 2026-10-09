@@ -1,0 +1,24 @@
+// groupBy key declared integer, expression is decimal (divide)
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "divide",
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    }
+  ]
+}

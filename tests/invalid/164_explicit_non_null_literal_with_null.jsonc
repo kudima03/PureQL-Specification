@@ -1,0 +1,11 @@
+// Literal typed with an explicit nullable: false and a null value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string", "nullable": true },
+      "expression": { "type": { "name": "string", "nullable": false }, "value": null }
+    }
+  ]
+}

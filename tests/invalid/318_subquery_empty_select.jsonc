@@ -1,0 +1,12 @@
+// A subquery with no select columns
+{
+  "subqueries": [{ "name": "recent", "query": { "from": { "entity": "orders" }, "select": [] } }],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

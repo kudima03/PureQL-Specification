@@ -1,0 +1,15 @@
+// not written with a conditions array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "not",
+    "conditions": [{ "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }]
+  }
+}

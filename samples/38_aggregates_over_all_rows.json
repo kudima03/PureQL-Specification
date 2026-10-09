@@ -1,0 +1,124 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "orders",
+      "type": {
+        "name": "integer"
+      },
+      "expression": {
+        "operator": "count"
+      }
+    },
+    {
+      "alias": "revenue",
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "operator": "sum",
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "smallest",
+      "type": {
+        "name": "decimal",
+        "nullable": true
+      },
+      "expression": {
+        "operator": "min",
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "latest",
+      "type": {
+        "name": "datetime",
+        "nullable": true
+      },
+      "expression": {
+        "operator": "max",
+        "selector": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "average",
+      "type": {
+        "name": "decimal",
+        "nullable": true
+      },
+      "expression": {
+        "operator": "average",
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "any_refund",
+      "type": {
+        "name": "boolean"
+      },
+      "expression": {
+        "operator": "any",
+        "predicate": {
+          "operator": "equal",
+          "left": {
+            "source": "orders",
+            "field": "status",
+            "type": {
+              "name": "string"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "string"
+            },
+            "value": "refunded"
+          }
+        }
+      }
+    },
+    {
+      "alias": "all_paid",
+      "type": {
+        "name": "boolean"
+      },
+      "expression": {
+        "operator": "all",
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    }
+  ]
+}

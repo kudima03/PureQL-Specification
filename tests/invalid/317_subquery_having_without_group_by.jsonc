@@ -1,0 +1,27 @@
+// A subquery with having but no groupBy
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          }
+        ],
+        "having": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

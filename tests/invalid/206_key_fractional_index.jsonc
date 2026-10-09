@@ -1,0 +1,17 @@
+// Group key with index 0.5
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "key": 0.5, "type": { "name": "uuid" } }
+    }
+  ]
+}

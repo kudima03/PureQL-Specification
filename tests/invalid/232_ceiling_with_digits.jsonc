@@ -1,0 +1,15 @@
+// ceiling with digits (only round takes digits)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "ceiling",
+        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+// Field reference using the old entity key instead of source
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "uuid" },
+      "expression": { "entity": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

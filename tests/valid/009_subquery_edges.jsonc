@@ -1,0 +1,125 @@
+// Subqueries at their edges: a grouped main query with subqueries; a grouped subquery with having, orderBy, distinct
+// and pagination; a later subquery filtering with in over an earlier one; a subquery joined twice under two aliases.
+{
+  "subqueries": [
+    {
+      "name": "top_users",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "having": {
+          "operator": "greaterThan",
+          "left": {
+            "operator": "sum",
+            "over": "group",
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
+        },
+        "select": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "key": 0, "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "revenue",
+            "type": { "name": "decimal" },
+            "expression": {
+              "operator": "sum",
+              "over": "group",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ],
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "sum",
+              "over": "group",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            },
+            "direction": "desc"
+          }
+        ],
+        "distinct": true,
+        "pagination": { "skip": 0, "take": 100 }
+      }
+    },
+    {
+      "name": "top_orders",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "in",
+          "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+          "list": { "subquery": "top_users", "field": "user_id", "type": { "name": "uuid" } }
+        },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "top_orders", "alias": "o" },
+  "joins": [
+    {
+      "type": "inner",
+      "subquery": "top_users",
+      "alias": "a",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "o", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "a", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "type": "left",
+      "subquery": "top_users",
+      "alias": "b",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "a", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "b", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "o", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "over": "group" }
+    },
+    {
+      "alias": "revenue",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": {
+        "operator": "max",
+        "over": "group",
+        "selector": { "source": "b", "field": "revenue", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

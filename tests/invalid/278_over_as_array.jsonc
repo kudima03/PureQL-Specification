@@ -1,0 +1,7 @@
+// over given an array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "type": { "name": "integer" }, "expression": { "operator": "count", "over": ["all"] } }
+  ]
+}

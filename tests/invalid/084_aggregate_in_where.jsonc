@@ -1,0 +1,20 @@
+// Aggregate inside where (old ambiguity B1)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "left": {
+      "operator": "sum",
+      "over": "all",
+      "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 5 }
+  }
+}

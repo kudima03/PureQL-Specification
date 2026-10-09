@@ -1,0 +1,11 @@
+// Typed null integer? in a non-null integer column
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": { "type": { "name": "integer", "nullable": true }, "value": null }
+    }
+  ]
+}

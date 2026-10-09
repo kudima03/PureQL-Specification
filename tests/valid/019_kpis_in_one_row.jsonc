@@ -1,0 +1,60 @@
+// Dashboard KPIs in one row: order count, paid count, paid share, whether any order was refunded, the latest order.
+// No column reads a field outside an aggregate, so the result is a single row even for an empty table. The share
+// guards against division by zero with if; max over all rows is nullable, because there may be no rows.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "paid_orders",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "count",
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "paid_share",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "equal",
+          "left": { "operator": "count" },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        },
+        "then": { "type": { "name": "integer" }, "value": 0 },
+        "else": {
+          "operator": "divide",
+          "values": [
+            {
+              "operator": "count",
+              "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+            },
+            { "operator": "count" }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "any_refunded",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "any",
+        "predicate": {
+          "operator": "equal",
+          "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "right": { "type": { "name": "string" }, "value": "refunded" }
+        }
+      }
+    },
+    {
+      "alias": "latest_order_at",
+      "type": { "name": "datetime", "nullable": true },
+      "expression": {
+        "operator": "max",
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

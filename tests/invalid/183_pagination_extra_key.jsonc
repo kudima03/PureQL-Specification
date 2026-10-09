@@ -1,0 +1,12 @@
+// pagination with an unknown page key
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "pagination": { "skip": 0, "take": 10, "page": 2 }
+}

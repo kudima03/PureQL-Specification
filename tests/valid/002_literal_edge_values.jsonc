@@ -1,0 +1,78 @@
+// Literal values at the edges of each format: 5.0 is a JSON integer, a decimal may be written without a fraction,
+// leap day, year 0000, nine fractional digits, offsets -00:30 / +00:00 / -23:59, an upper-case uuid,
+// and an explicit "nullable": false.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "int_written_as_5_0",
+      "type": { "name": "integer" },
+      "expression": { "type": { "name": "integer" }, "value": 5.0 }
+    },
+    {
+      "alias": "negative_int",
+      "type": { "name": "integer" },
+      "expression": { "type": { "name": "integer" }, "value": -42 }
+    },
+    {
+      "alias": "decimal_without_fraction",
+      "type": { "name": "decimal" },
+      "expression": { "type": { "name": "decimal" }, "value": 5 }
+    },
+    {
+      "alias": "decimal_exponent",
+      "type": { "name": "decimal" },
+      "expression": { "type": { "name": "decimal" }, "value": 1.5e-07 }
+    },
+    {
+      "alias": "empty_string",
+      "type": { "name": "string" },
+      "expression": { "type": { "name": "string" }, "value": "" }
+    },
+    {
+      "alias": "leap_day",
+      "type": { "name": "date" },
+      "expression": { "type": { "name": "date" }, "value": "2024-02-29" }
+    },
+    {
+      "alias": "year_zero",
+      "type": { "name": "date" },
+      "expression": { "type": { "name": "date" }, "value": "0000-01-01" }
+    },
+    {
+      "alias": "midnight",
+      "type": { "name": "time" },
+      "expression": { "type": { "name": "time" }, "value": "00:00:00" }
+    },
+    {
+      "alias": "nanoseconds",
+      "type": { "name": "time" },
+      "expression": { "type": { "name": "time" }, "value": "23:59:59.999999999" }
+    },
+    {
+      "alias": "minus_half_hour",
+      "type": { "name": "datetime" },
+      "expression": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00-00:30" }
+    },
+    {
+      "alias": "plus_zero",
+      "type": { "name": "datetime" },
+      "expression": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00+00:00" }
+    },
+    {
+      "alias": "max_negative_offset",
+      "type": { "name": "datetime" },
+      "expression": { "type": { "name": "datetime" }, "value": "2024-12-31T23:59:59.5-23:59" }
+    },
+    {
+      "alias": "upper_case_uuid",
+      "type": { "name": "uuid" },
+      "expression": { "type": { "name": "uuid" }, "value": "3F2A6C1E-8B4D-4E2A-9C1F-1A2B3C4D5E6F" }
+    },
+    {
+      "alias": "explicit_non_null",
+      "type": { "name": "string", "nullable": false },
+      "expression": { "type": { "name": "string", "nullable": false }, "value": "a" }
+    }
+  ]
+}

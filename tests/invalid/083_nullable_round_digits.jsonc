@@ -1,0 +1,15 @@
+// round.digits must be a non-null integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": {
+        "operator": "round",
+        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

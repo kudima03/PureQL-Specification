@@ -1,0 +1,23 @@
+// join naming both an entity and a subquery
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "users",
+      "subquery": "vip_users",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

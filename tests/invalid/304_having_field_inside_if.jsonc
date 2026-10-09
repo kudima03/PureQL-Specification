@@ -1,0 +1,19 @@
+// Field hidden in an if.condition inside having
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+  ],
+  "having": {
+    "operator": "if",
+    "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+    "then": { "type": { "name": "boolean" }, "value": true },
+    "else": { "type": { "name": "boolean" }, "value": false }
+  }
+}

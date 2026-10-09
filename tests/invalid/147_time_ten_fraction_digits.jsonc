@@ -1,0 +1,16 @@
+// time literal with 10 fractional digits (at most 9)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "lessThan",
+    "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
+    "right": { "type": { "name": "time" }, "value": "12:30:00.1234567890" }
+  }
+}

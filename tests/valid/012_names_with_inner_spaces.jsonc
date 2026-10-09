@@ -1,0 +1,12 @@
+// Names may contain inner spaces and non-ASCII letters: an entity, alias, parameter, field and column alias.
+{
+  "from": { "entity": "order items", "alias": "позиции" },
+  "where": { "param_name": "min qty", "type": { "name": "boolean" } },
+  "select": [
+    {
+      "alias": "line total",
+      "type": { "name": "decimal" },
+      "expression": { "source": "позиции", "field": "unit price", "type": { "name": "decimal" } }
+    }
+  ]
+}

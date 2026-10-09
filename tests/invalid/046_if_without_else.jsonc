@@ -1,0 +1,15 @@
+// if without else
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "then": { "type": { "name": "string" }, "value": "yes" }
+      }
+    }
+  ]
+}

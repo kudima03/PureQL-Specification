@@ -1,0 +1,20 @@
+// Aggregate inside the predicate of another aggregate
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "sum",
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 1 },
+        "predicate": {
+          "operator": "any",
+          "over": "all",
+          "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      }
+    }
+  ]
+}

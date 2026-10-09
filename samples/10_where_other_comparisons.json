@@ -1,0 +1,86 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "and",
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "left": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "string"
+          },
+          "value": "M"
+        }
+      },
+      {
+        "operator": "lessThan",
+        "left": {
+          "source": "users",
+          "field": "birth_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "date"
+          },
+          "value": "2000-01-01"
+        }
+      },
+      {
+        "operator": "greaterThanOrEqual",
+        "left": {
+          "source": "users",
+          "field": "preferred_call_time",
+          "type": {
+            "name": "time"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "time"
+          },
+          "value": "09:00:00"
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "name",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

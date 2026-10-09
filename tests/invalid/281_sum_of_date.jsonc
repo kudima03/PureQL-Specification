@@ -1,0 +1,15 @@
+// sum over a date selector
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "date" },
+      "expression": {
+        "operator": "sum",
+        "over": "all",
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

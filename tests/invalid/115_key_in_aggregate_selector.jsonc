@@ -1,0 +1,21 @@
+// Group key inside an aggregate selector (row context)
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "sum",
+        "over": "group",
+        "selector": { "key": 0, "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

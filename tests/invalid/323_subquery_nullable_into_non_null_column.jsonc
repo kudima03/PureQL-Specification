@@ -1,0 +1,30 @@
+// A subquery column declared non-null whose expression is a nullable field
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "id",
+            "type": { "name": "uuid" },
+            "expression": {
+              "source": "orders",
+              "field": "coupon_id",
+              "type": { "name": "uuid", "nullable": true }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

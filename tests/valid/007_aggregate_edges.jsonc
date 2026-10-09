@@ -1,0 +1,76 @@
+// Aggregates over all rows at their edges: count in a decimal and in a nullable integer column, sum of a nullable
+// selector is non-null, sum of a literal, average of a datetime (nullable), all over all rows, a predicate on count,
+// an if whose condition and branch mix an aggregate with a field (broadcast).
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "count_as_decimal",
+      "type": { "name": "decimal" },
+      "expression": { "operator": "count", "over": "all" }
+    },
+    {
+      "alias": "count_as_nullable",
+      "type": { "name": "integer", "nullable": true },
+      "expression": {
+        "operator": "count",
+        "over": "all",
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "points",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "sum",
+        "over": "all",
+        "selector": {
+          "source": "orders",
+          "field": "bonus_points",
+          "type": { "name": "integer", "nullable": true }
+        }
+      }
+    },
+    {
+      "alias": "rows",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "sum",
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "mean_time",
+      "type": { "name": "datetime", "nullable": true },
+      "expression": {
+        "operator": "average",
+        "over": "all",
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "all_paid",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "all",
+        "over": "all",
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "total_if_any",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "greaterThan",
+          "left": { "operator": "count", "over": "all" },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        },
+        "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "else": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

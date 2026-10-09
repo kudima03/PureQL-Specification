@@ -1,0 +1,15 @@
+// datetimeDiffSeconds is decimal, declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// min without over in a plain query declared non-null: it defaults to all rows, which may be none
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "smallest",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "min",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

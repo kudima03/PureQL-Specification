@@ -1,0 +1,25 @@
+// Nullable boolean as an aggregate predicate
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "any",
+        "over": "group",
+        "predicate": {
+          "source": "orders",
+          "field": "is_verified",
+          "type": { "name": "boolean", "nullable": true }
+        }
+      }
+    }
+  ]
+}

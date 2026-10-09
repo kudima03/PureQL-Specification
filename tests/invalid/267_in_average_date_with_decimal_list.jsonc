@@ -1,0 +1,19 @@
+// in(average of a date, decimalList): average of a date is a date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "boolean" },
+      "expression": {
+        "operator": "in",
+        "value": {
+          "operator": "average",
+          "over": "all",
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "list": { "param_name": "amounts", "type": { "name": "decimalList" } }
+      }
+    }
+  ]
+}

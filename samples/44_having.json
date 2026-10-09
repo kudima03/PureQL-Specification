@@ -1,0 +1,54 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThanOrEqual",
+    "left": {
+      "operator": "count"
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 5
+    }
+  },
+  "select": [
+    {
+      "alias": "user_id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "type": {
+        "name": "integer"
+      },
+      "expression": {
+        "operator": "count"
+      }
+    }
+  ]
+}

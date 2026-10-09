@@ -1,0 +1,15 @@
+// and.conditions given a single condition instead of an array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "conditions": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+  }
+}

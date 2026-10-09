@@ -8,28 +8,56 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    # A validation regression is exponential: fail fast instead of hanging.
+    timeout-minutes: 10
+
+    # ajv prints every file it checks to stdout, and for an invalid query the
+    # whole error list: over 10 000 lines. Steps below discard stdout. A file
+    # that fails its test is reported on stderr, which stays in the log
+    # (with the errors of a valid query that was rejected), so only failures
+    # are shown, plus one summary line per step.
+    # npm deprecation notices come from ajv-cli's own dependencies; hide them.
+    env:
+      npm_config_loglevel: error
+
     steps:
+      # Fetch the schema, samples and tests of the pull request.
       - uses: actions/checkout@v4
 
-      - name: Validate all samples against schema
-        run: |
-          pip install jsonschema --quiet
-          python3 - <<'PYEOF'
-          import json, glob, sys
-          from jsonschema import Draft202012Validator
+      # The schema must be exactly what the generator writes: 2-space
+      # indent, a final newline and no duplicate keys. jsonlint --check
+      # reformats it in memory, prints a diff if the file differs, and fails;
+      # it also rejects a duplicate key outright.
+      - name: Schema is formatted
+        run: >
+          npx --yes @prantlf/jsonlint@17.0.1 --check --indent 2 --trailing-newline
+          --no-duplicate-keys PureQL-Specification.json
 
-          spec = json.load(open("PureQL-Specification.json"))
-          validator = Draft202012Validator(spec)
-          failed = False
-          for path in sorted(glob.glob("samples/*.json")):
-              doc = json.load(open(path))
-              errors = list(validator.iter_errors(doc))
-              if errors:
-                  print(f"FAIL {path}:")
-                  for e in errors:
-                      print(f"  {e.message}")
-                  failed = True
-              else:
-                  print(f"OK   {path}")
-          sys.exit(1 if failed else 0)
-          PYEOF
+      # Samples are formatted the same way as the schema: 2-space indent,
+      # every object and array expanded, a final newline, no duplicate keys.
+      # --continue reports every file that differs, not only the first.
+      - name: Samples are formatted
+        run: >
+          npx --yes @prantlf/jsonlint@17.0.1 --check --continue --indent 2 --trailing-newline
+          --no-duplicate-keys "samples/*.json"
+
+      # Every sample and every query in tests/valid must be accepted.
+      # `ajv test --valid` fails if any file is rejected. tests/valid holds
+      # the deep nesting query that guards against exponential validation.
+      # --strict=false allows the root `version` keyword, which is not part
+      # of JSON Schema.
+      - name: Valid queries must pass
+        run: |
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid > /dev/null
+          echo "$(ls samples/*.json tests/valid/*.jsonc | wc -l) valid queries accepted"
+
+      # Every query in tests/invalid must be rejected. `ajv test --invalid`
+      # checks each file on its own and fails if any one of them is accepted.
+      # Test files are JSONC: a `//` comment with the case description,
+      # then the bare query. A file that does not parse fails the step too.
+      - name: Invalid queries must fail
+        run: |
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid > /dev/null
+          echo "$(ls tests/invalid/*.jsonc | wc -l) invalid queries rejected"

@@ -1,0 +1,87 @@
+// Orders at least 50% larger than the same user's average order.
+// There are no correlated subqueries: a grouped subquery computes one average per user and the main query joins it on
+// the user, which puts the user's average on every one of their orders.
+{
+  "subqueries": [
+    {
+      "name": "user_averages",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "type": { "name": "uuid" },
+            "expression": { "key": 0, "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "average_total",
+            "type": { "name": "decimal" },
+            "expression": {
+              "operator": "average",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "type": "inner",
+      "subquery": "user_averages",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "user_averages", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": {
+      "operator": "multiply",
+      "values": [
+        { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } },
+        { "type": { "name": "decimal" }, "value": 1.5 }
+      ]
+    }
+  },
+  "select": [
+    {
+      "alias": "order_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "total",
+      "type": { "name": "decimal" },
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "user_average",
+      "type": { "name": "decimal" },
+      "expression": { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "divide",
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } }
+        ]
+      },
+      "direction": "desc"
+    }
+  ]
+}

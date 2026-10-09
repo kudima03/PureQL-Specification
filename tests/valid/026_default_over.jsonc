@@ -1,0 +1,85 @@
+// over can be left out: an aggregate runs over the group in a grouped query and over all rows otherwise.
+// In the subquery (plain) count and min run over all rows, so min is nullable. In the main (grouped) query count, sum,
+// min and average run over each group, so min and average are non-null; over is written only for the total over
+// all rows that the share divides by.
+{
+  "subqueries": [
+    {
+      "name": "overview",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+          {
+            "alias": "smallest",
+            "type": { "name": "decimal", "nullable": true },
+            "expression": {
+              "operator": "min",
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "left": { "operator": "count" },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "smallest",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "min",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "average",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "average",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "share_of_revenue",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "divide",
+        "values": [
+          {
+            "operator": "sum",
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          {
+            "operator": "sum",
+            "over": "all",
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sum",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      },
+      "direction": "desc"
+    }
+  ]
+}

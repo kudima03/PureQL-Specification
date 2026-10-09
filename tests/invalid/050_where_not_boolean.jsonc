@@ -1,0 +1,12 @@
+// decimal field as where
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+}

@@ -1,0 +1,14 @@
+// round of a nullable decimal, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "round",
+        "value": { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

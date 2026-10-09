@@ -1,0 +1,15 @@
+// decimal? field in an integer? column (no narrowing)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer", "nullable": true },
+      "expression": {
+        "source": "orders",
+        "field": "discount",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    }
+  ]
+}

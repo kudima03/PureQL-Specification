@@ -1,0 +1,21 @@
+// greaterThan on a boolean hidden in an if
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "left": {
+      "operator": "if",
+      "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+      "then": { "type": { "name": "boolean" }, "value": true },
+      "else": { "type": { "name": "boolean" }, "value": false }
+    },
+    "right": { "type": { "name": "boolean" }, "value": true }
+  }
+}

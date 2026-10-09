@@ -1,0 +1,93 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "alias": "size_bucket",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "operator": "greaterThan",
+          "left": {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "decimal"
+            },
+            "value": 100
+          }
+        },
+        "then": {
+          "type": {
+            "name": "string"
+          },
+          "value": "large"
+        },
+        "else": {
+          "type": {
+            "name": "string"
+          },
+          "value": "small"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "size_bucket",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "type": {
+        "name": "integer"
+      },
+      "expression": {
+        "operator": "count"
+      }
+    },
+    {
+      "alias": "avg_total",
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "operator": "average",
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

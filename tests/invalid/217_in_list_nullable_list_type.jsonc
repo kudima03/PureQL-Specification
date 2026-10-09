@@ -1,0 +1,16 @@
+// in over a list parameter declared nullable (lists have no nullable form)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "in",
+    "value": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "list": { "param_name": "statuses", "type": { "name": "stringList", "nullable": true } }
+  }
+}

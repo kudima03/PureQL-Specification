@@ -1,0 +1,19 @@
+// modulo with a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "modulo",
+        "left": {
+          "source": "orders",
+          "field": "bonus_points",
+          "type": { "name": "integer", "nullable": true }
+        },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

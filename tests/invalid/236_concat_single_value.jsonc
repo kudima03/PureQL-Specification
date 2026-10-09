@@ -1,0 +1,14 @@
+// concat with one operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "concat",
+        "values": [{ "source": "orders", "field": "name", "type": { "name": "string" } }]
+      }
+    }
+  ]
+}

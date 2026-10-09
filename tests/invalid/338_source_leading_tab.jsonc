@@ -1,0 +1,11 @@
+// field source with a leading tab
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "\torders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

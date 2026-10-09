@@ -1,0 +1,17 @@
+// add(integer, decimal) is decimal, declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "add",
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

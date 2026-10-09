@@ -1,0 +1,16 @@
+// boolean literal written as a JSON string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "left": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+    "right": { "type": { "name": "boolean" }, "value": "true" }
+  }
+}

@@ -1,0 +1,17 @@
+// Field reference that also has a param_name
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "source": "orders",
+    "field": "is_paid",
+    "type": { "name": "boolean" },
+    "param_name": "only_paid"
+  }
+}

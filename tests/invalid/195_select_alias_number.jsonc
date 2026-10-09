@@ -1,0 +1,11 @@
+// select column alias is a number
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": 1,
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

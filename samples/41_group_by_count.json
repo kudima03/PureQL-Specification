@@ -1,0 +1,42 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "key": 0,
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "type": {
+        "name": "integer"
+      },
+      "expression": {
+        "operator": "count"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+// join with neither entity nor subquery
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "joins": [{ "type": "inner", "alias": "u", "on": { "type": { "name": "boolean" }, "value": true } }]
+}

@@ -1,0 +1,48 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "left": {
+      "source": "orders",
+      "field": "ordered_at",
+      "type": {
+        "name": "datetime"
+      }
+    },
+    "right": {
+      "param_name": "since",
+      "type": {
+        "name": "datetime"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "report_currency",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "param_name": "currency",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

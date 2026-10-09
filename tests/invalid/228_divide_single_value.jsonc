@@ -1,0 +1,14 @@
+// divide with one operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "divide",
+        "values": [{ "source": "orders", "field": "total", "type": { "name": "decimal" } }]
+      }
+    }
+  ]
+}

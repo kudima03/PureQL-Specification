@@ -1,0 +1,2 @@
+// select with no columns
+{ "from": { "entity": "orders" }, "select": [] }

@@ -1,0 +1,11 @@
+// date literal in a datetime column (no implicit conversion)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "datetime" },
+      "expression": { "type": { "name": "date" }, "value": "2024-01-01" }
+    }
+  ]
+}

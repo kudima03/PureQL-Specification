@@ -1,2 +1,5 @@
 # JetBrains Rider
 .idea/
+
+# Python
+__pycache__/

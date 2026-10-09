@@ -1,0 +1,16 @@
+// pagination take as a nullable integer parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
+  "pagination": {
+    "skip": 0,
+    "take": { "param_name": "page_size", "type": { "name": "integer", "nullable": true } }
+  }
+}

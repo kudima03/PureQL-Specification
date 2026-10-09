@@ -1,0 +1,91 @@
+{
+  "subqueries": [
+    {
+      "name": "vip_users",
+      "query": {
+        "from": {
+          "entity": "users"
+        },
+        "where": {
+          "operator": "equal",
+          "left": {
+            "source": "users",
+            "field": "tier",
+            "type": {
+              "name": "string"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "string"
+            },
+            "value": "vip"
+          }
+        },
+        "select": [
+          {
+            "alias": "id",
+            "type": {
+              "name": "uuid"
+            },
+            "expression": {
+              "source": "users",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "in",
+    "value": {
+      "source": "orders",
+      "field": "user_id",
+      "type": {
+        "name": "uuid"
+      }
+    },
+    "list": {
+      "subquery": "vip_users",
+      "field": "id",
+      "type": {
+        "name": "uuid"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "type": {
+        "name": "uuid"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "type": {
+        "name": "decimal"
+      },
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    }
+  ]
+}

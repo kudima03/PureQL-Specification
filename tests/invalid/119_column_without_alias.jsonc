@@ -1,0 +1,10 @@
+// Select column without an alias
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

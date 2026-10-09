@@ -1,0 +1,11 @@
+// from with an unknown key (schema)
+{
+  "from": { "entity": "orders", "schema": "public" },
+  "select": [
+    {
+      "alias": "id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ]
+}

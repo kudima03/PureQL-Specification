@@ -1,0 +1,105 @@
+// Order lines with their totals before and after the order's coupon discount, rounded to cents.
+// Per-row arithmetic mixes integer and decimal (the result is decimal); the coupon comes from a left join, so its
+// discount is nullable and coalesce(discount, 0) turns it back into a non-null decimal.
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "type": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "type": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "order_id",
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "kept_quantity",
+      "type": { "name": "integer" },
+      "expression": {
+        "operator": "subtract",
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "line_total",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "multiply",
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "discounted_total",
+      "type": { "name": "decimal" },
+      "expression": {
+        "operator": "round",
+        "value": {
+          "operator": "multiply",
+          "values": [
+            {
+              "operator": "multiply",
+              "values": [
+                { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+              ]
+            },
+            {
+              "operator": "subtract",
+              "values": [
+                { "type": { "name": "integer" }, "value": 1 },
+                {
+                  "operator": "coalesce",
+                  "values": [
+                    {
+                      "source": "coupons",
+                      "field": "discount",
+                      "type": { "name": "decimal", "nullable": true }
+                    },
+                    { "type": { "name": "integer" }, "value": 0 }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }, "direction": "asc" },
+    {
+      "expression": {
+        "operator": "multiply",
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        ]
+      },
+      "direction": "desc"
+    }
+  ]
+}

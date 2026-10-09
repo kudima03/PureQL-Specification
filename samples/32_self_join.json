@@ -1,0 +1,61 @@
+{
+  "from": {
+    "entity": "users",
+    "alias": "u"
+  },
+  "joins": [
+    {
+      "type": "left",
+      "entity": "users",
+      "alias": "referrer",
+      "on": {
+        "operator": "equal",
+        "left": {
+          "source": "u",
+          "field": "referrer_id",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "referrer",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "name",
+      "type": {
+        "name": "string"
+      },
+      "expression": {
+        "source": "u",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "referrer_name",
+      "type": {
+        "name": "string",
+        "nullable": true
+      },
+      "expression": {
+        "source": "referrer",
+        "field": "name",
+        "type": {
+          "name": "string",
+          "nullable": true
+        }
+      }
+    }
+  ]
+}

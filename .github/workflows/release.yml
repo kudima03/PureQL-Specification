@@ -11,56 +11,65 @@ jobs:
     permissions:
       contents: write
 
+    # ajv prints every file it checks to stdout, and for an invalid query the
+    # whole error list: over 10 000 lines. Steps below discard stdout. A file
+    # that fails its test is reported on stderr, which stays in the log
+    # (with the errors of a valid query that was rejected), so only failures
+    # are shown, plus one summary line per step.
+    # npm deprecation notices come from ajv-cli's own dependencies; hide them.
+    env:
+      npm_config_loglevel: error
+
     steps:
+      # Fetch the tagged commit.
       - uses: actions/checkout@v4
 
-      - name: Validate all samples against schema
+      # Same checks as validate.yml, so nothing broken is ever released:
+      # every sample and every query in tests/valid must be accepted.
+      - name: Valid queries must pass
         run: |
-          pip install jsonschema --quiet
-          python3 - <<'PYEOF'
-          import json, glob, sys
-          from jsonschema import Draft202012Validator
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid > /dev/null
+          echo "$(ls samples/*.json tests/valid/*.jsonc | wc -l) valid queries accepted"
 
-          spec = json.load(open("PureQL-Specification.json"))
-          validator = Draft202012Validator(spec)
-          failed = False
-          for path in sorted(glob.glob("samples/*.json")):
-              doc = json.load(open(path))
-              errors = list(validator.iter_errors(doc))
-              if errors:
-                  print(f"FAIL {path}:")
-                  for e in errors:
-                      print(f"  {e.message}")
-                  failed = True
-              else:
-                  print(f"OK   {path}")
-          sys.exit(1 if failed else 0)
-          PYEOF
+      # Every query in tests/invalid must be rejected, each file on its own.
+      - name: Invalid queries must fail
+        run: |
+          npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
+            -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid > /dev/null
+          echo "$(ls tests/invalid/*.jsonc | wc -l) invalid queries rejected"
 
+      # The tag must equal the `version` field of the schema, so a release
+      # never ships a schema that names another version. jq is preinstalled
+      # on GitHub runners.
       - name: Verify schema version matches tag
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          SCHEMA_VER=$(python3 -c "import json; print(json.load(open('PureQL-Specification.json')).get('version',''))")
-          if [ "$SCHEMA_VER" != "$TAG" ]; then
-            echo "ERROR: schema version '$SCHEMA_VER' does not match tag '$TAG'"
+          SCHEMA_VER=$(jq -r '.version // ""' PureQL-Specification.json)
+          if [ "$SCHEMA_VER" != "$GITHUB_REF_NAME" ]; then
+            echo "ERROR: schema version '$SCHEMA_VER' does not match tag '$GITHUB_REF_NAME'"
             exit 1
           fi
 
+      # The release body is the CHANGELOG.md section of this version: the
+      # lines between "## [<tag>]" and the next "## [" heading, without
+      # leading blank lines. A placeholder is used if there is no section.
       - name: Extract changelog notes
         run: |
-          python3 - <<'PYEOF' > release_notes.txt
-          import re, os
+          awk -v header="## [$GITHUB_REF_NAME]" '
+            index($0, header) == 1 { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md | sed -e '/./,$!d' > release_notes.txt
+          if [ ! -s release_notes.txt ]; then
+            echo "No changelog entry found for this version." > release_notes.txt
+          fi
 
-          tag = os.environ["GITHUB_REF_NAME"]
-          content = open("CHANGELOG.md").read()
-          pattern = r"## \[" + re.escape(tag) + r"\][^\n]*\n(.*?)(?=\n## \[|\Z)"
-          m = re.search(pattern, content, re.DOTALL)
-          print(m.group(1).strip() if m else "No changelog entry found for this version.")
-          PYEOF
-
+      # Samples ship as one archive next to the schema.
       - name: Package samples
         run: zip -r samples.zip samples/
 
+      # Publish the release with its assets; a tag containing "-preview"
+      # is marked as a pre-release.
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}

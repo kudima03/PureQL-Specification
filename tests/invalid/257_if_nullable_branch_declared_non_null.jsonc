@@ -1,0 +1,16 @@
+// if with a nullable else branch, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "then": { "type": { "name": "string" }, "value": "paid" },
+        "else": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+// Nullable boolean as if.condition
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "string" },
+      "expression": {
+        "operator": "if",
+        "condition": {
+          "source": "orders",
+          "field": "is_verified",
+          "type": { "name": "boolean", "nullable": true }
+        },
+        "then": { "type": { "name": "string" }, "value": "yes" },
+        "else": { "type": { "name": "string" }, "value": "no" }
+      }
+    }
+  ]
+}
