@@ -63,7 +63,7 @@
     {
       "alias": "user_id",
       "expression": {
-        "key": 0,
+        "key": "user_id",
         "type": {
           "name": "uuid"
         }
@@ -171,7 +171,7 @@
       "type": {
         "name": "decimal"
       },
-      "value": 1000
+      "value": "1000"
     }
   },
   "orderBy": [
@@ -186,7 +186,7 @@
     },
     {
       "expression": {
-        "key": 0,
+        "key": "user_id",
         "type": {
           "name": "uuid"
         }

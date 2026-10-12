@@ -34,7 +34,7 @@
   "select": [
     {
       "alias": "bucket",
-      "expression": { "key": 0, "type": { "name": "string" } }
+      "expression": { "key": "bucket", "type": { "name": "string" } }
     },
     {
       "alias": "orders",

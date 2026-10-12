@@ -16,7 +16,7 @@
         "select": [
           {
             "alias": "user_id",
-            "expression": { "key": 0, "type": { "name": "uuid" } }
+            "expression": { "key": "user_id", "type": { "name": "uuid" } }
           },
           {
             "alias": "average_total",
@@ -52,7 +52,7 @@
       "type": { "name": "decimal" },
       "values": [
         { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } },
-        { "type": { "name": "decimal" }, "value": 1.5 }
+        { "type": { "name": "decimal" }, "value": "1.5" }
       ]
     }
   },

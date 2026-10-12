@@ -26,7 +26,7 @@
             "type": {
               "name": "decimal"
             },
-            "value": 100
+            "value": "100"
           }
         },
         "then": {
@@ -48,7 +48,7 @@
     {
       "alias": "size_bucket",
       "expression": {
-        "key": 0,
+        "key": "size_bucket",
         "type": {
           "name": "string"
         }
@@ -83,7 +83,7 @@
   "orderBy": [
     {
       "expression": {
-        "key": 0,
+        "key": "size_bucket",
         "type": {
           "name": "string"
         }

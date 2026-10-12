@@ -68,11 +68,13 @@ SCHEMA_ID = f"https://github.com/kudima03/PureQL-Specification/releases/download
 
 TYPES = ["integer", "decimal", "string", "boolean", "date", "time", "datetime", "uuid"]
 SUBTYPES = {"decimal": ["integer"]}
-# integer operands are compared / tested for equality through decimal.
+# Families of operand types for equal, in and comparisons: integer operands are
+# compared through decimal. Every type is ordered, so every family is
+# comparable as well as equatable.
 EQUATABLE = ["decimal", "string", "boolean", "date", "time", "datetime", "uuid"]
-COMPARABLE = ["decimal", "string", "date", "time", "datetime"]
+COMPARABLE = EQUATABLE
 # min / max keep the selector type, so integer is listed separately.
-ORDERED = ["integer", "decimal", "string", "date", "time", "datetime"]
+ORDERED = TYPES
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
@@ -89,6 +91,10 @@ LEAP_YEAR = r"[0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579
 DATE = rf"([0-9]{{4}}-({MONTH_DAY})|({LEAP_YEAR})-02-29)"
 TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{1,9})?"
 # Mandatory, RFC 3339 range. -00:00 ("offset unknown") is excluded; +00:00 is Z.
+# A decimal as a string: no exponent, no leading zeros, no trailing zeros in the
+# fraction and no "-0", so each value has one spelling and every client reads it
+# exactly. 0, 12, -0.5 and 19.99 are decimals; 1.50, 01, -0, .5 and 1e3 are not.
+DECIMAL = r"(0|-?[1-9][0-9]*(\.[0-9]*[1-9])?|-?0\.[0-9]*[1-9])"
 OFFSET = (
     r"(Z"
     r"|\+([01][0-9]|2[0-3]):[0-5][0-9]"
@@ -113,7 +119,7 @@ INT64 = {"type": "integer", "minimum": -9223372036854776000, "maximum": 92233720
 
 VALUE = {
     "integer": INT64,
-    "decimal": {"type": "number"},
+    "decimal": pattern(DECIMAL),
     "string": {"type": "string"},
     "boolean": {"type": "boolean"},
     "date": pattern(DATE),
@@ -270,7 +276,8 @@ defs["param"] = obj(["param", "type"], {"param": NAME, "type": ref("type")})
 defs["field"] = obj(
     ["source", "field", "type"], {"source": NAME, "field": NAME, "type": ref("type")}
 )
-defs["key"] = obj(["key", "type"], {"key": {**INT64, "minimum": 0}, "type": ref("type")})
+# A group key is referenced by its alias.
+defs["key"] = obj(["key", "type"], {"key": NAME, "type": ref("type")})
 
 for t in TYPES:
     defs[f"type.{t}List"] = obj(["name"], {"name": {"const": f"{t}List"}})
@@ -562,8 +569,8 @@ defs["pagination"] = obj(
 
 # A column or a group key has the type its expression declares: a subquery
 # column is read from `select[j].expression.type`, and a key reference
-# `{ "key": i, "type": … }` repeats `groupBy[i].expression.type` exactly.
-defs["groupKey"] = obj(["expression"], {"alias": NAME, "expression": ref("expr@row")})
+# `{ "key": <alias>, "type": … }` repeats that key's `expression.type` exactly.
+defs["groupKey"] = obj(["alias", "expression"], {"alias": NAME, "expression": ref("expr@row")})
 
 for ctx in ["projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(

@@ -8,6 +8,6 @@
     }
   ],
   "select": [
-    { "alias": "user_id", "expression": { "key": 0, "type": { "name": "uuid" } } }
+    { "alias": "user_id", "expression": { "key": "", "type": { "name": "uuid" } } }
   ]
 }

@@ -31,7 +31,7 @@
   "select": [
     {
       "alias": "coupon",
-      "expression": { "key": 0, "type": { "name": "string" } }
+      "expression": { "key": "coupon", "type": { "name": "string" } }
     },
     {
       "alias": "orders",

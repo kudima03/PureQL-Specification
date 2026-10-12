@@ -3,12 +3,13 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
+      "alias": "user_id",
       "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
-    { "alias": "user_id", "expression": { "key": 0, "type": { "name": "uuid" } } },
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
     { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
   ]
 }

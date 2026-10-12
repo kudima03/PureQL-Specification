@@ -15,7 +15,7 @@
         { "type": { "name": "integer" }, "value": 1 }
       ]
     },
-    "right": { "type": { "name": "decimal" }, "value": 2.0 }
+    "right": { "type": { "name": "decimal" }, "value": "2" }
   },
   "groupBy": [
     {
@@ -26,7 +26,7 @@
   "select": [
     {
       "alias": "user_id",
-      "expression": { "key": 0, "type": { "name": "uuid" } }
+      "expression": { "key": "user_id", "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",
@@ -80,7 +80,7 @@
               "type": { "name": "integer", "nullable": true }
             }
           },
-          { "type": { "name": "decimal" }, "value": 0.5 }
+          { "type": { "name": "decimal" }, "value": "0.5" }
         ]
       }
     },

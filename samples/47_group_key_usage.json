@@ -81,7 +81,7 @@
     {
       "alias": "user_id",
       "expression": {
-        "key": 0,
+        "key": "user_id",
         "type": {
           "name": "uuid"
         }
@@ -96,7 +96,7 @@
         },
         "values": [
           {
-            "key": 1,
+            "key": "coupon",
             "type": {
               "name": "string",
               "nullable": true
@@ -121,7 +121,7 @@
         },
         "values": [
           {
-            "key": 2,
+            "key": "days_to_ship",
             "type": {
               "name": "integer",
               "nullable": true
@@ -158,7 +158,7 @@
           "name": "boolean"
         },
         "left": {
-          "key": 1,
+          "key": "coupon",
           "type": {
             "name": "string",
             "nullable": true
@@ -178,7 +178,7 @@
           "name": "boolean"
         },
         "left": {
-          "key": 2,
+          "key": "days_to_ship",
           "type": {
             "name": "integer",
             "nullable": true
@@ -196,7 +196,7 @@
   "orderBy": [
     {
       "expression": {
-        "key": 2,
+        "key": "days_to_ship",
         "type": {
           "name": "integer",
           "nullable": true

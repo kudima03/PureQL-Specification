@@ -14,11 +14,11 @@
     },
     {
       "alias": "decimal_without_fraction",
-      "expression": { "type": { "name": "decimal" }, "value": 5 }
+      "expression": { "type": { "name": "decimal" }, "value": "5" }
     },
     {
       "alias": "decimal_exponent",
-      "expression": { "type": { "name": "decimal" }, "value": 1.5e-07 }
+      "expression": { "type": { "name": "decimal" }, "value": "0.00000015" }
     },
     {
       "alias": "empty_string",

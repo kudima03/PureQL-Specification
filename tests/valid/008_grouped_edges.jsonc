@@ -49,7 +49,7 @@
     "operator": "and",
     "type": { "name": "boolean" },
     "conditions": [
-      { "key": 2, "type": { "name": "boolean" } },
+      { "key": "paid", "type": { "name": "boolean" } },
       {
         "operator": "any",
         "type": { "name": "boolean" },
@@ -120,7 +120,7 @@
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
-        "left": { "key": 0, "type": { "name": "integer", "nullable": true } },
+        "left": { "key": "points", "type": { "name": "integer", "nullable": true } },
         "right": {
           "operator": "sum",
           "type": { "name": "decimal" },
@@ -130,7 +130,7 @@
     },
     {
       "alias": "verified_key",
-      "expression": { "key": 3, "type": { "name": "boolean", "nullable": true } }
+      "expression": { "key": "verified", "type": { "name": "boolean", "nullable": true } }
     },
     {
       "alias": "span_end",
@@ -150,7 +150,7 @@
             "type": { "name": "date" },
             "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
           },
-          "right": { "key": 1, "type": { "name": "date" } }
+          "right": { "key": "day", "type": { "name": "date" } }
         }
       }
     },
@@ -163,7 +163,7 @@
           {
             "operator": "if",
             "type": { "name": "string" },
-            "condition": { "key": 2, "type": { "name": "boolean" } },
+            "condition": { "key": "paid", "type": { "name": "boolean" } },
             "then": { "type": { "name": "string" }, "value": "paid " },
             "else": { "type": { "name": "string" }, "value": "open " }
           },
@@ -192,7 +192,7 @@
             "else": { "type": { "name": "integer" }, "value": 0 }
           }
         },
-        "right": { "key": 0, "type": { "name": "integer", "nullable": true } }
+        "right": { "key": "points", "type": { "name": "integer", "nullable": true } }
       }
     },
     {
@@ -238,7 +238,7 @@
               "type": { "name": "date", "nullable": true }
             }
           },
-          { "key": 1, "type": { "name": "date" } }
+          { "key": "day", "type": { "name": "date" } }
         ]
       },
       "direction": "desc"

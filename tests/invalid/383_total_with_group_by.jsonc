@@ -1,6 +1,6 @@
 // A query with both aggregate and groupBy: a grouped query selects with select
 {
   "from": { "entity": "orders" },
-  "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
+  "groupBy": [{ "alias": "user_id", "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
   "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }]
 }

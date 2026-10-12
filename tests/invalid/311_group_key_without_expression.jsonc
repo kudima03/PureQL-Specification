@@ -3,6 +3,6 @@
   "from": { "entity": "orders" },
   "groupBy": [{}],
   "select": [
-    { "alias": "user_id", "expression": { "key": 0, "type": { "name": "uuid" } } }
+    { "alias": "user_id", "expression": { "key": "key_0", "type": { "name": "uuid" } } }
   ]
 }

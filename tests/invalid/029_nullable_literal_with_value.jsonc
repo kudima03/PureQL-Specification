@@ -4,7 +4,7 @@
   "select": [
     {
       "alias": "c",
-      "expression": { "type": { "name": "decimal", "nullable": true }, "value": 5 }
+      "expression": { "type": { "name": "decimal", "nullable": true }, "value": "5" }
     }
   ]
 }
