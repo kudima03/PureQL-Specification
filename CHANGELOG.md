@@ -19,6 +19,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 - **Every type is ordered**: comparisons, `min` and `max` accept `uuid` and `boolean` too, in the order `orderBy` already used, e.g. keyset pagination with `greaterThan(id, last_id)`.
 
+- **`distinctBy`**: lists `select` aliases and keeps, of the rows equal on those columns, the first in `orderBy` order, e.g. each user's latest order. Listing every alias removes duplicate rows.
+
 ### 🔧 Improvements
 
 - **Precise validation errors**: an error now points at the node and property that are wrong (`/where/right/type/name must be equal to one of the allowed values ["uuid"]`) instead of listing every way the expression could have been read.
@@ -37,13 +39,15 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **Fixed-type operators declare it too**: `and`, `or`, `not`, `equal`, `notEqual`, comparisons, `in`, `any` and `all` declare `{ "name": "boolean" }`; `count` declares `{ "name": "integer" }`.
 - **`select` columns and `groupBy` keys have no `type`**: a column is `{ "alias": …, "expression": … }` and a key `{ "alias"?: …, "expression": … }`, each with the type its expression declares. A subquery column is read with that type, and `{ "key": i, "type": … }` repeats the type of the key's expression. A column can no longer be declared wider than its expression, e.g. a `decimal` column over an `integer` sum.
 - **One spelling for each form**: a non-null type is written without `nullable` (`"nullable": false` is rejected); `and` and `or` take at least two conditions; `over` is written only as `"all"` in a grouped query (it is rejected in a plain query, where aggregates always run over all rows, and `"group"`, the default, is never written).
-- **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination`.
+- **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination` or `distinctBy`.
 - **64-bit integers**: `integer` literals, group key indexes, `skip` and `take` must be within the signed 64-bit range.
 - **A plain query always returns one row per row**: a `select` that reads no field outside an aggregate (only aggregates, literals or parameters) used to return a single row; write it as a total query with `aggregate` instead.
 - **Consistent names**: a join's kind is `kind` (`{ "kind": "left", … }`), so `type` always means a type; a parameter is `{ "param": …, "type": … }` instead of `param_name`; the operand of `floor`, `ceiling`, `round` and `in` is `operand` instead of `value`, which now only means a literal's value.
-- **Defaults are not written**: ascending order omits `direction` (`"asc"` is rejected), and a query without `distinct` keeps duplicates (`"distinct": false` is rejected).
+- **Defaults are not written**: ascending order omits `direction` (`"asc"` is rejected).
 - **`decimal` literals are strings**: `{ "type": { "name": "decimal" }, "value": "19.99" }`, in one spelling (no exponent, no leading or trailing zeros, no `-0`), so every client reads them exactly; `decimal` parameters are bound the same way. `integer` literals stay JSON numbers.
 - **Group keys are referenced by alias**: every `groupBy` key has an `alias`, and a reference is `{ "key": "user_id", "type": … }` instead of a zero-based index.
+- **`distinct` is replaced by `distinctBy`**: `"distinct": true` becomes `"distinctBy"` listing every `select` alias. It applies after `orderBy`, so the order of the distinct rows is the `orderBy` order.
+- **Samples renumbered** from 14 on, for the new `14_distinct_by_first_row.json`.
 
 ### Versioning
 

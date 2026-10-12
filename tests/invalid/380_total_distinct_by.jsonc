@@ -1,6 +1,6 @@
-// A total query with distinct: it has exactly one row
+// A total query with distinctBy: it has exactly one row
 {
   "from": { "entity": "orders" },
   "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }],
-  "distinct": true
+  "distinctBy": ["orders"]
 }

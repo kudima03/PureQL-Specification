@@ -1,0 +1,61 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "order_id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "ordered_at",
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "distinctBy": [
+    "user_id"
+  ]
+}

@@ -2,7 +2,9 @@
   "from": {
     "entity": "orders"
   },
-  "distinct": true,
+  "distinctBy": [
+    "status"
+  ],
   "select": [
     {
       "alias": "status",
