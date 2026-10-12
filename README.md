@@ -66,7 +66,7 @@ There is no `null` type. A null literal always carries its type, and a literal i
 { "type": { "name": "uuid", "nullable": true }, "value": null }
 ```
 
-**Invariant:** the type of every expression is determined by its subtree and its context (row, projection, group or total, fixed by its position), never inferred from its surroundings. The context decides where fields, group keys and aggregates may appear, whether `over` may be written, and the rows an aggregate runs over, so whether `average`, `min` and `max` can be null: never in a total query, which returns its row even over no rows. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`. Every expression declares this type; see [Declared types](#declared-types).
+**Invariant:** the type of every expression is determined by its subtree and its context (row, projection, group or total, fixed by its position), never inferred from its surroundings. The context decides where fields, group keys and aggregates may appear, whether `over` may be written, and the rows an aggregate runs over, so whether `average`, `min` and `max` can be null: always in a total query, which returns its row even over no rows. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`. Every expression declares this type; see [Declared types](#declared-types).
 
 ### Implicit conversions
 
