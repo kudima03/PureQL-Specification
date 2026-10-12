@@ -1,0 +1,13 @@
+// greaterThan between a uuid and a string: both operands must be of one family
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+    "right": { "type": { "name": "string" }, "value": "3f2a6c1e" }
+  }
+}

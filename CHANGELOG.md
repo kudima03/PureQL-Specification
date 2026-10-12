@@ -17,6 +17,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 - **Total queries**: a query with `aggregate` instead of `select` returns exactly one row, even over no rows, e.g. dashboard counters. Its columns read fields only inside aggregates; as a subquery it is a one-row source.
 
+- **Every type is ordered**: comparisons, `min` and `max` accept `uuid` and `boolean` too, in the order `orderBy` already used, e.g. keyset pagination with `greaterThan(id, last_id)`.
+
 ### 🔧 Improvements
 
 - **Precise validation errors**: an error now points at the node and property that are wrong (`/where/right/type/name must be equal to one of the allowed values ["uuid"]`) instead of listing every way the expression could have been read.
@@ -40,6 +42,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **A plain query always returns one row per row**: a `select` that reads no field outside an aggregate (only aggregates, literals or parameters) used to return a single row; write it as a total query with `aggregate` instead.
 - **Consistent names**: a join's kind is `kind` (`{ "kind": "left", … }`), so `type` always means a type; a parameter is `{ "param": …, "type": … }` instead of `param_name`; the operand of `floor`, `ceiling`, `round` and `in` is `operand` instead of `value`, which now only means a literal's value.
 - **Defaults are not written**: ascending order omits `direction` (`"asc"` is rejected), and a query without `distinct` keeps duplicates (`"distinct": false` is rejected).
+- **`decimal` literals are strings**: `{ "type": { "name": "decimal" }, "value": "19.99" }`, in one spelling (no exponent, no leading or trailing zeros, no `-0`), so every client reads them exactly; `decimal` parameters are bound the same way. `integer` literals stay JSON numbers.
+- **Group keys are referenced by alias**: every `groupBy` key has an `alias`, and a reference is `{ "key": "user_id", "type": … }` instead of a zero-based index.
 
 ### Versioning
 

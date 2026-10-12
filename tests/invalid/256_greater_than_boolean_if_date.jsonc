@@ -1,11 +1,8 @@
-// greaterThan on a boolean hidden in an if
+// greaterThan between a boolean if and a date
 {
   "from": { "entity": "orders" },
   "select": [
-    {
-      "alias": "id",
-      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
-    }
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
   ],
   "where": {
     "operator": "greaterThan",
@@ -17,6 +14,6 @@
       "then": { "type": { "name": "boolean" }, "value": true },
       "else": { "type": { "name": "boolean" }, "value": false }
     },
-    "right": { "type": { "name": "boolean" }, "value": true }
+    "right": { "type": { "name": "date" }, "value": "2024-01-01" }
   }
 }

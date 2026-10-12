@@ -1,8 +1,0 @@
-// Group key index 10^19, above the 64-bit range
-{
-  "from": { "entity": "orders" },
-  "groupBy": [{ "alias": "user_id", "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
-  "select": [
-    { "alias": "user_id", "expression": { "key": 10000000000000000000, "type": { "name": "uuid" } } }
-  ]
-}

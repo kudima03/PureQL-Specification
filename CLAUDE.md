@@ -59,7 +59,7 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 
 ### Types and nulls
 
-- Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`). `"nullable": false` is rejected: one spelling per type. `integer` literals, `key`, `skip` and `take` are within 64 bits (`INT64`).
+- Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`). `"nullable": false` is rejected: one spelling per type. `integer` literals, `skip` and `take` are within 64 bits (`INT64`). A `decimal` literal is a string in one spelling (`DECIMAL`: no exponent, no leading or trailing zeros, no `-0`). Every type is ordered: comparisons and `min` / `max` accept all of them.
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
 - Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`), and every expression declares it. The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
@@ -77,7 +77,7 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
 - Three kinds of query, by shape: plain (`select`: one row per row), grouped (`groupBy` + `select`: one row per group), total (`aggregate` instead of `select`: exactly one row; no `orderBy`, `distinct`, `pagination`, `having`). The root and `query` dispatch on `groupBy`, then `aggregate`.
 - `select` / `aggregate` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
-- `groupBy` items are `{ alias?, expression }`: any row expression can be a key. Keys are referenced as `{ "key": i, "type": … }`, repeating `groupBy[i].expression.type` exactly, and are never emitted automatically.
+- `groupBy` items are `{ alias, expression }`: any row expression can be a key, and the alias is required. Keys are referenced by alias as `{ "key": "user_id", "type": … }`, repeating that key's `expression.type` exactly, and are never emitted automatically.
 - Every expression declares its type, and the schema checks each declaration that does not depend on the catalog. Anything referenced from elsewhere (subquery columns, group keys) takes the type its expression declares. Otherwise the interpreter would need type inference, which breaks the design goal.
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.

@@ -1,0 +1,5 @@
+// decimal literal "1.50" with a trailing zero: each decimal has one spelling, "1.5"
+{
+  "from": { "entity": "orders" },
+  "select": [{ "alias": "c", "expression": { "type": { "name": "decimal" }, "value": "1.50" } }]
+}

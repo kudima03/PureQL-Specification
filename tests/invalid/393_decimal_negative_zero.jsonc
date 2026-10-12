@@ -1,0 +1,5 @@
+// decimal literal "-0": zero is written "0"
+{
+  "from": { "entity": "orders" },
+  "select": [{ "alias": "c", "expression": { "type": { "name": "decimal" }, "value": "-0" } }]
+}

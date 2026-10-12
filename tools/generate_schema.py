@@ -107,7 +107,8 @@ def pattern(body):
     """A whole-string pattern. In Python's `re`, `$` also matches before a final
     newline, so "2024-01-01\\n" would pass there and fail in ECMA-262: the
     explicit newline check keeps both in agreement."""
-    return {"type": "string", "pattern": f"^{body}$", "not": {"pattern": r"\n"}}
+    # `type` inside `not` too, or a non-string would fail it with a vague error
+    return {"type": "string", "pattern": f"^{body}$", "not": {"type": "string", "pattern": r"\n"}}
 
 
 # A signed 64-bit integer, as far as a schema can tell. The bounds are written
