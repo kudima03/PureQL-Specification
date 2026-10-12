@@ -9,7 +9,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [0.1.0-preview.2.0.0] - 2026-10-12
 
-Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. `select` columns and `groupBy` keys lose their own `type`, which now only repeated it: they have the type their expression declares. Every existing query needs a `type` on each operator node and none on its columns and keys.
+Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. `select` columns and `groupBy` keys lose their own `type`, which now only repeated it: they have the type their expression declares. The release also adds total queries and `distinctBy`, makes `decimal` literals exact strings and group keys named, and leaves one spelling for each form; every existing query needs migrating (see Versioning).
 
 ### ✨ New Features
 
@@ -37,10 +37,10 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 - **Operator nodes require `type`**: the result type, declared exactly. `add`, `subtract`, `multiply`, `if` and `coalesce` are `integer` when every operand is `integer` and `decimal` otherwise; a lifted operator is nullable exactly when an operand is; `coalesce` is non-null exactly when an operand is; `average`, `min` and `max` follow the aggregate rules. Declaring a wider type (`decimal` for a sum of integers, nullable for an addition of non-null values) is rejected, even where the wider type would be accepted; implicit conversions still apply where the expression is used.
 - **Fixed-type operators declare it too**: `and`, `or`, `not`, `equal`, `notEqual`, comparisons, `in`, `any` and `all` declare `{ "name": "boolean" }`; `count` declares `{ "name": "integer" }`.
-- **`select` columns and `groupBy` keys have no `type`**: a column is `{ "alias": …, "expression": … }` and a key `{ "alias"?: …, "expression": … }`, each with the type its expression declares. A subquery column is read with that type, and `{ "key": i, "type": … }` repeats the type of the key's expression. A column can no longer be declared wider than its expression, e.g. a `decimal` column over an `integer` sum.
+- **`select` columns and `groupBy` keys have no `type`**: a column is `{ "alias": …, "expression": … }` and a key `{ "alias": …, "expression": … }`, each with the type its expression declares. A subquery column is read with that type, and `{ "key": "user_id", "type": … }` repeats the type of the key's expression. A column can no longer be declared wider than its expression, e.g. a `decimal` column over an `integer` sum.
 - **One spelling for each form**: a non-null type is written without `nullable` (`"nullable": false` is rejected); `and` and `or` take at least two conditions; `over` is written only as `"all"` in a grouped query (it is rejected in a plain query, where aggregates always run over all rows, and `"group"`, the default, is never written).
 - **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination` or `distinctBy`.
-- **64-bit integers**: `integer` literals, group key indexes, `skip` and `take` must be within the signed 64-bit range.
+- **64-bit integers**: `integer` literals, `skip` and `take` must be within the signed 64-bit range.
 - **A plain query always returns one row per row**: a `select` that reads no field outside an aggregate (only aggregates, literals or parameters) used to return a single row; write it as a total query with `aggregate` instead.
 - **Consistent names**: a join's kind is `kind` (`{ "kind": "left", … }`), so `type` always means a type; a parameter is `{ "param": …, "type": … }` instead of `param_name`; the operand of `floor`, `ceiling`, `round` and `in` is `operand` instead of `value`, which now only means a literal's value.
 - **Defaults are not written**: ascending order omits `direction` (`"asc"` is rejected).
@@ -51,7 +51,7 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 ### Versioning
 
-Major preview bump (`0.1.0-preview.1.0.0` → `0.1.0-preview.2.0.0`). Every operator node gains a required property and every column and key loses one, so every existing query must be migrated; see Breaking Changes. Both `version` and `$id` updated.
+Major preview bump (`0.1.0-preview.1.0.0` → `0.1.0-preview.2.0.0`): properties are added, removed and renamed and constraints tightened, so every existing query must be migrated; see Breaking Changes. In each query: declare `type` on every operator node and drop it from columns and keys; give every group key an `alias` and reference it by name; write `decimal` literals as strings; rename a join's `type` to `kind`, `param_name` to `param` and the operand `value` of `floor`, `ceiling`, `round` and `in` to `operand`; drop `nullable: false`, `direction: "asc"`, `over: "group"` and any `over` in a plain query; replace `distinct: true` with `distinctBy`; turn a plain query that reads fields only inside aggregates into a total query with `aggregate`; add `orderBy` wherever there is `pagination`. Both `version` and `$id` updated.
 
 ---
 
