@@ -18,8 +18,9 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 ### 🔧 Improvements
 
 - **Precise validation errors**: an error now points at the node and property that are wrong (`/where/right/type/name must be equal to one of the allowed values ["uuid"]`) instead of listing every way the expression could have been read.
-- **Faster validation**: each node is validated once, against the type it declares, and every other check reads only declared types. Validating every sample and valid test is about 2.5 times faster, and the schema compiles faster, with 184 definitions instead of 697.
-- **Linear on any input**: malformed deep queries are rejected as fast as valid ones are accepted.
+- **Readable schema**: every definition is short and named after what it checks. An operator lists its signatures by declared type (`add@row`: a node declaring `decimal?` is checked by `add.decimal.nullable@row`), and shallow type checks are named (`declares.decimal`, `accepts.decimal.nullable`) instead of repeated inline. The schema is about 30% shorter.
+- **Faster validation**: each node is validated once, against the type it declares, and every other check reads only declared types. Validating every sample and valid test is more than twice as fast.
+- **Linear on any input and in any validator**: malformed deep queries are rejected as fast as valid ones are accepted, with or without ajv's `allErrors`, and in Python `jsonschema` too.
 
 ### ⚠️ Breaking Changes
 

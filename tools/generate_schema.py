@@ -154,43 +154,88 @@ def array_of(item, min_items):
     return {"type": "array", "items": item, "minItems": min_items}
 
 
-def declared(names=None, nullable=None):
-    """A shallow check on the `type` an expression declares: `names` (one type or
-    a list), and nullable (True), non-null (False) or either (None). It reads
-    nothing else, so it costs the same at any depth."""
+def type_check(names=None, nullable=None):
+    """A check on a declared type: `names` (one type or a list), and nullable
+    (True), non-null (False) or either (None). Names are an `enum` even when
+    there is one, so a validator's error says which type was expected."""
     t = {"type": "object", "required": ["name"], "properties": {}}
     if names is not None:
-        t["properties"]["name"] = {"enum": names} if isinstance(names, list) else {"const": names}
+        t["properties"]["name"] = {"enum": names if isinstance(names, list) else [names]}
     if nullable is True:
         t["required"] = ["name", "nullable"]
         t["properties"]["nullable"] = {"const": True}
     elif nullable is False:
         t["properties"]["nullable"] = {"const": False}
-    return {"type": "object", "required": ["type"], "properties": {"type": t}}
+    return t
 
 
-NULLABLE = declared(nullable=True)
-NON_NULL = declared(nullable=False)
+def check(name, names=None, nullable=None):
+    """A named shallow check on the `type` an expression declares. It reads
+    nothing else, so it costs the same at any depth and may be repeated."""
+    if name not in defs:
+        defs[name] = {"type": "object", "required": ["type"], "properties": {"type": type_check(names, nullable)}}
+    return ref(name)
+
+
+def declares(t, nullable):
+    """`declares.<type>[.nullable]`: the expression declares exactly this type."""
+    return check(f"declares.{t}{suffix(nullable)}", t, nullable)
+
+
+def declares_name(t):
+    """The expression declares `t`, nullable or not."""
+    return {"anyOf": [declares(t, False), declares(t, True)]}
+
+
+def accepts(t, nullable):
+    """`accepts.<type>[.nullable]`: the declared type fits a position of this
+    type: the type or a subtype, and non-null unless the position is nullable."""
+    return check(f"accepts.{t}{suffix(nullable)}", members(t), None if nullable else False)
+
+
+NULLABLE = check("declares.nullable", nullable=True)
+NON_NULL = check("declares.nonNull", nullable=False)
+
+
+def merged(checks):
+    """Checks as one schema: `properties` checks merged into one `properties`
+    where they do not clash, nested `allOf` flattened, the rest in `allOf`."""
+    props, rest = {}, []
+    for c in checks:
+        if list(c) == ["allOf"]:
+            rest += c["allOf"]
+        elif list(c) == ["properties"] and all(p not in props or not props[p].keys() & v.keys()
+                                               for p, v in c["properties"].items()):
+            for p, v in c["properties"].items():
+                props[p] = {**props.get(p, {}), **v}
+        else:
+            rest.append(c)
+    out = {"properties": props} if props else {}
+    if rest:
+        out["allOf"] = rest
+    return out
 
 
 def some(props, check):
     """At least one operand passes a shallow check: one of `props`, or an item of `values`."""
     if props == ["values"]:
         return {"properties": {"values": {"contains": check}}}
+    if len(props) == 1:
+        return {"properties": {props[0]: check}}
     return {"anyOf": [{"properties": {p: check}} for p in props]}
 
 
 # --- leaves ---------------------------------------------------------------
 
 # The type an expression declares; which ones a position accepts is checked
-# with `declared`.
+# with `declares.*` and `accepts.*`.
 defs["type"] = obj(["name"], {"name": {"enum": TYPES}, "nullable": {"type": "boolean"}})
 # A literal is nullable exactly when its value is null.
 defs["literal"] = {
     **obj(["type", "value"], {"type": ref("type"), "value": True}),
     "allOf": [
         {
-            "if": declared(t, nullable),
+            "if": declares(t, nullable),
             "then": {"properties": {"value": {"type": "null"} if nullable else VALUE[t]}},
         }
         for t in TYPES
@@ -225,10 +270,13 @@ for t in TYPES:
 
 # --- operators, per context -----------------------------------------------
 # `<operator>@<context>` checks the shape of the node, then picks the
-# signature by the type the node declares. A signature validates each operand
-# against its type in full, and makes the declared type exact with shallow
-# checks on the operands' declared types: a nullable result needs a nullable
-# operand, a `decimal` result of `add` needs a `decimal` operand, and so on.
+# signature by the type the node declares, one `if` / `then` per signature:
+# `add.decimal.nullable@row` is `add` declared `decimal?` in row context. A
+# signature validates each operand against its type in full, and makes the
+# declared type exact with shallow checks on the operands' declared types: a
+# nullable result needs a nullable operand, a `decimal` result of `add` needs a
+# `decimal` operand, and so on. equal, in and comparisons have one signature
+# per family of operands instead, picked by the type the first operand declares.
 
 OPERANDS = {"type": "array", "minItems": 2}
 
@@ -259,11 +307,16 @@ for ctx, rules in CONTEXTS.items():
         signature(name, t, False, operands(types, False), *checks)
         signature(name, t, True, operands(types, True), some(list(types), NULLABLE), *checks)
 
-    def by_family(prop, families, build):
-        """One signature body per family, chosen by the type `prop` declares."""
+    def by_family(name, prop, families, build):
+        """`<operator>.<family>@<ctx>` per family, chosen by the type `prop` declares."""
+        for f in families:
+            defs[f"{name}.{f}@{ctx}"] = build(f)
         return {
             "allOf": [
-                {"if": {"required": [prop], "properties": {prop: declared(members(f))}}, "then": build(f)}
+                {
+                    "if": {"required": [prop], "properties": {prop: accepts(f, True)}},
+                    "then": ref(f"{name}.{f}@{ctx}"),
+                }
                 for f in families
             ]
         }
@@ -271,7 +324,7 @@ for ctx, rules in CONTEXTS.items():
     # numbers: integer operands give integer, a decimal operand gives decimal
     for name in ["add", "subtract", "multiply"]:
         lifted(name, {"values": "integer"}, "integer")
-        lifted(name, {"values": "decimal"}, "decimal", some(["values"], declared("decimal")))
+        lifted(name, {"values": "decimal"}, "decimal", some(["values"], declares_name("decimal")))
     lifted("divide", {"values": "decimal"}, "decimal")
     for name in ["integerDivide", "modulo"]:
         lifted(name, {"left": "integer", "right": "integer"}, "integer")
@@ -307,26 +360,24 @@ for ctx, rules in CONTEXTS.items():
         *[(n, COMPARABLE) for n in ["greaterThan", "lessThan", "greaterThanOrEqual", "lessThanOrEqual"]],
     ]:
         shape(name, ["left", "right"], {
-            "left": declared([m for f in families for m in members(f)]),
+            "left": check(f"accepts.{'equatable' if families is EQUATABLE else 'comparable'}",
+                          [m for f in families for m in members(f)]),
             "right": True,
         })
         signature(name, "boolean", False, by_family(
-            "left", families, lambda f: operands({"left": f, "right": f}, True)
+            name, "left", families, lambda f: operands({"left": f, "right": f}, True)
         ))
-    shape("in", ["value", "list"], {
-        "value": declared([m for f in EQUATABLE for m in members(f)]),
-        "list": True,
-    })
+    shape("in", ["value", "list"], {"value": check("accepts.equatable"), "list": True})
     signature("in", "boolean", False, by_family(
-        "value", EQUATABLE,
+        "in", "value", EQUATABLE,
         lambda f: {"properties": {"value": expr(f, ctx, True), "list": ref(f"list.{f}")}},
     ))
 
     # conditional and null handling, for every type
     for t in TYPES:
-        wide = [some(["then", "else"], declared(t))] if t in SUBTYPES else []
+        wide = [some(["then", "else"], declares_name(t))] if t in SUBTYPES else []
         lifted("if", {"then": t, "else": t}, t, *wide)
-        wide = [some(["values"], declared(t))] if t in SUBTYPES else []
+        wide = [some(["values"], declares_name(t))] if t in SUBTYPES else []
         # coalesce is non-null as soon as one operand is non-null.
         signature("coalesce", t, False, operands({"values": t}, True), some(["values"], NON_NULL), *wide)
         signature("coalesce", t, True, operands({"values": t}, True), {
@@ -350,7 +401,7 @@ for ctx, rules in CONTEXTS.items():
             """The selector, of type `t` or (unless `exact`) one of its subtypes."""
             checks = [{"properties": {"selector": expr(t, "row", nullable)}}]
             if exact and t in SUBTYPES:
-                checks.append({"properties": {"selector": declared(t)}})
+                checks.append({"properties": {"selector": declares_name(t)}})
             return checks
 
         def aggregate(name, selector_t, result_t, exact):
@@ -394,49 +445,59 @@ for ctx, rules in CONTEXTS.items():
         # Every result type has the same nullabilities, so the declared type can
         # be checked by name and nullability separately, with plain errors.
         assert {(t, n) for t, n, _ in sigs} == {(t, n) for t in names for n in nullables}, name
-        result = declared(names, nullables.pop() if len(nullables) == 1 else None)["properties"]["type"]
+        result = type_check(names, nullables.pop() if len(nullables) == 1 else None)
+        del result["type"], result["required"][0]
+        if not result["required"]:
+            del result["required"]
         defs[f"{name}@{ctx}"] = obj(["operator", "type", *required], {
             "operator": {"const": name},
             "type": {**ref("type"), **result},
             **props,
         })
-        bodies = [
-            {"if": declared(t, n), "then": {"allOf": list(checks)}} for t, n, checks in sigs if checks
-        ]
-        if bodies:
-            defs[f"{name}@{ctx}"]["allOf"] = bodies
+        if len(sigs) == 1:
+            # one result type (equal, in, comparisons): its checks apply as they are
+            defs[f"{name}@{ctx}"].update(merged([{"properties": {}}, *sigs[0][2]]) if sigs[0][2] else {})
+            continue
+        dispatch = []
+        for t, n, checks in sigs:
+            sig = f"{name}.{t}{suffix(n)}@{ctx}"
+            defs[sig] = merged(checks)
+            dispatch.append({"if": declares(t, n), "then": ref(sig)})
+        defs[f"{name}@{ctx}"]["allOf"] = dispatch
 
-    # `expr@<ctx>`: any expression of the context. An operator node goes to its
-    # definition; a leaf is told apart by the property only it has.
+    # `operator@<ctx>`: an operator node of the context, sent to its definition.
+    defs[f"operator@{ctx}"] = {
+        "properties": {"operator": {"enum": list(shapes)}},
+        "allOf": [
+            {"if": {"properties": {"operator": {"const": name}}}, "then": ref(f"{name}@{ctx}")}
+            for name in shapes
+        ],
+    }
+    # `leaf@<ctx>`: a literal, parameter, field or group key, told apart by
+    # the property only it has.
     leaves = [("value", "literal"), ("param_name", "param")]
     if rules["fields"]:
         leaves.append(("field", "field"))
     if rules["keys"]:
         leaves.append(("key", "key"))
-    leaf = ref(leaves[-1][1])
-    for prop, def_name in reversed(leaves[:-1]):
-        leaf = {"if": {"required": [prop]}, "then": ref(def_name), "else": leaf}
+    defs[f"leaf@{ctx}"] = {
+        "anyOf": [{"required": [prop]} for prop, _ in leaves],
+        "allOf": [{"if": {"required": [prop]}, "then": ref(d)} for prop, d in leaves],
+    }
+    # `expr@<ctx>`: any expression of the context. Operands may be named
+    # `value`, so an operator is told apart from a leaf first.
     defs[f"expr@{ctx}"] = {
         "type": "object",
         "if": {"required": ["operator"]},
-        "then": {
-            "properties": {"operator": {"enum": list(shapes)}},
-            "allOf": [
-                {"if": {"properties": {"operator": {"const": name}}}, "then": ref(f"{name}@{ctx}")}
-                for name in shapes
-            ],
-        },
-        "else": leaf,
+        "then": ref(f"operator@{ctx}"),
+        "else": ref(f"leaf@{ctx}"),
     }
 
     # `<type>[.nullable]@<ctx>`: an expression of the context that declares the
     # type or one of its subtypes, nullable only in a nullable position.
     for t in TYPES:
         for nullable in [False, True]:
-            defs[f"{t}{suffix(nullable)}@{ctx}"] = {
-                **ref(f"expr@{ctx}"),
-                **declared(members(t), None if nullable else False),
-            }
+            defs[f"{t}{suffix(nullable)}@{ctx}"] = {"allOf": [accepts(t, nullable), ref(f"expr@{ctx}")]}
 
 # --- query ----------------------------------------------------------------
 
@@ -458,7 +519,7 @@ defs["join"] = {
 # skip / take are a number or a non-null integer parameter, so a page can be
 # chosen at execution time. The schema checks a number's range; a parameter's
 # value is checked by the interpreter when it is bound.
-INTEGER_PARAM = {**ref("param"), **declared("integer", False)}
+INTEGER_PARAM = {"allOf": [declares("integer", False), ref("param")]}
 defs["pagination"] = obj(
     ["skip", "take"],
     {
