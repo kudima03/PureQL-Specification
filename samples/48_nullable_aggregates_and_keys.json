@@ -46,7 +46,7 @@
     {
       "alias": "coupon_code",
       "expression": {
-        "key": 0,
+        "key": "coupon_code",
         "type": {
           "name": "string",
           "nullable": true
@@ -152,7 +152,7 @@
   "orderBy": [
     {
       "expression": {
-        "key": 0,
+        "key": "coupon_code",
         "type": {
           "name": "string",
           "nullable": true

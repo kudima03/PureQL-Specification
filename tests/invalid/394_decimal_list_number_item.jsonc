@@ -1,0 +1,13 @@
+// decimalList literal with a JSON number among its strings
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "list": { "type": { "name": "decimalList" }, "value": ["19.99", 19.99] }
+  }
+}

@@ -39,7 +39,7 @@ Each has its own rules for what its columns may read (see [Contexts](#contexts))
 | Type | Literal value | Example |
 |---|---|---|
 | `integer` | JSON integer from −2⁶³ to 2⁶³ − 1: a number with no fractional part, so `5.0` counts | `42` |
-| `decimal` | any JSON number, an integer or an exponent included | `19.99` |
+| `decimal` | a JSON string holding the number in one spelling: no exponent, no leading zeros, no trailing zeros in the fraction, no `-0` | `"19.99"` |
 | `string` | JSON string | `"active"` |
 | `boolean` | `true` / `false` | `true` |
 | `date` | `YYYY-MM-DD`, a real calendar date (February 29 only in leap years) | `"2024-01-31"` |
@@ -92,7 +92,7 @@ Every expression has a `type`: a field, parameter, literal or group key declares
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
-- **Columns and keys.** A `select` column and a `groupBy` key have the type their expression declares; they carry no `type` of their own. So the result schema of a query is read from `select[i].expression.type`, and a key reference `{ "key": i, "type": … }` repeats `groupBy[i].expression.type`.
+- **Columns and keys.** A `select` column and a `groupBy` key have the type their expression declares; they carry no `type` of their own. So the result schema of a query is read from `select[i].expression.type`, and a key reference `{ "key": <alias>, "type": … }` repeats the type of that key's expression.
 
 ### Null semantics
 
@@ -137,7 +137,7 @@ Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines expl
 | Literal | `{ "type": { "name": "string" }, "value": "active" }` | Always non-null unless `value` is `null` |
 | Parameter | `{ "param": "since", "type": { "name": "datetime" } }` | Bound at execution time; may be nullable |
 | List | `{ "type": { "name": "stringList" }, "value": ["a", "b"] }`, a list parameter `{ "param": …, "type": { "name": "stringList" } }`, or a subquery column | A value, not a column. Accepted only by `in`. A list literal holds no `null`, and a list type is never nullable. Every type `T` has `TList` |
-| Group key | `{ "key": 0, "type": { "name": "uuid" } }` | Zero-based index into `groupBy`, repeating the type the key's expression declares; only in grouped `select`, `having` and `orderBy` |
+| Group key | `{ "key": "user_id", "type": { "name": "uuid" } }` | The `alias` of a `groupBy` key, repeating the type the key's expression declares; only in grouped `select`, `having` and `orderBy` |
 | Operator | `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }` | Declares the type it yields, exactly. See [Declared types](#declared-types) and [Operators](#operators) |
 
 Fields, parameters and group keys declare their type at the point of use, including nullability, and the declaration must match exactly. For example, a field read from the optional side of an outer join is declared nullable, and a non-null field elsewhere is declared non-null. Operators declare their result type the same way, and the schema checks it against their operands.
@@ -210,8 +210,8 @@ A non-null boolean in row context, evaluated per row after the joins. A boolean 
 
 - **Expression.** A key may be any row expression, including a computed one such as a `dateDiffDays` or an `if` bucket.
 - **Type.** A key has the type its expression declares. Here `shipped_date` is null until an order ships, so the lifted `dateDiffDays` and the key are `integer?`, and unshipped orders form one group with a `null` key.
-- **Alias.** `alias` is optional and only names the key for readers; nothing refers to it.
-- **Referencing.** Keys are referenced by zero-based index as `{ "key": i, "type": … }`, and the reference repeats the type of the key's expression exactly. Matching the two is therefore a plain lookup.
+- **Alias.** Every key has an `alias`, unique among the keys of the query.
+- **Referencing.** A key is referenced by its alias as `{ "key": "days_to_ship", "type": … }`, and the reference repeats the type of the key's expression exactly. Matching the two is therefore a plain lookup, and reordering the keys changes nothing.
 - **Use.** A key behaves like an ordinary value of its type: it can be selected, compared, used in arithmetic and sorted.
 - **Result.** Keys are **not** added to the result automatically; select the ones you need.
 
@@ -289,7 +289,7 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 | `and`, `or` | `{ conditions: [boolean, …] }` (at least 2) | `boolean` |
 | `not` | `{ condition: boolean }` | `boolean` |
 | `equal`, `notEqual` | `{ left: T?, right: T? }`, `T` any type | `boolean` |
-| `greaterThan`, `lessThan`, `greaterThanOrEqual`, `lessThanOrEqual` | `{ left: T?, right: T? }`, where `T` is `integer` / `decimal`, `string`, `date`, `time` or `datetime` | `boolean` |
+| `greaterThan`, `lessThan`, `greaterThanOrEqual`, `lessThanOrEqual` | `{ left: T?, right: T? }`, `T` any type, compared by [its order](#ordering-and-equality) | `boolean` |
 | `in` | `{ operand: T?, list: <list of T> }` | `boolean` |
 
 ### Arithmetic
@@ -334,7 +334,7 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 | `count` | none | `integer` |
 | `sum` | `integer` / `decimal` | type of the selector, non-null; `0` for no rows |
 | `average` | `decimal`, `date`, `time`, `datetime` | `decimal` for numbers, otherwise the selector type |
-| `min`, `max` | `integer`, `decimal`, `string`, `date`, `time`, `datetime` | type of the selector |
+| `min`, `max` | any type | type of the selector |
 | `any`, `all` | none; `predicate` required | `boolean`. Over no rows, `any` is `false` and `all` is `true` |
 
 - An aggregate runs over the current group in a grouped query and over every row after `where` in a plain one, as in SQL. Write `over: "all"` in a grouped query for a total over every row, e.g. a group's share of all revenue. That is the only use of `over`: it is rejected in a plain query, and `"group"` is never written.
@@ -384,6 +384,8 @@ A string is a sequence of Unicode code points. `equal` compares code point by co
 
 ### Ordering and equality
 
+Every type is ordered, and the same order serves comparisons, `min` / `max` and `orderBy`.
+
 | Type | Equality | Order |
 |---|---|---|
 | `integer`, `decimal` | numeric value | numeric |
@@ -418,7 +420,7 @@ An aggregate sees the rows of its group, or every row left by `where` with `over
 
 ### Parameters
 
-- A query is run with a value for every parameter it uses. A value is written like a literal of the declared type: a JSON number for `integer` and `decimal`, the literal formats for `date`, `time`, `datetime` and `uuid`. A list parameter is a JSON array of non-`null` values of the element type, possibly empty.
+- A query is run with a value for every parameter it uses. A value is written like a literal of the declared type: a JSON number for `integer`, the literal formats for `decimal` (a string), `date`, `time`, `datetime` and `uuid`. A list parameter is a JSON array of non-`null` values of the element type, possibly empty.
 - A nullable parameter may be bound to `null`; a non-null one may not. Bound values that the query does not use are ignored.
 - One parameter name has one type in the whole document, subqueries included.
 
@@ -448,7 +450,7 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A `datetime` parameter is bound with an offset | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |
 | Each field reference declares exactly the nullability the field has at that point, outer joins included | interpreter |
-| A group key reference points to an existing key and repeats the type of its expression | interpreter |
+| `groupBy` aliases are unique; a group key reference names one of them and repeats the type of its expression | interpreter |
 | Subquery names are unique; a subquery reads only from earlier ones | interpreter |
 | Source names are unique within a query, and an aliased source is referenced by its alias | interpreter |
 | A field references a source introduced at that point: a join's `on` sees `from`, the earlier joins and the joined source; later clauses see every source | interpreter |
@@ -456,11 +458,11 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Referenced subquery columns exist with the declared types | interpreter |
 | Column aliases are unique within a `select` | interpreter |
 
-The interpreter's part needs no type inference. Besides lookups, it tracks which sources are on the optional side of an outer join at each point of the query. Every expression declares its type, and the schema has already checked every declaration that does not depend on the catalog: each operator against its operands. A `select` column (referenced as a subquery column) and a `groupBy` key (referenced as `{ "key": i }`) have the type of their expression. The interpreter only compares names and the declared types of fields, parameters and key references against the catalog, the `groupBy` list and the subquery headers, and reads the type of every other node as declared.
+The interpreter's part needs no type inference. Besides lookups, it tracks which sources are on the optional side of an outer join at each point of the query. Every expression declares its type, and the schema has already checked every declaration that does not depend on the catalog: each operator against its operands. A `select` column (referenced as a subquery column) and a `groupBy` key (referenced as `{ "key": <alias> }`) have the type of their expression. The interpreter only compares names and the declared types of fields, parameters and key references against the catalog, the `groupBy` list and the subquery headers, and reads the type of every other node as declared.
 
 ### Not specified yet
 
-- how results are encoded for transport, e.g. `decimal` values as JSON numbers or strings;
+- how results are encoded for transport; literals and parameters write a `decimal` as a string, results may follow;
 - string functions beyond `concat`, conversions between types, date parts;
 - set operations. Correlated subqueries are not part of the language: a reference from a subquery to a source of the query that reads it is an error.
 

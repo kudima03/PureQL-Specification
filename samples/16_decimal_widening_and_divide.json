@@ -81,7 +81,7 @@
             "type": {
               "name": "decimal"
             },
-            "value": 1.2
+            "value": "1.2"
           }
         ]
       }

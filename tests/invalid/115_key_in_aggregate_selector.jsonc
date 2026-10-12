@@ -3,6 +3,7 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
+      "alias": "user_id",
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
@@ -12,7 +13,7 @@
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
-        "selector": { "key": 0, "type": { "name": "integer" } }
+        "selector": { "key": "user_id", "type": { "name": "integer" } }
       }
     }
   ]

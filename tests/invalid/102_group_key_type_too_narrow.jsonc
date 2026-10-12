@@ -3,6 +3,7 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
+      "alias": "key_0",
       "expression": {
         "operator": "divide",
         "type": { "name": "integer" },
@@ -16,7 +17,7 @@
   "select": [
     {
       "alias": "user_id",
-      "expression": { "key": 0, "type": { "name": "uuid" } }
+      "expression": { "key": "key_0", "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",

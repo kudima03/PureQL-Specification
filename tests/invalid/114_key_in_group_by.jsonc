@@ -1,11 +1,11 @@
 // Group key reference inside groupBy itself
 {
   "from": { "entity": "orders" },
-  "groupBy": [{ "expression": { "key": 0, "type": { "name": "uuid" } } }],
+  "groupBy": [{ "alias": "key_0", "expression": { "key": 0, "type": { "name": "uuid" } } }],
   "select": [
     {
       "alias": "user_id",
-      "expression": { "key": 0, "type": { "name": "uuid" } }
+      "expression": { "key": "key_0", "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",

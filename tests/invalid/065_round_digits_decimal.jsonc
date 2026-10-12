@@ -8,7 +8,7 @@
         "operator": "round",
         "type": { "name": "decimal" },
         "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "digits": { "type": { "name": "decimal" }, "value": 2.5 }
+        "digits": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     }
   ]

@@ -1,0 +1,5 @@
+// decimal literal "1e3" with an exponent
+{
+  "from": { "entity": "orders" },
+  "select": [{ "alias": "c", "expression": { "type": { "name": "decimal" }, "value": "1e3" } }]
+}

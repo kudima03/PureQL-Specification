@@ -50,7 +50,7 @@
         "operator": "in",
         "type": { "name": "boolean" },
         "operand": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
-        "list": { "type": { "name": "decimalList" }, "value": [1.5, 2] }
+        "list": { "type": { "name": "decimalList" }, "value": ["1.5", "2"] }
       },
       {
         "operator": "in",
