@@ -2,7 +2,7 @@
   "from": {
     "entity": "orders"
   },
-  "select": [
+  "aggregate": [
     {
       "alias": "orders",
       "expression": {

@@ -36,8 +36,9 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 | Context | Used in | Fields | Group keys | Aggregates |
 |---|---|---|---|---|
 | `row` | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
-| `projection` | `select` / `orderBy` without `groupBy` | yes | no | over all rows (default) |
+| `projection` | `select` / `orderBy` of a plain query (one row per row) | yes | no | over all rows, no `over` |
 | `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | over the group (default) or `over: "all"` |
+| `total` | `aggregate` (a total query: exactly one row) | no | no | over all rows, no `over` |
 
 ### Declared types and dispatch
 
@@ -54,7 +55,7 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 
 ### Aggregates
 
-`{ "operator": "sum", "type": …, "over"?: "all", "selector": <row expr>, "predicate"?: <row boolean> }`. An aggregate runs over the group in a grouped query and over all rows otherwise; `over` exists only in group context and only as `"all"`, the default is never written. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null in a grouped query (over the group or over all rows: a group exists only if a row does) with no predicate and a non-null selector; otherwise, and always in a plain query, they are nullable. `count` and `sum` are never null.
+`{ "operator": "sum", "type": …, "over"?: "all", "selector": <row expr>, "predicate"?: <row boolean> }`. An aggregate runs over the group in a grouped query and over all rows otherwise; `over` exists only in group context and only as `"all"`, the default is never written. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null in a plain or grouped query (a result row exists only if a source row does, so every aggregate sees one) with no predicate and a non-null selector; otherwise, and always in a total query, they are nullable. `count` and `sum` are never null.
 
 ### Types and nulls
 
@@ -72,7 +73,8 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
-- `select` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
+- Three kinds of query, by shape: plain (`select`: one row per row), grouped (`groupBy` + `select`: one row per group), total (`aggregate` instead of `select`: exactly one row; no `orderBy`, `distinct`, `pagination`, `having`). The root and `query` dispatch on `groupBy`, then `aggregate`.
+- `select` / `aggregate` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
 - `groupBy` items are `{ alias?, expression }`: any row expression can be a key. Keys are referenced as `{ "key": i, "type": … }`, repeating `groupBy[i].expression.type` exactly, and are never emitted automatically.
 - Every expression declares its type, and the schema checks each declaration that does not depend on the catalog. Anything referenced from elsewhere (subquery columns, group keys) takes the type its expression declares. Otherwise the interpreter would need type inference, which breaks the design goal.
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.

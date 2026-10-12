@@ -1,0 +1,11 @@
+// A total query with having (filter with where, or group the rows)
+{
+  "from": { "entity": "orders" },
+  "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "operator": "count", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  }
+}

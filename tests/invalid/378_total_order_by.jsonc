@@ -1,0 +1,6 @@
+// A total query with orderBy: it has exactly one row
+{
+  "from": { "entity": "orders" },
+  "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }],
+  "orderBy": [{ "expression": { "operator": "count", "type": { "name": "integer" } } }]
+}

@@ -1,0 +1,71 @@
+// A total query (aggregate) returns exactly one row, even when no order is paid, so its max is nullable while
+// count and any are not. Joined on true, its row is repeated next to every order. In the plain main query min
+// over all rows is non-null: each result row comes from an order, so there is at least one.
+{
+  "subqueries": [
+    {
+      "name": "paid_stats",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "aggregate": [
+          { "alias": "paid_orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+          {
+            "alias": "largest",
+            "expression": {
+              "operator": "max",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "any_refunded",
+            "expression": {
+              "operator": "any",
+              "type": { "name": "boolean" },
+              "predicate": { "source": "orders", "field": "is_refunded", "type": { "name": "boolean" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "joins": [
+    { "type": "inner", "subquery": "paid_stats", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "share_of_largest",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          {
+            "operator": "coalesce",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "paid_stats", "field": "largest", "type": { "name": "decimal", "nullable": true } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "smallest_overall",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "paid_orders",
+      "expression": { "source": "paid_stats", "field": "paid_orders", "type": { "name": "integer" } }
+    }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }]
+}

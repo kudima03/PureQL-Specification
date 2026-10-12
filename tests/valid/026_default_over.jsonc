@@ -1,14 +1,14 @@
-// over can be left out: an aggregate runs over the group in a grouped query and over all rows otherwise.
-// In the subquery (plain) count and min run over all rows, so min is nullable. In the main (grouped) query count, sum,
-// min and average run over each group, so min and average are non-null; over is written only for the total over
-// all rows that the share divides by.
+// over is left out: an aggregate runs over the group in a grouped query and over all rows otherwise. The subquery
+// is a total query: count and min run over all rows, which may be none, so min is nullable. In the main (grouped)
+// query count, sum, min and average run over each group, so min and average are non-null; over is written only
+// for the total over all rows that the share divides by.
 {
   "subqueries": [
     {
       "name": "overview",
       "query": {
         "from": { "entity": "orders" },
-        "select": [
+        "aggregate": [
           {
             "alias": "orders",
             "expression": { "operator": "count", "type": { "name": "integer" } }

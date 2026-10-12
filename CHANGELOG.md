@@ -15,6 +15,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 - **Declared result types on operators**: `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }`. The type of any expression can be read from the node itself, e.g. to deserialize it into a typed expression tree, with no type rules in the reader.
 
+- **Total queries**: a query with `aggregate` instead of `select` returns exactly one row, even over no rows, e.g. dashboard counters. Its columns read fields only inside aggregates; as a subquery it is a one-row source.
+
 ### 🔧 Improvements
 
 - **Precise validation errors**: an error now points at the node and property that are wrong (`/where/right/type/name must be equal to one of the allowed values ["uuid"]`) instead of listing every way the expression could have been read.
@@ -24,7 +26,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 ### 🐛 Fixed
 
-- **`min`, `max` and `average` over all rows in a grouped query** are non-null when they have no predicate and a non-null selector, and are now declared so: a group exists only if a row does.
+- **`min`, `max` and `average` over all rows in a plain or grouped query** are non-null when they have no predicate and a non-null selector, and are now declared so: a result row exists only if a source row does.
+- **Plain queries no longer depend on a scan of their columns**: `select: [count]` with `orderBy` on a field had one row and no defined sort value; a plain query now always returns one row per row.
 
 ### ⚠️ Breaking Changes
 
@@ -34,6 +37,7 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **One spelling for each form**: a non-null type is written without `nullable` (`"nullable": false` is rejected); `and` and `or` take at least two conditions; `over` is written only as `"all"` in a grouped query (it is rejected in a plain query, where aggregates always run over all rows, and `"group"`, the default, is never written).
 - **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination`.
 - **64-bit integers**: `integer` literals, group key indexes, `skip` and `take` must be within the signed 64-bit range.
+- **A plain query always returns one row per row**: a `select` that reads no field outside an aggregate (only aggregates, literals or parameters) used to return a single row; write it as a total query with `aggregate` instead.
 
 ### Versioning
 

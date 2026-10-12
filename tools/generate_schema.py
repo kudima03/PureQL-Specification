@@ -24,12 +24,14 @@ linear in the size of the query, whatever its depth.
 Contexts:
   row         where, join.on, groupBy keys, aggregate selector/predicate.
               Fields allowed, aggregates not.
-  projection  select / orderBy of a non-grouped query.
+  projection  select / orderBy of a plain query: one row per row.
               Fields allowed, aggregates over all rows (broadcast), without
               `over`.
-  group       select / having / orderBy of a grouped query.
+  group       select / having / orderBy of a grouped query: one row per group.
               No fields; group keys and aggregates over the group, or over
               all rows with `"over": "all"`.
+  total       aggregate of a total query: exactly one row.
+              No fields, no keys; aggregates over all rows, without `over`.
 
 Subtyping (each arrow means "accepted wherever the right side is expected"):
   T -> T.nullable                      a non-null value is a valid T?
@@ -39,8 +41,9 @@ There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
 every expression is determined by its subtree and its context, never inferred
 from surrounding expressions. The context only decides whether min / max /
-average can be null: in a grouped query every aggregate sees at least one
-row, since a group exists only if a row does.
+average can be null: a row of a plain or grouped query exists only if a row
+of its source does, so there every aggregate sees at least one row, while a
+total query returns its row even when there are none.
 
 A document is the main query plus optional `subqueries`: named queries the
 main query and later subqueries can read from (`from` / `join` with
@@ -126,6 +129,7 @@ CONTEXTS = {
     "row": {"fields": True, "keys": False, "aggregates": False, "over": []},
     "projection": {"fields": True, "keys": False, "aggregates": True, "over": []},
     "group": {"fields": False, "keys": True, "aggregates": True, "over": ["all"]},
+    "total": {"fields": False, "keys": False, "aggregates": True, "over": []},
 }
 
 # An entity, field, alias, parameter or subquery name: not empty, no leading
@@ -419,7 +423,9 @@ for ctx, rules in CONTEXTS.items():
         aggregate_props = {"predicate": expr("boolean", "row")}
         if rules["over"]:
             aggregate_props["over"] = {"enum": rules["over"]}
-        in_group = ctx == "group"
+        # A row of a plain or grouped query comes from at least one row; a total
+        # query returns its one row even over no rows.
+        some_row = ctx != "total"
 
         def selector(t, nullable, exact):
             """The selector, of type `t` or (unless `exact`) one of its subtypes."""
@@ -429,12 +435,12 @@ for ctx, rules in CONTEXTS.items():
             return checks
 
         def aggregate(name, selector_t, result_t, exact):
-            # In a grouped query an aggregate sees at least one row: a group has
-            # one, and when a group exists so do all rows. So an unfiltered
-            # non-null selector gives T, over the group or over all rows. A
-            # predicate or a nullable selector may leave no value, and gives T?.
-            # A plain query may have no rows at all, so it always gives T?.
-            if in_group:
+            # Where a row exists, an aggregate sees at least one row: a group
+            # has one, and so do all rows when any result row exists. So an
+            # unfiltered non-null selector gives T, over the group or over all
+            # rows. A predicate or a nullable selector may leave no value, and
+            # gives T?. A total query may have no rows at all: always T?.
+            if some_row:
                 signature(name, result_t, False, *selector(selector_t, False, exact),
                           {"not": {"required": ["predicate"]}})
                 signature(name, result_t, True, *selector(selector_t, True, exact), {"anyOf": [
@@ -558,31 +564,39 @@ defs["pagination"] = obj(
 # `{ "key": i, "type": … }` repeats `groupBy[i].expression.type` exactly.
 defs["groupKey"] = obj(["expression"], {"alias": NAME, "expression": ref("expr@row")})
 
-for ctx in ["projection", "group"]:
+for ctx in ["projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(
         ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
     )
+for ctx in ["projection", "group"]:
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}
     )
 
-common = {
+sources = {
     "from": ref("from"),
     "joins": array_of(ref("join"), 1),
     "where": expr("boolean", "row"),
+}
+# Shaping the rows of a plain or grouped query; a total query has one row.
+rows = {
     "distinct": {"type": "boolean", "default": False},
     "pagination": ref("pagination"),
 }
 plain = {
+    **sources, **rows,
     "select": array_of(ref("selectItem@projection"), 1),
     "orderBy": array_of(ref("orderItem@projection"), 1),
 }
 grouped = {
+    **sources, **rows,
     "groupBy": array_of(ref("groupKey"), 1),
     "having": expr("boolean", "group"),
     "select": array_of(ref("selectItem@group"), 1),
     "orderBy": array_of(ref("orderItem@group"), 1),
 }
+# A total query folds every row into exactly one, even over no rows.
+total = {**sources, "aggregate": array_of(ref("selectItem@total"), 1)}
 # Subqueries are flat: only the main query may declare them.
 main = {"subqueries": array_of(ref("subquery"), 1)}
 
@@ -591,25 +605,34 @@ main = {"subqueries": array_of(ref("subquery"), 1)}
 PAGE_NEEDS_ORDER = {"dependentRequired": {"pagination": ["orderBy"]}}
 SUBQUERY_ORDER = {"dependentRequired": {"pagination": ["orderBy"], "orderBy": ["pagination"]}}
 
-defs["plainQuery"] = {**obj(["from", "select"], {**common, **plain}), **SUBQUERY_ORDER}
-defs["groupedQuery"] = {**obj(["from", "groupBy", "select"], {**common, **grouped}), **SUBQUERY_ORDER}
-defs["query"] = {
-    "if": {"required": ["groupBy"]},
-    "then": ref("groupedQuery"),
-    "else": ref("plainQuery"),
-}
+defs["plainQuery"] = {**obj(["from", "select"], plain), **SUBQUERY_ORDER}
+defs["groupedQuery"] = {**obj(["from", "groupBy", "select"], grouped), **SUBQUERY_ORDER}
+defs["totalQuery"] = obj(["from", "aggregate"], total)
+defs["mainPlainQuery"] = {**obj(["from", "select"], {**main, **plain}), **PAGE_NEEDS_ORDER}
+defs["mainGroupedQuery"] = {**obj(["from", "groupBy", "select"], {**main, **grouped}), **PAGE_NEEDS_ORDER}
+defs["mainTotalQuery"] = obj(["from", "aggregate"], {**main, **total})
+
+
+def kind_of_query(prefix):
+    """A grouped query has `groupBy`, a total query `aggregate`, a plain query neither."""
+    def name(kind):
+        return f"{prefix}{kind}Query" if prefix else f"{kind.lower()}Query"
+    return {
+        "if": {"required": ["groupBy"]},
+        "then": ref(name("Grouped")),
+        "else": {"if": {"required": ["aggregate"]}, "then": ref(name("Total")), "else": ref(name("Plain"))},
+    }
+
+
+defs["query"] = kind_of_query("")
 defs["subquery"] = obj(["name", "query"], {"name": NAME, "query": ref("query")})
-defs["mainPlainQuery"] = {**obj(["from", "select"], {**main, **common, **plain}), **PAGE_NEEDS_ORDER}
-defs["mainGroupedQuery"] = {**obj(["from", "groupBy", "select"], {**main, **common, **grouped}), **PAGE_NEEDS_ORDER}
 
 schema = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": SCHEMA_ID,
     "version": VERSION,
     "title": "PureQL specification",
-    "if": {"required": ["groupBy"]},
-    "then": ref("mainGroupedQuery"),
-    "else": ref("mainPlainQuery"),
+    **kind_of_query("main"),
     "$defs": dict(sorted(defs.items())),
 }
 

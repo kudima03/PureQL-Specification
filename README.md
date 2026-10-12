@@ -16,12 +16,19 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `where` | no | Row filter, before grouping |
 | `groupBy` | no | Group keys, each `{ alias?, expression }` with any row expression |
 | `having` | no | Group filter; only with `groupBy` |
-| `select` | yes | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
+| `select` | yes, or `aggregate` | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
+| `aggregate` | instead of `select` | Columns of a total query, which returns exactly one row. See [`aggregate`](#aggregate) |
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
 | `distinct` | no | When `true`, remove duplicate result rows |
 | `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter. Requires `orderBy` |
 
-A query with `groupBy` is a **grouped query**; without it, a **plain query**. The two have different rules for `select`, `having` and `orderBy` (see [Contexts](#contexts)).
+There are three kinds of query, told apart by their shape:
+
+- a **plain query** has `select` and returns one row per row of its sources;
+- a **grouped query** has `groupBy` and `select`, and returns one row per group;
+- a **total query** has `aggregate` instead of `select`, and returns exactly one row, even when there are no rows.
+
+Each has its own rules for what its columns may read (see [Contexts](#contexts)).
 
 ---
 
@@ -147,6 +154,7 @@ There is one set of operators. Where an expression may appear is decided by its 
 |---|---|---|---|---|
 | row | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
 | projection | `select` / `orderBy` of a plain query | yes | no | over all rows, without `over` |
+| total | `aggregate` of a total query | no | no | over all rows, without `over` |
 | group | `select` / `having` / `orderBy` of a grouped query | no | yes | over the group, or over all rows with `over: "all"` |
 
 Consequences, all enforced by the schema:
@@ -154,12 +162,13 @@ Consequences, all enforced by the schema:
 - Aggregates cannot appear in `where` or `join.on`, and cannot nest: an aggregate body is in row context.
 - A grouped query cannot select, filter on or sort by a bare field. Use a group key or an aggregate.
 - Group keys exist only in grouped queries.
+- A total query reads fields only inside aggregates, and has no `orderBy`, `distinct`, `pagination` or `having`.
 
 ---
 
 ## Query Clauses
 
-A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `select`, `distinct`, `orderBy`, `pagination`. Aggregates over all rows see the rows left by `where`. Each step is defined under [Evaluation](#evaluation).
+A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `select` (or `aggregate`), `distinct`, `orderBy`, `pagination`. Aggregates over all rows see the rows left by `where`. Each step is defined under [Evaluation](#evaluation).
 
 ### `from` and `joins`
 
@@ -222,8 +231,22 @@ Every column has an alias and an expression:
 
 A column has the type its expression declares, here `decimal`, which the schema has checked like every other declaration. So every query has a declared and verified result schema: an alias and a type per column. A column is never wider than its expression: a sum of `integer` values is an `integer` column.
 
-- **Plain query:** a column that references a field outside an aggregate makes the result one row per input row. Aggregates, which run over all rows, are then repeated on every row. If no column references a field outside an aggregate, the result is a single row, even when `where` leaves no rows. This includes a `select` of only literals and parameters.
+- **Plain query:** one row per row left by `where`, whatever the columns read. Aggregates, which run over all rows, are repeated on every row, and a `select` of only literals returns one row per row too. For a single row, use [`aggregate`](#aggregate).
 - **Grouped query:** one row per group.
+
+### `aggregate`
+
+A total query has `aggregate` instead of `select`, with the same `{ alias, expression }` columns:
+
+```json
+{ "from": { "entity": "orders" },
+  "aggregate": [
+    { "alias": "orders",  "expression": { "operator": "count", "type": { "name": "integer" } } },
+    { "alias": "largest", "expression": { "operator": "max", "type": { "name": "decimal", "nullable": true },
+                                          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } } } } ] }
+```
+
+It returns exactly one row, even when `where` leaves no rows. Its columns are in total context: they read fields only inside aggregates, and every aggregate runs over all rows, so `over` is not written. With no rows, `count` and `sum` are `0` and `min`, `max` and `average` are `null`, so these three are always nullable here. A total query has no `orderBy`, `distinct` or `pagination`, which would act on its one row, and no `having`: filter with `where`. As a subquery it gives a one-row source, e.g. joined `on` the literal `true` next to every row.
 
 ### `orderBy`
 
@@ -317,7 +340,7 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 - An aggregate runs over the current group in a grouped query and over every row after `where` in a plain one, as in SQL. Write `over: "all"` in a grouped query for a total over every row, e.g. a group's share of all revenue. That is the only use of `over`: it is rejected in a plain query, and `"group"` is never written.
 - `predicate` filters the rows the aggregate sees: `count` with a predicate counts the matching rows. `count` without one counts every row.
 - `null` values from the selector are skipped.
-- `average`, `min` and `max` are non-null in a grouped query, over the group or over all rows, when they have no `predicate` and a non-null selector: a group always has at least one row, and a group exists only when a row does. Otherwise they are nullable; in a plain query they always are, since there may be no rows at all.
+- `average`, `min` and `max` are non-null in a plain or grouped query when they have no `predicate` and a non-null selector: a result row exists only when a row of the sources does, so every aggregate, over the group or over all rows, sees at least one. With a `predicate` or a nullable selector they are nullable, and in a total query they always are, since it returns its row even over no rows.
 
 ---
 
@@ -330,7 +353,7 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **Sources and joins.** `from` yields the rows of its entity or subquery. Each join combines the rows so far with the joined source: `inner` keeps the pairs for which `on` is `true`; `left` also keeps every row so far that matched nothing, with `null` for the joined source's fields; `right` also keeps every joined row that matched nothing, with `null` for the fields of all earlier sources; `full` does both. `on` with the literal `true` is a cross join.
 - **`where`** keeps the rows whose condition is `true`.
 - **`groupBy`** partitions the rows by their keys, compared with `equal`: all `null` keys form one group, and `1` and `1.0` are the same `decimal` key. A group always has at least one row, so a grouped query over no rows returns no rows. **`having`** keeps the groups whose condition is `true`.
-- **`select`** yields one row per group in a grouped query. In a plain query it yields one row per row when a column reads a field outside an aggregate, and exactly one row otherwise.
+- **`select`** yields one row per row in a plain query and one row per group in a grouped query. **`aggregate`** yields exactly one row.
 - **`distinct`** removes rows equal to an earlier row in every column, compared with `equal`.
 - **`orderBy`** sorts by its keys in turn, by [the order of each type](#ordering-and-equality). Rows equal on every key come in an unspecified order. With `distinct`, a key that is not determined by the selected columns leaves the order of the distinct rows unspecified.
 - **`pagination`** skips `skip` rows, then returns at most `take`.
@@ -403,7 +426,7 @@ An aggregate sees the rows of its group, or every row left by `where` with `over
 
 - Each source of a query, the main query or a subquery, has a name: its `alias`, or its entity or subquery name when there is no alias. These names are unique within the query, and fields are referenced through them only: a source with an alias cannot be referenced by its entity or subquery name.
 - Subquery names are unique in the document. A subquery may read entities and the subqueries declared before it; the main query may read every subquery.
-- A subquery's columns are its `select` aliases, each with the type its expression declares.
+- A subquery's columns are its `select` (or `aggregate`) aliases, each with the type its expression declares.
 - Names compare exactly, code point by code point.
 
 ---
@@ -508,7 +531,7 @@ The [`samples/`](samples/) directory holds valid queries ordered from simple to 
 | [`35_full_join.json`](samples/35_full_join.json) | Full join: both sides nullable, coalesced into one key |
 | [`36_multiple_joins.json`](samples/36_multiple_joins.json) | Several joins of different kinds |
 | [`37_outer_join_chain.json`](samples/37_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
-| [`38_aggregates_over_all_rows.json`](samples/38_aggregates_over_all_rows.json) | Aggregates over all rows: `count` / `sum` non-null, `min` / `max` / `average` nullable |
+| [`38_aggregates_over_all_rows.json`](samples/38_aggregates_over_all_rows.json) | A total query (`aggregate`): one row; `count` / `sum` non-null, `min` / `max` / `average` nullable |
 | [`39_aggregate_with_predicate_broadcast.json`](samples/39_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
 | [`40_share_of_total.json`](samples/40_share_of_total.json) | A row value divided by an aggregate over all rows |
 | [`41_group_by_count.json`](samples/41_group_by_count.json) | Group by one field and count |
