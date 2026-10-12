@@ -3613,7 +3613,12 @@
         },
         "values": {
           "type": "array",
-          "minItems": 2
+          "minItems": 2,
+          "contains": {
+            "$ref": "#/$defs/declares.nonNull"
+          },
+          "minContains": 0,
+          "maxContains": 1
         }
       },
       "additionalProperties": false,
@@ -3778,7 +3783,12 @@
         },
         "values": {
           "type": "array",
-          "minItems": 2
+          "minItems": 2,
+          "contains": {
+            "$ref": "#/$defs/declares.nonNull"
+          },
+          "minContains": 0,
+          "maxContains": 1
         }
       },
       "additionalProperties": false,
@@ -3943,7 +3953,12 @@
         },
         "values": {
           "type": "array",
-          "minItems": 2
+          "minItems": 2,
+          "contains": {
+            "$ref": "#/$defs/declares.nonNull"
+          },
+          "minContains": 0,
+          "maxContains": 1
         }
       },
       "additionalProperties": false,
@@ -4108,7 +4123,12 @@
         },
         "values": {
           "type": "array",
-          "minItems": 2
+          "minItems": 2,
+          "contains": {
+            "$ref": "#/$defs/declares.nonNull"
+          },
+          "minContains": 0,
+          "maxContains": 1
         }
       },
       "additionalProperties": false,
@@ -15731,8 +15751,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "boolean"
-              }
+                "$ref": "#/$defs/value.boolean"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -15810,13 +15831,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string",
-                "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
-              }
+                "$ref": "#/$defs/value.date"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -15894,13 +15911,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string",
-                "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,9})?(Z|\\+([01][0-9]|2[0-3]):[0-5][0-9]|-(0[1-9]|1[0-9]|2[0-3]):[0-5][0-9]|-00:(0[1-9]|[1-5][0-9]))$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
-              }
+                "$ref": "#/$defs/value.datetime"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -15978,13 +15991,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string",
-                "pattern": "^(0|-?[1-9][0-9]*(\\.[0-9]*[1-9])?|-?0\\.[0-9]*[1-9])$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
-              }
+                "$ref": "#/$defs/value.decimal"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -16065,10 +16074,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "integer",
-                "minimum": -9223372036854776000,
-                "maximum": 9223372036854776000
-              }
+                "$ref": "#/$defs/value.integer"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -16146,8 +16154,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string"
-              }
+                "$ref": "#/$defs/value.string"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -16225,13 +16234,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string",
-                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,9})?$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
-              }
+                "$ref": "#/$defs/value.time"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -16309,13 +16314,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "string",
-                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
-              }
+                "$ref": "#/$defs/value.uuid"
+              },
+              "uniqueItems": true
             }
           },
           "additionalProperties": false
@@ -16399,9 +16400,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "integer",
-                "minimum": -9223372036854776000,
-                "maximum": 9223372036854776000
+                "$ref": "#/$defs/value.integer"
               }
             }
           }
@@ -16425,12 +16424,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string",
-                "pattern": "^(0|-?[1-9][0-9]*(\\.[0-9]*[1-9])?|-?0\\.[0-9]*[1-9])$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
+                "$ref": "#/$defs/value.decimal"
               }
             }
           }
@@ -16454,7 +16448,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string"
+                "$ref": "#/$defs/value.string"
               }
             }
           }
@@ -16478,7 +16472,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "boolean"
+                "$ref": "#/$defs/value.boolean"
               }
             }
           }
@@ -16502,12 +16496,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string",
-                "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
+                "$ref": "#/$defs/value.date"
               }
             }
           }
@@ -16531,12 +16520,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string",
-                "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,9})?$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
+                "$ref": "#/$defs/value.time"
               }
             }
           }
@@ -16560,12 +16544,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string",
-                "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,9})?(Z|\\+([01][0-9]|2[0-3]):[0-5][0-9]|-(0[1-9]|1[0-9]|2[0-3]):[0-5][0-9]|-00:(0[1-9]|[1-5][0-9]))$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
+                "$ref": "#/$defs/value.datetime"
               }
             }
           }
@@ -16589,12 +16568,7 @@
           "then": {
             "properties": {
               "value": {
-                "type": "string",
-                "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
-                "not": {
-                  "type": "string",
-                  "pattern": "\\n"
-                }
+                "$ref": "#/$defs/value.uuid"
               }
             }
           }
@@ -25830,6 +25804,83 @@
           "$ref": "#/$defs/expr@total"
         }
       ]
+    },
+    "value.boolean": {
+      "type": "boolean"
+    },
+    "value.date": {
+      "type": "string",
+      "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)$",
+      "not": {
+        "type": "string",
+        "pattern": "\\n"
+      }
+    },
+    "value.datetime": {
+      "type": "string",
+      "pattern": "^([0-9]{4}-((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))|([0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00)-02-29)T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{0,8}[1-9])?Z$",
+      "not": {
+        "type": "string",
+        "pattern": "\\n"
+      }
+    },
+    "value.decimal": {
+      "type": "string",
+      "pattern": "^(0|-?[1-9][0-9]*(\\.[0-9]*[1-9])?|-?0\\.[0-9]*[1-9])$",
+      "not": {
+        "type": "string",
+        "pattern": "\\n"
+      },
+      "allOf": [
+        {
+          "if": {
+            "pattern": "^-?[1-9][0-9]*$"
+          },
+          "then": {
+            "pattern": "^-?[0-9]{1,28}$"
+          }
+        },
+        {
+          "if": {
+            "pattern": "^-?[1-9][0-9]*\\."
+          },
+          "then": {
+            "pattern": "^-?[0-9.]{1,29}$"
+          }
+        },
+        {
+          "if": {
+            "pattern": "^-?0\\."
+          },
+          "then": {
+            "pattern": "^-?0\\.[0-9]{1,28}$"
+          }
+        }
+      ]
+    },
+    "value.integer": {
+      "type": "integer",
+      "minimum": -9223372036854776000,
+      "maximum": 9223372036854776000
+    },
+    "value.string": {
+      "type": "string"
+    },
+    "value.time": {
+      "type": "string",
+      "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{0,8}[1-9])?$",
+      "not": {
+        "type": "string",
+        "pattern": "\\n"
+      }
+    },
+    "value.uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "not": {
+        "type": "string",
+        "pattern": "\\n"
+      }
     }
   }
 }

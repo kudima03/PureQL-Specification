@@ -89,18 +89,12 @@ MONTH_DAY = (
 )
 LEAP_YEAR = r"[0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00"
 DATE = rf"([0-9]{{4}}-({MONTH_DAY})|({LEAP_YEAR})-02-29)"
-TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{1,9})?"
-# Mandatory, RFC 3339 range. -00:00 ("offset unknown") is excluded; +00:00 is Z.
+# Up to nanoseconds, without trailing zeros: 18:30:00.5, never 18:30:00.500.
+TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{0,8}[1-9])?"
 # A decimal as a string: no exponent, no leading zeros, no trailing zeros in the
 # fraction and no "-0", so each value has one spelling and every client reads it
 # exactly. 0, 12, -0.5 and 19.99 are decimals; 1.50, 01, -0, .5 and 1e3 are not.
 DECIMAL = r"(0|-?[1-9][0-9]*(\.[0-9]*[1-9])?|-?0\.[0-9]*[1-9])"
-OFFSET = (
-    r"(Z"
-    r"|\+([01][0-9]|2[0-3]):[0-5][0-9]"
-    r"|-(0[1-9]|1[0-9]|2[0-3]):[0-5][0-9]"
-    r"|-00:(0[1-9]|[1-5][0-9]))"
-)
 
 
 def pattern(body):
@@ -118,15 +112,29 @@ def pattern(body):
 # and the real bounds are rejected by the interpreter.
 INT64 = {"type": "integer", "minimum": -9223372036854776000, "maximum": 9223372036854776000}
 
+# A decimal is m × 10^-s with |m| < 10^28 and 0 <= s <= 28: at most 28
+# significant digits and 28 decimal places, which every interpreter holds
+# exactly (System.Decimal does). DECIMAL fixes the spelling; these bound it.
+DECIMAL_DIGITS = [
+    # a whole number: at most 28 digits
+    {"if": {"pattern": r"^-?[1-9][0-9]*$"}, "then": {"pattern": r"^-?[0-9]{1,28}$"}},
+    # 1 or more with a fraction: at most 28 digits and the point
+    {"if": {"pattern": r"^-?[1-9][0-9]*\."}, "then": {"pattern": r"^-?[0-9.]{1,29}$"}},
+    # below 1: at most 28 decimal places
+    {"if": {"pattern": r"^-?0\."}, "then": {"pattern": r"^-?0\.[0-9]{1,28}$"}},
+]
+
+# The literal form of each type: one spelling for each value.
 VALUE = {
     "integer": INT64,
-    "decimal": pattern(DECIMAL),
+    "decimal": {**pattern(DECIMAL), "allOf": DECIMAL_DIGITS},
     "string": {"type": "string"},
     "boolean": {"type": "boolean"},
     "date": pattern(DATE),
     "time": pattern(TIME),
-    "datetime": pattern(f"{DATE}T{TIME}{OFFSET}"),
-    "uuid": pattern(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"),
+    # always in UTC: an instant has one spelling
+    "datetime": pattern(f"{DATE}T{TIME}Z"),
+    "uuid": pattern(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"),
 }
 
 # `aggregates`: whether aggregates may appear, and the `over` values that may
@@ -266,12 +274,14 @@ defs["literal"] = {
     "allOf": [
         {
             "if": declares(t, nullable),
-            "then": {"properties": {"value": {"type": "null"} if nullable else VALUE[t]}},
+            "then": {"properties": {"value": {"type": "null"} if nullable else ref(f"value.{t}")}},
         }
         for t in TYPES
         for nullable in [False, True]
     ],
 }
+for t in TYPES:
+    defs[f"value.{t}"] = VALUE[t]
 defs["param"] = obj(["param", "type"], {"param": NAME, "type": ref("type")})
 # `source` is the entity, subquery or alias the column comes from.
 defs["field"] = obj(
@@ -287,7 +297,8 @@ for t in TYPES:
         "anyOf": [
             obj(
                 ["type", "value"],
-                {"type": ref(f"type.{t}List"), "value": {"type": "array", "items": VALUE[t]}},
+                # a set: a repeated value adds nothing
+                {"type": ref(f"type.{t}List"), "value": {"type": "array", "items": ref(f"value.{t}"), "uniqueItems": True}},
             ),
             obj(["param", "type"], {"param": NAME, "type": ref(f"type.{t}List")}),
             # Every value of one column of a subquery's result.
@@ -420,7 +431,10 @@ for ctx, rules in CONTEXTS.items():
         signature("coalesce", t, True, operands({"values": t}, True), {
             "properties": {"values": {"items": NULLABLE}}
         }, *wide)
-    shape("coalesce", ["values"], {"values": OPERANDS})
+    # An operand after a non-null one is never reached, so at most one is
+    # non-null. (That it comes last is beyond a schema: it cannot address the
+    # last item of an array.)
+    shape("coalesce", ["values"], {"values": {**OPERANDS, "contains": NON_NULL, "minContains": 0, "maxContains": 1}})
 
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the

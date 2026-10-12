@@ -48,6 +48,9 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **Group keys are referenced by alias**: every `groupBy` key has an `alias`, and a reference is `{ "key": "user_id", "type": … }` instead of a zero-based index.
 - **`distinct` is replaced by `distinctBy`**: `"distinct": true` becomes `"distinctBy"` listing every `select` alias. It applies after `orderBy`, so the order of the distinct rows is the `orderBy` order.
 - **Samples renumbered** from 14 on, for the new `14_distinct_by_first_row.json`.
+- **One spelling for each literal value**: a `time` fraction has no trailing zeros (`18:30:00.5`, not `18:30:00.500`); a `datetime` is always in UTC, ending in `Z` (`+03:00`, `+00:00` and every other offset are rejected); a `uuid` is in lower case; a list literal repeats no value. Parameter values are written the same way. `samples/24_datetime_offsets.json` becomes `24_datetime_utc.json`.
+- **`decimal` range**: a `decimal` is m × 10⁻ˢ with |m| < 10²⁸ and 0 ≤ s ≤ 28, at most 28 significant digits and 28 decimal places. A longer literal is rejected and a parameter outside the range is an execution error, so every interpreter reads both exactly. Results are rounded to that range and an overflow is an error, so interpreters agree on every result instead of only on those that fit in 28 digits.
+- **`coalesce` has at most one non-null operand**: an operand after a non-null one is never reached.
 
 ### Versioning
 

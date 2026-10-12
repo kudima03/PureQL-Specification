@@ -39,13 +39,13 @@ Each has its own rules for what its columns may read (see [Contexts](#contexts))
 | Type | Literal value | Example |
 |---|---|---|
 | `integer` | JSON integer from −2⁶³ to 2⁶³ − 1: a number with no fractional part, so `5.0` counts | `42` |
-| `decimal` | a JSON string holding the number in one spelling: no exponent, no leading zeros, no trailing zeros in the fraction, no `-0` | `"19.99"` |
+| `decimal` | a JSON string holding the number in one spelling: no exponent, no leading zeros, no trailing zeros in the fraction, no `-0`; at most 28 significant digits and 28 decimal places | `"19.99"` |
 | `string` | JSON string | `"active"` |
 | `boolean` | `true` / `false` | `true` |
 | `date` | `YYYY-MM-DD`, a real calendar date (February 29 only in leap years) | `"2024-01-31"` |
-| `time` | `hh:mm:ss[.fraction]`: hours `00`–`23`, seconds `00`–`59`, 1 to 9 fractional digits | `"18:30:00.125"` |
-| `datetime` | a `date`, `T`, a `time`, then an offset (see [Temporal types](#temporal-types)) | `"2024-01-31T18:30:00+03:00"` |
-| `uuid` | 8-4-4-4-12 hexadecimal digits, either case, no braces or prefix | `"3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f"` |
+| `time` | `hh:mm:ss[.fraction]`: hours `00`–`23`, seconds `00`–`59`, 1 to 9 fractional digits, the last not `0` | `"18:30:00.125"` |
+| `datetime` | a `date`, `T`, a `time`, then `Z`: always in UTC (see [Temporal types](#temporal-types)) | `"2024-01-31T15:30:00Z"` |
+| `uuid` | 8-4-4-4-12 hexadecimal digits in lower case, no braces or prefix | `"3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f"` |
 
 Every type is either non-null or nullable:
 
@@ -88,7 +88,7 @@ Every expression has a `type`: a field, parameter, literal or group key declares
 ```
 
 - **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid declared type.
-- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and defaults written out (`over` stating the default, `"direction": "asc"`). What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
+- **One spelling.** Redundant spellings are rejected as well, where the form of the query alone shows them: `"nullable": false`; `and` / `or` with a single condition; defaults written out (`over` stating the default, `"direction": "asc"`); a literal written in a second way (`decimal` `"1.50"`, `time` `"18:30:00.500"`, a `datetime` with an offset other than `Z`, a `uuid` in upper case); a repeated value in a list literal; and a `coalesce` operand that is never reached, after another non-null one (that the non-null operand comes last is beyond a schema). Equivalences between expressions are out of scope: `and(a, and(b, c))` and `and(a, b, c)`, `not(not(x))` and `x`, `not(equal(a, b))` and `notEqual(a, b)`, `if(true, a, b)` and `a` are all accepted, as any language accepts them. Nor can the schema see how a JSON number is written: `5` and `5.0` are the same `integer`.
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
@@ -120,10 +120,9 @@ Range, precision, rounding, `integerDivide` / `modulo` signs and division by zer
 
 - **`date`** is a local calendar date, and **`time`** a local time of day. Neither has an offset.
 - **`datetime`** is an instant, a point on the global timeline:
-  - The offset is mandatory: `Z` or `±hh:mm` up to `±23:59`, with `T` and `Z` in upper case.
-  - `-00:00` is rejected: in RFC 3339 it means "offset unknown", which is a naive timestamp under another name. `+00:00` is the same as `Z`.
-  - Comparison, `equal`, `*DiffSeconds`, `min` / `max`, `orderBy`, `groupBy` and `distinctBy` all work on the instant, so `03:00+03:00` equals `00:00Z`. The offset only affects how a value is written, and `datetime` results are returned in UTC, written with `Z`.
-  - A `datetime` parameter bound without an offset is an error. If storage holds naive timestamps, how they map to instants is interpreter configuration and is never guessed.
+  - It is always written in UTC, ending in `Z`, with `T` and `Z` in upper case. An instant has one spelling: `2024-01-01T03:00:00+03:00` is written `2024-01-01T00:00:00Z`, and any other offset, `+00:00` included, is rejected.
+  - Comparison, `equal`, `*DiffSeconds`, `min` / `max`, `orderBy`, `groupBy` and `distinctBy` all work on the instant, and `datetime` results are returned in UTC, written with `Z`.
+  - A `datetime` parameter is bound in UTC too. If storage holds naive timestamps, how they map to instants is interpreter configuration and is never guessed.
 
 Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines explicitly. Python's `re` treats `\d` as any Unicode digit and lets `$` match before a final newline, while ECMA-262 does neither, and lookahead support varies, so these rules keep every validator in agreement.
 
@@ -374,15 +373,15 @@ This section fixes what an interpreter computes, so that two conforming interpre
 
 A query fails at execution with an error when it:
 
-- produces an `integer` outside the 64-bit range, or a `decimal` beyond the interpreter's range;
+- produces an `integer` outside the 64-bit range, or a `decimal` of magnitude 10²⁸ or more;
 - divides by zero in `divide`, `integerDivide` or `modulo`;
 - produces a `date` or `datetime` outside the years 0000–9999;
-- is run with a missing parameter, a parameter of the wrong type, `null` for a non-null parameter, a `datetime` parameter without an offset, or a `pagination` parameter below its minimum (`skip` < 0, `take` < 1).
+- is run with a missing parameter, a parameter of the wrong type, `null` for a non-null parameter, a parameter value not written like a literal of its type (a `decimal` outside its range, a `datetime` not in UTC, and so on), or a `pagination` parameter below its minimum (`skip` < 0, `take` < 1).
 
 ### Integer and decimal arithmetic
 
 - **`integer`** is a signed 64-bit integer, from −2⁶³ to 2⁶³ − 1. Any `integer` result outside that range is an error, including `sum`, `round`, `floor` and `ceiling`.
-- **`decimal`** is an exact decimal number, never binary floating point: `0.1 + 0.2` equals `0.3`. Literals and parameters are read exactly. An interpreter keeps at least 28 significant digits; a result that needs more is rounded half away from zero, so interpreters agree on every result that fits in 28 digits.
+- **`decimal`** is an exact decimal number, never binary floating point: `0.1 + 0.2` equals `0.3`. Every value is m × 10⁻ˢ with an integer |m| < 10²⁸ and 0 ≤ s ≤ 28: at most 28 significant digits and 28 decimal places, which `System.Decimal` and every other decimal type of 28 digits or more holds exactly. A literal outside this range is rejected by the schema and a parameter outside it is an execution error, so literals and parameters are read exactly. A result that needs more digits is rounded half away from zero to the most decimal places that fit, so every interpreter computes the same result; a result of magnitude 10²⁸ or more is an error.
 - **Mixed operands.** An `integer` operand of a `decimal` operation is converted exactly. Comparisons and `equal` between `integer` and `decimal` compare numeric values: `2` equals `2.0`.
 - **`divide`** computes the exact quotient, rounded half away from zero to the decimal precision: `divide(1, 3)` is `0.3333333333333333333333333333` with 28 digits.
 - **`integerDivide`** truncates toward zero, and **`modulo`** takes the sign of its left operand, so `left = right × integerDivide(left, right) + modulo(left, right)`: `integerDivide(-7, 2)` is `-3` and `modulo(-7, 2)` is `-1`.
@@ -404,7 +403,7 @@ Every type is ordered, and the same order serves comparisons, `min` / `max` and 
 | `date` | calendar day | chronological |
 | `time` | time of day | chronological from `00:00:00` |
 | `datetime` | instant | chronological by instant |
-| `uuid` | value; letter case in a literal does not matter | lexicographic over the 32 hexadecimal digits in lower case, which is the order of the 16 bytes read as unsigned big-endian |
+| `uuid` | value | lexicographic over the 32 hexadecimal digits in lower case, which is the order of the 16 bytes read as unsigned big-endian |
 
 `null` equals `null` and sorts first in ascending order (see [Null semantics](#null-semantics)). The `uuid` order is not the one SQL Server uses for `uniqueidentifier`; an interpreter on such a database must still sort by this rule.
 
@@ -412,7 +411,7 @@ Every type is ordered, and the same order serves comparisons, `min` / `max` and 
 
 - **`date`** follows the proleptic Gregorian calendar. `dateAddDays` adds whole calendar days, and `dateDiffDays` is `left − right` in days.
 - **`time`** is a time of day with nanosecond precision, from `00:00:00` up to but excluding `24:00:00`. `timeAddSeconds` wraps around midnight: `23:00:00` plus 7200 seconds is `01:00:00`, and negative seconds go backwards. `timeDiffSeconds` is `left − right` in seconds without wrapping, so it is negative when `left` is earlier.
-- **`datetime`** is an instant with nanosecond precision; every day has 86400 seconds. `datetimeAddSeconds` and `datetimeDiffSeconds` work on the instant. The offset is notation only, and `datetime` results are returned in UTC, written with `Z`.
+- **`datetime`** is an instant with nanosecond precision; every day has 86400 seconds. `datetimeAddSeconds` and `datetimeDiffSeconds` work on the instant, and `datetime` results are returned in UTC, written with `Z`.
 - A number of seconds with more than 9 fractional digits is rounded to nanoseconds, half away from zero.
 
 ### Aggregate evaluation
@@ -430,7 +429,7 @@ An aggregate sees the rows of its group, or every row left by `where` with `over
 
 ### Parameters
 
-- A query is run with a value for every parameter it uses. A value is written like a literal of the declared type: a JSON number for `integer`, the literal formats for `decimal` (a string), `date`, `time`, `datetime` and `uuid`. A list parameter is a JSON array of non-`null` values of the element type, possibly empty.
+- A query is run with a value for every parameter it uses. A value is written exactly like a literal of the declared type, in the same one spelling: a JSON number for `integer`, the literal formats for `decimal` (a string within its range), `date`, `time`, `datetime` (in UTC) and `uuid` (in lower case). A list parameter is a JSON array of non-`null` values of the element type, possibly empty, and may repeat a value.
 - A nullable parameter may be bound to `null`; a non-null one may not. Bound values that the query does not use are ignored.
 - One parameter name has one type in the whole document, subqueries included.
 
@@ -455,9 +454,9 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Where fields, keys and aggregates may appear (contexts) | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
 | `pagination` has an `orderBy`; a subquery has `orderBy` only with `pagination` or `distinctBy`; `distinctBy` lists each alias once | schema |
-| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`); `integer` literals within 64 bits | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`), one spelling of each literal value, no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
 | Entities, fields and parameters exist and have the declared types; a parameter used in several places has one type | interpreter |
-| A `datetime` parameter is bound with an offset | interpreter |
+| A parameter value is written like a literal of its type: one spelling, a `decimal` within its range, a `datetime` in UTC | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |
 | Each field reference declares exactly the nullability the field has at that point, outer joins included | interpreter |
 | `groupBy` aliases are unique; a group key reference names one of them and repeats the type of its expression | interpreter |
@@ -530,7 +529,7 @@ The [`samples/`](samples/) directory holds valid queries ordered from simple to 
 | [`21_order_by_computed.json`](samples/21_order_by_computed.json) | `orderBy` on a computed per-row expression |
 | [`22_date_math.json`](samples/22_date_math.json) | `dateAddDays` / `dateDiffDays` as columns and in `where` |
 | [`23_time_datetime.json`](samples/23_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
-| [`24_datetime_offsets.json`](samples/24_datetime_offsets.json) | `datetime` literals with a non-UTC offset and with fractional seconds |
+| [`24_datetime_utc.json`](samples/24_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
 | [`25_nullable_columns.json`](samples/25_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`26_typed_null.json`](samples/26_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
 | [`27_coalesce.json`](samples/27_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |

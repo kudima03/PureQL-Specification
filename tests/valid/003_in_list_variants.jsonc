@@ -80,7 +80,7 @@
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "list": {
           "type": { "name": "datetimeList" },
-          "value": ["2024-01-01T00:00:00Z", "2024-01-01T03:00:00+03:00"]
+          "value": ["2024-01-01T00:00:00Z", "2024-01-01T00:00:00.5Z"]
         }
       }
     ]
