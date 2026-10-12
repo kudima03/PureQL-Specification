@@ -1,9 +1,9 @@
 // Dashboard KPIs in one row: order count, paid count, paid share, whether any order was refunded, the latest order.
-// No column reads a field outside an aggregate, so the result is a single row even for an empty table. The share
+// A total query (aggregate instead of select) returns exactly one row, even for an empty table. The share
 // guards against division by zero with if; max over all rows is nullable, because there may be no rows.
 {
   "from": { "entity": "orders" },
-  "select": [
+  "aggregate": [
     {
       "alias": "orders",
       "expression": { "operator": "count", "type": { "name": "integer" } }

@@ -40,7 +40,7 @@
       "alias": "mean_time",
       "expression": {
         "operator": "average",
-        "type": { "name": "datetime", "nullable": true },
+        "type": { "name": "datetime" },
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },

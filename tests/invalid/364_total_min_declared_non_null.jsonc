@@ -1,9 +1,9 @@
-// min without over in a plain query declared non-null: it defaults to all rows, which may be none
+// min in a total query may see no rows, so it is nullable; the node declares it non-null
 {
   "from": { "entity": "orders" },
-  "select": [
+  "aggregate": [
     {
-      "alias": "smallest",
+      "alias": "c",
       "expression": {
         "operator": "min",
         "type": { "name": "decimal" },

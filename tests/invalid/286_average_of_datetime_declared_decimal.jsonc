@@ -6,7 +6,7 @@
       "alias": "c",
       "expression": {
         "operator": "average",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     }

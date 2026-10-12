@@ -1,0 +1,8 @@
+// A query with both aggregate and select: it is either one row or one row per row
+{
+  "from": { "entity": "orders" },
+  "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }],
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

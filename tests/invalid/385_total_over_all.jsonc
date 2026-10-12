@@ -1,0 +1,7 @@
+// over: "all" in a total query: its aggregates always run over all rows, so over is not written
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" } }
+  ]
+}

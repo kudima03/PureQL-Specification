@@ -1,11 +1,11 @@
-// min in a plain query may see no rows, so it is nullable; the node declares it non-null
+// average in a total query declared non-null: it may see no rows, so it is nullable
 {
   "from": { "entity": "orders" },
-  "select": [
+  "aggregate": [
     {
       "alias": "c",
       "expression": {
-        "operator": "min",
+        "operator": "average",
         "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

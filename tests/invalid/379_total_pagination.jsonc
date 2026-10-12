@@ -1,0 +1,6 @@
+// A total query with pagination: it has exactly one row
+{
+  "from": { "entity": "orders" },
+  "aggregate": [{ "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }],
+  "pagination": { "skip": 0, "take": 1 }
+}

@@ -117,7 +117,7 @@
         "type": { "name": "boolean" },
         "left": {
           "operator": "min",
-          "type": { "name": "date", "nullable": true },
+          "type": { "name": "date" },
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": { "type": { "name": "date" }, "value": "2024-01-01" }
@@ -130,7 +130,7 @@
         "type": { "name": "boolean" },
         "value": {
           "operator": "average",
-          "type": { "name": "date", "nullable": true },
+          "type": { "name": "date" },
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "list": { "param_name": "dates", "type": { "name": "dateList" } }
@@ -159,7 +159,7 @@
         "type": { "name": "boolean" },
         "left": {
           "operator": "average",
-          "type": { "name": "time", "nullable": true },
+          "type": { "name": "time" },
           "selector": { "source": "orders", "field": "window_start", "type": { "name": "time" } }
         },
         "right": {
@@ -190,7 +190,7 @@
         },
         "right": {
           "operator": "max",
-          "type": { "name": "datetime", "nullable": true },
+          "type": { "name": "datetime" },
           "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
         }
       }

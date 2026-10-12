@@ -1,0 +1,5 @@
+// A group key reference in a total query, which has no groups
+{
+  "from": { "entity": "orders" },
+  "aggregate": [{ "alias": "k", "expression": { "key": 0, "type": { "name": "uuid" } } }]
+}

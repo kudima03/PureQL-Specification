@@ -1,0 +1,15 @@
+// min over all rows in a plain query, unfiltered and over a non-null selector, declared nullable: each result row comes from a row, so it is non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "smallest",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}
