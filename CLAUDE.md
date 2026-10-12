@@ -41,7 +41,7 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 
 ### Declared types and dispatch
 
-Every expression declares its `type`, operators included: `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }`. An operator's declared type is **exact**: the type it yields from its operands' declared types, never wider (`add` of integers is `integer`, a lifted operator is nullable exactly when an operand is, `coalesce` is non-null exactly when an operand is, `min` over a group is non-null exactly under the aggregate rules). Implicit conversions apply at the position, not in the declaration.
+Every expression declares its `type`, operators included: `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }`. An operator's declared type is **exact**: the type it yields from its operands' declared types, never wider (`add` of integers is `integer`, a lifted operator is nullable exactly when an operand is, `coalesce` is non-null exactly when an operand is, `min` over a group is non-null exactly under the aggregate rules). Implicit conversions apply at the position, not in the declaration. A `select` column and a `groupBy` key have no `type` of their own: they have the type their expression declares.
 
 Validation is linear by construction, and must stay so:
 
@@ -72,9 +72,9 @@ Never reference `expr@…` or a positional definition from two branches that can
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
-- `select` columns are `{ alias, type, expression }` with alias and type required. The schema checks the expression against the declared type.
-- `groupBy` items are `{ alias?, type, expression }`: any row expression can be a key, and its declared type is checked like a `select` column. Keys are referenced as `{ "key": i, "type": … }`, repeating that declared type exactly, and are never emitted automatically.
-- Every expression declares its type, and anything referenced from elsewhere (subquery columns, group keys) declares its type too; the schema checks each declaration that does not depend on the catalog. Otherwise the interpreter would need type inference, which breaks the design goal.
+- `select` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
+- `groupBy` items are `{ alias?, expression }`: any row expression can be a key. Keys are referenced as `{ "key": i, "type": … }`, repeating `groupBy[i].expression.type` exactly, and are never emitted automatically.
+- Every expression declares its type, and the schema checks each declaration that does not depend on the catalog. Anything referenced from elsewhere (subquery columns, group keys) takes the type its expression declares. Otherwise the interpreter would need type inference, which breaks the design goal.
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
@@ -130,7 +130,7 @@ What an interpreter computes is defined under **Semantics** in `README.md`: eval
 
 ## Adding samples and tests
 
-1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every column's and every operator's type by hand (`"type"` right after `"operator"`), and update the samples table in `README.md`.
+1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every operator's type by hand (`"type"` right after `"operator"`); columns and group keys have no `type`, and update the samples table in `README.md`.
 2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query. Test formatting is not checked; keep the compact style of the existing tests (an object or array on one line while it fits in 110 columns). Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
 3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
 4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.

@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "size",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "if",
         "type": {
@@ -61,9 +55,6 @@
     },
     {
       "alias": "discount",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "if",
         "type": {

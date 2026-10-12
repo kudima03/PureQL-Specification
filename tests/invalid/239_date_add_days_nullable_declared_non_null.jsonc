@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
-        "type": { "name": "date", "nullable": true },
+        "type": { "name": "date" },
         "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 1 }
       }

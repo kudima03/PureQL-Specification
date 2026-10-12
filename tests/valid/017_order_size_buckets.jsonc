@@ -6,7 +6,6 @@
   "groupBy": [
     {
       "alias": "bucket",
-      "type": { "name": "string" },
       "expression": {
         "operator": "if",
         "type": { "name": "string" },
@@ -35,17 +34,14 @@
   "select": [
     {
       "alias": "bucket",
-      "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
     {
       "alias": "orders",
-      "type": { "name": "integer" },
       "expression": { "operator": "count", "type": { "name": "integer" } }
     },
     {
       "alias": "revenue",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
         "type": { "name": "decimal" },
@@ -54,7 +50,6 @@
     },
     {
       "alias": "share_of_orders",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },

@@ -8,7 +8,6 @@
         "select": [
           {
             "alias": "id",
-            "type": { "name": "integer" },
             "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
           }
         ]
@@ -19,7 +18,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
     }
   ]

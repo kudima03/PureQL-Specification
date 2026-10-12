@@ -5,7 +5,6 @@
   "select": [
     {
       "alias": "orders",
-      "type": { "name": "integer" },
       "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
     }
   ]

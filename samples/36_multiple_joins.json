@@ -79,9 +79,6 @@
   "select": [
     {
       "alias": "email",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "users",
         "field": "email",
@@ -92,9 +89,6 @@
     },
     {
       "alias": "order_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -105,10 +99,6 @@
     },
     {
       "alias": "product",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "products",
         "field": "name",
@@ -120,9 +110,6 @@
     },
     {
       "alias": "quantity",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "source": "order_items",
         "field": "quantity",

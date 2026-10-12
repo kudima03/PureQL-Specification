@@ -61,9 +61,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -76,9 +73,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -88,9 +82,6 @@
     },
     {
       "alias": "units",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "sum",
         "type": {
@@ -107,9 +98,6 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "round",
         "type": {
@@ -153,9 +141,6 @@
     },
     {
       "alias": "tens_of_lines",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "integerDivide",
         "type": {
@@ -177,9 +162,6 @@
     },
     {
       "alias": "reorder_estimate",
-      "type": {
-        "name": "date"
-      },
       "expression": {
         "operator": "dateAddDays",
         "type": {

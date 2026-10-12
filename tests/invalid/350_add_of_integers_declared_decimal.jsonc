@@ -1,10 +1,9 @@
-// add of two integers is integer; declaring it decimal is wider than its type, even in a decimal column
+// add of two integers is integer; declaring it decimal is wider than its type
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "add",
         "type": { "name": "decimal" },

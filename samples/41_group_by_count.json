@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "orders",
         "field": "status",
@@ -19,9 +16,6 @@
   "select": [
     {
       "alias": "status",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -31,9 +25,6 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {

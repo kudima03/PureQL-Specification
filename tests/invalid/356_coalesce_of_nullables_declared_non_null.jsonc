@@ -1,10 +1,9 @@
-// coalesce of nullable operands only is nullable; the node declares it non-null although the column is nullable
+// coalesce of nullable operands only is nullable; the node declares it non-null
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "integer" },

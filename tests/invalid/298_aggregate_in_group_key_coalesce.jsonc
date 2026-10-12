@@ -3,7 +3,6 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "decimal" },
@@ -22,7 +21,6 @@
   "select": [
     {
       "alias": "discount",
-      "type": { "name": "decimal" },
       "expression": { "key": 0, "type": { "name": "decimal" } }
     }
   ]

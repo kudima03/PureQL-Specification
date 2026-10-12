@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "if",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
         "else": { "source": "orders", "field": "total", "type": { "name": "decimal" } }

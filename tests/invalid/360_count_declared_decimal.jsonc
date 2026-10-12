@@ -1,10 +1,9 @@
-// count is integer; declaring it decimal is wider than its type, even in a decimal column
+// count is integer; declaring it decimal is wider than its type
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": { "operator": "count", "type": { "name": "decimal" } }
     }
   ]

@@ -30,17 +30,14 @@
   "select": [
     {
       "alias": "user",
-      "type": { "name": "string" },
       "expression": { "source": "u", "field": "name", "type": { "name": "string" } }
     },
     {
       "alias": "referrer",
-      "type": { "name": "string", "nullable": true },
       "expression": { "source": "referrer", "field": "name", "type": { "name": "string", "nullable": true } }
     },
     {
       "alias": "grand_referrer",
-      "type": { "name": "string", "nullable": true },
       "expression": {
         "source": "grand_referrer",
         "field": "name",
@@ -49,7 +46,6 @@
     },
     {
       "alias": "chain_depth",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "if",
         "type": { "name": "integer" },

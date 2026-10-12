@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string" },
       "expression": {
         "operator": "coalesce",
-        "type": { "name": "string", "nullable": true },
+        "type": { "name": "string" },
         "values": [
           { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
           { "type": { "name": "string", "nullable": true }, "value": null }

@@ -2,6 +2,6 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "alias": "c", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+    { "alias": "c", "expression": { "key": 0, "type": { "name": "uuid" } } }
   ]
 }

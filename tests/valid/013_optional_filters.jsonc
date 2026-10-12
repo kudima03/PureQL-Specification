@@ -48,12 +48,10 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     }
   ],

@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },

@@ -24,17 +24,14 @@
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "window_start",
-      "type": { "name": "time" },
       "expression": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
     },
     {
       "alias": "window_end",
-      "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
         "type": { "name": "time" },
@@ -51,7 +48,6 @@
     },
     {
       "alias": "hours_until_closing",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "divide",
         "type": { "name": "decimal" },

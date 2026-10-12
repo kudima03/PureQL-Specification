@@ -39,9 +39,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -52,9 +49,6 @@
     },
     {
       "alias": "due_date",
-      "type": {
-        "name": "date"
-      },
       "expression": {
         "operator": "dateAddDays",
         "type": {
@@ -77,9 +71,6 @@
     },
     {
       "alias": "days_open",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "dateDiffDays",
         "type": {

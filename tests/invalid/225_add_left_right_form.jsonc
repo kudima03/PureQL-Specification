@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "add",
         "type": { "name": "integer" },

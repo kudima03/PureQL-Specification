@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "datetimeDiffSeconds",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
         "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }

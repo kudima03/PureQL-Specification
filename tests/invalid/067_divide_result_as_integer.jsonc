@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
         "type": { "name": "date" },

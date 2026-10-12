@@ -33,10 +33,6 @@
   "select": [
     {
       "alias": "product_id",
-      "type": {
-        "name": "uuid",
-        "nullable": true
-      },
       "expression": {
         "operator": "coalesce",
         "type": {
@@ -65,9 +61,6 @@
     },
     {
       "alias": "in_stock",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "coalesce",
         "type": {

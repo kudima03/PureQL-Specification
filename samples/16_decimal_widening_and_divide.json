@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "order_items",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "line_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "multiply",
         "type": {
@@ -46,9 +40,6 @@
     },
     {
       "alias": "half_quantity",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "divide",
         "type": {
@@ -73,9 +64,6 @@
     },
     {
       "alias": "price_with_tax",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "multiply",
         "type": {

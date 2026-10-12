@@ -1,7 +1,7 @@
-// Each operator declares its exact type, and a position accepts it wherever a wider type is expected: integer
-// operators in decimal and nullable columns, count with an explicit "nullable": false, average of an integer
-// selector (decimal), min over the group (non-null) and over all rows (nullable), coalesce and if mixing
-// integer with decimal (decimal), round with digits over an integer (decimal), equal of an integer and a decimal.
+// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: count with an
+// explicit "nullable": false, average of an integer selector (decimal), min over the group (non-null) and over all
+// rows (nullable), coalesce and if mixing integer with decimal (decimal), round with digits over an integer (decimal),
+// equal of an integer and a decimal. Each column has the type its expression declares.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -20,24 +20,20 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "key": 0, "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",
-      "type": { "name": "decimal", "nullable": true },
       "expression": { "operator": "count", "type": { "name": "integer", "nullable": false } }
     },
     {
       "alias": "items",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
@@ -46,7 +42,6 @@
     },
     {
       "alias": "avg_items",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
         "type": { "name": "decimal" },
@@ -55,7 +50,6 @@
     },
     {
       "alias": "smallest",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "min",
         "type": { "name": "decimal" },
@@ -64,7 +58,6 @@
     },
     {
       "alias": "smallest_overall",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "min",
         "type": { "name": "decimal", "nullable": true },
@@ -74,7 +67,6 @@
     },
     {
       "alias": "points",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "decimal" },
@@ -94,7 +86,6 @@
     },
     {
       "alias": "best",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "if",
         "type": { "name": "decimal", "nullable": true },
@@ -122,7 +113,6 @@
     },
     {
       "alias": "rounded",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },

@@ -1,7 +1,7 @@
-// Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays in a decimal?
-// column, an integer number of seconds, three-operand add, single-condition or, equal as a nullable column,
+// Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays of a nullable
+// date, an integer number of seconds, three-operand add, single-condition or, equal as a column,
 // comparisons between typed nulls and across integer / decimal, if over uuid, coalesce with the non-null operand last,
-// coalesce(integer?, decimal) as decimal, integer? widened to decimal?, a boolean expression as a column.
+// coalesce(integer?, decimal) as decimal, a nullable integer field and a boolean expression as columns.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -60,7 +60,6 @@
   "select": [
     {
       "alias": "floor_of_integer",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "floor",
         "type": { "name": "integer" },
@@ -69,7 +68,6 @@
     },
     {
       "alias": "hundreds",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
@@ -79,7 +77,6 @@
     },
     {
       "alias": "computed_digits",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
@@ -95,8 +92,7 @@
       }
     },
     {
-      "alias": "days_as_decimal",
-      "type": { "name": "decimal", "nullable": true },
+      "alias": "days_to_ship",
       "expression": {
         "operator": "dateDiffDays",
         "type": { "name": "integer", "nullable": true },
@@ -106,7 +102,6 @@
     },
     {
       "alias": "one_minute_later",
-      "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
         "type": { "name": "time" },
@@ -116,7 +111,6 @@
     },
     {
       "alias": "sum3",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "add",
         "type": { "name": "integer" },
@@ -129,7 +123,6 @@
     },
     {
       "alias": "same_status",
-      "type": { "name": "boolean", "nullable": true },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -139,7 +132,6 @@
     },
     {
       "alias": "either_id",
-      "type": { "name": "uuid" },
       "expression": {
         "operator": "if",
         "type": { "name": "uuid" },
@@ -150,7 +142,6 @@
     },
     {
       "alias": "code",
-      "type": { "name": "string" },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "string" },
@@ -163,7 +154,6 @@
     },
     {
       "alias": "points_or_total",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "decimal" },
@@ -174,8 +164,7 @@
       }
     },
     {
-      "alias": "points_widened",
-      "type": { "name": "decimal", "nullable": true },
+      "alias": "bonus_points_value",
       "expression": {
         "source": "orders",
         "field": "bonus_points",
@@ -184,7 +173,6 @@
     },
     {
       "alias": "paid_and_verified",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "and",
         "type": { "name": "boolean" },

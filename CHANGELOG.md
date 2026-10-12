@@ -9,7 +9,7 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ## [0.1.0-preview.2.0.0] - 2026-10-12
 
-Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. Every existing query needs a `type` on each operator node.
+Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. `select` columns and `groupBy` keys lose their own `type`, which now only repeated it: they have the type their expression declares. Every existing query needs a `type` on each operator node and none on its columns and keys.
 
 ### ✨ New Features
 
@@ -25,10 +25,11 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 
 - **Operator nodes require `type`**: the result type, declared exactly. `add`, `subtract`, `multiply`, `if` and `coalesce` are `integer` when every operand is `integer` and `decimal` otherwise; a lifted operator is nullable exactly when an operand is; `coalesce` is non-null exactly when an operand is; `average`, `min` and `max` follow the aggregate rules. Declaring a wider type (`decimal` for a sum of integers, nullable for an addition of non-null values) is rejected, even where the wider type would be accepted; implicit conversions still apply where the expression is used.
 - **Fixed-type operators declare it too**: `and`, `or`, `not`, `equal`, `notEqual`, comparisons, `in`, `any` and `all` declare `{ "name": "boolean" }`; `count` declares `{ "name": "integer" }`.
+- **`select` columns and `groupBy` keys have no `type`**: a column is `{ "alias": …, "expression": … }` and a key `{ "alias"?: …, "expression": … }`, each with the type its expression declares. A subquery column is read with that type, and `{ "key": i, "type": … }` repeats the type of the key's expression. A column can no longer be declared wider than its expression, e.g. a `decimal` column over an `integer` sum.
 
 ### Versioning
 
-Major preview bump (`0.1.0-preview.1.0.0` → `0.1.0-preview.2.0.0`). Every operator node gains a required property, so every existing query must be migrated; see Breaking Changes. Both `version` and `$id` updated.
+Major preview bump (`0.1.0-preview.1.0.0` → `0.1.0-preview.2.0.0`). Every operator node gains a required property and every column and key loses one, so every existing query must be migrated; see Breaking Changes. Both `version` and `$id` updated.
 
 ---
 

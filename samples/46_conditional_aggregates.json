@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -19,9 +16,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -31,9 +25,6 @@
     },
     {
       "alias": "refunds",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {
@@ -62,9 +53,6 @@
     },
     {
       "alias": "paid_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
         "type": {
@@ -88,9 +76,6 @@
     },
     {
       "alias": "paid_total_via_if",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
         "type": {
@@ -126,9 +111,6 @@
     },
     {
       "alias": "has_dispute",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "any",
         "type": {

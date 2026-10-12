@@ -18,7 +18,6 @@
   "groupBy": [
     {
       "alias": "coupon",
-      "type": { "name": "string" },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "string" },
@@ -32,17 +31,14 @@
   "select": [
     {
       "alias": "coupon",
-      "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
     {
       "alias": "orders",
-      "type": { "name": "integer" },
       "expression": { "operator": "count", "type": { "name": "integer" } }
     },
     {
       "alias": "paid_orders",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "count",
         "type": { "name": "integer" },
@@ -51,7 +47,6 @@
     },
     {
       "alias": "paid_revenue",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
         "type": { "name": "decimal" },
@@ -66,7 +61,6 @@
     },
     {
       "alias": "average_order",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
         "type": { "name": "decimal" },

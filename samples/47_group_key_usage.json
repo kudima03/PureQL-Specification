@@ -32,9 +32,6 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -45,10 +42,6 @@
     },
     {
       "alias": "coupon",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "coupons",
         "field": "code",
@@ -60,10 +53,6 @@
     },
     {
       "alias": "days_to_ship",
-      "type": {
-        "name": "integer",
-        "nullable": true
-      },
       "expression": {
         "operator": "dateDiffDays",
         "type": {
@@ -91,9 +80,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -103,9 +89,6 @@
     },
     {
       "alias": "coupon",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "coalesce",
         "type": {
@@ -130,10 +113,6 @@
     },
     {
       "alias": "hours_to_ship",
-      "type": {
-        "name": "integer",
-        "nullable": true
-      },
       "expression": {
         "operator": "multiply",
         "type": {
@@ -159,9 +138,6 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {

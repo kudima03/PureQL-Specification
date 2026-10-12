@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "price_floor",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "floor",
         "type": {
@@ -24,9 +21,6 @@
     },
     {
       "alias": "price_ceiling",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "ceiling",
         "type": {
@@ -43,9 +37,6 @@
     },
     {
       "alias": "price_rounded",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "round",
         "type": {
@@ -62,9 +53,6 @@
     },
     {
       "alias": "price_cents",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "round",
         "type": {
@@ -87,9 +75,6 @@
     },
     {
       "alias": "packs",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "integerDivide",
         "type": {
@@ -112,9 +97,6 @@
     },
     {
       "alias": "loose",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "modulo",
         "type": {

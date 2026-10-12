@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -16,9 +13,6 @@
       }
     },
     {
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "orders",
         "field": "status",
@@ -31,9 +25,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -43,9 +34,6 @@
     },
     {
       "alias": "status",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "key": 1,
         "type": {
@@ -55,9 +43,6 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {
@@ -67,9 +52,6 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
         "type": {

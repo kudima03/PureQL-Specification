@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "name",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "users",
         "field": "name",

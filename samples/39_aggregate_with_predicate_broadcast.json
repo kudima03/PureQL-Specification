@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "orders",
         "field": "total",
@@ -31,9 +25,6 @@
     },
     {
       "alias": "paid_orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {
@@ -50,9 +41,6 @@
     },
     {
       "alias": "paid_revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
         "type": {

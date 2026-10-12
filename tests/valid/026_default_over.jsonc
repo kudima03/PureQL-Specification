@@ -11,12 +11,10 @@
         "select": [
           {
             "alias": "orders",
-            "type": { "name": "integer" },
             "expression": { "operator": "count", "type": { "name": "integer" } }
           },
           {
             "alias": "smallest",
-            "type": { "name": "decimal", "nullable": true },
             "expression": {
               "operator": "min",
               "type": { "name": "decimal", "nullable": true },
@@ -31,7 +29,6 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
@@ -44,17 +41,14 @@
   "select": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "key": 0, "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",
-      "type": { "name": "integer" },
       "expression": { "operator": "count", "type": { "name": "integer" } }
     },
     {
       "alias": "smallest",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
         "type": { "name": "decimal" },
@@ -63,7 +57,6 @@
     },
     {
       "alias": "average",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
         "type": { "name": "decimal" },
@@ -72,7 +65,6 @@
     },
     {
       "alias": "share_of_revenue",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "divide",
         "type": { "name": "decimal" },

@@ -10,7 +10,6 @@
         "select": [
           {
             "alias": "code",
-            "type": { "name": "string", "nullable": true },
             "expression": {
               "source": "orders",
               "field": "coupon_code",
@@ -25,7 +24,6 @@
   "select": [
     {
       "alias": "a",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -55,7 +53,6 @@
     },
     {
       "alias": "b",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -71,7 +68,6 @@
     },
     {
       "alias": "c",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -89,7 +85,6 @@
     },
     {
       "alias": "d",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "lessThan",
         "type": { "name": "boolean" },
@@ -108,7 +103,6 @@
     },
     {
       "alias": "e",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -118,7 +112,6 @@
     },
     {
       "alias": "f",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean" },
@@ -133,7 +126,6 @@
     },
     {
       "alias": "g",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
@@ -148,7 +140,6 @@
     },
     {
       "alias": "h",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
@@ -165,7 +156,6 @@
     },
     {
       "alias": "i",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "notEqual",
         "type": { "name": "boolean" },
@@ -192,7 +182,6 @@
     },
     {
       "alias": "j",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "lessThan",
         "type": { "name": "boolean" },

@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "coalesce",
         "type": { "name": "integer", "nullable": true },

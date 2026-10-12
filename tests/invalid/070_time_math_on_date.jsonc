@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
         "type": { "name": "time" },

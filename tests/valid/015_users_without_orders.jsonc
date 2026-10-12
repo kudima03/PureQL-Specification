@@ -24,12 +24,10 @@
   "select": [
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     },
     {
       "alias": "signed_up_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
     }
   ],

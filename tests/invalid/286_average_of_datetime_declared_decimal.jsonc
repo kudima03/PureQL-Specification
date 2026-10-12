@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "average",
-        "type": { "name": "datetime", "nullable": true },
+        "type": { "name": "decimal", "nullable": true },
         "over": "all",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }

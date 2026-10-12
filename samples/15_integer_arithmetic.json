@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "order_items",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "double_quantity",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "multiply",
         "type": {
@@ -45,9 +39,6 @@
     },
     {
       "alias": "kept",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "subtract",
         "type": {
@@ -73,9 +64,6 @@
     },
     {
       "alias": "with_bonus",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "add",
         "type": {

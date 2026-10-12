@@ -58,9 +58,6 @@
   "select": [
     {
       "alias": "order_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -71,10 +68,6 @@
     },
     {
       "alias": "coupon",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "coupons",
         "field": "code",
@@ -86,10 +79,6 @@
     },
     {
       "alias": "issued_by",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "issuer",
         "field": "name",

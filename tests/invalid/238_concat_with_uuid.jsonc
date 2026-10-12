@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string" },
       "expression": {
         "operator": "concat",
         "type": { "name": "string" },

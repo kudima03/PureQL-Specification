@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "divide",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "type": { "name": "integer" }, "value": 2 }

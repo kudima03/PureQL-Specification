@@ -1,10 +1,9 @@
-// add of non-null operands is non-null; declaring it nullable is wider than its type, even in a nullable column
+// add of non-null operands is non-null; declaring it nullable is wider than its type
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "add",
         "type": { "name": "integer", "nullable": true },

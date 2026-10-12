@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "delivery_window_end",
-      "type": {
-        "name": "time"
-      },
       "expression": {
         "operator": "timeAddSeconds",
         "type": {
@@ -57,9 +51,6 @@
     },
     {
       "alias": "seconds_to_ship",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "datetimeDiffSeconds",
         "type": {

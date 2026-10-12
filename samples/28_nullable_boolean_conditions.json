@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "users",
         "field": "id",
@@ -18,10 +15,6 @@
     },
     {
       "alias": "is_verified",
-      "type": {
-        "name": "boolean",
-        "nullable": true
-      },
       "expression": {
         "source": "users",
         "field": "is_verified",

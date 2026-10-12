@@ -10,19 +10,16 @@
         "groupBy": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "average_total",
-            "type": { "name": "decimal" },
             "expression": {
               "operator": "average",
               "type": { "name": "decimal" },
@@ -62,17 +59,14 @@
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
       "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     },
     {
       "alias": "user_average",
-      "type": { "name": "decimal" },
       "expression": { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } }
     }
   ],

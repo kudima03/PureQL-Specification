@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,10 +15,6 @@
     },
     {
       "alias": "paid_total",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "if",
         "type": {
@@ -53,10 +46,6 @@
     },
     {
       "alias": "always_null",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "subtract",
         "type": {

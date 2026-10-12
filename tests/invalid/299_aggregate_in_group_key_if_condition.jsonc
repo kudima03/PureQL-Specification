@@ -3,7 +3,6 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "string" },
       "expression": {
         "operator": "if",
         "type": { "name": "string" },
@@ -26,7 +25,6 @@
   "select": [
     {
       "alias": "bucket",
-      "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     }
   ]

@@ -5,9 +5,6 @@
   "groupBy": [
     {
       "alias": "size_bucket",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "if",
         "type": {
@@ -50,9 +47,6 @@
   "select": [
     {
       "alias": "size_bucket",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -62,9 +56,6 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {
@@ -74,9 +65,6 @@
     },
     {
       "alias": "avg_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "average",
         "type": {

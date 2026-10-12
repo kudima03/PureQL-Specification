@@ -42,9 +42,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "orders",
               "field": "user_id",
@@ -55,9 +52,6 @@
           },
           {
             "alias": "line_total",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "operator": "multiply",
               "type": {
@@ -92,9 +86,6 @@
         },
         "groupBy": [
           {
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "paid_lines",
               "field": "user_id",
@@ -132,9 +123,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "key": 0,
               "type": {
@@ -144,9 +132,6 @@
           },
           {
             "alias": "revenue",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "operator": "sum",
               "type": {
@@ -163,9 +148,6 @@
           },
           {
             "alias": "lines",
-            "type": {
-              "name": "integer"
-            },
             "expression": {
               "operator": "count",
               "type": {
@@ -205,9 +187,6 @@
         "select": [
           {
             "alias": "id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "users",
               "field": "id",
@@ -279,9 +258,6 @@
   "select": [
     {
       "alias": "email",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "u",
         "field": "email",
@@ -292,9 +268,6 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "user_revenue",
         "field": "revenue",
@@ -305,9 +278,6 @@
     },
     {
       "alias": "average_line",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "divide",
         "type": {

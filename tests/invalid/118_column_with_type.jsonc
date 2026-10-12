@@ -1,10 +1,10 @@
-// select column type given as a bare string
+// select column with a type next to its expression: a column has the type its expression declares
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "id",
-      "type": "uuid",
+      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ]

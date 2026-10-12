@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
         "type": {
@@ -17,9 +14,6 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
         "type": {
@@ -36,10 +30,6 @@
     },
     {
       "alias": "smallest",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "min",
         "type": {
@@ -57,10 +47,6 @@
     },
     {
       "alias": "latest",
-      "type": {
-        "name": "datetime",
-        "nullable": true
-      },
       "expression": {
         "operator": "max",
         "type": {
@@ -78,10 +64,6 @@
     },
     {
       "alias": "average",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "average",
         "type": {
@@ -99,9 +81,6 @@
     },
     {
       "alias": "any_refund",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "any",
         "type": {
@@ -130,9 +109,6 @@
     },
     {
       "alias": "all_paid",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "all",
         "type": {

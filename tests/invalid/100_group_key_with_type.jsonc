@@ -1,0 +1,14 @@
+// groupBy key with a type next to its expression: a key has the type its expression declares
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "type": { "name": "uuid" },
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "expression": { "key": 0, "type": { "name": "uuid" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+  ]
+}

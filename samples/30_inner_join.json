@@ -31,9 +31,6 @@
   "select": [
     {
       "alias": "order_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -44,9 +41,6 @@
     },
     {
       "alias": "email",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "users",
         "field": "email",

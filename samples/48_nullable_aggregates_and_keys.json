@@ -32,10 +32,6 @@
   "groupBy": [
     {
       "alias": "coupon_code",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "coupons",
         "field": "code",
@@ -49,10 +45,6 @@
   "select": [
     {
       "alias": "coupon_code",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -63,9 +55,6 @@
     },
     {
       "alias": "last_order_at",
-      "type": {
-        "name": "datetime"
-      },
       "expression": {
         "operator": "max",
         "type": {
@@ -82,9 +71,6 @@
     },
     {
       "alias": "avg_order_at",
-      "type": {
-        "name": "datetime"
-      },
       "expression": {
         "operator": "average",
         "type": {
@@ -101,9 +87,6 @@
     },
     {
       "alias": "min_paid_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "coalesce",
         "type": {

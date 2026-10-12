@@ -1,17 +1,15 @@
-// Aggregates over all rows at their edges: count in a decimal and in a nullable integer column, sum of a nullable
+// Aggregates over all rows at their edges: count with and without a predicate, sum of a nullable
 // selector is non-null, sum of a literal, average of a datetime (nullable), all over all rows, a predicate on count,
 // an if whose condition and branch mix an aggregate with a field (broadcast).
 {
   "from": { "entity": "orders" },
   "select": [
     {
-      "alias": "count_as_decimal",
-      "type": { "name": "decimal" },
+      "alias": "count_all",
       "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
     },
     {
-      "alias": "count_as_nullable",
-      "type": { "name": "integer", "nullable": true },
+      "alias": "count_paid",
       "expression": {
         "operator": "count",
         "type": { "name": "integer" },
@@ -21,7 +19,6 @@
     },
     {
       "alias": "points",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
@@ -35,7 +32,6 @@
     },
     {
       "alias": "rows",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
@@ -45,7 +41,6 @@
     },
     {
       "alias": "mean_time",
-      "type": { "name": "datetime", "nullable": true },
       "expression": {
         "operator": "average",
         "type": { "name": "datetime", "nullable": true },
@@ -55,7 +50,6 @@
     },
     {
       "alias": "all_paid",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "all",
         "type": { "name": "boolean" },
@@ -65,7 +59,6 @@
     },
     {
       "alias": "total_if_any",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "if",
         "type": { "name": "decimal" },

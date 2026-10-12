@@ -93,9 +93,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -106,9 +103,6 @@
     },
     {
       "alias": "status",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "orders",
         "field": "status",

@@ -10,19 +10,16 @@
         "groupBy": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "first_order_at",
-            "type": { "name": "datetime" },
             "expression": {
               "operator": "min",
               "type": { "name": "datetime" },
@@ -67,17 +64,14 @@
   "select": [
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     },
     {
       "alias": "first_order_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } }
     },
     {
       "alias": "hours_to_first_order",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },

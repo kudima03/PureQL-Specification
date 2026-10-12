@@ -41,10 +41,10 @@ aggregate without `over`, and so whether min / max / average can be null.
 
 A document is the main query plus optional `subqueries`: named queries the
 main query and later subqueries can read from (`from` / `join` with
-`subquery`, or `in` over one of their columns). Every select column declares
-its alias and type, and the validator checks the expression against that
-type, so each subquery has a verified output schema. Matching a reference to
-that schema is name resolution and is left to the interpreter.
+`subquery`, or `in` over one of their columns). Every select column has an
+alias and the type its expression declares, which the validator has checked,
+so each subquery has a verified output schema. Matching a reference to that
+schema is name resolution and is left to the interpreter.
 
 Null semantics:
   - arithmetic, concat, date/time math, if, round/floor/ceiling are lifted:
@@ -468,34 +468,15 @@ defs["pagination"] = obj(
 )
 
 
-def typed_item(ctx, required):
-    """{ alias, type, expression }: the expression declares the column type or a narrower one.
-
-    Narrower types and non-null values are accepted (an integer expression in a
-    decimal column). Declaring the type is what lets a reference to the item
-    (a subquery column, a group key) be checked by lookup, without inference.
-    """
-    return {
-        **obj(
-            required,
-            {"alias": NAME, "type": ref("type"), "expression": ref(f"expr@{ctx}")},
-        ),
-        "allOf": [
-            {
-                "if": declared(t, nullable),
-                "then": {"properties": {"expression": declared(members(t), None if nullable else False)}},
-            }
-            for t in TYPES
-            for nullable in [False, True]
-        ],
-    }
-
-
-# A group key declares its type; `{ "key": i, "type": … }` must repeat it exactly.
-defs["groupKey"] = typed_item("row", ["type", "expression"])
+# A column or a group key has the type its expression declares: a subquery
+# column is read from `select[j].expression.type`, and a key reference
+# `{ "key": i, "type": … }` repeats `groupBy[i].expression.type` exactly.
+defs["groupKey"] = obj(["expression"], {"alias": NAME, "expression": ref("expr@row")})
 
 for ctx in ["projection", "group"]:
-    defs[f"selectItem@{ctx}"] = typed_item(ctx, ["alias", "type", "expression"])
+    defs[f"selectItem@{ctx}"] = obj(
+        ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
+    )
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}
     )

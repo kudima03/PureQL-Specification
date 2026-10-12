@@ -4,10 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "any",
-        "type": { "name": "boolean" },
+        "type": { "name": "integer" },
         "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }

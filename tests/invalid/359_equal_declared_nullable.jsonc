@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "boolean", "nullable": true },
       "expression": {
         "operator": "equal",
         "type": { "name": "boolean", "nullable": true },

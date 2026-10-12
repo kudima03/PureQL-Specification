@@ -12,17 +12,14 @@
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "ordered_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
       "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     }
   ],

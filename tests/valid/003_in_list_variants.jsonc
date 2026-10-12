@@ -9,7 +9,6 @@
         "select": [
           {
             "alias": "referrer_id",
-            "type": { "name": "uuid", "nullable": true },
             "expression": {
               "source": "users",
               "field": "referrer_id",
@@ -24,7 +23,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],

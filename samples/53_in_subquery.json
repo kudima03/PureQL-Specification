@@ -28,9 +28,6 @@
         "select": [
           {
             "alias": "id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "users",
               "field": "id",
@@ -69,9 +66,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -82,9 +76,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "orders",
         "field": "total",

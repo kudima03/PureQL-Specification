@@ -1,12 +1,11 @@
-// groupBy key declared integer, expression is decimal (divide)
+// groupBy key whose divide is declared integer: divide is always decimal
 {
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "integer" },
       "expression": {
         "operator": "divide",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "type": { "name": "integer" }, "value": 2 }
@@ -17,12 +16,10 @@
   "select": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "key": 0, "type": { "name": "uuid" } }
     },
     {
       "alias": "orders",
-      "type": { "name": "integer" },
       "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
     }
   ]

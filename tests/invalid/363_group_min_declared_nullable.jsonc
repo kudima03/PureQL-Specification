@@ -4,14 +4,12 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "min",
         "type": { "name": "decimal", "nullable": true },

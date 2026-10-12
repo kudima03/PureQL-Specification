@@ -28,12 +28,10 @@
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "kept_quantity",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "subtract",
         "type": { "name": "integer" },
@@ -45,7 +43,6 @@
     },
     {
       "alias": "line_total",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "multiply",
         "type": { "name": "decimal" },
@@ -57,7 +54,6 @@
     },
     {
       "alias": "discounted_total",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },

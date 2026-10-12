@@ -1,13 +1,12 @@
-// Column declared integer, expression is decimal (divide)
+// divide declared integer: divide is always decimal
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "divide",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "type": { "name": "integer" }, "value": 2 }

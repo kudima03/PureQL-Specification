@@ -27,9 +27,6 @@
         },
         "groupBy": [
           {
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "orders",
               "field": "user_id",
@@ -42,9 +39,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "key": 0,
               "type": {
@@ -54,9 +48,6 @@
           },
           {
             "alias": "total",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "operator": "sum",
               "type": {
@@ -73,9 +64,6 @@
           },
           {
             "alias": "orders",
-            "type": {
-              "name": "integer"
-            },
             "expression": {
               "operator": "count",
               "type": {
@@ -114,9 +102,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "user_totals",
               "field": "user_id",
@@ -127,9 +112,6 @@
           },
           {
             "alias": "total",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "source": "user_totals",
               "field": "total",
@@ -174,9 +156,6 @@
   "select": [
     {
       "alias": "name",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "users",
         "field": "name",
@@ -187,9 +166,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "big_spenders",
         "field": "total",

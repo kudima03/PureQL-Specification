@@ -7,14 +7,12 @@
         "from": { "entity": "orders" },
         "groupBy": [
           {
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           }
         ],
@@ -26,7 +24,6 @@
               "select": [
                 {
                   "alias": "id",
-                  "type": { "name": "uuid" },
                   "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
                 }
               ]
@@ -40,7 +37,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
     }
   ]
