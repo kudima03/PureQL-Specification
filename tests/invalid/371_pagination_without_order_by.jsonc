@@ -1,0 +1,8 @@
+// pagination without orderBy: without an order, interpreters may return different pages
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": { "skip": 0, "take": 10 }
+}

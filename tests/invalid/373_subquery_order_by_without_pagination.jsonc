@@ -1,0 +1,19 @@
+// A subquery with orderBy but no pagination: its result is unordered, so orderBy only serves pagination
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "select": [
+    { "alias": "id", "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

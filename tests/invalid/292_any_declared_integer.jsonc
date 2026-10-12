@@ -7,7 +7,6 @@
       "expression": {
         "operator": "any",
         "type": { "name": "integer" },
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     }

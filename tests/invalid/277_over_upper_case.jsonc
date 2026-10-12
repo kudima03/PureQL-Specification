@@ -1,6 +1,7 @@
 // over: ALL in upper case
 {
   "from": { "entity": "orders" },
+  "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
   "select": [
     {
       "alias": "c",

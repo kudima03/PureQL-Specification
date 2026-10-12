@@ -4,7 +4,7 @@
   "select": [
     {
       "alias": "c",
-      "expression": { "operator": "sum", "type": { "name": "integer" }, "over": "all" }
+      "expression": { "operator": "sum", "type": { "name": "integer" } }
     }
   ]
 }

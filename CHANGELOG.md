@@ -22,11 +22,18 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **Faster validation**: each node is validated once, against the type it declares, and every other check reads only declared types. Validating every sample and valid test is more than twice as fast.
 - **Linear on any input and in any validator**: malformed deep queries are rejected as fast as valid ones are accepted, with or without ajv's `allErrors`, and in Python `jsonschema` too.
 
+### 🐛 Fixed
+
+- **`min`, `max` and `average` over all rows in a grouped query** are non-null when they have no predicate and a non-null selector, and are now declared so: a group exists only if a row does.
+
 ### ⚠️ Breaking Changes
 
 - **Operator nodes require `type`**: the result type, declared exactly. `add`, `subtract`, `multiply`, `if` and `coalesce` are `integer` when every operand is `integer` and `decimal` otherwise; a lifted operator is nullable exactly when an operand is; `coalesce` is non-null exactly when an operand is; `average`, `min` and `max` follow the aggregate rules. Declaring a wider type (`decimal` for a sum of integers, nullable for an addition of non-null values) is rejected, even where the wider type would be accepted; implicit conversions still apply where the expression is used.
 - **Fixed-type operators declare it too**: `and`, `or`, `not`, `equal`, `notEqual`, comparisons, `in`, `any` and `all` declare `{ "name": "boolean" }`; `count` declares `{ "name": "integer" }`.
 - **`select` columns and `groupBy` keys have no `type`**: a column is `{ "alias": …, "expression": … }` and a key `{ "alias"?: …, "expression": … }`, each with the type its expression declares. A subquery column is read with that type, and `{ "key": i, "type": … }` repeats the type of the key's expression. A column can no longer be declared wider than its expression, e.g. a `decimal` column over an `integer` sum.
+- **One spelling for each form**: a non-null type is written without `nullable` (`"nullable": false` is rejected); `and` and `or` take at least two conditions; `over` is written only as `"all"` in a grouped query (it is rejected in a plain query, where aggregates always run over all rows, and `"group"`, the default, is never written).
+- **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination`.
+- **64-bit integers**: `integer` literals, group key indexes, `skip` and `take` must be within the signed 64-bit range.
 
 ### Versioning
 

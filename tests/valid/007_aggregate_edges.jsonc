@@ -6,14 +6,13 @@
   "select": [
     {
       "alias": "count_all",
-      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
+      "expression": { "operator": "count", "type": { "name": "integer" } }
     },
     {
       "alias": "count_paid",
       "expression": {
         "operator": "count",
         "type": { "name": "integer" },
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -22,7 +21,6 @@
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
-        "over": "all",
         "selector": {
           "source": "orders",
           "field": "bonus_points",
@@ -35,7 +33,6 @@
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
-        "over": "all",
         "selector": { "type": { "name": "integer" }, "value": 1 }
       }
     },
@@ -44,7 +41,6 @@
       "expression": {
         "operator": "average",
         "type": { "name": "datetime", "nullable": true },
-        "over": "all",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },
@@ -53,7 +49,6 @@
       "expression": {
         "operator": "all",
         "type": { "name": "boolean" },
-        "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -65,7 +60,7 @@
         "condition": {
           "operator": "greaterThan",
           "type": { "name": "boolean" },
-          "left": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
+          "left": { "operator": "count", "type": { "name": "integer" } },
           "right": { "type": { "name": "integer" }, "value": 0 }
         },
         "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },

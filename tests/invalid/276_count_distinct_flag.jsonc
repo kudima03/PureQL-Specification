@@ -4,7 +4,7 @@
   "select": [
     {
       "alias": "c",
-      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all", "distinct": true }
+      "expression": { "operator": "count", "type": { "name": "integer" }, "distinct": true }
     }
   ]
 }

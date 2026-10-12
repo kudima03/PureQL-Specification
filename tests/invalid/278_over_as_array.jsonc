@@ -1,6 +1,7 @@
 // over given an array
 {
   "from": { "entity": "orders" },
+  "groupBy": [{ "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }],
   "select": [
     {
       "alias": "c",

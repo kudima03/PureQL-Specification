@@ -1,0 +1,10 @@
+// Type written with "nullable": false: a non-null type omits nullable, so each type has one spelling
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "type": { "name": "string", "nullable": false }, "value": "a" }
+    }
+  ]
+}

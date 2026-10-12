@@ -14,7 +14,6 @@
       "expression": {
         "operator": "count",
         "type": { "name": "integer" },
-        "over": "group",
         "predicate": {
           "operator": "greaterThan",
           "type": { "name": "boolean" },

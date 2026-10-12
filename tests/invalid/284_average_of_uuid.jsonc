@@ -16,7 +16,6 @@
       "expression": {
         "operator": "average",
         "type": { "name": "uuid" },
-        "over": "group",
         "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
       }
     }

@@ -1,0 +1,5 @@
+// integer literal 10^19, above the 64-bit range
+{
+  "from": { "entity": "orders" },
+  "select": [{ "alias": "c", "expression": { "type": { "name": "integer" }, "value": 10000000000000000000 } }]
+}

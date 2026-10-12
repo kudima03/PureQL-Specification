@@ -16,7 +16,6 @@
       "expression": {
         "operator": "average",
         "type": { "name": "decimal" },
-        "over": "group",
         "selector": {
           "source": "orders",
           "field": "discount",

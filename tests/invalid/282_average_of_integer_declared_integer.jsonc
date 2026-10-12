@@ -16,7 +16,6 @@
       "expression": {
         "operator": "average",
         "type": { "name": "integer" },
-        "over": "group",
         "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
     }

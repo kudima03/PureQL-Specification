@@ -1,5 +1,5 @@
 // Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays of a nullable
-// date, an integer number of seconds, three-operand add, single-condition or, equal as a column,
+// date, an integer number of seconds, three-operand add, equal as a column,
 // comparisons between typed nulls and across integer / decimal, if over uuid, coalesce with the non-null operand last,
 // coalesce(integer?, decimal) as decimal, a nullable integer field and a boolean expression as columns.
 {
@@ -8,11 +8,7 @@
     "operator": "and",
     "type": { "name": "boolean" },
     "conditions": [
-      {
-        "operator": "or",
-        "type": { "name": "boolean" },
-        "conditions": [{ "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }]
-      },
+      { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
       {
         "operator": "coalesce",
         "type": { "name": "boolean" },

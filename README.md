@@ -19,7 +19,7 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `select` | yes | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
 | `distinct` | no | When `true`, remove duplicate result rows |
-| `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter |
+| `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter. Requires `orderBy` |
 
 A query with `groupBy` is a **grouped query**; without it, a **plain query**. The two have different rules for `select`, `having` and `orderBy` (see [Contexts](#contexts)).
 
@@ -31,7 +31,7 @@ A query with `groupBy` is a **grouped query**; without it, a **plain query**. Th
 
 | Type | Literal value | Example |
 |---|---|---|
-| `integer` | JSON integer: a number with no fractional part, so `5.0` counts. The schema sets no range | `42` |
+| `integer` | JSON integer from −2⁶³ to 2⁶³ − 1: a number with no fractional part, so `5.0` counts | `42` |
 | `decimal` | any JSON number, an integer or an exponent included | `19.99` |
 | `string` | JSON string | `"active"` |
 | `boolean` | `true` / `false` | `true` |
@@ -46,6 +46,10 @@ Every type is either non-null or nullable:
 { "name": "decimal" }                    // non-null
 { "name": "decimal", "nullable": true }  // nullable
 ```
+
+A non-null type is written without `nullable`; `"nullable": false` is rejected, so each type has one spelling and declared types compare as written.
+
+The schema rejects an `integer` literal outside the 64-bit range, up to the precision of JSON numbers. Its bounds are written as ±9223372036854776000, the way JavaScript prints ±2⁶³: a validator that reads numbers as binary doubles, as JavaScript does, applies exactly ±2⁶³, and one that reads them exactly lets through at most 192 more values on each side. The interpreter rejects the few values the schema lets past the real bounds. A client that reads numbers as doubles also cannot send integers beyond ±2⁵³ exactly.
 
 ### Null
 
@@ -76,7 +80,8 @@ Every expression has a `type`: a field, parameter, literal or group key declares
               { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } } ] }
 ```
 
-- **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid form.
+- **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid declared type.
+- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and `over` where it states the default. What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
@@ -141,8 +146,8 @@ There is one set of operators. Where an expression may appear is decided by its 
 | Context | Used in | Fields | Group keys | Aggregates |
 |---|---|---|---|---|
 | row | `where`, `join.on`, `groupBy` keys, aggregate `selector` / `predicate` | yes | no | no |
-| projection | `select` / `orderBy` of a plain query | yes | no | over all rows (the default) |
-| group | `select` / `having` / `orderBy` of a grouped query | no | yes | over the group (the default) or `over: "all"` |
+| projection | `select` / `orderBy` of a plain query | yes | no | over all rows, without `over` |
+| group | `select` / `having` / `orderBy` of a grouped query | no | yes | over the group, or over all rows with `over: "all"` |
 
 Consequences, all enforced by the schema:
 
@@ -226,7 +231,7 @@ Each item is `{ "expression": …, "direction": "asc" | "desc" }`, with `directi
 
 ### `distinct` and `pagination`
 
-`distinct: true` removes duplicate result rows. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }`. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param_name": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
+`distinct: true` removes duplicate result rows. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }` and requires `orderBy`, since without an order two interpreters may return different pages. The order should also be total: rows equal on every `orderBy` key may fall on either side of a page boundary, so end the keys with one that identifies a row, such as an `id`. The schema cannot check this, as it does not know which columns are unique. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param_name": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
 
 ### Subqueries
 
@@ -258,7 +263,7 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 
 | Operator | Shape | Result |
 |---|---|---|
-| `and`, `or` | `{ conditions: [boolean, …] }` (at least 1) | `boolean` |
+| `and`, `or` | `{ conditions: [boolean, …] }` (at least 2) | `boolean` |
 | `not` | `{ condition: boolean }` | `boolean` |
 | `equal`, `notEqual` | `{ left: T?, right: T? }`, `T` any type | `boolean` |
 | `greaterThan`, `lessThan`, `greaterThanOrEqual`, `lessThanOrEqual` | `{ left: T?, right: T? }`, where `T` is `integer` / `decimal`, `string`, `date`, `time` or `datetime` | `boolean` |
@@ -298,7 +303,7 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 ### Aggregates
 
 ```json
-{ "operator": "sum", "type": <result type>, "over"?: "group" | "all", "selector": <row expression>, "predicate"?: <row boolean> }
+{ "operator": "sum", "type": <result type>, "over"?: "all", "selector": <row expression>, "predicate"?: <row boolean> }
 ```
 
 | Operator | Selector | Result |
@@ -309,10 +314,10 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 | `min`, `max` | `integer`, `decimal`, `string`, `date`, `time`, `datetime` | type of the selector |
 | `any`, `all` | none; `predicate` required | `boolean`. Over no rows, `any` is `false` and `all` is `true` |
 
-- `over` is optional. Without it an aggregate runs over the current group in a grouped query and over every row after `where` in a plain one, as in SQL. Write `over: "all"` in a grouped query for a total over every row, e.g. a group's share of all revenue; `over: "group"` is accepted in grouped queries but never needed.
+- An aggregate runs over the current group in a grouped query and over every row after `where` in a plain one, as in SQL. Write `over: "all"` in a grouped query for a total over every row, e.g. a group's share of all revenue. That is the only use of `over`: it is rejected in a plain query, and `"group"` is never written.
 - `predicate` filters the rows the aggregate sees: `count` with a predicate counts the matching rows. `count` without one counts every row.
 - `null` values from the selector are skipped.
-- `average`, `min` and `max` are non-null only over a group (no `over` or `over: "group"` in a grouped query), with no `predicate` and a non-null selector, because a group always has at least one row. Otherwise they are nullable: in a plain query there may be no rows at all.
+- `average`, `min` and `max` are non-null in a grouped query, over the group or over all rows, when they have no `predicate` and a non-null selector: a group always has at least one row, and a group exists only when a row does. Otherwise they are nullable; in a plain query they always are, since there may be no rows at all.
 
 ---
 
@@ -329,7 +334,7 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **`distinct`** removes rows equal to an earlier row in every column, compared with `equal`.
 - **`orderBy`** sorts by its keys in turn, by [the order of each type](#ordering-and-equality). Rows equal on every key come in an unspecified order. With `distinct`, a key that is not determined by the selected columns leaves the order of the distinct rows unspecified.
 - **`pagination`** skips `skip` rows, then returns at most `take`.
-- **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` keeps.
+- **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` keeps, so a subquery has `orderBy` exactly when it has `pagination`.
 - **Laziness.** An operation raises an error only if it is evaluated, and evaluation is lazy where it matters: `if` evaluates only the branch it takes, `coalesce` stops at its first non-`null` operand, `and` stops at the first `false` condition and `or` at the first `true`. So `if(equal(n, 0), 0, divide(x, n))` never divides by zero.
 
 ### Execution errors
@@ -414,6 +419,8 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Each operator declares exactly the type it yields from its operands | schema |
 | Where fields, keys and aggregates may appear (contexts) | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
+| `pagination` has an `orderBy`; a subquery has `orderBy` exactly when it has `pagination` | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, `over` only where it is not the default; `integer` literals within 64 bits | schema |
 | Entities, fields and parameters exist and have the declared types; a parameter used in several places has one type | interpreter |
 | A `datetime` parameter is bound with an offset | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |
@@ -421,6 +428,8 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A group key reference points to an existing key and repeats the type of its expression | interpreter |
 | Subquery names are unique; a subquery reads only from earlier ones | interpreter |
 | Source names are unique within a query, and an aliased source is referenced by its alias | interpreter |
+| A field references a source introduced at that point: a join's `on` sees `from`, the earlier joins and the joined source; later clauses see every source | interpreter |
+| A subquery references only its own sources, never one of the query that reads it (a correlated reference is an error) | interpreter |
 | Referenced subquery columns exist with the declared types | interpreter |
 | Column aliases are unique within a `select` | interpreter |
 
@@ -430,7 +439,7 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 
 - how results are encoded for transport, e.g. `decimal` values as JSON numbers or strings;
 - string functions beyond `concat`, conversions between types, date parts;
-- correlated subqueries and set operations.
+- set operations. Correlated subqueries are not part of the language: a reference from a subquery to a source of the query that reads it is an error.
 
 ---
 

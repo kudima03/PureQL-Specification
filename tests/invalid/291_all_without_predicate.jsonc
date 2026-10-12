@@ -13,7 +13,7 @@
     },
     {
       "alias": "c",
-      "expression": { "operator": "all", "type": { "name": "boolean" }, "over": "group" }
+      "expression": { "operator": "all", "type": { "name": "boolean" } }
     }
   ]
 }
