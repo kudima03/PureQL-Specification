@@ -1,0 +1,13 @@
+// decimal literal of 29 significant digits with a fraction
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "decimal" }, "value": "1234567890123456.7890123456789" }
+  }
+}

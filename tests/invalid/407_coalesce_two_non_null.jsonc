@@ -1,0 +1,18 @@
+// coalesce with two non-null operands: the second is never reached
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
+          { "source": "orders", "field": "status", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": "none" }
+        ]
+      }
+    }
+  ]
+}

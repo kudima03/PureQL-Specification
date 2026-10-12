@@ -72,8 +72,8 @@
         "type": { "name": "decimal" },
         "values": [
           {
-            "operator": "sum",
-            "type": { "name": "integer" },
+            "operator": "max",
+            "type": { "name": "integer", "nullable": true },
             "selector": {
               "source": "orders",
               "field": "bonus_points",
