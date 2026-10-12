@@ -1,4 +1,4 @@
-// orderBy direction is not asc / desc
+// orderBy direction is not desc (ascending is written by omitting direction)
 {
   "from": { "entity": "orders" },
   "select": [

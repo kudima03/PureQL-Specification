@@ -65,8 +65,7 @@
   ],
   "orderBy": [
     {
-      "expression": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
-      "direction": "asc"
+      "expression": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
     }
   ]
 }

@@ -32,7 +32,7 @@
   ],
   "from": { "entity": "orders" },
   "joins": [
-    { "type": "inner", "subquery": "paid_stats", "on": { "type": { "name": "boolean" }, "value": true } }
+    { "kind": "inner", "subquery": "paid_stats", "on": { "type": { "name": "boolean" }, "value": true } }
   ],
   "select": [
     { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },

@@ -13,7 +13,7 @@
     "left": {
       "operator": "round",
       "type": { "name": "decimal" },
-      "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
       "digits": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
     },
     "right": { "type": { "name": "integer" }, "value": 1 }

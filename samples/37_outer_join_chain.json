@@ -4,7 +4,7 @@
   },
   "joins": [
     {
-      "type": "left",
+      "kind": "left",
       "entity": "coupons",
       "on": {
         "operator": "equal",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "type": "left",
+      "kind": "left",
       "entity": "users",
       "alias": "issuer",
       "on": {

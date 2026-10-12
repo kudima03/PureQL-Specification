@@ -12,14 +12,14 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 |---|---|---|
 | `subqueries` | no | Named helper queries the main query can read from. See [Subqueries](#subqueries) |
 | `from` | yes | Source to read: `{ "entity": … }` or `{ "subquery": … }`, with an optional `alias` |
-| `joins` | no | Further sources, each with a join type and an `on` condition. Omit rather than leave empty |
+| `joins` | no | Further sources, each with a join `kind` and an `on` condition. Omit rather than leave empty |
 | `where` | no | Row filter, before grouping |
 | `groupBy` | no | Group keys, each `{ alias?, expression }` with any row expression |
 | `having` | no | Group filter; only with `groupBy` |
 | `select` | yes, or `aggregate` | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
 | `aggregate` | instead of `select` | Columns of a total query, which returns exactly one row. See [`aggregate`](#aggregate) |
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
-| `distinct` | no | When `true`, remove duplicate result rows |
+| `distinct` | no | `true` removes duplicate result rows; omitted otherwise, never `false` |
 | `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter. Requires `orderBy` |
 
 There are three kinds of query, told apart by their shape:
@@ -88,7 +88,7 @@ Every expression has a `type`: a field, parameter, literal or group key declares
 ```
 
 - **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid declared type.
-- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and `over` where it states the default. What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
+- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and defaults written out (`over` stating the default, `"direction": "asc"`, `"distinct": false`). What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
@@ -135,8 +135,8 @@ Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines expl
 |---|---|---|
 | Field | `{ "source": "orders", "field": "total", "type": { "name": "decimal" } }` | `source` is an entity, a subquery or an alias of either |
 | Literal | `{ "type": { "name": "string" }, "value": "active" }` | Always non-null unless `value` is `null` |
-| Parameter | `{ "param_name": "since", "type": { "name": "datetime" } }` | Bound at execution time; may be nullable |
-| List | `{ "type": { "name": "stringList" }, "value": ["a", "b"] }`, a list parameter `{ "param_name": …, "type": { "name": "stringList" } }`, or a subquery column | A value, not a column. Accepted only by `in`. A list literal holds no `null`, and a list type is never nullable. Every type `T` has `TList` |
+| Parameter | `{ "param": "since", "type": { "name": "datetime" } }` | Bound at execution time; may be nullable |
+| List | `{ "type": { "name": "stringList" }, "value": ["a", "b"] }`, a list parameter `{ "param": …, "type": { "name": "stringList" } }`, or a subquery column | A value, not a column. Accepted only by `in`. A list literal holds no `null`, and a list type is never nullable. Every type `T` has `TList` |
 | Group key | `{ "key": 0, "type": { "name": "uuid" } }` | Zero-based index into `groupBy`, repeating the type the key's expression declares; only in grouped `select`, `having` and `orderBy` |
 | Operator | `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }` | Declares the type it yields, exactly. See [Declared types](#declared-types) and [Operators](#operators) |
 
@@ -175,7 +175,7 @@ A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `s
 ```json
 "from":  { "entity": "orders", "alias": "o" },
 "joins": [
-  { "type": "left", "entity": "coupons",
+  { "kind": "left", "entity": "coupons",
     "on": { "operator": "equal", "type": { "name": "boolean" },
             "left":  { "source": "o",       "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
             "right": { "source": "coupons", "field": "id",        "type": { "name": "uuid" } } } }
@@ -183,7 +183,7 @@ A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `s
 ```
 
 - A source names exactly one of `entity` or `subquery`, plus an optional `alias`. Aliases allow joining the same source twice (self-join).
-- Join types: `inner`, `left`, `right`, `full`.
+- Join kinds (`kind`): `inner`, `left`, `right`, `full`.
 - `on` is a non-null boolean in row context.
 - **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`33_join_on_nullable_key.json`](samples/33_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
 - **Translating to SQL.** `equal` with at least one non-null operand is plain `=`. With two nullable operands it is `IS NOT DISTINCT FROM`, which some databases cannot use for hash joins or indexes, so a `notEqual(key, null)` guard also lets the interpreter emit `=`.
@@ -250,11 +250,11 @@ It returns exactly one row, even when `where` leaves no rows. Its columns are in
 
 ### `orderBy`
 
-Each item is `{ "expression": …, "direction": "asc" | "desc" }`, with `direction` defaulting to `asc`. The expression is in projection context for a plain query and group context for a grouped one, and may be of any type. Each type orders as defined under [Ordering and equality](#ordering-and-equality). Items apply in order, each breaking the ties of the previous one. To sort by a computed column, repeat its expression.
+Each item is `{ "expression": … }` for ascending order or `{ "expression": …, "direction": "desc" }` for descending; `"asc"` is never written. The expression is in projection context for a plain query and group context for a grouped one, and may be of any type. Each type orders as defined under [Ordering and equality](#ordering-and-equality). Items apply in order, each breaking the ties of the previous one. To sort by a computed column, repeat its expression.
 
 ### `distinct` and `pagination`
 
-`distinct: true` removes duplicate result rows. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }` and requires `orderBy`, since without an order two interpreters may return different pages. The order should also be total: rows equal on every `orderBy` key may fall on either side of a page boundary, so end the keys with one that identifies a row, such as an `id`. The schema cannot check this, as it does not know which columns are unique. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param_name": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
+`distinct: true` removes duplicate result rows; without `distinct` they are kept, and `false` is never written. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }` and requires `orderBy`, since without an order two interpreters may return different pages. The order should also be total: rows equal on every `orderBy` key may fall on either side of a page boundary, so end the keys with one that identifies a row, such as an `id`. The schema cannot check this, as it does not know which columns are unique. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
 
 ### Subqueries
 
@@ -267,7 +267,7 @@ The main query may declare named helper queries:
     { "name": "big_spenders", "query": { "from": { "subquery": "user_totals" }, "where": …, "select": [ … ] } }
   ],
   "from": { "entity": "users" },
-  "joins": [ { "type": "inner", "subquery": "big_spenders", "on": … } ],
+  "joins": [ { "kind": "inner", "subquery": "big_spenders", "on": … } ],
   "select": [ … ]
 }
 ```
@@ -290,7 +290,7 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 | `not` | `{ condition: boolean }` | `boolean` |
 | `equal`, `notEqual` | `{ left: T?, right: T? }`, `T` any type | `boolean` |
 | `greaterThan`, `lessThan`, `greaterThanOrEqual`, `lessThanOrEqual` | `{ left: T?, right: T? }`, where `T` is `integer` / `decimal`, `string`, `date`, `time` or `datetime` | `boolean` |
-| `in` | `{ value: T?, list: <list of T> }` | `boolean` |
+| `in` | `{ operand: T?, list: <list of T> }` | `boolean` |
 
 ### Arithmetic
 
@@ -299,8 +299,8 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 | `add`, `subtract`, `multiply` | `{ values: [number, …] }` (at least 2, left to right) | `integer` when every operand is `integer`, otherwise `decimal` |
 | `divide` | `{ values: [number, …] }` (at least 2, left to right) | `decimal` |
 | `integerDivide`, `modulo` | `{ left: integer, right: integer }` | `integer` |
-| `floor`, `ceiling` | `{ value: decimal }` | `integer` |
-| `round` | `{ value: decimal }` / `{ value: decimal, digits: integer }`; `digits` is non-null and may be negative or computed | `integer` / `decimal` |
+| `floor`, `ceiling` | `{ operand: decimal }` | `integer` |
+| `round` | `{ operand: decimal }` / `{ operand: decimal, digits: integer }`; `digits` is non-null and may be negative or computed | `integer` / `decimal` |
 
 ### Strings, dates and times
 
@@ -443,7 +443,7 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Where fields, keys and aggregates may appear (contexts) | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
 | `pagination` has an `orderBy`; a subquery has `orderBy` exactly when it has `pagination` | schema |
-| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, `over` only where it is not the default; `integer` literals within 64 bits | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`, `distinct`); `integer` literals within 64 bits | schema |
 | Entities, fields and parameters exist and have the declared types; a parameter used in several places has one type | interpreter |
 | A `datetime` parameter is bound with an offset | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |

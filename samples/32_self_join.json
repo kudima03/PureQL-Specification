@@ -5,7 +5,7 @@
   },
   "joins": [
     {
-      "type": "left",
+      "kind": "left",
       "entity": "users",
       "alias": "referrer",
       "on": {

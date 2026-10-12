@@ -1,5 +1,5 @@
-// in over every kind of list: an empty literal, booleanList, integer value against decimalList and decimal value
-// against integerList (both through integer -> decimal), a typed null value, and a nullable subquery column.
+// in over every kind of list: an empty literal, booleanList, integer operand against decimalList and decimal operand
+// against integerList (both through integer -> decimal), a typed null operand, and a nullable subquery column.
 {
   "subqueries": [
     {
@@ -36,38 +36,38 @@
         "condition": {
           "operator": "in",
           "type": { "name": "boolean" },
-          "value": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
           "list": { "type": { "name": "stringList" }, "value": [] }
         }
       },
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "operand": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "list": { "type": { "name": "booleanList" }, "value": [true] }
       },
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+        "operand": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
         "list": { "type": { "name": "decimalList" }, "value": [1.5, 2] }
       },
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "list": { "param_name": "totals", "type": { "name": "integerList" } }
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "list": { "param": "totals", "type": { "name": "integerList" } }
       },
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "type": { "name": "string", "nullable": true }, "value": null },
-        "list": { "param_name": "statuses", "type": { "name": "stringList" } }
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "list": { "param": "statuses", "type": { "name": "stringList" } }
       },
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
         "list": {
           "subquery": "referrers",
           "field": "referrer_id",
@@ -77,7 +77,7 @@
       {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "list": {
           "type": { "name": "datetimeList" },
           "value": ["2024-01-01T00:00:00Z", "2024-01-01T03:00:00+03:00"]

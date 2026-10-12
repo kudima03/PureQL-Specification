@@ -5,7 +5,7 @@
   },
   "joins": [
     {
-      "type": "full",
+      "kind": "full",
       "entity": "catalog",
       "alias": "c",
       "on": {

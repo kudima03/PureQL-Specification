@@ -33,7 +33,7 @@
   "from": { "entity": "orders" },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "subquery": "user_averages",
       "on": {
         "operator": "equal",

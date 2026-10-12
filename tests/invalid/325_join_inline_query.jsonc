@@ -9,7 +9,7 @@
   ],
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "query": {
         "from": { "entity": "orders" },
         "select": [

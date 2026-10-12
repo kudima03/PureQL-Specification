@@ -33,7 +33,7 @@
   "from": { "entity": "users" },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "subquery": "first_orders",
       "on": {
         "operator": "equal",
@@ -75,7 +75,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": {
+        "operand": {
           "operator": "divide",
           "type": { "name": "decimal" },
           "values": [

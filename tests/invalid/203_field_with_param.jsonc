@@ -1,4 +1,4 @@
-// join type cross
+// Field reference that also has a param
 {
   "from": { "entity": "orders" },
   "select": [
@@ -7,5 +7,10 @@
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
-  "joins": [{ "type": "cross", "entity": "users", "on": { "type": { "name": "boolean" }, "value": true } }]
+  "where": {
+    "source": "orders",
+    "field": "is_paid",
+    "type": { "name": "boolean" },
+    "param": "only_paid"
+  }
 }

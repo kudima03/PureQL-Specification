@@ -7,12 +7,12 @@
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": {
+        "operand": {
           "operator": "average",
           "type": { "name": "date" },
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
-        "list": { "param_name": "amounts", "type": { "name": "decimalList" } }
+        "list": { "param": "amounts", "type": { "name": "decimalList" } }
       }
     }
   ]

@@ -14,14 +14,14 @@
           {
             "operator": "equal",
             "type": { "name": "boolean" },
-            "left": { "param_name": "country", "type": { "name": "string", "nullable": true } },
+            "left": { "param": "country", "type": { "name": "string", "nullable": true } },
             "right": { "type": { "name": "string", "nullable": true }, "value": null }
           },
           {
             "operator": "equal",
             "type": { "name": "boolean" },
             "left": { "source": "users", "field": "country", "type": { "name": "string" } },
-            "right": { "param_name": "country", "type": { "name": "string", "nullable": true } }
+            "right": { "param": "country", "type": { "name": "string", "nullable": true } }
           }
         ]
       },
@@ -32,14 +32,14 @@
           {
             "operator": "equal",
             "type": { "name": "boolean" },
-            "left": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } },
+            "left": { "param": "signed_up_since", "type": { "name": "datetime", "nullable": true } },
             "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
           },
           {
             "operator": "greaterThanOrEqual",
             "type": { "name": "boolean" },
             "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
-            "right": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } }
+            "right": { "param": "signed_up_since", "type": { "name": "datetime", "nullable": true } }
           }
         ]
       }

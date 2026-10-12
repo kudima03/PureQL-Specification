@@ -9,7 +9,7 @@
   ],
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "users",
       "alias": "",
       "on": {

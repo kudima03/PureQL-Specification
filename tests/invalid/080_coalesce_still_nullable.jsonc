@@ -12,7 +12,7 @@
     "type": { "name": "boolean", "nullable": true },
     "values": [
       { "source": "orders", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
-      { "param_name": "fallback", "type": { "name": "boolean", "nullable": true } }
+      { "param": "fallback", "type": { "name": "boolean", "nullable": true } }
     ]
   }
 }

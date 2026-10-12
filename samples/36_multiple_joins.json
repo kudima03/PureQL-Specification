@@ -4,7 +4,7 @@
   },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "orders",
       "on": {
         "operator": "equal",
@@ -28,7 +28,7 @@
       }
     },
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "users",
       "on": {
         "operator": "equal",
@@ -52,7 +52,7 @@
       }
     },
     {
-      "type": "left",
+      "kind": "left",
       "entity": "products",
       "on": {
         "operator": "equal",

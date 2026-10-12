@@ -80,7 +80,7 @@
   },
   "joins": [
     {
-      "type": "left",
+      "kind": "left",
       "subquery": "user_totals",
       "on": {
         "operator": "equal",

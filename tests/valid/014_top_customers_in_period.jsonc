@@ -5,7 +5,7 @@
   "from": { "entity": "orders" },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "users",
       "on": {
         "operator": "equal",
@@ -23,13 +23,13 @@
         "operator": "greaterThanOrEqual",
         "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "right": { "param_name": "since", "type": { "name": "datetime" } }
+        "right": { "param": "since", "type": { "name": "datetime" } }
       },
       {
         "operator": "lessThan",
         "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "right": { "param_name": "until", "type": { "name": "datetime" } }
+        "right": { "param": "until", "type": { "name": "datetime" } }
       }
     ]
   },
@@ -51,7 +51,7 @@
       "type": { "name": "decimal" },
       "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     },
-    "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
+    "right": { "param": "min_revenue", "type": { "name": "decimal" } }
   },
   "select": [
     {
@@ -88,7 +88,7 @@
       },
       "direction": "desc"
     },
-    { "expression": { "key": 1, "type": { "name": "string" } }, "direction": "asc" }
+    { "expression": { "key": 1, "type": { "name": "string" } } }
   ],
   "pagination": { "skip": 0, "take": 10 }
 }

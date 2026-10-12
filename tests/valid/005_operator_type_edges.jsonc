@@ -59,7 +59,7 @@
       "expression": {
         "operator": "floor",
         "type": { "name": "integer" },
-        "value": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+        "operand": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
     },
     {
@@ -67,7 +67,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": { "type": { "name": "integer" }, "value": -2 }
       }
     },
@@ -76,12 +76,12 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": {
           "operator": "add",
           "type": { "name": "integer" },
           "values": [
-            { "param_name": "precision", "type": { "name": "integer" } },
+            { "param": "precision", "type": { "name": "integer" } },
             { "type": { "name": "integer" }, "value": 1 }
           ]
         }

@@ -1,4 +1,4 @@
-// Parameter without param_name
+// Parameter without its param name
 {
   "from": { "entity": "orders" },
   "select": [

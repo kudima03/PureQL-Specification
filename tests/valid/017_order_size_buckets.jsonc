@@ -53,7 +53,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": {
+        "operand": {
           "operator": "divide",
           "type": { "name": "decimal" },
           "values": [
@@ -71,8 +71,7 @@
         "operator": "min",
         "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
-      },
-      "direction": "asc"
+      }
     }
   ]
 }

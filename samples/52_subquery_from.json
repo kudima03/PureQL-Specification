@@ -19,7 +19,7 @@
             }
           },
           "right": {
-            "param_name": "since",
+            "param": "since",
             "type": {
               "name": "datetime"
             }

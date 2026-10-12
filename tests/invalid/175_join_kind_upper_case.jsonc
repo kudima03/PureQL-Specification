@@ -1,4 +1,4 @@
-// join without a type
+// join kind LEFT in upper case
 {
   "from": { "entity": "orders" },
   "select": [
@@ -9,6 +9,7 @@
   ],
   "joins": [
     {
+      "kind": "LEFT",
       "entity": "users",
       "on": {
         "operator": "equal",

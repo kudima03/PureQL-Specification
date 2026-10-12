@@ -7,8 +7,8 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "digits": { "param_name": "digits", "type": { "name": "integer", "nullable": true } }
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
       }
     }
   ]

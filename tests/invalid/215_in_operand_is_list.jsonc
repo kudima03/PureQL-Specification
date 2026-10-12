@@ -1,4 +1,4 @@
-// Field reference that also has a param_name
+// in whose operand is itself a list parameter
 {
   "from": { "entity": "orders" },
   "select": [
@@ -8,9 +8,9 @@
     }
   ],
   "where": {
-    "source": "orders",
-    "field": "is_paid",
+    "operator": "in",
     "type": { "name": "boolean" },
-    "param_name": "only_paid"
+    "operand": { "param": "a", "type": { "name": "stringList" } },
+    "list": { "param": "b", "type": { "name": "stringList" } }
   }
 }

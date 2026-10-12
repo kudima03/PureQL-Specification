@@ -7,7 +7,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "integer" },
-        "value": { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } }
+        "operand": { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } }
       }
     }
   ]
