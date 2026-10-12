@@ -538,8 +538,7 @@ for ctx, rules in CONTEXTS.items():
 
 # --- query ----------------------------------------------------------------
 
-# Defaults are never written: ascending order is the absence of `direction`,
-# and a query without `distinct` keeps duplicate rows.
+# Defaults are never written: ascending order is the absence of `direction`.
 DIRECTION = {"enum": ["desc"]}
 
 # A source is either a stored entity or a subquery, named explicitly so the two
@@ -588,8 +587,10 @@ sources = {
     "where": expr("boolean", "row"),
 }
 # Shaping the rows of a plain or grouped query; a total query has one row.
+# `distinctBy` lists `select` aliases: of the rows equal on those columns, the
+# first in `orderBy` order is kept. Listing every alias removes duplicate rows.
 rows = {
-    "distinct": {"const": True},
+    "distinctBy": {"type": "array", "items": NAME, "minItems": 1, "uniqueItems": True},
     "pagination": ref("pagination"),
 }
 plain = {
@@ -610,9 +611,13 @@ total = {**sources, "aggregate": array_of(ref("selectItem@total"), 1)}
 main = {"subqueries": array_of(ref("subquery"), 1)}
 
 # A page is chosen by an order, or two interpreters may return different pages.
-# A subquery's result is unordered, so its orderBy only serves pagination.
+# A subquery's result is unordered, so its orderBy only serves pagination and
+# the choice of the first row by distinctBy.
 PAGE_NEEDS_ORDER = {"dependentRequired": {"pagination": ["orderBy"]}}
-SUBQUERY_ORDER = {"dependentRequired": {"pagination": ["orderBy"], "orderBy": ["pagination"]}}
+SUBQUERY_ORDER = {
+    "dependentRequired": {"pagination": ["orderBy"]},
+    "dependentSchemas": {"orderBy": {"anyOf": [{"required": ["pagination"]}, {"required": ["distinctBy"]}]}},
+}
 
 defs["plainQuery"] = {**obj(["from", "select"], plain), **SUBQUERY_ORDER}
 defs["groupedQuery"] = {**obj(["from", "groupBy", "select"], grouped), **SUBQUERY_ORDER}

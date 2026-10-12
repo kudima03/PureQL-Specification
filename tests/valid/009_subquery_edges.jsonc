@@ -1,4 +1,4 @@
-// Subqueries at their edges: a grouped main query with subqueries; a grouped subquery with having, orderBy, distinct
+// Subqueries at their edges: a grouped main query with subqueries; a grouped subquery with having, orderBy, distinctBy
 // and pagination; a later subquery filtering with in over an earlier one; a subquery joined twice under two aliases.
 {
   "subqueries": [
@@ -46,7 +46,7 @@
             "direction": "desc"
           }
         ],
-        "distinct": true,
+        "distinctBy": ["user_id", "revenue"],
         "pagination": { "skip": 0, "take": 100 }
       }
     },

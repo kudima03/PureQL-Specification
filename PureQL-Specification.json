@@ -9977,8 +9977,18 @@
         "where": {
           "$ref": "#/$defs/boolean@row"
         },
-        "distinct": {
-          "const": true
+        "distinctBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+            "not": {
+              "type": "string",
+              "pattern": "\\n"
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -10012,10 +10022,23 @@
       "dependentRequired": {
         "pagination": [
           "orderBy"
-        ],
-        "orderBy": [
-          "pagination"
         ]
+      },
+      "dependentSchemas": {
+        "orderBy": {
+          "anyOf": [
+            {
+              "required": [
+                "pagination"
+              ]
+            },
+            {
+              "required": [
+                "distinctBy"
+              ]
+            }
+          ]
+        }
       }
     },
     "if.boolean.nullable@group": {
@@ -16618,8 +16641,18 @@
         "where": {
           "$ref": "#/$defs/boolean@row"
         },
-        "distinct": {
-          "const": true
+        "distinctBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+            "not": {
+              "type": "string",
+              "pattern": "\\n"
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -16683,8 +16716,18 @@
         "where": {
           "$ref": "#/$defs/boolean@row"
         },
-        "distinct": {
-          "const": true
+        "distinctBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+            "not": {
+              "type": "string",
+              "pattern": "\\n"
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -23160,8 +23203,18 @@
         "where": {
           "$ref": "#/$defs/boolean@row"
         },
-        "distinct": {
-          "const": true
+        "distinctBy": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+            "not": {
+              "type": "string",
+              "pattern": "\\n"
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -23185,10 +23238,23 @@
       "dependentRequired": {
         "pagination": [
           "orderBy"
-        ],
-        "orderBy": [
-          "pagination"
         ]
+      },
+      "dependentSchemas": {
+        "orderBy": {
+          "anyOf": [
+            {
+              "required": [
+                "pagination"
+              ]
+            },
+            {
+              "required": [
+                "distinctBy"
+              ]
+            }
+          ]
+        }
       }
     },
     "query": {

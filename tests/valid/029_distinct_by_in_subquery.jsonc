@@ -1,0 +1,54 @@
+// A subquery keeps each user's latest order with distinctBy: its orderBy chooses the first row, so it needs no
+// pagination. Left-joined to users, the subquery's columns are nullable.
+{
+  "subqueries": [
+    {
+      "name": "latest_orders",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "total",
+            "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        ],
+        "orderBy": [
+          {
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "direction": "desc"
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "distinctBy": ["user_id"]
+      }
+    }
+  ],
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "latest_orders",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "latest_orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "last_total",
+      "expression": {
+        "source": "latest_orders",
+        "field": "total",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    }
+  ]
+}

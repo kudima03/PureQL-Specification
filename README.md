@@ -19,7 +19,7 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `select` | yes, or `aggregate` | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
 | `aggregate` | instead of `select` | Columns of a total query, which returns exactly one row. See [`aggregate`](#aggregate) |
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
-| `distinct` | no | `true` removes duplicate result rows; omitted otherwise, never `false` |
+| `distinctBy` | no | `select` aliases: of the rows equal on those columns, keep the first in `orderBy` order. Listing every alias removes duplicate rows |
 | `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter. Requires `orderBy` |
 
 There are three kinds of query, told apart by their shape:
@@ -88,7 +88,7 @@ Every expression has a `type`: a field, parameter, literal or group key declares
 ```
 
 - **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid declared type.
-- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and defaults written out (`over` stating the default, `"direction": "asc"`, `"distinct": false`). What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
+- **One spelling.** Redundant spellings are rejected as well: `"nullable": false`, `and` / `or` with a single condition, and defaults written out (`over` stating the default, `"direction": "asc"`). What the schema cannot see is how a JSON number is written: `5` and `5.0` are the same `integer`.
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
@@ -122,7 +122,7 @@ Range, precision, rounding, `integerDivide` / `modulo` signs and division by zer
 - **`datetime`** is an instant, a point on the global timeline:
   - The offset is mandatory: `Z` or `±hh:mm` up to `±23:59`, with `T` and `Z` in upper case.
   - `-00:00` is rejected: in RFC 3339 it means "offset unknown", which is a naive timestamp under another name. `+00:00` is the same as `Z`.
-  - Comparison, `equal`, `*DiffSeconds`, `min` / `max`, `orderBy`, `groupBy` and `distinct` all work on the instant, so `03:00+03:00` equals `00:00Z`. The offset only affects how a value is written, and `datetime` results are returned in UTC, written with `Z`.
+  - Comparison, `equal`, `*DiffSeconds`, `min` / `max`, `orderBy`, `groupBy` and `distinctBy` all work on the instant, so `03:00+03:00` equals `00:00Z`. The offset only affects how a value is written, and `datetime` results are returned in UTC, written with `Z`.
   - A `datetime` parameter bound without an offset is an error. If storage holds naive timestamps, how they map to instants is interpreter configuration and is never guessed.
 
 Literal patterns use `[0-9]`, never `\d`, no lookahead, and reject newlines explicitly. Python's `re` treats `\d` as any Unicode digit and lets `$` match before a final newline, while ECMA-262 does neither, and lookahead support varies, so these rules keep every validator in agreement.
@@ -162,13 +162,13 @@ Consequences, all enforced by the schema:
 - Aggregates cannot appear in `where` or `join.on`, and cannot nest: an aggregate body is in row context.
 - A grouped query cannot select, filter on or sort by a bare field. Use a group key or an aggregate.
 - Group keys exist only in grouped queries.
-- A total query reads fields only inside aggregates, and has no `orderBy`, `distinct`, `pagination` or `having`.
+- A total query reads fields only inside aggregates, and has no `orderBy`, `distinctBy`, `pagination` or `having`.
 
 ---
 
 ## Query Clauses
 
-A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `select` (or `aggregate`), `distinct`, `orderBy`, `pagination`. Aggregates over all rows see the rows left by `where`. Each step is defined under [Evaluation](#evaluation).
+A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `select` (or `aggregate`), `orderBy`, `distinctBy`, `pagination`. Aggregates over all rows see the rows left by `where`. Each step is defined under [Evaluation](#evaluation).
 
 ### `from` and `joins`
 
@@ -185,11 +185,11 @@ A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `s
 - A source names exactly one of `entity` or `subquery`, plus an optional `alias`. Aliases allow joining the same source twice (self-join).
 - Join kinds (`kind`): `inner`, `left`, `right`, `full`.
 - `on` is a non-null boolean in row context.
-- **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`33_join_on_nullable_key.json`](samples/33_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
+- **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`34_join_on_nullable_key.json`](samples/34_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
 - **Translating to SQL.** `equal` with at least one non-null operand is plain `=`. With two nullable operands it is `IS NOT DISTINCT FROM`, which some databases cannot use for hash joins or indexes, so a `notEqual(key, null)` guard also lets the interpreter emit `=`.
 - **Nullability after an outer join.** A field is nullable at a point of the query if it is stored nullable, or if its source is on the optional side of an outer join that precedes that point: the joined source for `left`, every earlier source for `right`, both for `full`.
   - A join's own `on` precedes the join itself, so it sees the joined source's real rows. In the example, `coupons.id` is non-null in its own `on` and nullable everywhere after it.
-  - The `on` of a later join, `where`, `groupBy`, `select` and every later clause come after the join. A field that is non-null in storage is therefore nullable in the next join's `on` if its source was joined with `left` before, as in [`37_outer_join_chain.json`](samples/37_outer_join_chain.json).
+  - The `on` of a later join, `where`, `groupBy`, `select` and every later clause come after the join. A field that is non-null in storage is therefore nullable in the next join's `on` if its source was joined with `left` before, as in [`38_outer_join_chain.json`](samples/38_outer_join_chain.json).
   - An `on` is never affected by joins that come after it: a `right` join makes the earlier sources nullable only from that join on.
   - References declare exactly this nullability, no more and no less: declaring a non-null field nullable is an error too.
 
@@ -246,15 +246,25 @@ A total query has `aggregate` instead of `select`, with the same `{ alias, expre
                                           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } } } } ] }
 ```
 
-It returns exactly one row, even when `where` leaves no rows. Its columns are in total context: they read fields only inside aggregates, and every aggregate runs over all rows, so `over` is not written. With no rows, `count` and `sum` are `0` and `min`, `max` and `average` are `null`, so these three are always nullable here. A total query has no `orderBy`, `distinct` or `pagination`, which would act on its one row, and no `having`: filter with `where`. As a subquery it gives a one-row source, e.g. joined `on` the literal `true` next to every row.
+It returns exactly one row, even when `where` leaves no rows. Its columns are in total context: they read fields only inside aggregates, and every aggregate runs over all rows, so `over` is not written. With no rows, `count` and `sum` are `0` and `min`, `max` and `average` are `null`, so these three are always nullable here. A total query has no `orderBy`, `distinctBy` or `pagination`, which would act on its one row, and no `having`: filter with `where`. As a subquery it gives a one-row source, e.g. joined `on` the literal `true` next to every row.
 
 ### `orderBy`
 
 Each item is `{ "expression": … }` for ascending order or `{ "expression": …, "direction": "desc" }` for descending; `"asc"` is never written. The expression is in projection context for a plain query and group context for a grouped one, and may be of any type. Each type orders as defined under [Ordering and equality](#ordering-and-equality). Items apply in order, each breaking the ties of the previous one. To sort by a computed column, repeat its expression.
 
-### `distinct` and `pagination`
+### `distinctBy` and `pagination`
 
-`distinct: true` removes duplicate result rows; without `distinct` they are kept, and `false` is never written. `pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }` and requires `orderBy`, since without an order two interpreters may return different pages. The order should also be total: rows equal on every `orderBy` key may fall on either side of a page boundary, so end the keys with one that identifies a row, such as an `id`. The schema cannot check this, as it does not know which columns are unique. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinct` and `pagination`.
+`distinctBy` lists `select` aliases, each once. Of the rows equal on those columns, compared with `equal`, it keeps the first in `orderBy` order and drops the others:
+
+```json
+"orderBy": [ { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }, "direction": "desc" },
+             { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ],
+"distinctBy": [ "user_id" ]
+```
+
+keeps each user's latest order ([`14_distinct_by_first_row.json`](samples/14_distinct_by_first_row.json)). Listing every alias removes duplicate rows, as SQL `DISTINCT` does; rows equal in every column are interchangeable, so no order is needed then. Otherwise, which row is kept is defined only as far as `orderBy` tells the rows apart, as with pagination below. Without `distinctBy` duplicate rows are kept.
+
+`pagination` is `{ "skip": ≥ 0, "take": ≥ 1 }` and requires `orderBy`, since without an order two interpreters may return different pages. The order should also be total: rows equal on every `orderBy` key may fall on either side of a page boundary, so end the keys with one that identifies a row, such as an `id`. The schema cannot check this, as it does not know which columns are unique. Each of `skip` and `take` is either a number or a non-null `integer` parameter, e.g. `{ "skip": { "param": "offset", "type": { "name": "integer" } }, "take": 20 }`, so the page is chosen at execution time. The schema checks the range of a number; binding a parameter outside it (a negative `skip`, a `take` below 1) is an execution error. Aggregates over all rows are computed before `distinctBy` and `pagination`.
 
 ### Subqueries
 
@@ -354,10 +364,10 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **`where`** keeps the rows whose condition is `true`.
 - **`groupBy`** partitions the rows by their keys, compared with `equal`: all `null` keys form one group, and `1` and `1.0` are the same `decimal` key. A group always has at least one row, so a grouped query over no rows returns no rows. **`having`** keeps the groups whose condition is `true`.
 - **`select`** yields one row per row in a plain query and one row per group in a grouped query. **`aggregate`** yields exactly one row.
-- **`distinct`** removes rows equal to an earlier row in every column, compared with `equal`.
-- **`orderBy`** sorts by its keys in turn, by [the order of each type](#ordering-and-equality). Rows equal on every key come in an unspecified order. With `distinct`, a key that is not determined by the selected columns leaves the order of the distinct rows unspecified.
+- **`orderBy`** sorts by its keys in turn, by [the order of each type](#ordering-and-equality). Rows equal on every key come in an unspecified order.
+- **`distinctBy`** then walks the sorted rows and drops each row equal, on the listed columns compared with `equal`, to a row before it. The rows kept stay in `orderBy` order.
 - **`pagination`** skips `skip` rows, then returns at most `take`.
-- **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` keeps, so a subquery has `orderBy` exactly when it has `pagination`.
+- **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` and `distinctBy` keep, so a subquery has `orderBy` only together with one of them, and `pagination` only with `orderBy`.
 - **Laziness.** An operation raises an error only if it is evaluated, and evaluation is lazy where it matters: `if` evaluates only the branch it takes, `coalesce` stops at its first non-`null` operand, `and` stops at the first `false` condition and `or` at the first `true`. So `if(equal(n, 0), 0, divide(x, n))` never divides by zero.
 
 ### Execution errors
@@ -444,8 +454,8 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Each operator declares exactly the type it yields from its operands | schema |
 | Where fields, keys and aggregates may appear (contexts) | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
-| `pagination` has an `orderBy`; a subquery has `orderBy` exactly when it has `pagination` | schema |
-| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`, `distinct`); `integer` literals within 64 bits | schema |
+| `pagination` has an `orderBy`; a subquery has `orderBy` only with `pagination` or `distinctBy`; `distinctBy` lists each alias once | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`); `integer` literals within 64 bits | schema |
 | Entities, fields and parameters exist and have the declared types; a parameter used in several places has one type | interpreter |
 | A `datetime` parameter is bound with an offset | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1 | interpreter |
@@ -456,7 +466,8 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A field references a source introduced at that point: a join's `on` sees `from`, the earlier joins and the joined source; later clauses see every source | interpreter |
 | A subquery references only its own sources, never one of the query that reads it (a correlated reference is an error) | interpreter |
 | Referenced subquery columns exist with the declared types | interpreter |
-| Column aliases are unique within a `select` | interpreter |
+| Column aliases are unique within a `select` (and within an `aggregate`) | interpreter |
+| Each `distinctBy` entry is an alias of the query's `select` | interpreter |
 
 The interpreter's part needs no type inference. Besides lookups, it tracks which sources are on the optional side of an outer join at each point of the query. Every expression declares its type, and the schema has already checked every declaration that does not depend on the catalog: each operator against its operands. A `select` column (referenced as a subquery column) and a `groupBy` key (referenced as `{ "key": <alias> }`) have the type of their expression. The interpreter only compares names and the declared types of fields, parameters and key references against the catalog, the `groupBy` list and the subquery headers, and reads the type of every other node as declared.
 
@@ -508,47 +519,48 @@ The [`samples/`](samples/) directory holds valid queries ordered from simple to 
 | [`10_where_other_comparisons.json`](samples/10_where_other_comparisons.json) | Range comparisons on `string`, `date` and `time` |
 | [`11_in_list.json`](samples/11_in_list.json) | Membership in a list parameter and a list literal |
 | [`12_order_by_multiple_keys.json`](samples/12_order_by_multiple_keys.json) | `orderBy` with several keys and directions |
-| [`13_distinct.json`](samples/13_distinct.json) | `distinct` over a single column |
-| [`14_filter_order_page.json`](samples/14_filter_order_page.json) | Row filter with a parameter, ordering and pagination |
-| [`15_integer_arithmetic.json`](samples/15_integer_arithmetic.json) | `add` / `subtract` / `multiply` over integers stay `integer` |
-| [`16_decimal_widening_and_divide.json`](samples/16_decimal_widening_and_divide.json) | `integer` widens to `decimal`; `divide` is always `decimal` |
-| [`17_rounding_and_integer_division.json`](samples/17_rounding_and_integer_division.json) | `floor` / `ceiling` / `round`, `round` with digits, `integerDivide` and `modulo` |
-| [`18_concat.json`](samples/18_concat.json) | String concatenation |
-| [`19_if_column.json`](samples/19_if_column.json) | `if` as a column; an `integer` branch widens to `decimal` |
-| [`20_order_by_computed.json`](samples/20_order_by_computed.json) | `orderBy` on a computed per-row expression |
-| [`21_date_math.json`](samples/21_date_math.json) | `dateAddDays` / `dateDiffDays` as columns and in `where` |
-| [`22_time_datetime.json`](samples/22_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
-| [`23_datetime_offsets.json`](samples/23_datetime_offsets.json) | `datetime` literals with a non-UTC offset and with fractional seconds |
-| [`24_nullable_columns.json`](samples/24_nullable_columns.json) | Nullable fields selected into nullable columns |
-| [`25_typed_null.json`](samples/25_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
-| [`26_coalesce.json`](samples/26_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
-| [`27_null_checks.json`](samples/27_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
-| [`28_nullable_boolean_conditions.json`](samples/28_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
-| [`29_lifted_operators.json`](samples/29_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |
-| [`30_inner_join.json`](samples/30_inner_join.json) | Inner join on a key |
-| [`31_left_join_nullable.json`](samples/31_left_join_nullable.json) | Left join: nullable fields, typed null, lifted arithmetic, `coalesce` |
-| [`32_self_join.json`](samples/32_self_join.json) | Self-join through an alias on the join |
-| [`33_join_on_nullable_key.json`](samples/33_join_on_nullable_key.json) | Join on a key nullable on both sides: `notEqual(…, null)` keeps two nulls from matching |
-| [`34_right_join.json`](samples/34_right_join.json) | Right join: the left side becomes nullable |
-| [`35_full_join.json`](samples/35_full_join.json) | Full join: both sides nullable, coalesced into one key |
-| [`36_multiple_joins.json`](samples/36_multiple_joins.json) | Several joins of different kinds |
-| [`37_outer_join_chain.json`](samples/37_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
-| [`38_aggregates_over_all_rows.json`](samples/38_aggregates_over_all_rows.json) | A total query (`aggregate`): one row; `count` / `sum` non-null, `min` / `max` / `average` nullable |
-| [`39_aggregate_with_predicate_broadcast.json`](samples/39_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
-| [`40_share_of_total.json`](samples/40_share_of_total.json) | A row value divided by an aggregate over all rows |
-| [`41_group_by_count.json`](samples/41_group_by_count.json) | Group by one field and count |
-| [`42_group_by_multiple_keys.json`](samples/42_group_by_multiple_keys.json) | Group by two fields |
-| [`43_computed_group_key.json`](samples/43_computed_group_key.json) | Group by a computed key, select it and order groups by it |
-| [`44_having.json`](samples/44_having.json) | `having` on an aggregate |
-| [`45_having_boolean_logic.json`](samples/45_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
-| [`46_conditional_aggregates.json`](samples/46_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
-| [`47_group_key_usage.json`](samples/47_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
-| [`48_nullable_aggregates_and_keys.json`](samples/48_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
-| [`49_date_math_everywhere.json`](samples/49_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
-| [`50_integer_decimal.json`](samples/50_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
-| [`51_grouped_revenue.json`](samples/51_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
-| [`52_subquery_from.json`](samples/52_subquery_from.json) | Main query reading from one subquery |
-| [`53_in_subquery.json`](samples/53_in_subquery.json) | Semi-join: `in` over one column of a subquery |
-| [`54_subquery_chain.json`](samples/54_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
-| [`55_left_join_subquery.json`](samples/55_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
-| [`56_subquery_full_pipeline.json`](samples/56_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |
+| [`13_distinct.json`](samples/13_distinct.json) | `distinctBy` over every column: duplicate rows removed |
+| [`14_distinct_by_first_row.json`](samples/14_distinct_by_first_row.json) | `distinctBy` on one column: each user's latest order, the first in `orderBy` order |
+| [`15_filter_order_page.json`](samples/15_filter_order_page.json) | Row filter with a parameter, ordering and pagination |
+| [`16_integer_arithmetic.json`](samples/16_integer_arithmetic.json) | `add` / `subtract` / `multiply` over integers stay `integer` |
+| [`17_decimal_widening_and_divide.json`](samples/17_decimal_widening_and_divide.json) | `integer` widens to `decimal`; `divide` is always `decimal` |
+| [`18_rounding_and_integer_division.json`](samples/18_rounding_and_integer_division.json) | `floor` / `ceiling` / `round`, `round` with digits, `integerDivide` and `modulo` |
+| [`19_concat.json`](samples/19_concat.json) | String concatenation |
+| [`20_if_column.json`](samples/20_if_column.json) | `if` as a column; an `integer` branch widens to `decimal` |
+| [`21_order_by_computed.json`](samples/21_order_by_computed.json) | `orderBy` on a computed per-row expression |
+| [`22_date_math.json`](samples/22_date_math.json) | `dateAddDays` / `dateDiffDays` as columns and in `where` |
+| [`23_time_datetime.json`](samples/23_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
+| [`24_datetime_offsets.json`](samples/24_datetime_offsets.json) | `datetime` literals with a non-UTC offset and with fractional seconds |
+| [`25_nullable_columns.json`](samples/25_nullable_columns.json) | Nullable fields selected into nullable columns |
+| [`26_typed_null.json`](samples/26_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
+| [`27_coalesce.json`](samples/27_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
+| [`28_null_checks.json`](samples/28_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
+| [`29_nullable_boolean_conditions.json`](samples/29_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
+| [`30_lifted_operators.json`](samples/30_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |
+| [`31_inner_join.json`](samples/31_inner_join.json) | Inner join on a key |
+| [`32_left_join_nullable.json`](samples/32_left_join_nullable.json) | Left join: nullable fields, typed null, lifted arithmetic, `coalesce` |
+| [`33_self_join.json`](samples/33_self_join.json) | Self-join through an alias on the join |
+| [`34_join_on_nullable_key.json`](samples/34_join_on_nullable_key.json) | Join on a key nullable on both sides: `notEqual(…, null)` keeps two nulls from matching |
+| [`35_right_join.json`](samples/35_right_join.json) | Right join: the left side becomes nullable |
+| [`36_full_join.json`](samples/36_full_join.json) | Full join: both sides nullable, coalesced into one key |
+| [`37_multiple_joins.json`](samples/37_multiple_joins.json) | Several joins of different kinds |
+| [`38_outer_join_chain.json`](samples/38_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
+| [`39_aggregates_over_all_rows.json`](samples/39_aggregates_over_all_rows.json) | A total query (`aggregate`): one row; `count` / `sum` non-null, `min` / `max` / `average` nullable |
+| [`40_aggregate_with_predicate_broadcast.json`](samples/40_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
+| [`41_share_of_total.json`](samples/41_share_of_total.json) | A row value divided by an aggregate over all rows |
+| [`42_group_by_count.json`](samples/42_group_by_count.json) | Group by one field and count |
+| [`43_group_by_multiple_keys.json`](samples/43_group_by_multiple_keys.json) | Group by two fields |
+| [`44_computed_group_key.json`](samples/44_computed_group_key.json) | Group by a computed key, select it and order groups by it |
+| [`45_having.json`](samples/45_having.json) | `having` on an aggregate |
+| [`46_having_boolean_logic.json`](samples/46_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
+| [`47_conditional_aggregates.json`](samples/47_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
+| [`48_group_key_usage.json`](samples/48_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
+| [`49_nullable_aggregates_and_keys.json`](samples/49_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
+| [`50_date_math_everywhere.json`](samples/50_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
+| [`51_integer_decimal.json`](samples/51_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
+| [`52_grouped_revenue.json`](samples/52_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
+| [`53_subquery_from.json`](samples/53_subquery_from.json) | Main query reading from one subquery |
+| [`54_in_subquery.json`](samples/54_in_subquery.json) | Semi-join: `in` over one column of a subquery |
+| [`55_subquery_chain.json`](samples/55_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
+| [`56_left_join_subquery.json`](samples/56_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
+| [`57_subquery_full_pipeline.json`](samples/57_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |

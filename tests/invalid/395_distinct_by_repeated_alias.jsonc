@@ -1,0 +1,8 @@
+// distinctBy listing the same alias twice
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "distinctBy": ["id", "id"]
+}

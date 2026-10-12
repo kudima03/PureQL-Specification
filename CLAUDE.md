@@ -72,10 +72,11 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 - Field reference: `{ "source": <entity, subquery or alias>, "field": …, "type": … }`.
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`. A join's kind is `kind` (`inner` / `left` / `right` / `full`): `type` always means a type object.
 - A parameter is `{ "param": …, "type": … }`. A unary operator's operand is `operand` (`floor`, `ceiling`, `round`, `in`), so `value` only ever means a literal's value.
-- Defaults are never written: no `"direction": "asc"` (ascending is the absence of `direction`), no `"distinct": false`.
+- Defaults are never written: no `"direction": "asc"` (ascending is the absence of `direction`).
+- `distinctBy` lists `select` aliases (each once, checked by `uniqueItems`); of the rows equal on them it keeps the first in `orderBy` order, so it applies after `orderBy` and before `pagination`. Listing every alias is SQL `DISTINCT`; there is no `distinct` flag. Select aliases must be unique: the interpreter checks this, a schema cannot compare items by one property.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
-- Three kinds of query, by shape: plain (`select`: one row per row), grouped (`groupBy` + `select`: one row per group), total (`aggregate` instead of `select`: exactly one row; no `orderBy`, `distinct`, `pagination`, `having`). The root and `query` dispatch on `groupBy`, then `aggregate`.
+- Three kinds of query, by shape: plain (`select`: one row per row), grouped (`groupBy` + `select`: one row per group), total (`aggregate` instead of `select`: exactly one row; no `orderBy`, `distinctBy`, `pagination`, `having`). The root and `query` dispatch on `groupBy`, then `aggregate`.
 - `select` / `aggregate` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
 - `groupBy` items are `{ alias, expression }`: any row expression can be a key, and the alias is required. Keys are referenced by alias as `{ "key": "user_id", "type": … }`, repeating that key's `expression.type` exactly, and are never emitted automatically.
 - Every expression declares its type, and the schema checks each declaration that does not depend on the catalog. Anything referenced from elsewhere (subquery columns, group keys) takes the type its expression declares. Otherwise the interpreter would need type inference, which breaks the design goal.
@@ -83,7 +84,7 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
 - Every object has `additionalProperties: false`. Every array (`select`, `joins`, `groupBy`, `orderBy`, `subqueries`) has at least one item: an absent clause is omitted, never empty. `and` / `or` take at least two conditions.
-- `pagination` requires `orderBy` (`dependentRequired`); in a subquery `orderBy` also requires `pagination`, since a subquery's result is unordered.
+- `pagination` requires `orderBy` (`dependentRequired`); in a subquery `orderBy` also requires `pagination` or `distinctBy`, since a subquery's result is unordered.
 - Names (`NAME`) are non-empty with no leading or trailing space or tab and no line break; inner spaces are allowed.
 
 ## Workflow rules

@@ -1,4 +1,4 @@
-// A subquery with orderBy but no pagination: its result is unordered, so orderBy only serves pagination
+// A subquery with orderBy but neither pagination nor distinctBy: its result is unordered, so orderBy only serves them
 {
   "subqueries": [
     {
