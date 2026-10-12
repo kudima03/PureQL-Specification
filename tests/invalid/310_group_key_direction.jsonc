@@ -4,7 +4,7 @@
   "groupBy": [
     {
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
-      "direction": "asc"
+      "direction": "desc"
     }
   ],
   "select": [

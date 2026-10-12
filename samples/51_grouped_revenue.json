@@ -4,7 +4,7 @@
   },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "orders",
       "on": {
         "operator": "equal",

@@ -4,7 +4,7 @@
   },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "orders",
       "on": {
         "operator": "equal",
@@ -103,7 +103,7 @@
         "type": {
           "name": "decimal"
         },
-        "value": {
+        "operand": {
           "operator": "sum",
           "type": {
             "name": "decimal"
@@ -185,7 +185,7 @@
           "type": {
             "name": "integer"
           },
-          "value": {
+          "operand": {
             "operator": "average",
             "type": {
               "name": "decimal"

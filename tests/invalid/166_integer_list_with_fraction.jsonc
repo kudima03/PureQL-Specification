@@ -10,7 +10,7 @@
   "where": {
     "operator": "in",
     "type": { "name": "boolean" },
-    "value": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+    "operand": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
     "list": { "type": { "name": "integerList" }, "value": [1, 2.5] }
   }
 }

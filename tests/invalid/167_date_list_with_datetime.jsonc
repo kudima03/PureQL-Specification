@@ -10,7 +10,7 @@
   "where": {
     "operator": "in",
     "type": { "name": "boolean" },
-    "value": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
     "list": { "type": { "name": "dateList" }, "value": ["2024-01-01", "2024-01-02T00:00:00Z"] }
   }
 }

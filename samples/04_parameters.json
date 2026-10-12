@@ -15,7 +15,7 @@
       }
     },
     "right": {
-      "param_name": "since",
+      "param": "since",
       "type": {
         "name": "datetime"
       }
@@ -35,7 +35,7 @@
     {
       "alias": "report_currency",
       "expression": {
-        "param_name": "currency",
+        "param": "currency",
         "type": {
           "name": "string"
         }

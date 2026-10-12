@@ -8,5 +8,5 @@
     }
   ],
   "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
-  "pagination": { "skip": 0, "take": { "param_name": "sizes", "type": { "name": "integerList" } } }
+  "pagination": { "skip": 0, "take": { "param": "sizes", "type": { "name": "integerList" } } }
 }

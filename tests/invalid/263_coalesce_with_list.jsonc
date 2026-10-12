@@ -9,7 +9,7 @@
         "type": { "name": "string" },
         "values": [
           { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
-          { "param_name": "codes", "type": { "name": "stringList" } }
+          { "param": "codes", "type": { "name": "stringList" } }
         ]
       }
     }

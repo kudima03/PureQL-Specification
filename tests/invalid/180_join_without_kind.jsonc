@@ -1,4 +1,4 @@
-// Aggregate as the value of an in inside join.on
+// join without a kind
 {
   "from": { "entity": "orders" },
   "select": [
@@ -9,13 +9,12 @@
   ],
   "joins": [
     {
-      "type": "inner",
       "entity": "users",
       "on": {
-        "operator": "in",
+        "operator": "equal",
         "type": { "name": "boolean" },
-        "value": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
-        "list": { "param_name": "sizes", "type": { "name": "integerList" } }
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }
     }
   ]

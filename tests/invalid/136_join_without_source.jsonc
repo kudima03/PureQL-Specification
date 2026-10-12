@@ -7,5 +7,5 @@
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
-  "joins": [{ "type": "inner", "alias": "u", "on": { "type": { "name": "boolean" }, "value": true } }]
+  "joins": [{ "kind": "inner", "alias": "u", "on": { "type": { "name": "boolean" }, "value": true } }]
 }

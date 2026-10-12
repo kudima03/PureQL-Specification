@@ -31,7 +31,7 @@
     },
     {
       "alias": "bucket",
-      "expression": { "param_name": "bucket", "type": { "name": "string" } }
+      "expression": { "param": "bucket", "type": { "name": "string" } }
     },
     {
       "alias": "discount",
@@ -113,7 +113,7 @@
     },
     {
       "alias": "bucket_param",
-      "expression": { "param_name": "bucket", "type": { "name": "string" } }
+      "expression": { "param": "bucket", "type": { "name": "string" } }
     },
     {
       "alias": "points_match",
@@ -200,7 +200,7 @@
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": {
+        "operand": {
           "operator": "max",
           "type": { "name": "date" },
           "selector": {
@@ -210,7 +210,7 @@
             "right": { "type": { "name": "integer" }, "value": 1 }
           }
         },
-        "list": { "param_name": "holidays", "type": { "name": "dateList" } }
+        "list": { "param": "holidays", "type": { "name": "dateList" } }
       }
     }
   ],

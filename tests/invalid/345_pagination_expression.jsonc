@@ -14,7 +14,7 @@
       "operator": "multiply",
       "type": { "name": "integer" },
       "values": [
-        { "param_name": "page_size", "type": { "name": "integer" } },
+        { "param": "page_size", "type": { "name": "integer" } },
         { "type": { "name": "integer" }, "value": 2 }
       ]
     }

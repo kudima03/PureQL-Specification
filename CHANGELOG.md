@@ -38,6 +38,8 @@ Every operator node now declares the type it yields, as fields, parameters, lite
 - **Deterministic pages**: `pagination` requires `orderBy`. In a subquery, whose result is unordered, `orderBy` also requires `pagination`.
 - **64-bit integers**: `integer` literals, group key indexes, `skip` and `take` must be within the signed 64-bit range.
 - **A plain query always returns one row per row**: a `select` that reads no field outside an aggregate (only aggregates, literals or parameters) used to return a single row; write it as a total query with `aggregate` instead.
+- **Consistent names**: a join's kind is `kind` (`{ "kind": "left", … }`), so `type` always means a type; a parameter is `{ "param": …, "type": … }` instead of `param_name`; the operand of `floor`, `ceiling`, `round` and `in` is `operand` instead of `value`, which now only means a literal's value.
+- **Defaults are not written**: ascending order omits `direction` (`"asc"` is rejected), and a query without `distinct` keeps duplicates (`"distinct": false` is rejected).
 
 ### Versioning
 

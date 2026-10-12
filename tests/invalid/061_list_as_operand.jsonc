@@ -11,6 +11,6 @@
     "operator": "equal",
     "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
-    "right": { "param_name": "statuses", "type": { "name": "stringList" } }
+    "right": { "param": "statuses", "type": { "name": "stringList" } }
   }
 }

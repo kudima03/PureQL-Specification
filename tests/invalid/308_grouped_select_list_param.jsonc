@@ -13,7 +13,7 @@
     },
     {
       "alias": "c",
-      "expression": { "param_name": "statuses", "type": { "name": "stringList" } }
+      "expression": { "param": "statuses", "type": { "name": "stringList" } }
     }
   ]
 }

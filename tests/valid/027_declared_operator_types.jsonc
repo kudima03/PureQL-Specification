@@ -116,7 +116,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": { "operator": "count", "type": { "name": "integer" } },
+        "operand": { "operator": "count", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }
     }

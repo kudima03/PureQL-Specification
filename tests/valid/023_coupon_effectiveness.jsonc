@@ -5,7 +5,7 @@
   "from": { "entity": "orders" },
   "joins": [
     {
-      "type": "left",
+      "kind": "left",
       "entity": "coupons",
       "on": {
         "operator": "equal",

@@ -77,7 +77,7 @@
           "name": "integer"
         },
         "left": {
-          "param_name": "as_of",
+          "param": "as_of",
           "type": {
             "name": "date"
           }

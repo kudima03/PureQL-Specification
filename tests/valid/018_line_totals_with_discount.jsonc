@@ -5,7 +5,7 @@
   "from": { "entity": "order_items" },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "orders",
       "on": {
         "operator": "equal",
@@ -15,7 +15,7 @@
       }
     },
     {
-      "type": "left",
+      "kind": "left",
       "entity": "coupons",
       "on": {
         "operator": "equal",
@@ -57,7 +57,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "decimal" },
-        "value": {
+        "operand": {
           "operator": "multiply",
           "type": { "name": "decimal" },
           "values": [
@@ -95,7 +95,7 @@
     }
   ],
   "orderBy": [
-    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }, "direction": "asc" },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
     {
       "expression": {
         "operator": "multiply",

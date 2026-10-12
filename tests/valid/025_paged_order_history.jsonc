@@ -7,7 +7,7 @@
     "operator": "equal",
     "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
-    "right": { "param_name": "user_id", "type": { "name": "uuid" } }
+    "right": { "param": "user_id", "type": { "name": "uuid" } }
   },
   "select": [
     {
@@ -28,10 +28,10 @@
       "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
       "direction": "desc"
     },
-    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }, "direction": "asc" }
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
   ],
   "pagination": {
-    "skip": { "param_name": "offset", "type": { "name": "integer" } },
-    "take": { "param_name": "page_size", "type": { "name": "integer" } }
+    "skip": { "param": "offset", "type": { "name": "integer" } },
+    "take": { "param": "page_size", "type": { "name": "integer" } }
   }
 }

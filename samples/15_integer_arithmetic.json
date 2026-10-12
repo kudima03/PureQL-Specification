@@ -84,7 +84,7 @@
             "value": 1
           },
           {
-            "param_name": "bonus",
+            "param": "bonus",
             "type": {
               "name": "integer"
             }

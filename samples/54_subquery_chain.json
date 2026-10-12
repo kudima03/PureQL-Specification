@@ -93,7 +93,7 @@
             }
           },
           "right": {
-            "param_name": "min_total",
+            "param": "min_total",
             "type": {
               "name": "decimal"
             }
@@ -129,7 +129,7 @@
   },
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "subquery": "big_spenders",
       "on": {
         "operator": "equal",

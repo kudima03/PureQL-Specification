@@ -8,8 +8,8 @@
         "operator": "if",
         "type": { "name": "string" },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
-        "then": { "param_name": "a", "type": { "name": "stringList" } },
-        "else": { "param_name": "b", "type": { "name": "stringList" } }
+        "then": { "param": "a", "type": { "name": "stringList" } },
+        "else": { "param": "b", "type": { "name": "stringList" } }
       }
     }
   ]

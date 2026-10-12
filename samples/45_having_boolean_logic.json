@@ -95,7 +95,7 @@
           }
         },
         "right": {
-          "param_name": "min_orders",
+          "param": "min_orders",
           "type": {
             "name": "integer"
           }

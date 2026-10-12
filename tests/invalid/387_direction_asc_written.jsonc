@@ -1,0 +1,10 @@
+// orderBy direction "asc" written out: ascending order is written by omitting direction
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }, "direction": "asc" }
+  ]
+}

@@ -7,7 +7,7 @@
       "expression": {
         "operator": "floor",
         "type": { "name": "integer" },
-        "value": { "source": "orders", "field": "name", "type": { "name": "string" } }
+        "operand": { "source": "orders", "field": "name", "type": { "name": "string" } }
       }
     }
   ]

@@ -46,7 +46,7 @@ Every expression declares its `type`, operators included: `{ "operator": "add", 
 
 The schema reads as tables of named definitions, and validation is linear by construction. Keep both:
 
-- `expr@<ctx>` is the only entry to a node: `operator` present → `operator@<ctx>`, otherwise `leaf@<ctx>` (`value` → `literal`, `param_name` → `param`, `field` → `field`, `key` → `key`). Operands may be named `value`, so operators are told apart first.
+- `expr@<ctx>` is the only entry to a node: `operator` present → `operator@<ctx>`, otherwise `leaf@<ctx>` (`value` → `literal`, `param` → `param`, `field` → `field`, `key` → `key`).
 - `operator@<ctx>` sends each `operator` value to `<operator>@<ctx>`, which checks the node's shape and picks a signature by its declared type: `{ "if": declares.decimal.nullable, "then": add.decimal.nullable@row }`. A signature validates each operand once against its type and makes the declared type exact with shallow checks on the operands. `equal`, `notEqual`, `in` and comparisons have one result type, so they pick `<operator>.<family>@<ctx>` by the type the first operand declares instead.
 - `<type>[.nullable]@<ctx>` is a position: `allOf` of `accepts.<type>[.nullable]` (shallow) and `expr@<ctx>`.
 - Shallow checks are named definitions that read only the node's `type`: `declares.<type>[.nullable]` (exactly that type), `accepts.<type>[.nullable]` (the type or a subtype, non-null unless nullable), `accepts.equatable` / `accepts.comparable`, `declares.nullable` / `declares.nonNull`. They may be repeated anywhere (`contains`, `anyOf`, `if`) at no cost in depth. Type names are an `enum` even when there is one, so errors say which type was expected.
@@ -70,7 +70,9 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 ### Query structure
 
 - Field reference: `{ "source": <entity, subquery or alias>, "field": …, "type": … }`.
-- `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
+- `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`. A join's kind is `kind` (`inner` / `left` / `right` / `full`): `type` always means a type object.
+- A parameter is `{ "param": …, "type": … }`. A unary operator's operand is `operand` (`floor`, `ceiling`, `round`, `in`), so `value` only ever means a literal's value.
+- Defaults are never written: no `"direction": "asc"` (ascending is the absence of `direction`), no `"distinct": false`.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
 - Three kinds of query, by shape: plain (`select`: one row per row), grouped (`groupBy` + `select`: one row per group), total (`aggregate` instead of `select`: exactly one row; no `orderBy`, `distinct`, `pagination`, `having`). The root and `query` dispatch on `groupBy`, then `aggregate`.

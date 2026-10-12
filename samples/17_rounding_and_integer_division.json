@@ -10,7 +10,7 @@
         "type": {
           "name": "integer"
         },
-        "value": {
+        "operand": {
           "source": "order_items",
           "field": "unit_price",
           "type": {
@@ -26,7 +26,7 @@
         "type": {
           "name": "integer"
         },
-        "value": {
+        "operand": {
           "source": "order_items",
           "field": "unit_price",
           "type": {
@@ -42,7 +42,7 @@
         "type": {
           "name": "integer"
         },
-        "value": {
+        "operand": {
           "source": "order_items",
           "field": "unit_price",
           "type": {
@@ -58,7 +58,7 @@
         "type": {
           "name": "decimal"
         },
-        "value": {
+        "operand": {
           "source": "order_items",
           "field": "unit_price",
           "type": {

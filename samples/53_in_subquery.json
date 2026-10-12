@@ -48,7 +48,7 @@
     "type": {
       "name": "boolean"
     },
-    "value": {
+    "operand": {
       "source": "orders",
       "field": "user_id",
       "type": {

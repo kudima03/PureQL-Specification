@@ -51,8 +51,7 @@
         "type": {
           "name": "uuid"
         }
-      },
-      "direction": "asc"
+      }
     }
   ]
 }

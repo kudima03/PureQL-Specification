@@ -10,7 +10,7 @@
   "where": {
     "operator": "in",
     "type": { "name": "boolean" },
-    "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+    "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
     "list": { "subquery": "vip_users", "field": "id", "type": { "name": "uuidList" } }
   }
 }

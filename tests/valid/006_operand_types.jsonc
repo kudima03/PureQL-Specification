@@ -74,12 +74,12 @@
         "left": {
           "operator": "round",
           "type": { "name": "integer" },
-          "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         },
         "right": {
           "operator": "floor",
           "type": { "name": "integer" },
-          "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         }
       }
     },
@@ -128,12 +128,12 @@
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": {
+        "operand": {
           "operator": "average",
           "type": { "name": "date" },
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
-        "list": { "param_name": "dates", "type": { "name": "dateList" } }
+        "list": { "param": "dates", "type": { "name": "dateList" } }
       }
     },
     {
@@ -141,7 +141,7 @@
       "expression": {
         "operator": "in",
         "type": { "name": "boolean" },
-        "value": {
+        "operand": {
           "operator": "concat",
           "type": { "name": "string" },
           "values": [
@@ -224,7 +224,7 @@
         "then": {
           "operator": "round",
           "type": { "name": "decimal" },
-          "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "digits": { "type": { "name": "integer" }, "value": 1 }
         },
         "else": { "type": { "name": "integer" }, "value": 0 }

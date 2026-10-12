@@ -1,5 +1,5 @@
 // Accepted query shapes at their edges: from a subquery through an alias, a boolean parameter as where,
-// distinct false, pagination with skip 0 / take 1, orderBy keys of every kind of type (boolean, uuid, a typed null,
+// pagination with skip 0 / take 1, orderBy keys of every kind of type (boolean, uuid, a typed null,
 // count over all rows in a plain query).
 {
   "subqueries": [
@@ -7,7 +7,7 @@
       "name": "recent",
       "query": {
         "from": { "entity": "orders" },
-        "where": { "param_name": "only_paid", "type": { "name": "boolean" } },
+        "where": { "param": "only_paid", "type": { "name": "boolean" } },
         "select": [
           {
             "alias": "id",
@@ -35,9 +35,8 @@
       "direction": "desc"
     },
     { "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } },
-    { "expression": { "type": { "name": "date", "nullable": true }, "value": null }, "direction": "asc" },
+    { "expression": { "type": { "name": "date", "nullable": true }, "value": null } },
     { "expression": { "operator": "count", "type": { "name": "integer" } } }
   ],
-  "distinct": false,
   "pagination": { "skip": 0, "take": 1 }
 }

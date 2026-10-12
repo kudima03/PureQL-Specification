@@ -10,7 +10,7 @@
   "where": {
     "operator": "in",
     "type": { "name": "boolean" },
-    "value": { "source": "orders", "field": "status", "type": { "name": "string" } },
-    "list": { "param_name": "status", "type": { "name": "string" } }
+    "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "list": { "param": "status", "type": { "name": "string" } }
   }
 }

@@ -265,7 +265,7 @@ defs["literal"] = {
         for nullable in [False, True]
     ],
 }
-defs["param"] = obj(["param_name", "type"], {"param_name": NAME, "type": ref("type")})
+defs["param"] = obj(["param", "type"], {"param": NAME, "type": ref("type")})
 # `source` is the entity, subquery or alias the column comes from.
 defs["field"] = obj(
     ["source", "field", "type"], {"source": NAME, "field": NAME, "type": ref("type")}
@@ -281,7 +281,7 @@ for t in TYPES:
                 ["type", "value"],
                 {"type": ref(f"type.{t}List"), "value": {"type": "array", "items": VALUE[t]}},
             ),
-            obj(["param_name", "type"], {"param_name": NAME, "type": ref(f"type.{t}List")}),
+            obj(["param", "type"], {"param": NAME, "type": ref(f"type.{t}List")}),
             # Every value of one column of a subquery's result.
             obj(
                 ["subquery", "field", "type"],
@@ -357,11 +357,11 @@ for ctx, rules in CONTEXTS.items():
     for name in ["integerDivide", "modulo"]:
         lifted(name, {"left": "integer", "right": "integer"}, "integer")
     for name in ["floor", "ceiling"]:
-        lifted(name, {"value": "decimal"}, "integer")
+        lifted(name, {"operand": "decimal"}, "integer")
     # round gives integer, or decimal with digits
     digits = {"digits": expr("integer", ctx)}
-    lifted("round", {"value": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
-    lifted("round", {"value": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
+    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
+    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
 
     # strings
     lifted("concat", {"values": "string"}, "string")
@@ -396,10 +396,10 @@ for ctx, rules in CONTEXTS.items():
         signature(name, "boolean", False, by_family(
             name, "left", families, lambda f: operands({"left": f, "right": f}, True)
         ))
-    shape("in", ["value", "list"], {"value": check("accepts.equatable"), "list": True})
+    shape("in", ["operand", "list"], {"operand": check("accepts.equatable"), "list": True})
     signature("in", "boolean", False, by_family(
-        "in", "value", EQUATABLE,
-        lambda f: {"properties": {"value": expr(f, ctx, True), "list": ref(f"list.{f}")}},
+        "in", "operand", EQUATABLE,
+        lambda f: {"properties": {"operand": expr(f, ctx, True), "list": ref(f"list.{f}")}},
     ))
 
     # conditional and null handling, for every type
@@ -505,7 +505,7 @@ for ctx, rules in CONTEXTS.items():
     }
     # `leaf@<ctx>`: a literal, parameter, field or group key, told apart by
     # the property only it has.
-    leaves = [("value", "literal"), ("param_name", "param")]
+    leaves = [("value", "literal"), ("param", "param")]
     if rules["fields"]:
         leaves.append(("field", "field"))
     if rules["keys"]:
@@ -514,8 +514,7 @@ for ctx, rules in CONTEXTS.items():
         "anyOf": [{"required": [prop]} for prop, _ in leaves],
         "allOf": [{"if": {"required": [prop]}, "then": ref(d)} for prop, d in leaves],
     }
-    # `expr@<ctx>`: any expression of the context. Operands may be named
-    # `value`, so an operator is told apart from a leaf first.
+    # `expr@<ctx>`: any expression of the context: an operator, or a leaf.
     defs[f"expr@{ctx}"] = {
         "type": "object",
         "if": {"required": ["operator"]},
@@ -531,7 +530,9 @@ for ctx, rules in CONTEXTS.items():
 
 # --- query ----------------------------------------------------------------
 
-DIRECTION = {"enum": ["asc", "desc"], "default": "asc"}
+# Defaults are never written: ascending order is the absence of `direction`,
+# and a query without `distinct` keeps duplicate rows.
+DIRECTION = {"enum": ["desc"]}
 
 # A source is either a stored entity or a subquery, named explicitly so the two
 # can never be confused.
@@ -541,8 +542,8 @@ ONE_SOURCE = {"oneOf": [{"required": ["entity"]}, {"required": ["subquery"]}]}
 defs["from"] = {**obj([], SOURCE), **ONE_SOURCE}
 defs["join"] = {
     **obj(
-        ["type", "on"],
-        {"type": {"enum": ["inner", "left", "right", "full"]}, **SOURCE, "on": expr("boolean", "row")},
+        ["kind", "on"],
+        {"kind": {"enum": ["inner", "left", "right", "full"]}, **SOURCE, "on": expr("boolean", "row")},
     ),
     **ONE_SOURCE,
 }
@@ -580,7 +581,7 @@ sources = {
 }
 # Shaping the rows of a plain or grouped query; a total query has one row.
 rows = {
-    "distinct": {"type": "boolean", "default": False},
+    "distinct": {"const": True},
     "pagination": ref("pagination"),
 }
 plain = {

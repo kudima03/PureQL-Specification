@@ -34,7 +34,7 @@
           },
           "values": [
             {
-              "param_name": "window_hours",
+              "param": "window_hours",
               "type": {
                 "name": "integer"
               }

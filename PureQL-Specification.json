@@ -2079,17 +2079,17 @@
     },
     "ceiling.integer.nullable@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -2098,17 +2098,17 @@
     },
     "ceiling.integer.nullable@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -2117,17 +2117,17 @@
     },
     "ceiling.integer.nullable@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -2136,17 +2136,17 @@
     },
     "ceiling.integer.nullable@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -2155,28 +2155,28 @@
     },
     "ceiling.integer@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@group"
         }
       }
     },
     "ceiling.integer@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@projection"
         }
       }
     },
     "ceiling.integer@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@row"
         }
       }
     },
     "ceiling.integer@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@total"
         }
       }
@@ -2186,7 +2186,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -2202,7 +2202,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -2229,7 +2229,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -2245,7 +2245,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -2272,7 +2272,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -2288,7 +2288,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -2315,7 +2315,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -2331,7 +2331,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -7970,17 +7970,17 @@
     },
     "floor.integer.nullable@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -7989,17 +7989,17 @@
     },
     "floor.integer.nullable@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -8008,17 +8008,17 @@
     },
     "floor.integer.nullable@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -8027,17 +8027,17 @@
     },
     "floor.integer.nullable@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -8046,28 +8046,28 @@
     },
     "floor.integer@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@group"
         }
       }
     },
     "floor.integer@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@projection"
         }
       }
     },
     "floor.integer@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@row"
         }
       }
     },
     "floor.integer@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@total"
         }
       }
@@ -8077,7 +8077,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -8093,7 +8093,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -8120,7 +8120,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -8136,7 +8136,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -8163,7 +8163,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -8179,7 +8179,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -8206,7 +8206,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -8222,7 +8222,7 @@
             }
           }
         },
-        "value": true
+        "operand": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -9597,8 +9597,7 @@
           "$ref": "#/$defs/boolean@row"
         },
         "distinct": {
-          "type": "boolean",
-          "default": false
+          "const": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -12096,7 +12095,7 @@
     },
     "in.boolean@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/boolean.nullable@group"
         },
         "list": {
@@ -12106,7 +12105,7 @@
     },
     "in.boolean@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/boolean.nullable@projection"
         },
         "list": {
@@ -12116,7 +12115,7 @@
     },
     "in.boolean@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/boolean.nullable@row"
         },
         "list": {
@@ -12126,7 +12125,7 @@
     },
     "in.boolean@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/boolean.nullable@total"
         },
         "list": {
@@ -12136,7 +12135,7 @@
     },
     "in.date@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@group"
         },
         "list": {
@@ -12146,7 +12145,7 @@
     },
     "in.date@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@projection"
         },
         "list": {
@@ -12156,7 +12155,7 @@
     },
     "in.date@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@row"
         },
         "list": {
@@ -12166,7 +12165,7 @@
     },
     "in.date@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@total"
         },
         "list": {
@@ -12176,7 +12175,7 @@
     },
     "in.datetime@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@group"
         },
         "list": {
@@ -12186,7 +12185,7 @@
     },
     "in.datetime@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@projection"
         },
         "list": {
@@ -12196,7 +12195,7 @@
     },
     "in.datetime@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@row"
         },
         "list": {
@@ -12206,7 +12205,7 @@
     },
     "in.datetime@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@total"
         },
         "list": {
@@ -12216,7 +12215,7 @@
     },
     "in.decimal@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@group"
         },
         "list": {
@@ -12226,7 +12225,7 @@
     },
     "in.decimal@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@projection"
         },
         "list": {
@@ -12236,7 +12235,7 @@
     },
     "in.decimal@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@row"
         },
         "list": {
@@ -12246,7 +12245,7 @@
     },
     "in.decimal@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@total"
         },
         "list": {
@@ -12256,7 +12255,7 @@
     },
     "in.string@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/string.nullable@group"
         },
         "list": {
@@ -12266,7 +12265,7 @@
     },
     "in.string@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/string.nullable@projection"
         },
         "list": {
@@ -12276,7 +12275,7 @@
     },
     "in.string@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/string.nullable@row"
         },
         "list": {
@@ -12286,7 +12285,7 @@
     },
     "in.string@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/string.nullable@total"
         },
         "list": {
@@ -12296,7 +12295,7 @@
     },
     "in.time@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@group"
         },
         "list": {
@@ -12306,7 +12305,7 @@
     },
     "in.time@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@projection"
         },
         "list": {
@@ -12316,7 +12315,7 @@
     },
     "in.time@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@row"
         },
         "list": {
@@ -12326,7 +12325,7 @@
     },
     "in.time@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@total"
         },
         "list": {
@@ -12336,7 +12335,7 @@
     },
     "in.uuid@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/uuid.nullable@group"
         },
         "list": {
@@ -12346,7 +12345,7 @@
     },
     "in.uuid@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/uuid.nullable@projection"
         },
         "list": {
@@ -12356,7 +12355,7 @@
     },
     "in.uuid@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/uuid.nullable@row"
         },
         "list": {
@@ -12366,7 +12365,7 @@
     },
     "in.uuid@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/uuid.nullable@total"
         },
         "list": {
@@ -12379,7 +12378,7 @@
       "required": [
         "operator",
         "type",
-        "value",
+        "operand",
         "list"
       ],
       "properties": {
@@ -12399,7 +12398,7 @@
             }
           }
         },
-        "value": {
+        "operand": {
           "$ref": "#/$defs/accepts.equatable"
         },
         "list": true
@@ -12409,10 +12408,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.decimal.nullable"
               }
             }
@@ -12424,10 +12423,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.string.nullable"
               }
             }
@@ -12439,10 +12438,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.boolean.nullable"
               }
             }
@@ -12454,10 +12453,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.date.nullable"
               }
             }
@@ -12469,10 +12468,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.time.nullable"
               }
             }
@@ -12484,10 +12483,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.datetime.nullable"
               }
             }
@@ -12499,10 +12498,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.uuid.nullable"
               }
             }
@@ -12518,7 +12517,7 @@
       "required": [
         "operator",
         "type",
-        "value",
+        "operand",
         "list"
       ],
       "properties": {
@@ -12538,7 +12537,7 @@
             }
           }
         },
-        "value": {
+        "operand": {
           "$ref": "#/$defs/accepts.equatable"
         },
         "list": true
@@ -12548,10 +12547,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.decimal.nullable"
               }
             }
@@ -12563,10 +12562,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.string.nullable"
               }
             }
@@ -12578,10 +12577,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.boolean.nullable"
               }
             }
@@ -12593,10 +12592,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.date.nullable"
               }
             }
@@ -12608,10 +12607,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.time.nullable"
               }
             }
@@ -12623,10 +12622,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.datetime.nullable"
               }
             }
@@ -12638,10 +12637,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.uuid.nullable"
               }
             }
@@ -12657,7 +12656,7 @@
       "required": [
         "operator",
         "type",
-        "value",
+        "operand",
         "list"
       ],
       "properties": {
@@ -12677,7 +12676,7 @@
             }
           }
         },
-        "value": {
+        "operand": {
           "$ref": "#/$defs/accepts.equatable"
         },
         "list": true
@@ -12687,10 +12686,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.decimal.nullable"
               }
             }
@@ -12702,10 +12701,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.string.nullable"
               }
             }
@@ -12717,10 +12716,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.boolean.nullable"
               }
             }
@@ -12732,10 +12731,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.date.nullable"
               }
             }
@@ -12747,10 +12746,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.time.nullable"
               }
             }
@@ -12762,10 +12761,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.datetime.nullable"
               }
             }
@@ -12777,10 +12776,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.uuid.nullable"
               }
             }
@@ -12796,7 +12795,7 @@
       "required": [
         "operator",
         "type",
-        "value",
+        "operand",
         "list"
       ],
       "properties": {
@@ -12816,7 +12815,7 @@
             }
           }
         },
-        "value": {
+        "operand": {
           "$ref": "#/$defs/accepts.equatable"
         },
         "list": true
@@ -12826,10 +12825,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.decimal.nullable"
               }
             }
@@ -12841,10 +12840,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.string.nullable"
               }
             }
@@ -12856,10 +12855,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.boolean.nullable"
               }
             }
@@ -12871,10 +12870,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.date.nullable"
               }
             }
@@ -12886,10 +12885,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.time.nullable"
               }
             }
@@ -12901,10 +12900,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.datetime.nullable"
               }
             }
@@ -12916,10 +12915,10 @@
         {
           "if": {
             "required": [
-              "value"
+              "operand"
             ],
             "properties": {
-              "value": {
+              "operand": {
                 "$ref": "#/$defs/accepts.uuid.nullable"
               }
             }
@@ -13377,11 +13376,11 @@
     "join": {
       "type": "object",
       "required": [
-        "type",
+        "kind",
         "on"
       ],
       "properties": {
-        "type": {
+        "kind": {
           "enum": [
             "inner",
             "left",
@@ -13455,7 +13454,7 @@
         },
         {
           "required": [
-            "param_name"
+            "param"
           ]
         },
         {
@@ -13478,7 +13477,7 @@
         {
           "if": {
             "required": [
-              "param_name"
+              "param"
             ]
           },
           "then": {
@@ -13506,7 +13505,7 @@
         },
         {
           "required": [
-            "param_name"
+            "param"
           ]
         },
         {
@@ -13529,7 +13528,7 @@
         {
           "if": {
             "required": [
-              "param_name"
+              "param"
             ]
           },
           "then": {
@@ -13557,7 +13556,7 @@
         },
         {
           "required": [
-            "param_name"
+            "param"
           ]
         },
         {
@@ -13580,7 +13579,7 @@
         {
           "if": {
             "required": [
-              "param_name"
+              "param"
             ]
           },
           "then": {
@@ -13608,7 +13607,7 @@
         },
         {
           "required": [
-            "param_name"
+            "param"
           ]
         }
       ],
@@ -13626,7 +13625,7 @@
         {
           "if": {
             "required": [
-              "param_name"
+              "param"
             ]
           },
           "then": {
@@ -14931,11 +14930,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15011,11 +15010,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15091,11 +15090,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15167,11 +15166,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15248,11 +15247,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15324,11 +15323,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15404,11 +15403,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15484,11 +15483,11 @@
         {
           "type": "object",
           "required": [
-            "param_name",
+            "param",
             "type"
           ],
           "properties": {
-            "param_name": {
+            "param": {
               "type": "string",
               "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
               "not": {
@@ -15791,8 +15790,7 @@
           "$ref": "#/$defs/boolean@row"
         },
         "distinct": {
-          "type": "boolean",
-          "default": false
+          "const": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -15857,8 +15855,7 @@
           "$ref": "#/$defs/boolean@row"
         },
         "distinct": {
-          "type": "boolean",
-          "default": false
+          "const": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -21670,10 +21667,8 @@
         },
         "direction": {
           "enum": [
-            "asc",
             "desc"
-          ],
-          "default": "asc"
+          ]
         }
       },
       "additionalProperties": false
@@ -21689,10 +21684,8 @@
         },
         "direction": {
           "enum": [
-            "asc",
             "desc"
-          ],
-          "default": "asc"
+          ]
         }
       },
       "additionalProperties": false
@@ -21748,11 +21741,11 @@
     "param": {
       "type": "object",
       "required": [
-        "param_name",
+        "param",
         "type"
       ],
       "properties": {
-        "param_name": {
+        "param": {
           "type": "string",
           "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
           "not": {
@@ -21786,8 +21779,7 @@
           "$ref": "#/$defs/boolean@row"
         },
         "distinct": {
-          "type": "boolean",
-          "default": false
+          "const": true
         },
         "pagination": {
           "$ref": "#/$defs/pagination"
@@ -21845,17 +21837,17 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -21867,17 +21859,17 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -21889,17 +21881,17 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -21911,17 +21903,17 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -21933,7 +21925,7 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@group"
         }
       }
@@ -21943,7 +21935,7 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@projection"
         }
       }
@@ -21953,7 +21945,7 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@row"
         }
       }
@@ -21963,24 +21955,24 @@
         "digits"
       ],
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@total"
         }
       }
     },
     "round.integer.nullable@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -21996,17 +21988,17 @@
     },
     "round.integer.nullable@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -22022,17 +22014,17 @@
     },
     "round.integer.nullable@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -22048,17 +22040,17 @@
     },
     "round.integer.nullable@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
       "allOf": [
         {
           "required": [
-            "value"
+            "operand"
           ],
           "properties": {
-            "value": {
+            "operand": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
@@ -22074,7 +22066,7 @@
     },
     "round.integer@group": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@group"
         }
       },
@@ -22090,7 +22082,7 @@
     },
     "round.integer@projection": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@projection"
         }
       },
@@ -22106,7 +22098,7 @@
     },
     "round.integer@row": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@row"
         }
       },
@@ -22122,7 +22114,7 @@
     },
     "round.integer@total": {
       "properties": {
-        "value": {
+        "operand": {
           "$ref": "#/$defs/decimal@total"
         }
       },
@@ -22141,7 +22133,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -22158,7 +22150,7 @@
             }
           }
         },
-        "value": true,
+        "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@group"
         }
@@ -22204,7 +22196,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -22221,7 +22213,7 @@
             }
           }
         },
-        "value": true,
+        "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@projection"
         }
@@ -22267,7 +22259,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -22284,7 +22276,7 @@
             }
           }
         },
-        "value": true,
+        "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@row"
         }
@@ -22330,7 +22322,7 @@
       "required": [
         "operator",
         "type",
-        "value"
+        "operand"
       ],
       "properties": {
         "operator": {
@@ -22347,7 +22339,7 @@
             }
           }
         },
-        "value": true,
+        "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@total"
         }

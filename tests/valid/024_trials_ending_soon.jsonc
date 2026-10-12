@@ -16,7 +16,7 @@
           "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
           "right": { "type": { "name": "integer" }, "value": 14 }
         },
-        "right": { "param_name": "today", "type": { "name": "date" } }
+        "right": { "param": "today", "type": { "name": "date" } }
       },
       {
         "operator": "lessThanOrEqual",
@@ -34,7 +34,7 @@
             },
             "right": { "type": { "name": "integer" }, "value": 14 }
           },
-          "right": { "param_name": "today", "type": { "name": "date" } }
+          "right": { "param": "today", "type": { "name": "date" } }
         },
         "right": { "type": { "name": "integer" }, "value": 3 }
       }
@@ -62,12 +62,10 @@
         "type": { "name": "date", "nullable": true },
         "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 14 }
-      },
-      "direction": "asc"
+      }
     },
     {
-      "expression": { "source": "users", "field": "email", "type": { "name": "string" } },
-      "direction": "asc"
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     }
   ]
 }

@@ -10,6 +10,6 @@
   "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
   "pagination": {
     "skip": 0,
-    "take": { "param_name": "page_size", "type": { "name": "integer", "nullable": true } }
+    "take": { "param": "page_size", "type": { "name": "integer", "nullable": true } }
   }
 }

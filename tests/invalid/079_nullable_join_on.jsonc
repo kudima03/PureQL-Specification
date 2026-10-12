@@ -9,9 +9,9 @@
   ],
   "joins": [
     {
-      "type": "inner",
+      "kind": "inner",
       "entity": "users",
-      "on": { "param_name": "join_all", "type": { "name": "boolean", "nullable": true } }
+      "on": { "param": "join_all", "type": { "name": "boolean", "nullable": true } }
     }
   ]
 }
