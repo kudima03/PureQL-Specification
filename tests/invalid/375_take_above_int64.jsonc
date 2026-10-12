@@ -1,0 +1,9 @@
+// pagination.take 10^19, above the 64-bit range
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
+  "pagination": { "skip": 0, "take": 10000000000000000000 }
+}

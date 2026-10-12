@@ -10,7 +10,6 @@
         "value": {
           "operator": "average",
           "type": { "name": "date", "nullable": true },
-          "over": "all",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "list": { "param_name": "amounts", "type": { "name": "decimalList" } }

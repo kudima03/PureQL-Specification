@@ -18,7 +18,8 @@
           { "source": "orders", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
           { "type": { "name": "boolean", "nullable": true }, "value": null }
         ]
-      }
+      },
+      { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
     ]
   }
 }

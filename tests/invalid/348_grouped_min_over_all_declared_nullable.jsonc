@@ -1,4 +1,5 @@
-// min over all rows inside a grouped query declared non-null: over all rows it is nullable, the default over the group is not
+// min over all rows in a grouped query, unfiltered and over a non-null selector, declared nullable: a group exists only
+// if a row does, so it is non-null
 {
   "from": { "entity": "orders" },
   "groupBy": [
@@ -12,7 +13,7 @@
       "alias": "smallest",
       "expression": {
         "operator": "min",
-        "type": { "name": "decimal" },
+        "type": { "name": "decimal", "nullable": true },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

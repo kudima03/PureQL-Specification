@@ -16,7 +16,6 @@
       "expression": {
         "operator": "max",
         "type": { "name": "boolean" },
-        "over": "group",
         "selector": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     }

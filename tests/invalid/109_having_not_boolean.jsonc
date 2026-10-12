@@ -13,8 +13,8 @@
     },
     {
       "alias": "orders",
-      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
+      "expression": { "operator": "count", "type": { "name": "integer" } }
     }
   ],
-  "having": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
+  "having": { "operator": "count", "type": { "name": "integer" } }
 }

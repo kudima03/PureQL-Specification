@@ -1,7 +1,7 @@
-// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: count with an
-// explicit "nullable": false, average of an integer selector (decimal), min over the group (non-null) and over all
-// rows (nullable), coalesce and if mixing integer with decimal (decimal), round with digits over an integer (decimal),
-// equal of an integer and a decimal. Each column has the type its expression declares.
+// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: average of an
+// integer selector (decimal), min over the group and over all rows (non-null in a grouped query), coalesce and if
+// mixing integer with decimal (decimal), round with digits over an integer (decimal), equal of an integer and a
+// decimal. Each column has the type its expression declares.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -30,7 +30,7 @@
     },
     {
       "alias": "orders",
-      "expression": { "operator": "count", "type": { "name": "integer", "nullable": false } }
+      "expression": { "operator": "count", "type": { "name": "integer" } }
     },
     {
       "alias": "items",
@@ -60,7 +60,7 @@
       "alias": "smallest_overall",
       "expression": {
         "operator": "min",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

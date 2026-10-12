@@ -7,7 +7,6 @@
       "expression": {
         "operator": "count",
         "type": { "name": "integer" },
-        "over": "all",
         "predicate": {
           "operator": "greaterThan",
           "type": { "name": "boolean" },

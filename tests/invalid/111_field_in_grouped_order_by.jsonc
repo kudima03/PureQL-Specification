@@ -13,7 +13,7 @@
     },
     {
       "alias": "orders",
-      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
+      "expression": { "operator": "count", "type": { "name": "integer" } }
     }
   ],
   "orderBy": [{ "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } }]

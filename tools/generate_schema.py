@@ -10,8 +10,10 @@ The declared type is exact. The schema checks it against the types the
 operands declare, so it is the type the operator yields from them, never a
 wider one: adding two integers is `integer`, not `decimal`, and a lifted
 operator is nullable exactly when one of its operands is. So an expression has
-one valid form, and an interpreter reads the type of any node without
-computing it.
+one valid declared type, and an interpreter reads the type of any node without
+computing it. Redundant spellings are rejected too: a non-null type has no
+`nullable` key, `and` / `or` take at least two conditions, and `over` is
+written only when it changes the rows of an aggregate.
 
 Each node is validated in full once, by `expr@<context>`, which dispatches on
 `operator` (or on the kind of leaf) and then on the declared type. A position
@@ -23,11 +25,11 @@ Contexts:
   row         where, join.on, groupBy keys, aggregate selector/predicate.
               Fields allowed, aggregates not.
   projection  select / orderBy of a non-grouped query.
-              Fields allowed, aggregates over all rows (broadcast); `over`
-              may be omitted, it can only be "all".
+              Fields allowed, aggregates over all rows (broadcast), without
+              `over`.
   group       select / having / orderBy of a grouped query.
-              No fields; group keys and aggregates over the group (the
-              default when `over` is omitted) or over "all" rows.
+              No fields; group keys and aggregates over the group, or over
+              all rows with `"over": "all"`.
 
 Subtyping (each arrow means "accepted wherever the right side is expected"):
   T -> T.nullable                      a non-null value is a valid T?
@@ -36,8 +38,9 @@ Subtyping (each arrow means "accepted wherever the right side is expected"):
 There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
 every expression is determined by its subtree and its context, never inferred
-from surrounding expressions. The context only decides the rows of an
-aggregate without `over`, and so whether min / max / average can be null.
+from surrounding expressions. The context only decides whether min / max /
+average can be null: in a grouped query every aggregate sees at least one
+row, since a group exists only if a row does.
 
 A document is the main query plus optional `subqueries`: named queries the
 main query and later subqueries can read from (`from` / `join` with
@@ -91,7 +94,6 @@ OFFSET = (
 )
 
 
-
 def pattern(body):
     """A whole-string pattern. In Python's `re`, `$` also matches before a final
     newline, so "2024-01-01\\n" would pass there and fail in ECMA-262: the
@@ -99,8 +101,15 @@ def pattern(body):
     return {"type": "string", "pattern": f"^{body}$", "not": {"pattern": r"\n"}}
 
 
+# A signed 64-bit integer, as far as a schema can tell. The bounds are written
+# as JavaScript prints ±2^63 (CI formats the schema with a JavaScript tool), so
+# they are exactly ±2^63 for a validator that reads numbers as doubles, and
+# ±(2^63 + 192) for one that reads them exactly. The few values between those
+# and the real bounds are rejected by the interpreter.
+INT64 = {"type": "integer", "minimum": -9223372036854776000, "maximum": 9223372036854776000}
+
 VALUE = {
-    "integer": {"type": "integer"},
+    "integer": INT64,
     "decimal": {"type": "number"},
     "string": {"type": "string"},
     "boolean": {"type": "boolean"},
@@ -110,10 +119,13 @@ VALUE = {
     "uuid": pattern(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"),
 }
 
+# `aggregates`: whether aggregates may appear, and the `over` values that may
+# be written: none in projection (always all rows), "all" in group (the group
+# is the default).
 CONTEXTS = {
-    "row": {"fields": True, "keys": False, "over": []},
-    "projection": {"fields": True, "keys": False, "over": ["all"], "default_over": "all"},
-    "group": {"fields": False, "keys": True, "over": ["group", "all"], "default_over": "group"},
+    "row": {"fields": True, "keys": False, "aggregates": False, "over": []},
+    "projection": {"fields": True, "keys": False, "aggregates": True, "over": []},
+    "group": {"fields": False, "keys": True, "aggregates": True, "over": ["all"]},
 }
 
 # An entity, field, alias, parameter or subquery name: not empty, no leading
@@ -165,6 +177,7 @@ def type_check(names=None, nullable=None):
         t["required"] = ["name", "nullable"]
         t["properties"]["nullable"] = {"const": True}
     elif nullable is False:
+        # `type` only allows `"nullable": true`, so this means: no `nullable` key
         t["properties"]["nullable"] = {"const": False}
     return t
 
@@ -198,38 +211,44 @@ NON_NULL = check("declares.nonNull", nullable=False)
 
 
 def merged(checks):
-    """Checks as one schema: `properties` checks merged into one `properties`
+    """Checks as one schema: `required` / `properties` checks merged into one
     where they do not clash, nested `allOf` flattened, the rest in `allOf`."""
-    props, rest = {}, []
+    props, required, rest = {}, [], []
     for c in checks:
         if list(c) == ["allOf"]:
             rest += c["allOf"]
-        elif list(c) == ["properties"] and all(p not in props or not props[p].keys() & v.keys()
-                                               for p, v in c["properties"].items()):
-            for p, v in c["properties"].items():
+        elif set(c) <= {"required", "properties"} and all(
+            p not in props or not props[p].keys() & v.keys() for p, v in c.get("properties", {}).items()
+        ):
+            required += [p for p in c.get("required", []) if p not in required]
+            for p, v in c.get("properties", {}).items():
                 props[p] = {**props.get(p, {}), **v}
         else:
             rest.append(c)
-    out = {"properties": props} if props else {}
+    out = {"required": required} if required else {}
+    if props:
+        out["properties"] = props
     if rest:
         out["allOf"] = rest
     return out
 
 
 def some(props, check):
-    """At least one operand passes a shallow check: one of `props`, or an item of `values`."""
+    """At least one operand passes a shallow check: one of `props`, or an item of
+    `values`. The operand is required, so a missing one never passes vacuously."""
     if props == ["values"]:
-        return {"properties": {"values": {"contains": check}}}
+        return {"required": ["values"], "properties": {"values": {"contains": check}}}
     if len(props) == 1:
-        return {"properties": {props[0]: check}}
-    return {"anyOf": [{"properties": {p: check}} for p in props]}
+        return {"required": props, "properties": {props[0]: check}}
+    return {"anyOf": [{"required": [p], "properties": {p: check}} for p in props]}
 
 
 # --- leaves ---------------------------------------------------------------
 
 # The type an expression declares; which ones a position accepts is checked
 # with `declares.*` and `accepts.*`.
-defs["type"] = obj(["name"], {"name": {"enum": TYPES}, "nullable": {"type": "boolean"}})
+# A non-null type is written without `nullable`, so each type has one spelling.
+defs["type"] = obj(["name"], {"name": {"enum": TYPES}, "nullable": {"const": True}})
 # A literal is nullable exactly when its value is null.
 defs["literal"] = {
     **obj(["type", "value"], {"type": ref("type"), "value": True}),
@@ -247,7 +266,7 @@ defs["param"] = obj(["param_name", "type"], {"param_name": NAME, "type": ref("ty
 defs["field"] = obj(
     ["source", "field", "type"], {"source": NAME, "field": NAME, "type": ref("type")}
 )
-defs["key"] = obj(["key", "type"], {"key": {"type": "integer", "minimum": 0}, "type": ref("type")})
+defs["key"] = obj(["key", "type"], {"key": {**INT64, "minimum": 0}, "type": ref("type")})
 
 for t in TYPES:
     defs[f"type.{t}List"] = obj(["name"], {"name": {"const": f"{t}List"}})
@@ -287,6 +306,8 @@ for ctx, rules in CONTEXTS.items():
     signatures = {}
 
     def shape(name, required, props):
+        # an operator called again (another result type) must keep its shape
+        assert shapes.get(name, (required, props)) == (required, props), name
         shapes[name] = (required, props)
 
     def signature(name, t, nullable, *checks):
@@ -301,9 +322,12 @@ for ctx, rules in CONTEXTS.items():
             }
         }
 
-    def lifted(name, types, t, *checks):
-        """Non-null operands give T, nullable ones T?: then at least one of them is nullable."""
-        shape(name, list(types), {p: OPERANDS if p == "values" else True for p in types})
+    def lifted(name, types, t, *checks, extra=None, optional=None):
+        """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
+        `extra` / `optional`: required / optional properties of the node besides
+        its operands (if.condition, round.digits), never null."""
+        shape(name, list(types) + list(extra or {}),
+              {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(types, False), *checks)
         signature(name, t, True, operands(types, True), some(list(types), NULLABLE), *checks)
 
@@ -331,9 +355,9 @@ for ctx, rules in CONTEXTS.items():
     for name in ["floor", "ceiling"]:
         lifted(name, {"value": "decimal"}, "integer")
     # round gives integer, or decimal with digits
-    lifted("round", {"value": "decimal"}, "integer", {"not": {"required": ["digits"]}})
-    lifted("round", {"value": "decimal"}, "decimal", {"required": ["digits"]})
-    shape("round", ["value"], {"value": True, "digits": expr("integer", ctx)})
+    digits = {"digits": expr("integer", ctx)}
+    lifted("round", {"value": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
+    lifted("round", {"value": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
 
     # strings
     lifted("concat", {"values": "string"}, "string")
@@ -348,7 +372,8 @@ for ctx, rules in CONTEXTS.items():
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:
-        shape(name, ["conditions"], {"conditions": array_of(expr("boolean", ctx), 1)})
+        # one condition would be the condition itself
+        shape(name, ["conditions"], {"conditions": array_of(expr("boolean", ctx), 2)})
         signature(name, "boolean", False)
     shape("not", ["condition"], {"condition": expr("boolean", ctx)})
     signature("not", "boolean", False)
@@ -376,26 +401,25 @@ for ctx, rules in CONTEXTS.items():
     # conditional and null handling, for every type
     for t in TYPES:
         wide = [some(["then", "else"], declares_name(t))] if t in SUBTYPES else []
-        lifted("if", {"then": t, "else": t}, t, *wide)
+        lifted("if", {"then": t, "else": t}, t, *wide, extra={"condition": expr("boolean", ctx)})
         wide = [some(["values"], declares_name(t))] if t in SUBTYPES else []
         # coalesce is non-null as soon as one operand is non-null.
         signature("coalesce", t, False, operands({"values": t}, True), some(["values"], NON_NULL), *wide)
         signature("coalesce", t, True, operands({"values": t}, True), {
             "properties": {"values": {"items": NULLABLE}}
         }, *wide)
-    shape("if", ["condition", "then", "else"], {
-        "condition": expr("boolean", ctx), "then": True, "else": True,
-    })
     shape("coalesce", ["values"], {"values": OPERANDS})
 
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the
-    # selector are skipped. `over` is optional: without it an aggregate runs
-    # over the group in a grouped query and over all rows otherwise, so it is
-    # written only for a total over all rows inside a grouped query.
-    if rules["over"]:
-        aggregate_props = {"over": {"enum": rules["over"]}, "predicate": expr("boolean", "row")}
-        over_group = rules["default_over"] == "group"
+    # selector are skipped. An aggregate runs over the group in a grouped query
+    # and over all rows otherwise; `"over": "all"` is written only for a total
+    # over all rows inside a grouped query.
+    if rules["aggregates"]:
+        aggregate_props = {"predicate": expr("boolean", "row")}
+        if rules["over"]:
+            aggregate_props["over"] = {"enum": rules["over"]}
+        in_group = ctx == "group"
 
         def selector(t, nullable, exact):
             """The selector, of type `t` or (unless `exact`) one of its subtypes."""
@@ -405,17 +429,17 @@ for ctx, rules in CONTEXTS.items():
             return checks
 
         def aggregate(name, selector_t, result_t, exact):
-            # A group is never empty, so an unfiltered non-null selector over the
-            # group (explicit or by default) gives T. Anything else may see no
-            # rows (predicate, over "all", all-null selector) and gives T?.
-            if over_group:
+            # In a grouped query an aggregate sees at least one row: a group has
+            # one, and when a group exists so do all rows. So an unfiltered
+            # non-null selector gives T, over the group or over all rows. A
+            # predicate or a nullable selector may leave no value, and gives T?.
+            # A plain query may have no rows at all, so it always gives T?.
+            if in_group:
                 signature(name, result_t, False, *selector(selector_t, False, exact),
-                          {"not": {"required": ["predicate"]}},
-                          {"properties": {"over": {"const": "group"}}})
+                          {"not": {"required": ["predicate"]}})
                 signature(name, result_t, True, *selector(selector_t, True, exact), {"anyOf": [
                     {"required": ["predicate"]},
-                    {"required": ["over"], "properties": {"over": {"const": "all"}}},
-                    {"properties": {"selector": NULLABLE}},
+                    {"required": ["selector"], "properties": {"selector": NULLABLE}},
                 ]})
             else:
                 signature(name, result_t, True, *selector(selector_t, True, exact))
@@ -523,8 +547,8 @@ INTEGER_PARAM = {"allOf": [declares("integer", False), ref("param")]}
 defs["pagination"] = obj(
     ["skip", "take"],
     {
-        "skip": {"anyOf": [{"type": "integer", "minimum": 0}, INTEGER_PARAM]},
-        "take": {"anyOf": [{"type": "integer", "minimum": 1}, INTEGER_PARAM]},
+        "skip": {"anyOf": [{**INT64, "minimum": 0}, INTEGER_PARAM]},
+        "take": {"anyOf": [{**INT64, "minimum": 1}, INTEGER_PARAM]},
     },
 )
 
@@ -562,16 +586,21 @@ grouped = {
 # Subqueries are flat: only the main query may declare them.
 main = {"subqueries": array_of(ref("subquery"), 1)}
 
-defs["plainQuery"] = obj(["from", "select"], {**common, **plain})
-defs["groupedQuery"] = obj(["from", "groupBy", "select"], {**common, **grouped})
+# A page is chosen by an order, or two interpreters may return different pages.
+# A subquery's result is unordered, so its orderBy only serves pagination.
+PAGE_NEEDS_ORDER = {"dependentRequired": {"pagination": ["orderBy"]}}
+SUBQUERY_ORDER = {"dependentRequired": {"pagination": ["orderBy"], "orderBy": ["pagination"]}}
+
+defs["plainQuery"] = {**obj(["from", "select"], {**common, **plain}), **SUBQUERY_ORDER}
+defs["groupedQuery"] = {**obj(["from", "groupBy", "select"], {**common, **grouped}), **SUBQUERY_ORDER}
 defs["query"] = {
     "if": {"required": ["groupBy"]},
     "then": ref("groupedQuery"),
     "else": ref("plainQuery"),
 }
 defs["subquery"] = obj(["name", "query"], {"name": NAME, "query": ref("query")})
-defs["mainPlainQuery"] = obj(["from", "select"], {**main, **common, **plain})
-defs["mainGroupedQuery"] = obj(["from", "groupBy", "select"], {**main, **common, **grouped})
+defs["mainPlainQuery"] = {**obj(["from", "select"], {**main, **common, **plain}), **PAGE_NEEDS_ORDER}
+defs["mainGroupedQuery"] = {**obj(["from", "groupBy", "select"], {**main, **common, **grouped}), **PAGE_NEEDS_ORDER}
 
 schema = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",

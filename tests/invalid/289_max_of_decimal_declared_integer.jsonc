@@ -16,7 +16,6 @@
       "expression": {
         "operator": "max",
         "type": { "name": "integer" },
-        "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

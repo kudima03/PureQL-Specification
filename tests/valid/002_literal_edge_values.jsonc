@@ -1,6 +1,6 @@
 // Literal values at the edges of each format: 5.0 is a JSON integer, a decimal may be written without a fraction,
 // leap day, year 0000, nine fractional digits, offsets -00:30 / +00:00 / -23:59, an upper-case uuid,
-// and an explicit "nullable": false.
+// and the largest and smallest 64-bit integers.
 {
   "from": { "entity": "orders" },
   "select": [
@@ -56,9 +56,7 @@
       "alias": "upper_case_uuid",
       "expression": { "type": { "name": "uuid" }, "value": "3F2A6C1E-8B4D-4E2A-9C1F-1A2B3C4D5E6F" }
     },
-    {
-      "alias": "explicit_non_null",
-      "expression": { "type": { "name": "string", "nullable": false }, "value": "a" }
-    }
+    { "alias": "largest_integer", "expression": { "type": { "name": "integer" }, "value": 9223372036854775807 } },
+    { "alias": "smallest_integer", "expression": { "type": { "name": "integer" }, "value": -9223372036854775808 } }
   ]
 }

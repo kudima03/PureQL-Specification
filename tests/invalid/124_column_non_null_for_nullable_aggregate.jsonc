@@ -7,7 +7,6 @@
       "expression": {
         "operator": "min",
         "type": { "name": "decimal" },
-        "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

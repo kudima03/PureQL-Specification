@@ -432,6 +432,9 @@
       }
     },
     "add.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -444,6 +447,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -462,6 +468,9 @@
       ]
     },
     "add.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -474,6 +483,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -492,6 +504,9 @@
       ]
     },
     "add.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -504,6 +519,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -522,6 +540,9 @@
       ]
     },
     "add.decimal@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -541,6 +562,9 @@
       }
     },
     "add.decimal@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -560,6 +584,9 @@
       }
     },
     "add.decimal@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -579,6 +606,9 @@
       }
     },
     "add.integer.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -591,6 +621,9 @@
       }
     },
     "add.integer.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -603,6 +636,9 @@
       }
     },
     "add.integer.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -854,14 +890,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         }
       },
       "additionalProperties": false
@@ -889,11 +924,6 @@
               "const": false
             }
           }
-        },
-        "over": {
-          "enum": [
-            "all"
-          ]
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
@@ -930,7 +960,7 @@
           "items": {
             "$ref": "#/$defs/boolean@group"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -964,7 +994,7 @@
           "items": {
             "$ref": "#/$defs/boolean@projection"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -998,7 +1028,7 @@
           "items": {
             "$ref": "#/$defs/boolean@row"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -1027,14 +1057,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         }
       },
       "additionalProperties": false
@@ -1063,11 +1092,6 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         }
@@ -1090,15 +1114,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -1120,9 +1137,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/date@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -1151,15 +1165,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -1181,9 +1188,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/datetime@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -1212,15 +1216,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -1242,9 +1239,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/decimal@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -1273,15 +1267,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -1303,9 +1290,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/time@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -1342,14 +1326,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         },
         "selector": true
       },
@@ -1450,11 +1433,6 @@
               "const": true
             }
           }
-        },
-        "over": {
-          "enum": [
-            "all"
-          ]
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
@@ -1565,6 +1543,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -1581,6 +1562,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -1597,6 +1581,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -1816,6 +1803,9 @@
       ]
     },
     "coalesce.boolean@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -1828,6 +1818,9 @@
       }
     },
     "coalesce.boolean@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -1840,6 +1833,9 @@
       }
     },
     "coalesce.boolean@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -1912,6 +1908,9 @@
       ]
     },
     "coalesce.date@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -1924,6 +1923,9 @@
       }
     },
     "coalesce.date@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -1936,6 +1938,9 @@
       }
     },
     "coalesce.date@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2008,6 +2013,9 @@
       ]
     },
     "coalesce.datetime@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2020,6 +2028,9 @@
       }
     },
     "coalesce.datetime@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2032,6 +2043,9 @@
       }
     },
     "coalesce.datetime@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2044,6 +2058,9 @@
       }
     },
     "coalesce.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2074,6 +2091,9 @@
       ]
     },
     "coalesce.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2104,6 +2124,9 @@
       ]
     },
     "coalesce.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2134,6 +2157,9 @@
       ]
     },
     "coalesce.decimal@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2146,6 +2172,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -2164,6 +2193,9 @@
       ]
     },
     "coalesce.decimal@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2176,6 +2208,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -2194,6 +2229,9 @@
       ]
     },
     "coalesce.decimal@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2206,6 +2244,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -2284,6 +2325,9 @@
       ]
     },
     "coalesce.integer@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2296,6 +2340,9 @@
       }
     },
     "coalesce.integer@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2308,6 +2355,9 @@
       }
     },
     "coalesce.integer@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2380,6 +2430,9 @@
       ]
     },
     "coalesce.string@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2392,6 +2445,9 @@
       }
     },
     "coalesce.string@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2404,6 +2460,9 @@
       }
     },
     "coalesce.string@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2476,6 +2535,9 @@
       ]
     },
     "coalesce.time@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2488,6 +2550,9 @@
       }
     },
     "coalesce.time@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2500,6 +2565,9 @@
       }
     },
     "coalesce.time@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2572,6 +2640,9 @@
       ]
     },
     "coalesce.uuid@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2584,6 +2655,9 @@
       }
     },
     "coalesce.uuid@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -2596,6 +2670,9 @@
       }
     },
     "coalesce.uuid@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -3103,6 +3180,9 @@
       ]
     },
     "concat.string.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -3115,6 +3195,9 @@
       }
     },
     "concat.string.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -3127,6 +3210,9 @@
       }
     },
     "concat.string.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -3326,14 +3412,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         }
       },
       "additionalProperties": false
@@ -3360,11 +3445,6 @@
               "const": false
             }
           }
-        },
-        "over": {
-          "enum": [
-            "all"
-          ]
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
@@ -3445,6 +3525,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3452,6 +3535,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3475,6 +3561,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3482,6 +3571,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3505,6 +3597,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3512,6 +3607,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3700,6 +3798,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3707,6 +3808,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3730,6 +3834,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3737,6 +3844,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3760,6 +3870,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -3767,6 +3880,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4015,6 +4131,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4022,6 +4141,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4045,6 +4167,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4052,6 +4177,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4075,6 +4203,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4082,6 +4213,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4270,6 +4404,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4277,6 +4414,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4300,6 +4440,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4307,6 +4450,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4330,6 +4476,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -4337,6 +4486,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -5004,6 +5156,9 @@
       }
     },
     "divide.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -5016,6 +5171,9 @@
       }
     },
     "divide.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -5028,6 +5186,9 @@
       }
     },
     "divide.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -5909,6 +6070,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -5925,6 +6089,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -5941,6 +6108,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -7165,7 +7335,15 @@
           "minItems": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "dependentRequired": {
+        "pagination": [
+          "orderBy"
+        ],
+        "orderBy": [
+          "pagination"
+        ]
+      }
     },
     "if.boolean.nullable@group": {
       "properties": {
@@ -7180,6 +7358,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7187,6 +7368,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7210,6 +7394,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7217,6 +7404,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7240,6 +7430,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7247,6 +7440,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7300,6 +7496,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7307,6 +7506,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7330,6 +7532,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7337,6 +7542,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7360,6 +7568,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7367,6 +7578,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7420,6 +7634,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7427,6 +7644,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7450,6 +7670,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7457,6 +7680,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7480,6 +7706,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7487,6 +7716,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7540,6 +7772,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7547,6 +7782,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7558,6 +7796,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7572,6 +7813,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7602,6 +7846,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7609,6 +7856,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7620,6 +7870,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7634,6 +7887,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7664,6 +7920,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7671,6 +7930,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7682,6 +7944,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7696,6 +7961,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7726,6 +7994,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7740,6 +8011,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7770,6 +8044,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7784,6 +8061,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7814,6 +8094,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "anyOf": [
@@ -7828,6 +8111,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "anyOf": [
@@ -7858,6 +8144,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7865,6 +8154,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7888,6 +8180,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7895,6 +8190,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7918,6 +8216,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7925,6 +8226,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7978,6 +8282,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -7985,6 +8292,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8008,6 +8318,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8015,6 +8328,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8038,6 +8354,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8045,6 +8364,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8098,6 +8420,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8105,6 +8430,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8128,6 +8456,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8135,6 +8466,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8158,6 +8492,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8165,6 +8502,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8218,6 +8558,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8225,6 +8568,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8248,6 +8594,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8255,6 +8604,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8278,6 +8630,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "then"
+              ],
               "properties": {
                 "then": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8285,6 +8640,9 @@
               }
             },
             {
+              "required": [
+                "else"
+              ],
               "properties": {
                 "else": {
                   "$ref": "#/$defs/declares.nullable"
@@ -8330,9 +8688,9 @@
       "required": [
         "operator",
         "type",
-        "condition",
         "then",
-        "else"
+        "else",
+        "condition"
       ],
       "properties": {
         "operator": {
@@ -8355,11 +8713,11 @@
             }
           }
         },
+        "then": true,
+        "else": true,
         "condition": {
           "$ref": "#/$defs/boolean@group"
-        },
-        "then": true,
-        "else": true
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -8498,9 +8856,9 @@
       "required": [
         "operator",
         "type",
-        "condition",
         "then",
-        "else"
+        "else",
+        "condition"
       ],
       "properties": {
         "operator": {
@@ -8523,11 +8881,11 @@
             }
           }
         },
+        "then": true,
+        "else": true,
         "condition": {
           "$ref": "#/$defs/boolean@projection"
-        },
-        "then": true,
-        "else": true
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -8666,9 +9024,9 @@
       "required": [
         "operator",
         "type",
-        "condition",
         "then",
-        "else"
+        "else",
+        "condition"
       ],
       "properties": {
         "operator": {
@@ -8691,11 +9049,11 @@
             }
           }
         },
+        "then": true,
+        "else": true,
         "condition": {
           "$ref": "#/$defs/boolean@row"
-        },
-        "then": true,
-        "else": true
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -9529,6 +9887,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9536,6 +9897,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9559,6 +9923,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9566,6 +9933,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9589,6 +9959,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9596,6 +9969,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -9834,7 +10210,8 @@
       "properties": {
         "key": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 9223372036854776000
         },
         "type": {
           "$ref": "#/$defs/type"
@@ -11279,7 +11656,9 @@
             "value": {
               "type": "array",
               "items": {
-                "type": "integer"
+                "type": "integer",
+                "minimum": -9223372036854776000,
+                "maximum": 9223372036854776000
               }
             }
           },
@@ -11597,7 +11976,9 @@
           "then": {
             "properties": {
               "value": {
-                "type": "integer"
+                "type": "integer",
+                "minimum": -9223372036854776000,
+                "maximum": 9223372036854776000
               }
             }
           }
@@ -11860,7 +12241,12 @@
           "minItems": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "dependentRequired": {
+        "pagination": [
+          "orderBy"
+        ]
+      }
     },
     "mainPlainQuery": {
       "type": "object",
@@ -11911,7 +12297,12 @@
           "minItems": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "dependentRequired": {
+        "pagination": [
+          "orderBy"
+        ]
+      }
     },
     "max.date.nullable@group": {
       "properties": {
@@ -11929,15 +12320,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -11959,9 +12343,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/date@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -11990,15 +12371,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12020,9 +12394,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/datetime@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12059,15 +12430,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12105,9 +12469,6 @@
               "$ref": "#/$defs/declares.decimal.nullable"
             }
           ]
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12136,15 +12497,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12166,9 +12520,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/integer@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12197,15 +12548,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12227,9 +12571,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/string@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12258,15 +12599,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12288,9 +12622,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/time@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12329,14 +12660,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         },
         "selector": true
       },
@@ -12472,11 +12802,6 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
@@ -12550,15 +12875,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12580,9 +12898,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/date@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12611,15 +12926,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12641,9 +12949,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/datetime@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12680,15 +12985,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12726,9 +13024,6 @@
               "$ref": "#/$defs/declares.decimal.nullable"
             }
           ]
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12757,15 +13052,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12787,9 +13075,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/integer@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12818,15 +13103,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12848,9 +13126,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/string@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12879,15 +13154,8 @@
             },
             {
               "required": [
-                "over"
+                "selector"
               ],
-              "properties": {
-                "over": {
-                  "const": "all"
-                }
-              }
-            },
-            {
               "properties": {
                 "selector": {
                   "$ref": "#/$defs/declares.nullable"
@@ -12909,9 +13177,6 @@
       "properties": {
         "selector": {
           "$ref": "#/$defs/time@row"
-        },
-        "over": {
-          "const": "group"
         }
       },
       "allOf": [
@@ -12950,14 +13215,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         },
         "selector": true
       },
@@ -13093,11 +13357,6 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
@@ -13168,6 +13427,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13175,6 +13437,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13198,6 +13463,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13205,6 +13473,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13228,6 +13499,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13235,6 +13509,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -13411,6 +13688,9 @@
       ]
     },
     "multiply.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13423,6 +13703,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -13441,6 +13724,9 @@
       ]
     },
     "multiply.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13453,6 +13739,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -13471,6 +13760,9 @@
       ]
     },
     "multiply.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13483,6 +13775,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -13501,6 +13796,9 @@
       ]
     },
     "multiply.decimal@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13520,6 +13818,9 @@
       }
     },
     "multiply.decimal@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13539,6 +13840,9 @@
       }
     },
     "multiply.decimal@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13558,6 +13862,9 @@
       }
     },
     "multiply.integer.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13570,6 +13877,9 @@
       }
     },
     "multiply.integer.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -13582,6 +13892,9 @@
       }
     },
     "multiply.integer.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -15859,7 +16172,7 @@
           "items": {
             "$ref": "#/$defs/boolean@group"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -15893,7 +16206,7 @@
           "items": {
             "$ref": "#/$defs/boolean@projection"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -15927,7 +16240,7 @@
           "items": {
             "$ref": "#/$defs/boolean@row"
           },
-          "minItems": 1
+          "minItems": 2
         }
       },
       "additionalProperties": false
@@ -15981,7 +16294,8 @@
           "anyOf": [
             {
               "type": "integer",
-              "minimum": 0
+              "minimum": 0,
+              "maximum": 9223372036854776000
             },
             {
               "allOf": [
@@ -15999,7 +16313,8 @@
           "anyOf": [
             {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "maximum": 9223372036854776000
             },
             {
               "allOf": [
@@ -16078,7 +16393,15 @@
           "minItems": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "dependentRequired": {
+        "pagination": [
+          "orderBy"
+        ],
+        "orderBy": [
+          "pagination"
+        ]
+      }
     },
     "query": {
       "if": {
@@ -16094,6 +16417,9 @@
       }
     },
     "round.decimal.nullable@group": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal.nullable@group"
@@ -16101,20 +16427,21 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
-        },
-        {
-          "required": [
-            "digits"
-          ]
         }
       ]
     },
     "round.decimal.nullable@projection": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal.nullable@projection"
@@ -16122,20 +16449,21 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
-        },
-        {
-          "required": [
-            "digits"
-          ]
         }
       ]
     },
     "round.decimal.nullable@row": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal.nullable@row"
@@ -16143,60 +16471,46 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
             }
           }
-        },
-        {
-          "required": [
-            "digits"
-          ]
         }
       ]
     },
     "round.decimal@group": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal@group"
         }
-      },
-      "allOf": [
-        {
-          "required": [
-            "digits"
-          ]
-        }
-      ]
+      }
     },
     "round.decimal@projection": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal@projection"
         }
-      },
-      "allOf": [
-        {
-          "required": [
-            "digits"
-          ]
-        }
-      ]
+      }
     },
     "round.decimal@row": {
+      "required": [
+        "digits"
+      ],
       "properties": {
         "value": {
           "$ref": "#/$defs/decimal@row"
         }
-      },
-      "allOf": [
-        {
-          "required": [
-            "digits"
-          ]
-        }
-      ]
+      }
     },
     "round.integer.nullable@group": {
       "properties": {
@@ -16206,6 +16520,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -16229,6 +16546,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -16252,6 +16572,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "value"
+          ],
           "properties": {
             "value": {
               "$ref": "#/$defs/declares.nullable"
@@ -16625,6 +16948,9 @@
       "additionalProperties": false
     },
     "subtract.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16637,6 +16963,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -16655,6 +16984,9 @@
       ]
     },
     "subtract.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16667,6 +16999,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -16685,6 +17020,9 @@
       ]
     },
     "subtract.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16697,6 +17035,9 @@
       },
       "allOf": [
         {
+          "required": [
+            "values"
+          ],
           "properties": {
             "values": {
               "contains": {
@@ -16715,6 +17056,9 @@
       ]
     },
     "subtract.decimal@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16734,6 +17078,9 @@
       }
     },
     "subtract.decimal@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16753,6 +17100,9 @@
       }
     },
     "subtract.decimal@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16772,6 +17122,9 @@
       }
     },
     "subtract.integer.nullable@group": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16784,6 +17137,9 @@
       }
     },
     "subtract.integer.nullable@projection": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -16796,6 +17152,9 @@
       }
     },
     "subtract.integer.nullable@row": {
+      "required": [
+        "values"
+      ],
       "properties": {
         "values": {
           "items": {
@@ -17092,14 +17451,13 @@
             }
           }
         },
-        "over": {
-          "enum": [
-            "group",
-            "all"
-          ]
-        },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
         },
         "selector": true
       },
@@ -17147,11 +17505,6 @@
               "const": false
             }
           }
-        },
-        "over": {
-          "enum": [
-            "all"
-          ]
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
@@ -17251,6 +17604,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17258,6 +17614,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17281,6 +17640,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17288,6 +17650,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17311,6 +17676,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17318,6 +17686,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17506,6 +17877,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17513,6 +17887,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17536,6 +17913,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17543,6 +17923,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17566,6 +17949,9 @@
         {
           "anyOf": [
             {
+              "required": [
+                "left"
+              ],
               "properties": {
                 "left": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17573,6 +17959,9 @@
               }
             },
             {
+              "required": [
+                "right"
+              ],
               "properties": {
                 "right": {
                   "$ref": "#/$defs/declares.nullable"
@@ -17767,7 +18156,7 @@
           ]
         },
         "nullable": {
-          "type": "boolean"
+          "const": true
         }
       },
       "additionalProperties": false

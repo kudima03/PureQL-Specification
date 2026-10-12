@@ -9,7 +9,7 @@
   "select": [
     {
       "alias": "c",
-      "expression": { "operator": "any", "type": { "name": "boolean" }, "over": "group" }
+      "expression": { "operator": "any", "type": { "name": "boolean" } }
     }
   ]
 }

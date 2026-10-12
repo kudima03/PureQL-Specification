@@ -7,7 +7,6 @@
       "expression": {
         "operator": "sum",
         "type": { "name": "integer" },
-        "over": "all",
         "selector": { "type": { "name": "integer" }, "value": 1 },
         "predicate": {
           "operator": "any",

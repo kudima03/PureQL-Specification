@@ -20,7 +20,7 @@
     },
     {
       "alias": "orders",
-      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
+      "expression": { "operator": "count", "type": { "name": "integer" } }
     }
   ]
 }

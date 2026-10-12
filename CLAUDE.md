@@ -54,11 +54,11 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 
 ### Aggregates
 
-`{ "operator": "sum", "type": …, "over"?: "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `over` defaults to `"group"` in a grouped query and `"all"` otherwise; samples and examples omit it unless it is `"all"` inside a grouped query. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only over a group (omitted or `"group"` over, in a grouped query), with no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
+`{ "operator": "sum", "type": …, "over"?: "all", "selector": <row expr>, "predicate"?: <row boolean> }`. An aggregate runs over the group in a grouped query and over all rows otherwise; `over` exists only in group context and only as `"all"`, the default is never written. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null in a grouped query (over the group or over all rows: a group exists only if a row does) with no predicate and a non-null selector; otherwise, and always in a plain query, they are nullable. `count` and `sum` are never null.
 
 ### Types and nulls
 
-- Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`).
+- Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`). `"nullable": false` is rejected: one spelling per type. `integer` literals, `key`, `skip` and `take` are within 64 bits (`INT64`).
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
 - Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`), and every expression declares it. The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
@@ -78,7 +78,8 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
-- Every object has `additionalProperties: false`. Every array (`select`, `joins`, `groupBy`, `orderBy`, `subqueries`) has at least one item: an absent clause is omitted, never empty.
+- Every object has `additionalProperties: false`. Every array (`select`, `joins`, `groupBy`, `orderBy`, `subqueries`) has at least one item: an absent clause is omitted, never empty. `and` / `or` take at least two conditions.
+- `pagination` requires `orderBy` (`dependentRequired`); in a subquery `orderBy` also requires `pagination`, since a subquery's result is unordered.
 - Names (`NAME`) are non-empty with no leading or trailing space or tab and no line break; inner spaces are allowed.
 
 ## Workflow rules

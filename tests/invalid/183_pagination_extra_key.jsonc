@@ -7,5 +7,6 @@
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
   "pagination": { "skip": 0, "take": 10, "page": 2 }
 }

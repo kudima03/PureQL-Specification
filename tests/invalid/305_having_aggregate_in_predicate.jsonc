@@ -12,7 +12,6 @@
   "having": {
     "operator": "any",
     "type": { "name": "boolean" },
-    "over": "group",
     "predicate": {
       "operator": "greaterThan",
       "type": { "name": "boolean" },
