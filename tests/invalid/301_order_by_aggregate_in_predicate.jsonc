@@ -3,23 +3,25 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } }
+    { "alias": "user_id", "expression": { "key": 0, "type": { "name": "uuid" } } }
   ],
   "orderBy": [
     {
       "expression": {
         "operator": "count",
+        "type": { "name": "integer" },
         "over": "group",
         "predicate": {
           "operator": "greaterThan",
+          "type": { "name": "boolean" },
           "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "right": {
             "operator": "average",
+            "type": { "name": "decimal", "nullable": true },
             "over": "all",
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           }

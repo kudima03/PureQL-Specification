@@ -2,6 +2,6 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "alias": "c", "type": { "name": "uuid" }, "expression": { "source": "orders", "field": "id" } }
+    { "alias": "c", "expression": { "source": "orders", "field": "id" } }
   ]
 }

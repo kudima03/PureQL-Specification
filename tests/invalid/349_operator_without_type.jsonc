@@ -1,0 +1,16 @@
+// An operator node without a declared type (every expression declares its type)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

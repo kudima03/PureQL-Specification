@@ -4,12 +4,12 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
   "where": {
     "operator": "in",
+    "type": { "name": "boolean" },
     "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
     "list": { "source": "vip_users", "field": "id", "type": { "name": "uuid" } }
   }

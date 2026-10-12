@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -18,8 +15,14 @@
   ],
   "having": {
     "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
-      "operator": "count"
+      "operator": "count",
+      "type": {
+        "name": "integer"
+      }
     },
     "right": {
       "type": {
@@ -31,9 +34,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -43,11 +43,11 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     }
   ]

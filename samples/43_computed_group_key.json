@@ -5,13 +5,16 @@
   "groupBy": [
     {
       "alias": "size_bucket",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "if",
+        "type": {
+          "name": "string"
+        },
         "condition": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "total",
@@ -44,9 +47,6 @@
   "select": [
     {
       "alias": "size_bucket",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -56,20 +56,20 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     },
     {
       "alias": "avg_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",

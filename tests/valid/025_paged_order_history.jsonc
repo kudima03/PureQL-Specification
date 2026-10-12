@@ -5,23 +5,21 @@
   "from": { "entity": "orders" },
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
     "right": { "param_name": "user_id", "type": { "name": "uuid" } }
   },
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "ordered_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
       "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     }
   ],

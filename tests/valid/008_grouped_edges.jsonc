@@ -1,4 +1,4 @@
-// A grouped query at its edges: keys of a nullable field, a date, a boolean declared nullable, a literal, a parameter and
+// A grouped query at its edges: keys of a nullable field, a date, a boolean, a literal, a parameter and
 // a coalesce declared non-null; a non-null boolean key as part of having; a field inside an aggregate predicate in having;
 // non-null and nullable aggregates; group keys and aggregates combined through equal / in / date math / concat;
 // orderBy on aggregates over all rows and on a coalesce of an aggregate and a key.
@@ -7,7 +7,6 @@
   "groupBy": [
     {
       "alias": "points",
-      "type": { "name": "integer", "nullable": true },
       "expression": {
         "source": "orders",
         "field": "bonus_points",
@@ -16,34 +15,29 @@
     },
     {
       "alias": "day",
-      "type": { "name": "date" },
       "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
     },
     {
       "alias": "paid",
-      "type": { "name": "boolean" },
       "expression": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
     },
     {
       "alias": "verified",
-      "type": { "name": "boolean", "nullable": true },
       "expression": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
     },
     {
       "alias": "one",
-      "type": { "name": "integer" },
       "expression": { "type": { "name": "integer" }, "value": 1 }
     },
     {
       "alias": "bucket",
-      "type": { "name": "string" },
       "expression": { "param_name": "bucket", "type": { "name": "string" } }
     },
     {
       "alias": "discount",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } },
           { "type": { "name": "integer" }, "value": 0 }
@@ -53,22 +47,27 @@
   ],
   "having": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       { "key": 2, "type": { "name": "boolean" } },
       {
         "operator": "any",
+        "type": { "name": "boolean" },
         "over": "group",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       },
       {
         "operator": "greaterThan",
-        "left": { "operator": "count", "over": "group" },
-        "right": { "operator": "count", "over": "all" }
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" }, "over": "group" },
+        "right": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
       },
       {
         "operator": "greaterThan",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "max",
+          "type": { "name": "decimal", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         },
@@ -79,18 +78,18 @@
   "select": [
     {
       "alias": "avg_quantity",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal" },
         "over": "group",
         "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
     },
     {
       "alias": "avg_discount",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
         "over": "group",
         "selector": {
           "source": "orders",
@@ -101,35 +100,35 @@
     },
     {
       "alias": "last_name",
-      "type": { "name": "string" },
       "expression": {
         "operator": "max",
+        "type": { "name": "string" },
         "over": "group",
         "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
       }
     },
     {
       "alias": "min_quantity",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "integer" },
         "over": "group",
         "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
     },
     {
       "alias": "bucket_param",
-      "type": { "name": "string" },
       "expression": { "param_name": "bucket", "type": { "name": "string" } }
     },
     {
       "alias": "points_match",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "key": 0, "type": { "name": "integer", "nullable": true } },
         "right": {
           "operator": "sum",
+          "type": { "name": "decimal" },
           "over": "group",
           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         }
@@ -137,23 +136,25 @@
     },
     {
       "alias": "verified_key",
-      "type": { "name": "boolean", "nullable": true },
       "expression": { "key": 3, "type": { "name": "boolean", "nullable": true } }
     },
     {
       "alias": "span_end",
-      "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date" },
         "left": {
           "operator": "min",
+          "type": { "name": "date" },
           "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": {
           "operator": "dateDiffDays",
+          "type": { "name": "integer" },
           "left": {
             "operator": "max",
+            "type": { "name": "date" },
             "over": "group",
             "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
           },
@@ -163,18 +164,20 @@
     },
     {
       "alias": "label",
-      "type": { "name": "string", "nullable": true },
       "expression": {
         "operator": "concat",
+        "type": { "name": "string", "nullable": true },
         "values": [
           {
             "operator": "if",
+            "type": { "name": "string" },
             "condition": { "key": 2, "type": { "name": "boolean" } },
             "then": { "type": { "name": "string" }, "value": "paid " },
             "else": { "type": { "name": "string" }, "value": "open " }
           },
           {
             "operator": "max",
+            "type": { "name": "string", "nullable": true },
             "over": "all",
             "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
           }
@@ -183,14 +186,16 @@
     },
     {
       "alias": "min_points_is_key",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "min",
+          "type": { "name": "integer" },
           "over": "group",
           "selector": {
             "operator": "if",
+            "type": { "name": "integer" },
             "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
             "then": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
             "else": { "type": { "name": "integer" }, "value": 0 }
@@ -201,14 +206,16 @@
     },
     {
       "alias": "late_day_listed",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": {
           "operator": "max",
+          "type": { "name": "date" },
           "over": "group",
           "selector": {
             "operator": "dateAddDays",
+            "type": { "name": "date" },
             "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
             "right": { "type": { "name": "integer" }, "value": 1 }
           }
@@ -221,6 +228,7 @@
     {
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
@@ -228,9 +236,11 @@
     {
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "date" },
         "values": [
           {
             "operator": "min",
+            "type": { "name": "date", "nullable": true },
             "over": "all",
             "selector": {
               "source": "orders",

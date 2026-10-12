@@ -8,6 +8,9 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "coupon_id",
@@ -29,10 +32,6 @@
   "groupBy": [
     {
       "alias": "coupon_code",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "coupons",
         "field": "code",
@@ -46,10 +45,6 @@
   "select": [
     {
       "alias": "coupon_code",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -60,11 +55,11 @@
     },
     {
       "alias": "last_order_at",
-      "type": {
-        "name": "datetime"
-      },
       "expression": {
         "operator": "max",
+        "type": {
+          "name": "datetime"
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -76,11 +71,11 @@
     },
     {
       "alias": "avg_order_at",
-      "type": {
-        "name": "datetime"
-      },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "datetime"
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -92,14 +87,18 @@
     },
     {
       "alias": "min_paid_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "operator": "min",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
             "selector": {
               "source": "orders",
               "field": "total",
@@ -127,8 +126,14 @@
   ],
   "having": {
     "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "max",
+      "type": {
+        "name": "datetime"
+      },
       "selector": {
         "source": "orders",
         "field": "ordered_at",

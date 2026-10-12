@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "amount",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "orders",
         "field": "total",
@@ -32,9 +26,15 @@
   ],
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "status",
@@ -51,6 +51,9 @@
       },
       {
         "operator": "greaterThan",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "total",

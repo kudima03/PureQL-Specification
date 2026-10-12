@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "ceiling",
+        "type": { "name": "integer" },
         "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": { "type": { "name": "integer" }, "value": 2 }
       }

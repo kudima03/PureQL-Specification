@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -19,9 +16,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -31,13 +25,16 @@
     },
     {
       "alias": "refunds",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
+        "type": {
+          "name": "integer"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -56,11 +53,11 @@
     },
     {
       "alias": "paid_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -79,13 +76,16 @@
     },
     {
       "alias": "paid_total_via_if",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "operator": "if",
+          "type": {
+            "name": "decimal"
+          },
           "condition": {
             "source": "orders",
             "field": "is_paid",
@@ -111,13 +111,16 @@
     },
     {
       "alias": "has_dispute",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "any",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -137,6 +140,9 @@
   ],
   "having": {
     "operator": "all",
+    "type": {
+      "name": "boolean"
+    },
     "predicate": {
       "source": "orders",
       "field": "is_paid",

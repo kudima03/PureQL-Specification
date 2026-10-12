@@ -10,21 +10,19 @@
         "groupBy": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "first_order_at",
-            "type": { "name": "datetime" },
             "expression": {
               "operator": "min",
+              "type": { "name": "datetime" },
               "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
             }
           }
@@ -39,6 +37,7 @@
       "subquery": "first_orders",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "first_orders", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }
@@ -46,13 +45,16 @@
   ],
   "where": {
     "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
     "left": {
       "operator": "datetimeDiffSeconds",
+      "type": { "name": "decimal" },
       "left": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } },
       "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
     },
     "right": {
       "operator": "multiply",
+      "type": { "name": "integer" },
       "values": [
         { "type": { "name": "integer" }, "value": 7 },
         { "type": { "name": "integer" }, "value": 86400 }
@@ -62,24 +64,24 @@
   "select": [
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     },
     {
       "alias": "first_order_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } }
     },
     {
       "alias": "hours_to_first_order",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": {
           "operator": "divide",
+          "type": { "name": "decimal" },
           "values": [
             {
               "operator": "datetimeDiffSeconds",
+              "type": { "name": "decimal" },
               "left": { "source": "first_orders", "field": "first_order_at", "type": { "name": "datetime" } },
               "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
             },

@@ -12,6 +12,9 @@
             "entity": "orders",
             "on": {
               "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
               "left": {
                 "source": "order_items",
                 "field": "order_id",
@@ -39,9 +42,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "orders",
               "field": "user_id",
@@ -52,11 +52,11 @@
           },
           {
             "alias": "line_total",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
               "values": [
                 {
                   "source": "order_items",
@@ -86,9 +86,6 @@
         },
         "groupBy": [
           {
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "paid_lines",
               "field": "user_id",
@@ -100,8 +97,14 @@
         ],
         "having": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "operator": "sum",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "paid_lines",
               "field": "line_total",
@@ -120,9 +123,6 @@
         "select": [
           {
             "alias": "user_id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "key": 0,
               "type": {
@@ -132,11 +132,11 @@
           },
           {
             "alias": "revenue",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
               "selector": {
                 "source": "paid_lines",
                 "field": "line_total",
@@ -148,11 +148,11 @@
           },
           {
             "alias": "lines",
-            "type": {
-              "name": "integer"
-            },
             "expression": {
-              "operator": "count"
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
             }
           }
         ]
@@ -166,6 +166,9 @@
         },
         "where": {
           "operator": "lessThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "users",
             "field": "last_login_at",
@@ -184,9 +187,6 @@
         "select": [
           {
             "alias": "id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "users",
               "field": "id",
@@ -209,6 +209,9 @@
       "subquery": "user_revenue",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "u",
           "field": "id",
@@ -228,8 +231,14 @@
   ],
   "where": {
     "operator": "not",
+    "type": {
+      "name": "boolean"
+    },
     "condition": {
       "operator": "in",
+      "type": {
+        "name": "boolean"
+      },
       "value": {
         "source": "u",
         "field": "id",
@@ -249,9 +258,6 @@
   "select": [
     {
       "alias": "email",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "u",
         "field": "email",
@@ -262,9 +268,6 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "user_revenue",
         "field": "revenue",
@@ -275,11 +278,11 @@
     },
     {
       "alias": "average_line",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "user_revenue",

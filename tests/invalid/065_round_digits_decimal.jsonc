@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": { "type": { "name": "decimal" }, "value": 2.5 }
       }

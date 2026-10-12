@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string", "nullable": true },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
         "values": [{ "source": "orders", "field": "code", "type": { "name": "string", "nullable": true } }]
       }
     }

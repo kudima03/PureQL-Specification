@@ -1,6 +1,6 @@
-// Operands whose type is visible only deep inside them, so the variant of equal / in / comparisons and of orderBy keys
-// is chosen through if.then, coalesce.values[0] and aggregate selectors: typed nulls first, integer next to decimal,
-// fixed-type operators (round, floor, dateDiffDays, count) and aggregates over all rows.
+// Operands of equal / in / comparisons and orderBy keys that are operators (if, coalesce, aggregates) over typed nulls,
+// integer next to decimal, fixed-type operators (round, floor, dateDiffDays, count) and aggregates over all rows: the
+// family is read from the type each operator declares.
 {
   "subqueries": [
     {
@@ -10,7 +10,6 @@
         "select": [
           {
             "alias": "code",
-            "type": { "name": "string", "nullable": true },
             "expression": {
               "source": "orders",
               "field": "coupon_code",
@@ -25,17 +24,20 @@
   "select": [
     {
       "alias": "a",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "coalesce",
+          "type": { "name": "decimal" },
           "values": [
             {
               "operator": "if",
+              "type": { "name": "integer", "nullable": true },
               "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
               "then": {
                 "operator": "coalesce",
+                "type": { "name": "integer", "nullable": true },
                 "values": [
                   { "type": { "name": "integer", "nullable": true }, "value": null },
                   { "type": { "name": "integer", "nullable": true }, "value": null }
@@ -51,11 +53,12 @@
     },
     {
       "alias": "b",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "if",
+          "type": { "name": "decimal", "nullable": true },
           "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
           "then": { "type": { "name": "integer", "nullable": true }, "value": null },
           "else": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
@@ -65,26 +68,29 @@
     },
     {
       "alias": "c",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "round",
+          "type": { "name": "integer" },
           "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         },
         "right": {
           "operator": "floor",
+          "type": { "name": "integer" },
           "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         }
       }
     },
     {
       "alias": "d",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "lessThan",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "dateDiffDays",
+          "type": { "name": "integer", "nullable": true },
           "left": {
             "source": "orders",
             "field": "shipped_date",
@@ -97,20 +103,21 @@
     },
     {
       "alias": "e",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
-        "left": { "operator": "count", "over": "all" },
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
         "right": { "type": { "name": "decimal" }, "value": 1.5 }
       }
     },
     {
       "alias": "f",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "min",
+          "type": { "name": "date", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
@@ -119,11 +126,12 @@
     },
     {
       "alias": "g",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": {
           "operator": "average",
+          "type": { "name": "date", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
@@ -132,11 +140,12 @@
     },
     {
       "alias": "h",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": {
           "operator": "concat",
+          "type": { "name": "string" },
           "values": [
             { "type": { "name": "string" }, "value": "#" },
             { "source": "orders", "field": "name", "type": { "name": "string" } }
@@ -147,19 +156,22 @@
     },
     {
       "alias": "i",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "notEqual",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "average",
+          "type": { "name": "time", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "window_start", "type": { "name": "time" } }
         },
         "right": {
           "operator": "timeAddSeconds",
+          "type": { "name": "time" },
           "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
           "right": {
             "operator": "divide",
+            "type": { "name": "decimal" },
             "values": [
               { "type": { "name": "integer" }, "value": 1 },
               { "type": { "name": "integer" }, "value": 2 }
@@ -170,16 +182,18 @@
     },
     {
       "alias": "j",
-      "type": { "name": "boolean" },
       "expression": {
         "operator": "lessThan",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "datetimeAddSeconds",
+          "type": { "name": "datetime" },
           "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
           "right": { "type": { "name": "integer" }, "value": 60 }
         },
         "right": {
           "operator": "max",
+          "type": { "name": "datetime", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
         }
@@ -190,6 +204,7 @@
     {
       "expression": {
         "operator": "if",
+        "type": { "name": "string", "nullable": true },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": { "type": { "name": "string", "nullable": true }, "value": null },
         "else": { "source": "orders", "field": "name", "type": { "name": "string" } }
@@ -198,6 +213,7 @@
     {
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "uuid" },
         "values": [
           { "type": { "name": "uuid", "nullable": true }, "value": null },
           { "source": "orders", "field": "id", "type": { "name": "uuid" } }
@@ -207,9 +223,11 @@
     {
       "expression": {
         "operator": "if",
+        "type": { "name": "decimal" },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": {
           "operator": "round",
+          "type": { "name": "decimal" },
           "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "digits": { "type": { "name": "integer" }, "value": 1 }
         },

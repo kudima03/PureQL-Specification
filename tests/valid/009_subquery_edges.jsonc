@@ -9,14 +9,15 @@
         "groupBy": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "having": {
           "operator": "greaterThan",
+          "type": { "name": "boolean" },
           "left": {
             "operator": "sum",
+            "type": { "name": "decimal" },
             "over": "group",
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           },
@@ -25,14 +26,13 @@
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "revenue",
-            "type": { "name": "decimal" },
             "expression": {
               "operator": "sum",
+              "type": { "name": "decimal" },
               "over": "group",
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             }
@@ -42,6 +42,7 @@
           {
             "expression": {
               "operator": "sum",
+              "type": { "name": "decimal" },
               "over": "group",
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             },
@@ -58,18 +59,17 @@
         "from": { "entity": "orders" },
         "where": {
           "operator": "in",
+          "type": { "name": "boolean" },
           "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
           "list": { "subquery": "top_users", "field": "user_id", "type": { "name": "uuid" } }
         },
         "select": [
           {
             "alias": "id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
           },
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ]
@@ -84,6 +84,7 @@
       "alias": "a",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "o", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "a", "field": "user_id", "type": { "name": "uuid" } }
       }
@@ -94,6 +95,7 @@
       "alias": "b",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "a", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "b", "field": "user_id", "type": { "name": "uuid" } }
       }
@@ -101,22 +103,23 @@
   ],
   "groupBy": [
     {
-      "type": { "name": "uuid" },
       "expression": { "source": "o", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
+    {
+      "alias": "user_id",
+      "expression": { "key": 0, "type": { "name": "uuid" } }
+    },
     {
       "alias": "orders",
-      "type": { "name": "integer" },
-      "expression": { "operator": "count", "over": "group" }
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
     },
     {
       "alias": "revenue",
-      "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "max",
+        "type": { "name": "decimal", "nullable": true },
         "over": "group",
         "selector": { "source": "b", "field": "revenue", "type": { "name": "decimal", "nullable": true } }
       }

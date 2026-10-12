@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "subtract",
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
           { "source": "orders", "field": "order_date", "type": { "name": "date" } }

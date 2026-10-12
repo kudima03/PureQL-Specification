@@ -1,0 +1,124 @@
+// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: count with an
+// explicit "nullable": false, average of an integer selector (decimal), min over the group (non-null) and over all
+// rows (nullable), coalesce and if mixing integer with decimal (decimal), round with digits over an integer (decimal),
+// equal of an integer and a decimal. Each column has the type its expression declares.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "add",
+      "type": { "name": "integer" },
+      "values": [
+        { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+        { "type": { "name": "integer" }, "value": 1 }
+      ]
+    },
+    "right": { "type": { "name": "decimal" }, "value": 2.0 }
+  },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "key": 0, "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "orders",
+      "expression": { "operator": "count", "type": { "name": "integer", "nullable": false } }
+    },
+    {
+      "alias": "items",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "avg_items",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "smallest",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "smallest_overall",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "points",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "integer" },
+            "selector": {
+              "source": "orders",
+              "field": "bonus_points",
+              "type": { "name": "integer", "nullable": true }
+            }
+          },
+          { "type": { "name": "decimal" }, "value": 0.5 }
+        ]
+      }
+    },
+    {
+      "alias": "best",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal", "nullable": true },
+        "condition": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "operator": "count", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "then": {
+          "operator": "max",
+          "type": { "name": "integer" },
+          "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "else": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": {
+            "source": "orders",
+            "field": "discount",
+            "type": { "name": "decimal", "nullable": true }
+          }
+        }
+      }
+    },
+    {
+      "alias": "rounded",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "value": { "operator": "count", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

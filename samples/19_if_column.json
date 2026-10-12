@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,13 +15,16 @@
     },
     {
       "alias": "size",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "if",
+        "type": {
+          "name": "string"
+        },
         "condition": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "total",
@@ -55,11 +55,11 @@
     },
     {
       "alias": "discount",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "if",
+        "type": {
+          "name": "decimal"
+        },
         "condition": {
           "source": "orders",
           "field": "is_vip",
@@ -69,6 +69,9 @@
         },
         "then": {
           "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
           "values": [
             {
               "source": "orders",

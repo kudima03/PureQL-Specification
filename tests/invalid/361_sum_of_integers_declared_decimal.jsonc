@@ -1,0 +1,14 @@
+// sum keeps the selector type: of an integer selector it is integer, not decimal
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

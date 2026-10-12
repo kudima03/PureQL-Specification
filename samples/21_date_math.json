@@ -4,8 +4,15 @@
   },
   "where": {
     "operator": "lessThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "dateDiffDays",
+      "type": {
+        "name": "integer",
+        "nullable": true
+      },
       "left": {
         "source": "orders",
         "field": "shipped_date",
@@ -32,9 +39,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -45,11 +49,11 @@
     },
     {
       "alias": "due_date",
-      "type": {
-        "name": "date"
-      },
       "expression": {
         "operator": "dateAddDays",
+        "type": {
+          "name": "date"
+        },
         "left": {
           "source": "orders",
           "field": "order_date",
@@ -67,11 +71,11 @@
     },
     {
       "alias": "days_open",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "dateDiffDays",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "param_name": "as_of",
           "type": {

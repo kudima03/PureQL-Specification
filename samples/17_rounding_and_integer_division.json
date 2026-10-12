@@ -5,11 +5,11 @@
   "select": [
     {
       "alias": "price_floor",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "floor",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -21,11 +21,11 @@
     },
     {
       "alias": "price_ceiling",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "ceiling",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -37,11 +37,11 @@
     },
     {
       "alias": "price_rounded",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -53,11 +53,11 @@
     },
     {
       "alias": "price_cents",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -75,11 +75,11 @@
     },
     {
       "alias": "packs",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "source": "order_items",
           "field": "quantity",
@@ -97,11 +97,11 @@
     },
     {
       "alias": "loose",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "modulo",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "source": "order_items",
           "field": "quantity",

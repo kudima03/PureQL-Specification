@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "add",
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "source": "orders", "field": "total", "type": { "name": "decimal" } }

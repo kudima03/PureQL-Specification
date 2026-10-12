@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "order_items",
         "field": "id",
@@ -18,11 +15,11 @@
     },
     {
       "alias": "subtotal",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",
@@ -46,6 +43,9 @@
     {
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",

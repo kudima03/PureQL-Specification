@@ -1,0 +1,17 @@
+// coalesce of integer operands is integer; declaring it decimal is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ]
+}

@@ -10,6 +10,9 @@
       "alias": "c",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "s",
           "field": "product_id",
@@ -30,12 +33,12 @@
   "select": [
     {
       "alias": "product_id",
-      "type": {
-        "name": "uuid",
-        "nullable": true
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        },
         "values": [
           {
             "source": "s",
@@ -58,11 +61,11 @@
     },
     {
       "alias": "in_stock",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "s",

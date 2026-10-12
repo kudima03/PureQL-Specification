@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "order_items",
         "field": "id",
@@ -18,11 +15,11 @@
     },
     {
       "alias": "double_quantity",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",
@@ -42,11 +39,11 @@
     },
     {
       "alias": "kept",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "subtract",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",
@@ -67,11 +64,11 @@
     },
     {
       "alias": "with_bonus",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "add",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",

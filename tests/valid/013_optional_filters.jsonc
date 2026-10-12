@@ -5,17 +5,21 @@
   "from": { "entity": "users" },
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "or",
+        "type": { "name": "boolean" },
         "conditions": [
           {
             "operator": "equal",
+            "type": { "name": "boolean" },
             "left": { "param_name": "country", "type": { "name": "string", "nullable": true } },
             "right": { "type": { "name": "string", "nullable": true }, "value": null }
           },
           {
             "operator": "equal",
+            "type": { "name": "boolean" },
             "left": { "source": "users", "field": "country", "type": { "name": "string" } },
             "right": { "param_name": "country", "type": { "name": "string", "nullable": true } }
           }
@@ -23,14 +27,17 @@
       },
       {
         "operator": "or",
+        "type": { "name": "boolean" },
         "conditions": [
           {
             "operator": "equal",
+            "type": { "name": "boolean" },
             "left": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } },
             "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
           },
           {
             "operator": "greaterThanOrEqual",
+            "type": { "name": "boolean" },
             "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
             "right": { "param_name": "signed_up_since", "type": { "name": "datetime", "nullable": true } }
           }
@@ -41,12 +48,10 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     }
   ],

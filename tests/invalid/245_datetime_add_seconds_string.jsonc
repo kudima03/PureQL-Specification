@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "datetime" },
       "expression": {
         "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
         "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "right": { "type": { "name": "string" }, "value": "60" }
       }

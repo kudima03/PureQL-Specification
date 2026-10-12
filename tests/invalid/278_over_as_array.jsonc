@@ -2,6 +2,9 @@
 {
   "from": { "entity": "orders" },
   "select": [
-    { "alias": "c", "type": { "name": "integer" }, "expression": { "operator": "count", "over": ["all"] } }
+    {
+      "alias": "c",
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": ["all"] }
+    }
   ]
 }

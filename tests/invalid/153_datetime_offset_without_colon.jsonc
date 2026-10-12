@@ -4,12 +4,12 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
   "where": {
     "operator": "greaterThan",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
     "right": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00+0300" }
   }

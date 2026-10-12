@@ -1,0 +1,17 @@
+// An operator declared with a list type (lists are values for in, never results)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integerList" },
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

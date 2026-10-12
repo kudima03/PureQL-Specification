@@ -9,6 +9,7 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }
@@ -16,18 +17,17 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "id", "type": { "name": "uuid", "nullable": true } },
     "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
   },
   "select": [
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     },
     {
       "alias": "signed_up_at",
-      "type": { "name": "datetime" },
       "expression": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
     }
   ],

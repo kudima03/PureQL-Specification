@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string" },
       "expression": {
         "operator": "concat",
+        "type": { "name": "string" },
         "values": [
           { "type": { "name": "string" }, "value": "order-" },
           { "source": "orders", "field": "id", "type": { "name": "uuid" } }

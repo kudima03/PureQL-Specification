@@ -4,14 +4,15 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
   "where": {
     "operator": "greaterThan",
+    "type": { "name": "boolean" },
     "left": {
       "operator": "if",
+      "type": { "name": "boolean" },
       "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
       "then": { "type": { "name": "boolean" }, "value": true },
       "else": { "type": { "name": "boolean" }, "value": false }

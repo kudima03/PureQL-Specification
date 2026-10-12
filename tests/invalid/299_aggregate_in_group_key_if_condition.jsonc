@@ -3,14 +3,16 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "string" },
       "expression": {
         "operator": "if",
+        "type": { "name": "string" },
         "condition": {
           "operator": "greaterThan",
+          "type": { "name": "boolean" },
           "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "right": {
             "operator": "average",
+            "type": { "name": "decimal", "nullable": true },
             "over": "all",
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           }
@@ -23,7 +25,6 @@
   "select": [
     {
       "alias": "bucket",
-      "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     }
   ]

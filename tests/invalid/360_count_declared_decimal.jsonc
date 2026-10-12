@@ -1,0 +1,10 @@
+// count is integer; declaring it decimal is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "count", "type": { "name": "decimal" } }
+    }
+  ]
+}

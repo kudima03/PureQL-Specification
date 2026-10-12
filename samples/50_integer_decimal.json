@@ -8,6 +8,9 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "order_items",
           "field": "order_id",
@@ -27,8 +30,14 @@
   ],
   "where": {
     "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "modulo",
+      "type": {
+        "name": "integer"
+      },
       "left": {
         "source": "order_items",
         "field": "quantity",
@@ -52,9 +61,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -67,9 +73,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -79,11 +82,11 @@
     },
     {
       "alias": "units",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "integer"
+        },
         "selector": {
           "source": "order_items",
           "field": "quantity",
@@ -95,15 +98,21 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
         "value": {
           "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
           "selector": {
             "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
             "values": [
               {
                 "source": "order_items",
@@ -132,13 +141,16 @@
     },
     {
       "alias": "tens_of_lines",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
         "left": {
-          "operator": "count"
+          "operator": "count",
+          "type": {
+            "name": "integer"
+          }
         },
         "right": {
           "type": {
@@ -150,13 +162,16 @@
     },
     {
       "alias": "reorder_estimate",
-      "type": {
-        "name": "date"
-      },
       "expression": {
         "operator": "dateAddDays",
+        "type": {
+          "name": "date"
+        },
         "left": {
           "operator": "max",
+          "type": {
+            "name": "date"
+          },
           "selector": {
             "source": "orders",
             "field": "order_date",
@@ -167,8 +182,14 @@
         },
         "right": {
           "operator": "floor",
+          "type": {
+            "name": "integer"
+          },
           "value": {
             "operator": "average",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "order_items",
               "field": "quantity",

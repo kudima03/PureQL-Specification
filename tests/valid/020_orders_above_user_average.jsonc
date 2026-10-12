@@ -10,21 +10,19 @@
         "groupBy": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "average_total",
-            "type": { "name": "decimal" },
             "expression": {
               "operator": "average",
+              "type": { "name": "decimal" },
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             }
           }
@@ -39,6 +37,7 @@
       "subquery": "user_averages",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "user_averages", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
       }
@@ -46,9 +45,11 @@
   ],
   "where": {
     "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
     "right": {
       "operator": "multiply",
+      "type": { "name": "decimal" },
       "values": [
         { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } },
         { "type": { "name": "decimal" }, "value": 1.5 }
@@ -58,17 +59,14 @@
   "select": [
     {
       "alias": "order_id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     },
     {
       "alias": "total",
-      "type": { "name": "decimal" },
       "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     },
     {
       "alias": "user_average",
-      "type": { "name": "decimal" },
       "expression": { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } }
     }
   ],
@@ -76,6 +74,7 @@
     {
       "expression": {
         "operator": "divide",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           { "source": "user_averages", "field": "average_total", "type": { "name": "decimal" } }

@@ -8,6 +8,9 @@
         },
         "where": {
           "operator": "greaterThanOrEqual",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "ordered_at",
@@ -25,9 +28,6 @@
         "select": [
           {
             "alias": "id",
-            "type": {
-              "name": "uuid"
-            },
             "expression": {
               "source": "orders",
               "field": "id",
@@ -38,9 +38,6 @@
           },
           {
             "alias": "total",
-            "type": {
-              "name": "decimal"
-            },
             "expression": {
               "source": "orders",
               "field": "total",
@@ -59,9 +56,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "recent_orders",
         "field": "id",
@@ -72,9 +66,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "recent_orders",
         "field": "total",

@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string", "nullable": true },
       "expression": { "type": { "name": "string" }, "value": null }
     }
   ]

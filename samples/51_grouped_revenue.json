@@ -8,6 +8,9 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "order_items",
           "field": "order_id",
@@ -27,6 +30,9 @@
   ],
   "where": {
     "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "source": "orders",
       "field": "status",
@@ -44,9 +50,6 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -59,9 +62,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -71,13 +71,16 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
           "values": [
             {
               "source": "order_items",
@@ -99,26 +102,32 @@
     },
     {
       "alias": "line_items",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     },
     {
       "alias": "share_of_all_lines",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
-            "operator": "count"
+            "operator": "count",
+            "type": {
+              "name": "integer"
+            }
           },
           {
             "operator": "count",
+            "type": {
+              "name": "integer"
+            },
             "over": "all"
           }
         ]
@@ -127,10 +136,19 @@
   ],
   "having": {
     "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "sum",
+      "type": {
+        "name": "decimal"
+      },
       "selector": {
         "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",
@@ -159,7 +177,10 @@
   "orderBy": [
     {
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       },
       "direction": "desc"
     },

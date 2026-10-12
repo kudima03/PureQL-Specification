@@ -4,9 +4,8 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
-  "where": { "operator": "and", "conditions": [] }
+  "where": { "operator": "and", "type": { "name": "boolean" }, "conditions": [] }
 }

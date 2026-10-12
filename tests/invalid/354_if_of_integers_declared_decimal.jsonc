@@ -1,0 +1,16 @@
+// if with two integer branches is integer; declaring it decimal is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal" },
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "then": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+        "else": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

@@ -31,7 +31,7 @@ On every pull request, `validate.yml` first checks that the schema is formatted 
 
 ### One operator set, contexts by position
 
-There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDiffDays`, …) exists once. Where it may appear and what its operands may be is fixed by the **context**, which the schema passes down through `$ref`. Each expression definition is generated as `<type>@<context>` or `<type>.nullable@<context>`.
+There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDiffDays`, …) exists once. Where it may appear and what its operands may be is fixed by the **context**, which the schema passes down through `$ref`. Every expression is validated by `expr@<context>`; a position that expects a type refers to `<type>@<context>` or `<type>.nullable@<context>`.
 
 | Context | Used in | Fields | Group keys | Aggregates |
 |---|---|---|---|---|
@@ -39,18 +39,29 @@ There is no single-value / `each*` split. Each operator (`equal`, `add`, `dateDi
 | `projection` | `select` / `orderBy` without `groupBy` | yes | no | over all rows (default) |
 | `group` | `select` / `having` / `orderBy` with `groupBy` | no | yes | over the group (default) or `over: "all"` |
 
-The root dispatches on whether `groupBy` is present, and operator nodes dispatch on `operator` (`if` / `then`). Operators generated per operand type (`equal`, `notEqual`, `in`, comparisons) and `orderBy` keys then pick their variant with `probe.<family>`, which reads the operand's type without validating it: a leaf's `type.name`, a fixed-type operator, or the operand named in `SPINE` (`if.then`, `coalesce.values[0]`, aggregate `selector`). Probes require the operand and its `type` to be objects and match one family at most, so a malformed node cannot fan out. Subtypes are merged into their supertype's definition (`decimal@ctx` holds the `integer` leaves and the integer-only operators), never added as a separate `anyOf` branch: ajv in draft 2020-12 mode evaluates every branch, so a duplicated branch doubles the work at each level. So each subtree is validated in full once. When adding an operator whose result type depends on an operand, add it to `SPINE` (the generator asserts this); when adding one generated per operand type, register a `guard`. Otherwise validation becomes exponential in query depth, which `tests/valid/001_deep_nesting.jsonc` checks under the CI timeout.
+### Declared types and dispatch
+
+Every expression declares its `type`, operators included: `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }`. An operator's declared type is **exact**: the type it yields from its operands' declared types, never wider (`add` of integers is `integer`, a lifted operator is nullable exactly when an operand is, `coalesce` is non-null exactly when an operand is, `min` over a group is non-null exactly under the aggregate rules). Implicit conversions apply at the position, not in the declaration. A `select` column and a `groupBy` key have no `type` of their own: they have the type their expression declares.
+
+The schema reads as tables of named definitions, and validation is linear by construction. Keep both:
+
+- `expr@<ctx>` is the only entry to a node: `operator` present → `operator@<ctx>`, otherwise `leaf@<ctx>` (`value` → `literal`, `param_name` → `param`, `field` → `field`, `key` → `key`). Operands may be named `value`, so operators are told apart first.
+- `operator@<ctx>` sends each `operator` value to `<operator>@<ctx>`, which checks the node's shape and picks a signature by its declared type: `{ "if": declares.decimal.nullable, "then": add.decimal.nullable@row }`. A signature validates each operand once against its type and makes the declared type exact with shallow checks on the operands. `equal`, `notEqual`, `in` and comparisons have one result type, so they pick `<operator>.<family>@<ctx>` by the type the first operand declares instead.
+- `<type>[.nullable]@<ctx>` is a position: `allOf` of `accepts.<type>[.nullable]` (shallow) and `expr@<ctx>`.
+- Shallow checks are named definitions that read only the node's `type`: `declares.<type>[.nullable]` (exactly that type), `accepts.<type>[.nullable]` (the type or a subtype, non-null unless nullable), `accepts.equatable` / `accepts.comparable`, `declares.nullable` / `declares.nonNull`. They may be repeated anywhere (`contains`, `anyOf`, `if`) at no cost in depth. Type names are an `enum` even when there is one, so errors say which type was expected.
+
+Dispatch on a value (`operator`, the declared type, an operand's family) is always `if` / `then` with a shallow `if`, never `anyOf` / `oneOf` over branches that reach `expr@…`. ajv stops at the first matching `anyOf` branch only without `allErrors`; Python `jsonschema` and `allErrors` evaluate every branch in full, which is exponential in depth: an `anyOf` prototype took over a minute at depth 2 in Python and ran out of memory at depth 4 with `allErrors`. Likewise never reference `expr@…` or a position from two branches that can both apply to one node. `tests/valid/001_deep_nesting.jsonc`, `tests/valid/010_deep_operand_chains.jsonc` and `tests/invalid/330_deep_malformed_operand_type.jsonc` check this under the CI timeout; when touching dispatch, also time a 30-level query with `allErrors` and with Python `jsonschema`.
 
 ### Aggregates
 
-`{ "operator": "sum", "over"?: "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `over` defaults to `"group"` in a grouped query and `"all"` otherwise; samples and examples omit it unless it is `"all"` inside a grouped query. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only over a group (omitted or `"group"` over, in a grouped query), with no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
+`{ "operator": "sum", "type": …, "over"?: "group" | "all", "selector": <row expr>, "predicate"?: <row boolean> }`. `over` defaults to `"group"` in a grouped query and `"all"` otherwise; samples and examples omit it unless it is `"all"` inside a grouped query. `count` has no selector; `any` / `all` require a predicate. The body is in row context, which has no aggregates, so aggregates cannot nest. `average`, `min` and `max` are non-null only over a group (omitted or `"group"` over, in a grouped query), with no predicate and a non-null selector. Otherwise they are nullable. `count` and `sum` are never null.
 
 ### Types and nulls
 
 - Types: `integer`, `decimal`, `string`, `boolean`, `date`, `time`, `datetime`, `uuid`, each non-null (`{ "name": T }`) or nullable (`{ "name": T, "nullable": true }`).
 - Implicit conversions: `T → T?` and `integer → decimal`. No others.
 - Null literals are always typed (`{ "type": { "name": T, "nullable": true }, "value": null }`); there is no `null` type. A literal is nullable exactly when its value is `null`.
-- Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`). The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
+- Invariant: the type of an expression is determined by its subtree and its context (fixed by position, passed down by `$ref`), and every expression declares it. The context only decides an aggregate's default `over`. Never add a rule that infers a type from surrounding expressions.
 - Null semantics: arithmetic, `concat`, date math, `round` / `floor` / `ceiling` are lifted (null if any operand is null). `if` is nullable when either branch is, and yields the branch taken. `equal` / comparisons / `in` return a non-null boolean. Every condition requires a non-null boolean.
 - `divide` is always `decimal`; `integerDivide` / `modulo` / `floor` / `ceiling` / `round` (without `digits`) give `integer`.
 - `datetime` literals need an offset (`Z` or `±hh:mm`, not `-00:00`). Literal patterns use `[0-9]`, never `\d`, no lookahead, and go through `pattern()`, which rejects newlines (Python's `$` matches before a final one).
@@ -61,9 +72,9 @@ The root dispatches on whether `groupBy` is present, and operator nodes dispatch
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.
 - A field is nullable at a point if it is stored nullable or its source is on the optional side of an outer join before that point (`left`: joined source; `right`: earlier sources; `full`: both). A join's own `on` comes before the join, so it keeps the joined source's stored nullability; a later join's `on` does not. References declare exactly this nullability, never more or less, and the same stored field is declared the same way in every sample.
-- `select` columns are `{ alias, type, expression }` with alias and type required. The schema checks the expression against the declared type.
-- `groupBy` items are `{ alias?, type, expression }`: any row expression can be a key, and its declared type is checked like a `select` column. Keys are referenced as `{ "key": i, "type": … }`, repeating that declared type exactly, and are never emitted automatically.
-- Anything referenced from elsewhere (subquery columns, group keys) must declare its type and have it checked by the schema. Otherwise the interpreter would need type inference, which breaks the design goal.
+- `select` columns are `{ alias, expression }`, both required. A column has the type its expression declares, so a query's result schema is `select[i].alias` and `select[i].expression.type`.
+- `groupBy` items are `{ alias?, expression }`: any row expression can be a key. Keys are referenced as `{ "key": i, "type": … }`, repeating `groupBy[i].expression.type` exactly, and are never emitted automatically.
+- Every expression declares its type, and the schema checks each declaration that does not depend on the catalog. Anything referenced from elsewhere (subquery columns, group keys) takes the type its expression declares. Otherwise the interpreter would need type inference, which breaks the design goal.
 - `orderBy` items are `{ expression, direction? }`. Repeat an expression rather than referencing a `select` alias.
 - Lists (`stringList`, …, or a subquery column `{ subquery, field, type }`) are values accepted only by `in`.
 - `subqueries` is a flat array of `{ name, query }` on the main query only. A subquery reads only from earlier ones; there is no recursion.
@@ -119,7 +130,7 @@ What an interpreter computes is defined under **Semantics** in `README.md`: eval
 
 ## Adding samples and tests
 
-1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every column's type by hand, and update the samples table in `README.md`.
+1. **Sample:** add a bare query as `samples/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/NN_name.json`, which CI checks; declare every operator's type by hand (`"type"` right after `"operator"`); columns and group keys have no `type`, and update the samples table in `README.md`.
 2. **Invalid test:** write `tests/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query. Test formatting is not checked; keep the compact style of the existing tests (an object or array on one line while it fits in 110 columns). Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
 3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `tests/valid/NNN_name.jsonc`, in the same JSONC format.
 4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.

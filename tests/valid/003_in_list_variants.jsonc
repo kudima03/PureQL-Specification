@@ -9,7 +9,6 @@
         "select": [
           {
             "alias": "referrer_id",
-            "type": { "name": "uuid", "nullable": true },
             "expression": {
               "source": "users",
               "field": "referrer_id",
@@ -24,43 +23,50 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "not",
+        "type": { "name": "boolean" },
         "condition": {
           "operator": "in",
+          "type": { "name": "boolean" },
           "value": { "source": "orders", "field": "status", "type": { "name": "string" } },
           "list": { "type": { "name": "stringList" }, "value": [] }
         }
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "list": { "type": { "name": "booleanList" }, "value": [true] }
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
         "list": { "type": { "name": "decimalList" }, "value": [1.5, 2] }
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "list": { "param_name": "totals", "type": { "name": "integerList" } }
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "type": { "name": "string", "nullable": true }, "value": null },
         "list": { "param_name": "statuses", "type": { "name": "stringList" } }
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
         "list": {
           "subquery": "referrers",
@@ -70,6 +76,7 @@
       },
       {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "list": {
           "type": { "name": "datetimeList" },

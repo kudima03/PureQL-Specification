@@ -8,6 +8,9 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "coupon_id",
@@ -29,9 +32,6 @@
   "groupBy": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -42,10 +42,6 @@
     },
     {
       "alias": "coupon",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "coupons",
         "field": "code",
@@ -57,12 +53,12 @@
     },
     {
       "alias": "days_to_ship",
-      "type": {
-        "name": "integer",
-        "nullable": true
-      },
       "expression": {
         "operator": "dateDiffDays",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "left": {
           "source": "orders",
           "field": "shipped_date",
@@ -84,9 +80,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -96,11 +89,11 @@
     },
     {
       "alias": "coupon",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string"
+        },
         "values": [
           {
             "key": 1,
@@ -120,12 +113,12 @@
     },
     {
       "alias": "hours_to_ship",
-      "type": {
-        "name": "integer",
-        "nullable": true
-      },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "values": [
           {
             "key": 2,
@@ -145,19 +138,25 @@
     },
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     }
   ],
   "having": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "key": 1,
           "type": {
@@ -175,6 +174,9 @@
       },
       {
         "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "key": 2,
           "type": {
@@ -203,7 +205,10 @@
     },
     {
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       },
       "direction": "desc"
     }

@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "integer" },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

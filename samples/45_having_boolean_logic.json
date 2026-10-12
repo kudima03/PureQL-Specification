@@ -4,9 +4,6 @@
   },
   "groupBy": [
     {
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "user_id",
@@ -18,14 +15,26 @@
   ],
   "having": {
     "operator": "or",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
         "conditions": [
           {
             "operator": "greaterThan",
+            "type": {
+              "name": "boolean"
+            },
             "left": {
               "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
               "selector": {
                 "source": "orders",
                 "field": "total",
@@ -43,10 +52,19 @@
           },
           {
             "operator": "not",
+            "type": {
+              "name": "boolean"
+            },
             "condition": {
               "operator": "any",
+              "type": {
+                "name": "boolean"
+              },
               "predicate": {
                 "operator": "equal",
+                "type": {
+                  "name": "boolean"
+                },
                 "left": {
                   "source": "orders",
                   "field": "status",
@@ -67,8 +85,14 @@
       },
       {
         "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
-          "operator": "count"
+          "operator": "count",
+          "type": {
+            "name": "integer"
+          }
         },
         "right": {
           "param_name": "min_orders",
@@ -82,9 +106,6 @@
   "select": [
     {
       "alias": "user_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "key": 0,
         "type": {
@@ -94,11 +115,11 @@
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",

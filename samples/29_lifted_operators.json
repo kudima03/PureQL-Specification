@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "users",
         "field": "id",
@@ -18,12 +15,12 @@
     },
     {
       "alias": "trial_end",
-      "type": {
-        "name": "date",
-        "nullable": true
-      },
       "expression": {
         "operator": "dateAddDays",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
         "left": {
           "source": "users",
           "field": "trial_start",
@@ -42,12 +39,12 @@
     },
     {
       "alias": "greeting",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "operator": "concat",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
         "values": [
           {
             "type": {
@@ -68,12 +65,12 @@
     },
     {
       "alias": "age_next_year",
-      "type": {
-        "name": "integer",
-        "nullable": true
-      },
       "expression": {
         "operator": "add",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "values": [
           {
             "source": "users",

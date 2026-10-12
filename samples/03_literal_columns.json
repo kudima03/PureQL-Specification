@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "an_integer",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "type": {
           "name": "integer"
@@ -30,9 +24,6 @@
     },
     {
       "alias": "a_decimal",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "type": {
           "name": "decimal"
@@ -42,9 +33,6 @@
     },
     {
       "alias": "a_string",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "type": {
           "name": "string"
@@ -54,9 +42,6 @@
     },
     {
       "alias": "a_boolean",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "type": {
           "name": "boolean"
@@ -66,9 +51,6 @@
     },
     {
       "alias": "a_date",
-      "type": {
-        "name": "date"
-      },
       "expression": {
         "type": {
           "name": "date"
@@ -78,9 +60,6 @@
     },
     {
       "alias": "a_time",
-      "type": {
-        "name": "time"
-      },
       "expression": {
         "type": {
           "name": "time"
@@ -90,9 +69,6 @@
     },
     {
       "alias": "a_datetime",
-      "type": {
-        "name": "datetime"
-      },
       "expression": {
         "type": {
           "name": "datetime"
@@ -102,9 +78,6 @@
     },
     {
       "alias": "a_uuid",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "type": {
           "name": "uuid"

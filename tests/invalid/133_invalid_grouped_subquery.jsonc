@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
@@ -15,24 +14,22 @@
         "from": { "entity": "orders" },
         "groupBy": [
           {
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
           }
         ],
         "select": [
           {
             "alias": "user_id",
-            "type": { "name": "uuid" },
             "expression": { "key": 0, "type": { "name": "uuid" } }
           },
           {
             "alias": "orders",
-            "type": { "name": "integer" },
-            "expression": { "operator": "count", "over": "group" }
+            "expression": { "operator": "count", "type": { "name": "integer" }, "over": "group" }
           }
         ],
         "having": {
           "operator": "equal",
+          "type": { "name": "boolean" },
           "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
           "right": { "type": { "name": "string" }, "value": "paid" }
         }

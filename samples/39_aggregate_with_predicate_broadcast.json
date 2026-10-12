@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "orders",
         "field": "total",
@@ -31,11 +25,11 @@
     },
     {
       "alias": "paid_orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "operator": "count",
+        "type": {
+          "name": "integer"
+        },
         "predicate": {
           "source": "orders",
           "field": "is_paid",
@@ -47,11 +41,11 @@
     },
     {
       "alias": "paid_revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",

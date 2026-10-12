@@ -5,7 +5,6 @@
   "select": [
     {
       "alias": "line total",
-      "type": { "name": "decimal" },
       "expression": { "source": "позиции", "field": "unit price", "type": { "name": "decimal" } }
     }
   ]

@@ -5,11 +5,11 @@
   "select": [
     {
       "alias": "display_name",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string"
+        },
         "values": [
           {
             "source": "users",
@@ -31,12 +31,12 @@
     },
     {
       "alias": "phone",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
         "values": [
           {
             "source": "users",

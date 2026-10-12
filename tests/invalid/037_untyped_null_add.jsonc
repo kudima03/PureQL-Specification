@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "add",
+        "type": { "name": "decimal" },
         "values": [
           { "type": { "name": "null" }, "value": null },
           { "type": { "name": "null" }, "value": null }

@@ -10,6 +10,9 @@
       "alias": "referrer",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "u",
           "field": "referrer_id",
@@ -31,9 +34,6 @@
   "select": [
     {
       "alias": "name",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "u",
         "field": "name",
@@ -44,10 +44,6 @@
     },
     {
       "alias": "referrer_name",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "referrer",
         "field": "name",

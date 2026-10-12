@@ -8,6 +8,9 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "order_items",
           "field": "order_id",
@@ -29,6 +32,9 @@
       "entity": "users",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "user_id",
@@ -50,6 +56,9 @@
       "entity": "products",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "order_items",
           "field": "product_id",
@@ -70,9 +79,6 @@
   "select": [
     {
       "alias": "email",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "users",
         "field": "email",
@@ -83,9 +89,6 @@
     },
     {
       "alias": "order_id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -96,10 +99,6 @@
     },
     {
       "alias": "product",
-      "type": {
-        "name": "string",
-        "nullable": true
-      },
       "expression": {
         "source": "products",
         "field": "name",
@@ -111,9 +110,6 @@
     },
     {
       "alias": "quantity",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
         "source": "order_items",
         "field": "quantity",

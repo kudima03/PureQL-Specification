@@ -5,11 +5,14 @@
   "from": { "entity": "users" },
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "dateAddDays",
+          "type": { "name": "date", "nullable": true },
           "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
           "right": { "type": { "name": "integer" }, "value": 14 }
         },
@@ -17,10 +20,13 @@
       },
       {
         "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "dateDiffDays",
+          "type": { "name": "integer", "nullable": true },
           "left": {
             "operator": "dateAddDays",
+            "type": { "name": "date", "nullable": true },
             "left": {
               "source": "users",
               "field": "trial_start",
@@ -37,14 +43,13 @@
   "select": [
     {
       "alias": "email",
-      "type": { "name": "string" },
       "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
     },
     {
       "alias": "trial_ends_on",
-      "type": { "name": "date", "nullable": true },
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
         "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 14 }
       }
@@ -54,6 +59,7 @@
     {
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
         "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 14 }
       },

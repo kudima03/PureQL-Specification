@@ -3,6 +3,9 @@
   "from": { "entity": "orders" },
   "groupBy": null,
   "select": [
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "all" } }
+    {
+      "alias": "orders",
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
+    }
   ]
 }

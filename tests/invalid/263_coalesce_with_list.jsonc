@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "string", "nullable": true },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "string" },
         "values": [
           { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
           { "param_name": "codes", "type": { "name": "stringList" } }

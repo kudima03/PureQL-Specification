@@ -1,0 +1,20 @@
+// min over the group of a non-null selector without a predicate is non-null; declaring it nullable is wider
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

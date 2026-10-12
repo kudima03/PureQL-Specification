@@ -8,7 +8,6 @@
         "select": [
           {
             "alias": "id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
           }
         ],
@@ -20,7 +19,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
     }
   ]

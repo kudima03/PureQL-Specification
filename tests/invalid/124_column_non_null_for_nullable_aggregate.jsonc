@@ -1,12 +1,12 @@
-// Column declared non-null, but min over all rows is nullable
+// min over all rows declared non-null: it may see no rows, so it is nullable
 {
   "from": { "entity": "orders" },
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "decimal" },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

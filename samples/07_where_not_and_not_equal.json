@@ -4,9 +4,15 @@
   },
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "status",
@@ -23,6 +29,9 @@
       },
       {
         "operator": "not",
+        "type": {
+          "name": "boolean"
+        },
         "condition": {
           "source": "orders",
           "field": "is_test",
@@ -36,9 +45,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",

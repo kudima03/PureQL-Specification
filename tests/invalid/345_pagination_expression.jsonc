@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
@@ -13,6 +12,7 @@
     "skip": 0,
     "take": {
       "operator": "multiply",
+      "type": { "name": "integer" },
       "values": [
         { "param_name": "page_size", "type": { "name": "integer" } },
         { "type": { "name": "integer" }, "value": 2 }

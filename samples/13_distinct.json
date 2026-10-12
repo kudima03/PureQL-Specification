@@ -6,9 +6,6 @@
   "select": [
     {
       "alias": "status",
-      "type": {
-        "name": "string"
-      },
       "expression": {
         "source": "orders",
         "field": "status",

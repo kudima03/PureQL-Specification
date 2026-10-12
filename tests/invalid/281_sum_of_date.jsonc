@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "date" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "over": "all",
         "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }

@@ -1,0 +1,17 @@
+// coalesce of nullable operands only is nullable; the node declares it non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } },
+          { "type": { "name": "integer", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

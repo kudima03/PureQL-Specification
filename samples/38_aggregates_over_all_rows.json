@@ -5,20 +5,20 @@
   "select": [
     {
       "alias": "orders",
-      "type": {
-        "name": "integer"
-      },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     },
     {
       "alias": "revenue",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -30,12 +30,12 @@
     },
     {
       "alias": "smallest",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "min",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -47,12 +47,12 @@
     },
     {
       "alias": "latest",
-      "type": {
-        "name": "datetime",
-        "nullable": true
-      },
       "expression": {
         "operator": "max",
+        "type": {
+          "name": "datetime",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -64,12 +64,12 @@
     },
     {
       "alias": "average",
-      "type": {
-        "name": "decimal",
-        "nullable": true
-      },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -81,13 +81,16 @@
     },
     {
       "alias": "any_refund",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "any",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -106,11 +109,11 @@
     },
     {
       "alias": "all_paid",
-      "type": {
-        "name": "boolean"
-      },
       "expression": {
         "operator": "all",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "source": "orders",
           "field": "is_paid",

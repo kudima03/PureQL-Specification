@@ -4,7 +4,6 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "uuid" },
       "expression": { "entity": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ]

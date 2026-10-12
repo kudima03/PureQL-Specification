@@ -1,0 +1,16 @@
+// if with two non-null branches is non-null; declaring it nullable is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string", "nullable": true },
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "then": { "type": { "name": "string" }, "value": "paid" },
+        "else": { "type": { "name": "string" }, "value": "open" }
+      }
+    }
+  ]
+}

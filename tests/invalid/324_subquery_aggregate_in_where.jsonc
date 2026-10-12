@@ -8,13 +8,13 @@
         "select": [
           {
             "alias": "id",
-            "type": { "name": "uuid" },
             "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
           }
         ],
         "where": {
           "operator": "greaterThan",
-          "left": { "operator": "count", "over": "all" },
+          "type": { "name": "boolean" },
+          "left": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
           "right": { "type": { "name": "integer" }, "value": 1 }
         }
       }
@@ -24,7 +24,6 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "recent", "field": "id", "type": { "name": "uuid" } }
     }
   ]

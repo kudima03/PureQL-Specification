@@ -1,0 +1,17 @@
+// add of two integers is integer; declaring it decimal is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

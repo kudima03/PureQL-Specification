@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "smallest",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

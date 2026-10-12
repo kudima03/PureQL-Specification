@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "floor",
+        "type": { "name": "integer" },
         "value": { "source": "orders", "field": "name", "type": { "name": "string" } }
       }
     }

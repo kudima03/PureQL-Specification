@@ -5,9 +5,6 @@
   "select": [
     {
       "alias": "id",
-      "type": {
-        "name": "uuid"
-      },
       "expression": {
         "source": "orders",
         "field": "id",
@@ -18,9 +15,6 @@
     },
     {
       "alias": "total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "source": "orders",
         "field": "total",
@@ -31,11 +25,11 @@
     },
     {
       "alias": "share_of_total",
-      "type": {
-        "name": "decimal"
-      },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "orders",
@@ -46,6 +40,9 @@
           },
           {
             "operator": "sum",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "orders",
               "field": "total",

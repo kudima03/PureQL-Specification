@@ -4,12 +4,12 @@
   "select": [
     {
       "alias": "id",
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
     }
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "type": { "name": "string", "nullable": true }, "value": null },
     "right": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
   }

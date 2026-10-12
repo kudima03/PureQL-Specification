@@ -3,19 +3,19 @@
   "from": { "entity": "orders" },
   "groupBy": [
     {
-      "type": { "name": "uuid" },
       "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
     }
   ],
   "select": [
     {
       "alias": "c",
-      "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "over": "group",
         "selector": {
           "operator": "sum",
+          "type": { "name": "decimal" },
           "over": "group",
           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         }

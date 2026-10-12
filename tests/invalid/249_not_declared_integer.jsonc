@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "not",
+        "type": { "name": "integer", "nullable": true },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     }

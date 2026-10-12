@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "modulo",
+        "type": { "name": "integer" },
         "left": {
           "source": "orders",
           "field": "bonus_points",

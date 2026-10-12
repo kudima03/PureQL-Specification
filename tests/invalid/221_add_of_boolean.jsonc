@@ -4,9 +4,9 @@
   "select": [
     {
       "alias": "c",
-      "type": { "name": "integer" },
       "expression": {
         "operator": "add",
+        "type": { "name": "integer" },
         "values": [
           { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
           { "type": { "name": "integer" }, "value": 1 }
