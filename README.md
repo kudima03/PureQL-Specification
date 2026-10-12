@@ -14,7 +14,7 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `from` | yes | Source to read: `{ "entity": … }` or `{ "subquery": … }`, with an optional `alias` |
 | `joins` | no | Further sources, each with a join `kind` and an `on` condition. Omit rather than leave empty |
 | `where` | no | Row filter, before grouping |
-| `groupBy` | no | Group keys, each `{ alias?, expression }` with any row expression |
+| `groupBy` | no | Group keys, each `{ alias, expression }` with any row expression |
 | `having` | no | Group filter; only with `groupBy` |
 | `select` | yes, or `aggregate` | Result columns, each `{ alias, expression }`; a column has the type its expression declares |
 | `aggregate` | instead of `select` | Columns of a total query, which returns exactly one row. See [`aggregate`](#aggregate) |
@@ -66,7 +66,7 @@ There is no `null` type. A null literal always carries its type, and a literal i
 { "type": { "name": "uuid", "nullable": true }, "value": null }
 ```
 
-**Invariant:** the type of every expression is determined by its subtree and its context (row, projection or group, fixed by its position), never inferred from its surroundings. The context matters only for an aggregate without `over`, whose rows and so whose nullability depend on whether the query is grouped. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`. Every expression declares this type; see [Declared types](#declared-types).
+**Invariant:** the type of every expression is determined by its subtree and its context (row, projection, group or total, fixed by its position), never inferred from its surroundings. The context decides where fields, group keys and aggregates may appear, whether `over` may be written, and the rows an aggregate runs over, so whether `average`, `min` and `max` can be null: never in a total query, which returns its row even over no rows. With implicit conversions this is the narrowest type: an `integer` expression is also a valid `decimal`. Every expression declares this type; see [Declared types](#declared-types).
 
 ### Implicit conversions
 
