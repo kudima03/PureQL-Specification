@@ -8,6 +8,10 @@
     }
   ],
   "select": [
-    { "alias": "c", "type": { "name": "boolean" }, "expression": { "operator": "any", "over": "group" } }
+    {
+      "alias": "c",
+      "type": { "name": "boolean" },
+      "expression": { "operator": "any", "type": { "name": "boolean" }, "over": "group" }
+    }
   ]
 }

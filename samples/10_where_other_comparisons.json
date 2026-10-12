@@ -4,9 +4,15 @@
   },
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "name",
@@ -23,6 +29,9 @@
       },
       {
         "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "birth_date",
@@ -39,6 +48,9 @@
       },
       {
         "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "preferred_call_time",

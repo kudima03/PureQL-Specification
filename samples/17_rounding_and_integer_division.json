@@ -10,6 +10,9 @@
       },
       "expression": {
         "operator": "floor",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -26,6 +29,9 @@
       },
       "expression": {
         "operator": "ceiling",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -42,6 +48,9 @@
       },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "integer"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -58,6 +67,9 @@
       },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
         "value": {
           "source": "order_items",
           "field": "unit_price",
@@ -80,6 +92,9 @@
       },
       "expression": {
         "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "source": "order_items",
           "field": "quantity",
@@ -102,6 +117,9 @@
       },
       "expression": {
         "operator": "modulo",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "source": "order_items",
           "field": "quantity",

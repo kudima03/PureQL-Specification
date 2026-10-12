@@ -7,6 +7,31 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.2.0.0] - 2026-10-12
+
+Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. Every existing query needs a `type` on each operator node.
+
+### ✨ New Features
+
+- **Declared result types on operators**: `{ "operator": "add", "type": { "name": "integer" }, "values": [ … ] }`. The type of any expression can be read from the node itself, e.g. to deserialize it into a typed expression tree, with no type rules in the reader.
+
+### 🔧 Improvements
+
+- **Precise validation errors**: an error now points at the node and property that are wrong (`/where/right/type/name must be equal to one of the allowed values ["uuid"]`) instead of listing every way the expression could have been read.
+- **Faster validation**: each node is validated once, against the type it declares, and every other check reads only declared types. Validating every sample and valid test is about 2.5 times faster, and the schema compiles faster, with 184 definitions instead of 697.
+- **Linear on any input**: malformed deep queries are rejected as fast as valid ones are accepted.
+
+### ⚠️ Breaking Changes
+
+- **Operator nodes require `type`**: the result type, declared exactly. `add`, `subtract`, `multiply`, `if` and `coalesce` are `integer` when every operand is `integer` and `decimal` otherwise; a lifted operator is nullable exactly when an operand is; `coalesce` is non-null exactly when an operand is; `average`, `min` and `max` follow the aggregate rules. Declaring a wider type (`decimal` for a sum of integers, nullable for an addition of non-null values) is rejected, even where the wider type would be accepted; implicit conversions still apply where the expression is used.
+- **Fixed-type operators declare it too**: `and`, `or`, `not`, `equal`, `notEqual`, comparisons, `in`, `any` and `all` declare `{ "name": "boolean" }`; `count` declares `{ "name": "integer" }`.
+
+### Versioning
+
+Major preview bump (`0.1.0-preview.1.0.0` → `0.1.0-preview.2.0.0`). Every operator node gains a required property, so every existing query must be migrated; see Breaking Changes. Both `version` and `$id` updated.
+
+---
+
 ## [0.1.0-preview.1.0.0] - 2026-10-09
 
 PureQL moves to a type system enforced by the schema alone. Where an expression may appear, its type, how nulls propagate and the type of every result column are now all checked by any JSON Schema validator. The interpreter resolves names and makes a few checks that need no type inference. Every existing query needs migrating; the 56 new samples show the new forms.

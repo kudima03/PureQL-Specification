@@ -13,13 +13,16 @@
       "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date" },
         "left": {
           "operator": "max",
+          "type": { "name": "date" },
           "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": {
           "operator": "average",
+          "type": { "name": "decimal" },
           "over": "group",
           "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
         }

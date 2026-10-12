@@ -4,6 +4,9 @@
   },
   "where": {
     "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "source": "users",
       "field": "status",

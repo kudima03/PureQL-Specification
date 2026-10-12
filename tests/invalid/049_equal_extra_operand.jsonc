@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
     "right": { "type": { "name": "string" }, "value": "paid" },
     "other": { "type": { "name": "string" }, "value": "x" }

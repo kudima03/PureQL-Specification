@@ -8,6 +8,9 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "coupon_id",
@@ -63,6 +66,10 @@
       },
       "expression": {
         "operator": "dateDiffDays",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "left": {
           "source": "orders",
           "field": "shipped_date",
@@ -101,6 +108,9 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string"
+        },
         "values": [
           {
             "key": 1,
@@ -126,6 +136,10 @@
       },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "values": [
           {
             "key": 2,
@@ -149,15 +163,24 @@
         "name": "integer"
       },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     }
   ],
   "having": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "key": 1,
           "type": {
@@ -175,6 +198,9 @@
       },
       {
         "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "key": 2,
           "type": {
@@ -203,7 +229,10 @@
     },
     {
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       },
       "direction": "desc"
     }

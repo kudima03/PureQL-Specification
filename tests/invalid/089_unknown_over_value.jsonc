@@ -8,6 +8,10 @@
     }
   ],
   "select": [
-    { "alias": "c", "type": { "name": "integer" }, "expression": { "operator": "count", "over": "window" } }
+    {
+      "alias": "c",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "window" }
+    }
   ]
 }

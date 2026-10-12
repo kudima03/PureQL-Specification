@@ -1,0 +1,16 @@
+// dateDiffDays with a nullable operand is nullable; the node declares it non-null although the column is nullable
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "integer", "nullable": true },
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

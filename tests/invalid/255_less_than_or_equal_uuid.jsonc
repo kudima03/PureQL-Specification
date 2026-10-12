@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
     "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
   }

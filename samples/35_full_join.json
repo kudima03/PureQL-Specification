@@ -10,6 +10,9 @@
       "alias": "c",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "s",
           "field": "product_id",
@@ -36,6 +39,10 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        },
         "values": [
           {
             "source": "s",
@@ -63,6 +70,9 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "s",

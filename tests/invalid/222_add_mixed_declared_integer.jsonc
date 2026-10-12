@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "add",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "source": "orders", "field": "total", "type": { "name": "decimal" } }

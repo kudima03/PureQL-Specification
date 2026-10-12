@@ -7,6 +7,7 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "if",
+        "type": { "name": "string", "nullable": true },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": { "type": { "name": "string" }, "value": "paid" },
         "else": { "type": { "name": "string", "nullable": true }, "value": null }

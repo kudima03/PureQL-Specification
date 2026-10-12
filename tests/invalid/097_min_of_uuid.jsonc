@@ -13,6 +13,7 @@
       "type": { "name": "uuid" },
       "expression": {
         "operator": "min",
+        "type": { "name": "uuid" },
         "over": "group",
         "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
       }

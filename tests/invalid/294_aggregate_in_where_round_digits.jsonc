@@ -10,10 +10,12 @@
   ],
   "where": {
     "operator": "greaterThan",
+    "type": { "name": "boolean" },
     "left": {
       "operator": "round",
+      "type": { "name": "decimal" },
       "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-      "digits": { "operator": "count", "over": "all" }
+      "digits": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
     },
     "right": { "type": { "name": "integer" }, "value": 1 }
   }

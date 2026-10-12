@@ -18,8 +18,14 @@
   ],
   "having": {
     "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
-      "operator": "count"
+      "operator": "count",
+      "type": {
+        "name": "integer"
+      }
     },
     "right": {
       "type": {
@@ -47,7 +53,10 @@
         "name": "integer"
       },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     }
   ]

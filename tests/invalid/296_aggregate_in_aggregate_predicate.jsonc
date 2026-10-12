@@ -7,10 +7,12 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "integer" },
         "over": "all",
         "selector": { "type": { "name": "integer" }, "value": 1 },
         "predicate": {
           "operator": "any",
+          "type": { "name": "boolean" },
           "over": "all",
           "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
         }

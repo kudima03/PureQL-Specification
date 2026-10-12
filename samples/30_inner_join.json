@@ -8,6 +8,9 @@
       "entity": "users",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "user_id",

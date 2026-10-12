@@ -8,6 +8,9 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "coupon_id",
@@ -65,6 +68,9 @@
       },
       "expression": {
         "operator": "max",
+        "type": {
+          "name": "datetime"
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -81,6 +87,9 @@
       },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "datetime"
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -97,9 +106,16 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "operator": "min",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
             "selector": {
               "source": "orders",
               "field": "total",
@@ -127,8 +143,14 @@
   ],
   "having": {
     "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "max",
+      "type": {
+        "name": "datetime"
+      },
       "selector": {
         "source": "orders",
         "field": "ordered_at",

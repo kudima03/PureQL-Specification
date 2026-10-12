@@ -8,6 +8,9 @@
         },
         "where": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -56,6 +59,9 @@
             },
             "expression": {
               "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
               "selector": {
                 "source": "orders",
                 "field": "total",
@@ -71,7 +77,10 @@
               "name": "integer"
             },
             "expression": {
-              "operator": "count"
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
             }
           }
         ]
@@ -85,6 +94,9 @@
         },
         "where": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "user_totals",
             "field": "total",
@@ -139,6 +151,9 @@
       "subquery": "big_spenders",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "id",

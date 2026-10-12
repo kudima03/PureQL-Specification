@@ -10,6 +10,9 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string"
+        },
         "values": [
           {
             "source": "users",
@@ -37,6 +40,10 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
         "values": [
           {
             "source": "users",

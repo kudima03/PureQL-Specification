@@ -16,6 +16,7 @@
       "entity": "users",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "key": 0, "type": { "name": "uuid" } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }

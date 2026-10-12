@@ -6,13 +6,16 @@
   "from": { "entity": "orders" },
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "or",
+        "type": { "name": "boolean" },
         "conditions": [{ "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }]
       },
       {
         "operator": "coalesce",
+        "type": { "name": "boolean" },
         "values": [
           { "source": "orders", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
           { "type": { "name": "boolean" }, "value": false }
@@ -20,29 +23,35 @@
       },
       {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "type": { "name": "string", "nullable": true }, "value": null },
         "right": { "type": { "name": "string", "nullable": true }, "value": null }
       },
       {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "type": { "name": "integer", "nullable": true }, "value": null },
         "right": { "type": { "name": "decimal", "nullable": true }, "value": null }
       },
       {
         "operator": "not",
+        "type": { "name": "boolean" },
         "condition": {
           "operator": "greaterThan",
+          "type": { "name": "boolean" },
           "left": { "type": { "name": "date", "nullable": true }, "value": null },
           "right": { "type": { "name": "date", "nullable": true }, "value": null }
         }
       },
       {
         "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "right": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       },
       {
         "operator": "notEqual",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
         "right": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
@@ -54,6 +63,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "floor",
+        "type": { "name": "integer" },
         "value": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
     },
@@ -62,6 +72,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": { "type": { "name": "integer" }, "value": -2 }
       }
@@ -71,9 +82,11 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "digits": {
           "operator": "add",
+          "type": { "name": "integer" },
           "values": [
             { "param_name": "precision", "type": { "name": "integer" } },
             { "type": { "name": "integer" }, "value": 1 }
@@ -86,6 +99,7 @@
       "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
         "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
         "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }
@@ -95,6 +109,7 @@
       "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
+        "type": { "name": "time" },
         "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
         "right": { "type": { "name": "integer" }, "value": 60 }
       }
@@ -104,6 +119,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "add",
+        "type": { "name": "integer" },
         "values": [
           { "type": { "name": "integer" }, "value": 1 },
           { "type": { "name": "integer" }, "value": 2 },
@@ -116,6 +132,7 @@
       "type": { "name": "boolean", "nullable": true },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
         "right": { "type": { "name": "string" }, "value": "paid" }
       }
@@ -125,6 +142,7 @@
       "type": { "name": "uuid" },
       "expression": {
         "operator": "if",
+        "type": { "name": "uuid" },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
         "else": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
@@ -135,6 +153,7 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "string" },
         "values": [
           { "type": { "name": "string", "nullable": true }, "value": null },
           { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
@@ -147,6 +166,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } },
           { "source": "orders", "field": "total", "type": { "name": "decimal" } }
@@ -167,10 +187,12 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "and",
+        "type": { "name": "boolean" },
         "conditions": [
           { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
           {
             "operator": "equal",
+            "type": { "name": "boolean" },
             "left": {
               "source": "orders",
               "field": "is_verified",

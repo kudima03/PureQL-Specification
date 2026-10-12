@@ -1,0 +1,15 @@
+// min in a plain query may see no rows, so it is nullable; the node declares it non-null although the column is nullable
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "decimal", "nullable": true },
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

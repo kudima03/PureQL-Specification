@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "if",
+    "type": { "name": "boolean", "nullable": true },
     "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
     "then": { "source": "orders", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
     "else": { "type": { "name": "boolean" }, "value": true }

@@ -14,7 +14,8 @@
       "entity": "users",
       "on": {
         "operator": "in",
-        "value": { "operator": "count", "over": "all" },
+        "type": { "name": "boolean" },
+        "value": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
         "list": { "param_name": "sizes", "type": { "name": "integerList" } }
       }
     }

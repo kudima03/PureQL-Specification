@@ -7,6 +7,7 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "concat",
+        "type": { "name": "string", "nullable": true },
         "values": [
           { "source": "orders", "field": "name", "type": { "name": "string" } },
           { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } }

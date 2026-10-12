@@ -23,6 +23,9 @@
       },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",
@@ -47,6 +50,9 @@
       },
       "expression": {
         "operator": "subtract",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",
@@ -72,6 +78,9 @@
       },
       "expression": {
         "operator": "add",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "order_items",

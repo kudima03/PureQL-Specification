@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "timeDiffSeconds",
+        "type": { "name": "decimal" },
         "left": { "source": "orders", "field": "window_end", "type": { "name": "time" } },
         "right": { "source": "orders", "field": "window_start", "type": { "name": "time" } }
       }

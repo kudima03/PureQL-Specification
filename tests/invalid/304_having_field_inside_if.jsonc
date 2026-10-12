@@ -12,6 +12,7 @@
   ],
   "having": {
     "operator": "if",
+    "type": { "name": "boolean" },
     "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
     "then": { "type": { "name": "boolean" }, "value": true },
     "else": { "type": { "name": "boolean" }, "value": false }

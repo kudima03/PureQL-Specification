@@ -9,6 +9,7 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
       }
@@ -20,6 +21,7 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "string" },
         "values": [
           { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
           { "type": { "name": "string" }, "value": "no coupon" }
@@ -33,12 +35,17 @@
       "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "type": { "name": "integer" } }
+    },
     {
       "alias": "paid_orders",
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
+        "type": { "name": "integer" },
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
     },
@@ -47,8 +54,10 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": {
           "operator": "if",
+          "type": { "name": "decimal" },
           "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
           "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "else": { "type": { "name": "integer" }, "value": 0 }
@@ -60,6 +69,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }
@@ -68,6 +78,7 @@
     {
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "desc"

@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "floor",
+        "type": { "name": "integer", "nullable": true },
         "value": { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } }
       }
     }

@@ -13,6 +13,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "min_number",
+        "type": { "name": "decimal" },
         "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

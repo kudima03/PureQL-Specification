@@ -23,6 +23,9 @@
       },
       "expression": {
         "operator": "timeAddSeconds",
+        "type": {
+          "name": "time"
+        },
         "left": {
           "source": "orders",
           "field": "delivery_window_start",
@@ -32,6 +35,9 @@
         },
         "right": {
           "operator": "multiply",
+          "type": {
+            "name": "integer"
+          },
           "values": [
             {
               "param_name": "window_hours",
@@ -56,6 +62,9 @@
       },
       "expression": {
         "operator": "datetimeDiffSeconds",
+        "type": {
+          "name": "decimal"
+        },
         "left": {
           "source": "orders",
           "field": "shipped_at",
@@ -75,9 +84,15 @@
   ],
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "ordered_at",
@@ -94,6 +109,9 @@
       },
       {
         "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "delivery_window_start",

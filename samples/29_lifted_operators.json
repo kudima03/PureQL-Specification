@@ -24,6 +24,10 @@
       },
       "expression": {
         "operator": "dateAddDays",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
         "left": {
           "source": "users",
           "field": "trial_start",
@@ -48,6 +52,10 @@
       },
       "expression": {
         "operator": "concat",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
         "values": [
           {
             "type": {
@@ -74,6 +82,10 @@
       },
       "expression": {
         "operator": "add",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
         "values": [
           {
             "source": "users",

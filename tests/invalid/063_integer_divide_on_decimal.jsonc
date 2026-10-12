@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "integerDivide",
+        "type": { "name": "integer" },
         "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "right": { "type": { "name": "integer" }, "value": 2 }
       }

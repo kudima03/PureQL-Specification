@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "greaterThan",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
     "right": { "type": { "name": "string" }, "value": "100" }
   }

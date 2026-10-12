@@ -36,6 +36,9 @@
       },
       "expression": {
         "operator": "count",
+        "type": {
+          "name": "integer"
+        },
         "predicate": {
           "source": "orders",
           "field": "is_paid",
@@ -52,6 +55,9 @@
       },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",

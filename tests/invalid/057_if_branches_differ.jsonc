@@ -7,6 +7,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "if",
+        "type": { "name": "decimal" },
         "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
         "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "else": { "type": { "name": "string" }, "value": "n/a" }

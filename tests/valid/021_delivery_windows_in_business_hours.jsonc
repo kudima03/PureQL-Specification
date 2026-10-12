@@ -5,14 +5,17 @@
   "from": { "entity": "orders" },
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
         "right": { "type": { "name": "time" }, "value": "09:00:00" }
       },
       {
         "operator": "lessThan",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
         "right": { "type": { "name": "time" }, "value": "18:00:00" }
       }
@@ -34,9 +37,11 @@
       "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
+        "type": { "name": "time" },
         "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
         "right": {
           "operator": "multiply",
+          "type": { "name": "integer" },
           "values": [
             { "type": { "name": "integer" }, "value": 2 },
             { "type": { "name": "integer" }, "value": 3600 }
@@ -49,9 +54,11 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "divide",
+        "type": { "name": "decimal" },
         "values": [
           {
             "operator": "timeDiffSeconds",
+            "type": { "name": "decimal" },
             "left": { "type": { "name": "time" }, "value": "18:00:00" },
             "right": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
           },

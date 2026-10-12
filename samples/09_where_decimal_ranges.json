@@ -4,9 +4,15 @@
   },
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "total",
@@ -23,6 +29,9 @@
       },
       {
         "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "total",
@@ -39,6 +48,9 @@
       },
       {
         "operator": "greaterThan",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "total",
@@ -55,6 +67,9 @@
       },
       {
         "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "total",

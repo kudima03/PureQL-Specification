@@ -9,7 +9,10 @@
         "name": "integer"
       },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     },
     {
@@ -19,6 +22,9 @@
       },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -36,6 +42,10 @@
       },
       "expression": {
         "operator": "min",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -53,6 +63,10 @@
       },
       "expression": {
         "operator": "max",
+        "type": {
+          "name": "datetime",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "ordered_at",
@@ -70,6 +84,10 @@
       },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -86,8 +104,14 @@
       },
       "expression": {
         "operator": "any",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -111,6 +135,9 @@
       },
       "expression": {
         "operator": "all",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "source": "orders",
           "field": "is_paid",

@@ -9,16 +9,20 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "if",
+        "type": { "name": "string" },
         "condition": {
           "operator": "lessThan",
+          "type": { "name": "boolean" },
           "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
           "right": { "type": { "name": "integer" }, "value": 50 }
         },
         "then": { "type": { "name": "string" }, "value": "small" },
         "else": {
           "operator": "if",
+          "type": { "name": "string" },
           "condition": {
             "operator": "lessThan",
+            "type": { "name": "boolean" },
             "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
             "right": { "type": { "name": "integer" }, "value": 200 }
           },
@@ -34,12 +38,17 @@
       "type": { "name": "string" },
       "expression": { "key": 0, "type": { "name": "string" } }
     },
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "type": { "name": "integer" } }
+    },
     {
       "alias": "revenue",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -48,9 +57,14 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": {
           "operator": "divide",
-          "values": [{ "operator": "count" }, { "operator": "count", "over": "all" }]
+          "type": { "name": "decimal" },
+          "values": [
+            { "operator": "count", "type": { "name": "integer" } },
+            { "operator": "count", "type": { "name": "integer" }, "over": "all" }
+          ]
         },
         "digits": { "type": { "name": "integer" }, "value": 3 }
       }
@@ -60,6 +74,7 @@
     {
       "expression": {
         "operator": "min",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "asc"

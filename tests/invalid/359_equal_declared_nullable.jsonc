@@ -1,0 +1,16 @@
+// equal is a non-null boolean; declaring it nullable is wider than its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "type": { "name": "boolean", "nullable": true },
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean", "nullable": true },
+        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "paid" }
+      }
+    }
+  ]
+}

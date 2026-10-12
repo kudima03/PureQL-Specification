@@ -24,6 +24,10 @@
       },
       "expression": {
         "operator": "if",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "condition": {
           "source": "orders",
           "field": "is_paid",
@@ -55,6 +59,10 @@
       },
       "expression": {
         "operator": "subtract",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
         "values": [
           {
             "source": "orders",

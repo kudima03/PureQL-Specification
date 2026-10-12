@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "in",
+    "type": { "name": "boolean" },
     "value": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
     "list": { "param_name": "ids", "type": { "name": "stringList" } }
   }

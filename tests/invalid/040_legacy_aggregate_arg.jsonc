@@ -13,6 +13,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "arg": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }

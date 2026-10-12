@@ -23,6 +23,9 @@
       },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",
@@ -48,6 +51,9 @@
       },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",
@@ -72,6 +78,9 @@
       },
       "expression": {
         "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "order_items",

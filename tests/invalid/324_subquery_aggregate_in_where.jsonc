@@ -14,7 +14,8 @@
         ],
         "where": {
           "operator": "greaterThan",
-          "left": { "operator": "count", "over": "all" },
+          "type": { "name": "boolean" },
+          "left": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
           "right": { "type": { "name": "integer" }, "value": 1 }
         }
       }

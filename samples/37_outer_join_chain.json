@@ -8,6 +8,9 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "orders",
           "field": "coupon_id",
@@ -31,6 +34,9 @@
       "alias": "issuer",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "coupons",
           "field": "issued_by",

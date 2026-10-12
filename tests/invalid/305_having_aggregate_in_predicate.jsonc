@@ -12,12 +12,15 @@
   ],
   "having": {
     "operator": "any",
+    "type": { "name": "boolean" },
     "over": "group",
     "predicate": {
       "operator": "greaterThan",
+      "type": { "name": "boolean" },
       "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
       "right": {
         "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

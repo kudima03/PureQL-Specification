@@ -8,7 +8,15 @@
     }
   ],
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
-    { "alias": "c", "type": { "name": "boolean" }, "expression": { "operator": "all", "over": "group" } }
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "key": 0, "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "c",
+      "type": { "name": "boolean" },
+      "expression": { "operator": "all", "type": { "name": "boolean" }, "over": "group" }
+    }
   ]
 }

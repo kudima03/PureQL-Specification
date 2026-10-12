@@ -44,6 +44,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "discount", "type": { "name": "decimal", "nullable": true } },
           { "type": { "name": "integer" }, "value": 0 }
@@ -53,22 +54,27 @@
   ],
   "having": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       { "key": 2, "type": { "name": "boolean" } },
       {
         "operator": "any",
+        "type": { "name": "boolean" },
         "over": "group",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       },
       {
         "operator": "greaterThan",
-        "left": { "operator": "count", "over": "group" },
-        "right": { "operator": "count", "over": "all" }
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" }, "over": "group" },
+        "right": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
       },
       {
         "operator": "greaterThan",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "max",
+          "type": { "name": "decimal", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         },
@@ -82,6 +88,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal" },
         "over": "group",
         "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
@@ -91,6 +98,7 @@
       "type": { "name": "decimal", "nullable": true },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
         "over": "group",
         "selector": {
           "source": "orders",
@@ -104,6 +112,7 @@
       "type": { "name": "string" },
       "expression": {
         "operator": "max",
+        "type": { "name": "string" },
         "over": "group",
         "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
       }
@@ -113,6 +122,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "integer" },
         "over": "group",
         "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
       }
@@ -127,9 +137,11 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "key": 0, "type": { "name": "integer", "nullable": true } },
         "right": {
           "operator": "sum",
+          "type": { "name": "decimal" },
           "over": "group",
           "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
         }
@@ -145,15 +157,19 @@
       "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date" },
         "left": {
           "operator": "min",
+          "type": { "name": "date" },
           "over": "group",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
         "right": {
           "operator": "dateDiffDays",
+          "type": { "name": "integer" },
           "left": {
             "operator": "max",
+            "type": { "name": "date" },
             "over": "group",
             "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
           },
@@ -166,15 +182,18 @@
       "type": { "name": "string", "nullable": true },
       "expression": {
         "operator": "concat",
+        "type": { "name": "string", "nullable": true },
         "values": [
           {
             "operator": "if",
+            "type": { "name": "string" },
             "condition": { "key": 2, "type": { "name": "boolean" } },
             "then": { "type": { "name": "string" }, "value": "paid " },
             "else": { "type": { "name": "string" }, "value": "open " }
           },
           {
             "operator": "max",
+            "type": { "name": "string", "nullable": true },
             "over": "all",
             "selector": { "source": "orders", "field": "name", "type": { "name": "string" } }
           }
@@ -186,11 +205,14 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": {
           "operator": "min",
+          "type": { "name": "integer" },
           "over": "group",
           "selector": {
             "operator": "if",
+            "type": { "name": "integer" },
             "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
             "then": { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
             "else": { "type": { "name": "integer" }, "value": 0 }
@@ -204,11 +226,14 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": {
           "operator": "max",
+          "type": { "name": "date" },
           "over": "group",
           "selector": {
             "operator": "dateAddDays",
+            "type": { "name": "date" },
             "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
             "right": { "type": { "name": "integer" }, "value": 1 }
           }
@@ -221,6 +246,7 @@
     {
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "over": "all",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
@@ -228,9 +254,11 @@
     {
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "date" },
         "values": [
           {
             "operator": "min",
+            "type": { "name": "date", "nullable": true },
             "over": "all",
             "selector": {
               "source": "orders",

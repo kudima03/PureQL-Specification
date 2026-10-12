@@ -10,8 +10,10 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": {
       "operator": "coalesce",
+      "type": { "name": "integer" },
       "values": [
         { "type": { "name": "integer", "nullable": true }, "value": null },
         { "source": "orders", "field": "name", "type": { "name": "string" } }

@@ -10,6 +10,9 @@
       "alias": "referrer",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "u",
           "field": "referrer_id",

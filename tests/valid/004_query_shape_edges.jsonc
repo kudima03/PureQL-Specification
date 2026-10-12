@@ -39,7 +39,7 @@
     },
     { "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } },
     { "expression": { "type": { "name": "date", "nullable": true }, "value": null }, "direction": "asc" },
-    { "expression": { "operator": "count", "over": "all" } }
+    { "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" } }
   ],
   "distinct": false,
   "pagination": { "skip": 0, "take": 1 }

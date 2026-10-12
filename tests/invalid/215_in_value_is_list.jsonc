@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "in",
+    "type": { "name": "boolean" },
     "value": { "param_name": "a", "type": { "name": "stringList" } },
     "list": { "param_name": "b", "type": { "name": "stringList" } }
   }

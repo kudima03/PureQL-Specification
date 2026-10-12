@@ -13,6 +13,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "over": "group",
         "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
       }

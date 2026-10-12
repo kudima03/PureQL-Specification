@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "divide",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
           { "type": { "name": "integer" }, "value": 2 }

@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "type": { "name": "string", "nullable": true }, "value": null },
     "right": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
   }

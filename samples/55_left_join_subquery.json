@@ -8,6 +8,9 @@
         },
         "where": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -56,6 +59,9 @@
             },
             "expression": {
               "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
               "selector": {
                 "source": "orders",
                 "field": "total",
@@ -71,7 +77,10 @@
               "name": "integer"
             },
             "expression": {
-              "operator": "count"
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
             }
           }
         ]
@@ -87,6 +96,9 @@
       "subquery": "user_totals",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "id",
@@ -125,6 +137,9 @@
       },
       "expression": {
         "operator": "coalesce",
+        "type": {
+          "name": "integer"
+        },
         "values": [
           {
             "source": "user_totals",

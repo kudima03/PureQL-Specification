@@ -9,6 +9,7 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }
@@ -16,6 +17,7 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "id", "type": { "name": "uuid", "nullable": true } },
     "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
   },

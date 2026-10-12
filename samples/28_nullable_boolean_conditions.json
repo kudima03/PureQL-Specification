@@ -34,9 +34,15 @@
   ],
   "where": {
     "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
     "conditions": [
       {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "users",
           "field": "is_verified",
@@ -54,6 +60,9 @@
       },
       {
         "operator": "coalesce",
+        "type": {
+          "name": "boolean"
+        },
         "values": [
           {
             "source": "users",

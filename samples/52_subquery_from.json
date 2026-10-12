@@ -8,6 +8,9 @@
         },
         "where": {
           "operator": "greaterThanOrEqual",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "ordered_at",

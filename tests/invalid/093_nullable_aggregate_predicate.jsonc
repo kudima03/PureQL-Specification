@@ -13,6 +13,7 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "any",
+        "type": { "name": "boolean" },
         "over": "group",
         "predicate": {
           "source": "orders",

@@ -7,6 +7,7 @@
       "type": { "name": "time" },
       "expression": {
         "operator": "timeAddSeconds",
+        "type": { "name": "time" },
         "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
         "right": { "type": { "name": "integer" }, "value": 60 }
       }

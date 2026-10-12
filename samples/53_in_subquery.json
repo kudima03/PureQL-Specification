@@ -8,6 +8,9 @@
         },
         "where": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "users",
             "field": "tier",
@@ -45,6 +48,9 @@
   },
   "where": {
     "operator": "in",
+    "type": {
+      "name": "boolean"
+    },
     "value": {
       "source": "orders",
       "field": "user_id",

@@ -7,8 +7,10 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "in",
+        "type": { "name": "boolean" },
         "value": {
           "operator": "average",
+          "type": { "name": "date", "nullable": true },
           "over": "all",
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },

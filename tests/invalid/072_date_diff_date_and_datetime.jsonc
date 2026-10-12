@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "dateDiffDays",
+        "type": { "name": "integer" },
         "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
         "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }

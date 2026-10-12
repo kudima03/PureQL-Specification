@@ -7,9 +7,11 @@
       "type": { "name": "date" },
       "expression": {
         "operator": "dateAddDays",
+        "type": { "name": "date" },
         "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
         "right": {
           "operator": "divide",
+          "type": { "name": "decimal" },
           "values": [
             { "source": "orders", "field": "quantity", "type": { "name": "integer" } },
             { "type": { "name": "integer" }, "value": 2 }

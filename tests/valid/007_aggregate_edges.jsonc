@@ -7,13 +7,14 @@
     {
       "alias": "count_as_decimal",
       "type": { "name": "decimal" },
-      "expression": { "operator": "count", "over": "all" }
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
     },
     {
       "alias": "count_as_nullable",
       "type": { "name": "integer", "nullable": true },
       "expression": {
         "operator": "count",
+        "type": { "name": "integer" },
         "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
@@ -23,6 +24,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "integer" },
         "over": "all",
         "selector": {
           "source": "orders",
@@ -36,6 +38,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "integer" },
         "over": "all",
         "selector": { "type": { "name": "integer" }, "value": 1 }
       }
@@ -45,6 +48,7 @@
       "type": { "name": "datetime", "nullable": true },
       "expression": {
         "operator": "average",
+        "type": { "name": "datetime", "nullable": true },
         "over": "all",
         "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
@@ -54,6 +58,7 @@
       "type": { "name": "boolean" },
       "expression": {
         "operator": "all",
+        "type": { "name": "boolean" },
         "over": "all",
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
@@ -63,9 +68,11 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "if",
+        "type": { "name": "decimal" },
         "condition": {
           "operator": "greaterThan",
-          "left": { "operator": "count", "over": "all" },
+          "type": { "name": "boolean" },
+          "left": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
           "right": { "type": { "name": "integer" }, "value": 0 }
         },
         "then": { "source": "orders", "field": "total", "type": { "name": "decimal" } },

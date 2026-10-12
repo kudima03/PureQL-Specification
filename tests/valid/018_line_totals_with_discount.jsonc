@@ -9,6 +9,7 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
         "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
       }
@@ -18,6 +19,7 @@
       "entity": "coupons",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
       }
@@ -34,6 +36,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "subtract",
+        "type": { "name": "integer" },
         "values": [
           { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
           { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
@@ -45,6 +48,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "multiply",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
           { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
@@ -56,11 +60,14 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "round",
+        "type": { "name": "decimal" },
         "value": {
           "operator": "multiply",
+          "type": { "name": "decimal" },
           "values": [
             {
               "operator": "multiply",
+              "type": { "name": "decimal" },
               "values": [
                 { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
                 { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
@@ -68,10 +75,12 @@
             },
             {
               "operator": "subtract",
+              "type": { "name": "decimal" },
               "values": [
                 { "type": { "name": "integer" }, "value": 1 },
                 {
                   "operator": "coalesce",
+                  "type": { "name": "decimal" },
                   "values": [
                     {
                       "source": "coupons",
@@ -94,6 +103,7 @@
     {
       "expression": {
         "operator": "multiply",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
           { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }

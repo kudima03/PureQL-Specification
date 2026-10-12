@@ -36,8 +36,14 @@
       },
       "expression": {
         "operator": "count",
+        "type": {
+          "name": "integer"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -61,6 +67,9 @@
       },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",
@@ -84,8 +93,14 @@
       },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "operator": "if",
+          "type": {
+            "name": "decimal"
+          },
           "condition": {
             "source": "orders",
             "field": "is_paid",
@@ -116,8 +131,14 @@
       },
       "expression": {
         "operator": "any",
+        "type": {
+          "name": "boolean"
+        },
         "predicate": {
           "operator": "equal",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "status",
@@ -137,6 +158,9 @@
   ],
   "having": {
     "operator": "all",
+    "type": {
+      "name": "boolean"
+    },
     "predicate": {
       "source": "orders",
       "field": "is_paid",

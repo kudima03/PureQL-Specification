@@ -36,6 +36,9 @@
       },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "orders",
@@ -46,6 +49,9 @@
           },
           {
             "operator": "sum",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "orders",
               "field": "total",

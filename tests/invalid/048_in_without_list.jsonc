@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "in",
+    "type": { "name": "boolean" },
     "value": { "source": "orders", "field": "status", "type": { "name": "string" } }
   }
 }

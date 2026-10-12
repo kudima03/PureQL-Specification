@@ -13,6 +13,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "count",
+        "type": { "name": "integer" },
         "over": "group",
         "predicate": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }

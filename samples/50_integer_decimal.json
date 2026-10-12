@@ -8,6 +8,9 @@
       "entity": "orders",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "order_items",
           "field": "order_id",
@@ -27,8 +30,14 @@
   ],
   "where": {
     "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "modulo",
+      "type": {
+        "name": "integer"
+      },
       "left": {
         "source": "order_items",
         "field": "quantity",
@@ -84,6 +93,9 @@
       },
       "expression": {
         "operator": "sum",
+        "type": {
+          "name": "integer"
+        },
         "selector": {
           "source": "order_items",
           "field": "quantity",
@@ -100,10 +112,19 @@
       },
       "expression": {
         "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
         "value": {
           "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
           "selector": {
             "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
             "values": [
               {
                 "source": "order_items",
@@ -137,8 +158,14 @@
       },
       "expression": {
         "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
         "left": {
-          "operator": "count"
+          "operator": "count",
+          "type": {
+            "name": "integer"
+          }
         },
         "right": {
           "type": {
@@ -155,8 +182,14 @@
       },
       "expression": {
         "operator": "dateAddDays",
+        "type": {
+          "name": "date"
+        },
         "left": {
           "operator": "max",
+          "type": {
+            "name": "date"
+          },
           "selector": {
             "source": "orders",
             "field": "order_date",
@@ -167,8 +200,14 @@
         },
         "right": {
           "operator": "floor",
+          "type": {
+            "name": "integer"
+          },
           "value": {
             "operator": "average",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "order_items",
               "field": "quantity",

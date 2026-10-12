@@ -10,9 +10,11 @@
   ],
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "coalesce",
+        "type": { "name": "boolean", "nullable": true },
         "values": [
           { "source": "orders", "field": "is_verified", "type": { "name": "boolean", "nullable": true } },
           { "type": { "name": "boolean", "nullable": true }, "value": null }

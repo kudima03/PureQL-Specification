@@ -14,8 +14,9 @@
       "entity": "users",
       "on": {
         "operator": "greaterThan",
+        "type": { "name": "boolean" },
         "left": { "source": "users", "field": "score", "type": { "name": "integer" } },
-        "right": { "operator": "count", "over": "all" }
+        "right": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
       }
     }
   ]

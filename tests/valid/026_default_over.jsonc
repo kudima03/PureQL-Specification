@@ -9,12 +9,17 @@
       "query": {
         "from": { "entity": "orders" },
         "select": [
-          { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+          {
+            "alias": "orders",
+            "type": { "name": "integer" },
+            "expression": { "operator": "count", "type": { "name": "integer" } }
+          },
           {
             "alias": "smallest",
             "type": { "name": "decimal", "nullable": true },
             "expression": {
               "operator": "min",
+              "type": { "name": "decimal", "nullable": true },
               "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
             }
           }
@@ -32,17 +37,27 @@
   ],
   "having": {
     "operator": "greaterThan",
-    "left": { "operator": "count" },
+    "type": { "name": "boolean" },
+    "left": { "operator": "count", "type": { "name": "integer" } },
     "right": { "type": { "name": "integer" }, "value": 1 }
   },
   "select": [
-    { "alias": "user_id", "type": { "name": "uuid" }, "expression": { "key": 0, "type": { "name": "uuid" } } },
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "user_id",
+      "type": { "name": "uuid" },
+      "expression": { "key": 0, "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "type": { "name": "integer" } }
+    },
     {
       "alias": "smallest",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -51,6 +66,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
@@ -59,13 +75,16 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "divide",
+        "type": { "name": "decimal" },
         "values": [
           {
             "operator": "sum",
+            "type": { "name": "decimal" },
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           },
           {
             "operator": "sum",
+            "type": { "name": "decimal" },
             "over": "all",
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           }
@@ -77,6 +96,7 @@
     {
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "desc"

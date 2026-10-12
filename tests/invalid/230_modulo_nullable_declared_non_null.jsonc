@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "modulo",
+        "type": { "name": "integer", "nullable": true },
         "left": {
           "source": "orders",
           "field": "bonus_points",

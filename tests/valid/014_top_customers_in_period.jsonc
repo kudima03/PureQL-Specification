@@ -9,6 +9,7 @@
       "entity": "users",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
       }
@@ -16,14 +17,17 @@
   ],
   "where": {
     "operator": "and",
+    "type": { "name": "boolean" },
     "conditions": [
       {
         "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "right": { "param_name": "since", "type": { "name": "datetime" } }
       },
       {
         "operator": "lessThan",
+        "type": { "name": "boolean" },
         "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
         "right": { "param_name": "until", "type": { "name": "datetime" } }
       }
@@ -43,8 +47,10 @@
   ],
   "having": {
     "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
     "left": {
       "operator": "sum",
+      "type": { "name": "decimal" },
       "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
     },
     "right": { "param_name": "min_revenue", "type": { "name": "decimal" } }
@@ -60,15 +66,21 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
-    { "alias": "orders", "type": { "name": "integer" }, "expression": { "operator": "count" } },
+    {
+      "alias": "orders",
+      "type": { "name": "integer" },
+      "expression": { "operator": "count", "type": { "name": "integer" } }
+    },
     {
       "alias": "average_order",
       "type": { "name": "decimal" },
       "expression": {
         "operator": "average",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     }
@@ -77,6 +89,7 @@
     {
       "expression": {
         "operator": "sum",
+        "type": { "name": "decimal" },
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       },
       "direction": "desc"

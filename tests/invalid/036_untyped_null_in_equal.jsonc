@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "equal",
+    "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
     "right": { "type": { "name": "null" }, "value": null }
   }

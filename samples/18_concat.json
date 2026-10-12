@@ -10,6 +10,9 @@
       },
       "expression": {
         "operator": "concat",
+        "type": {
+          "name": "string"
+        },
         "values": [
           {
             "source": "users",

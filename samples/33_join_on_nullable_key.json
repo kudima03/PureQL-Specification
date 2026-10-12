@@ -10,9 +10,15 @@
       "alias": "b",
       "on": {
         "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
         "conditions": [
           {
             "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
             "left": {
               "source": "a",
               "field": "referrer_id",
@@ -32,6 +38,9 @@
           },
           {
             "operator": "notEqual",
+            "type": {
+              "name": "boolean"
+            },
             "left": {
               "source": "a",
               "field": "referrer_id",
@@ -50,6 +59,9 @@
           },
           {
             "operator": "notEqual",
+            "type": {
+              "name": "boolean"
+            },
             "left": {
               "source": "a",
               "field": "id",

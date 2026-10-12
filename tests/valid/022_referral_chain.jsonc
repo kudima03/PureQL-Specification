@@ -10,6 +10,7 @@
       "alias": "referrer",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "u", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "referrer", "field": "id", "type": { "name": "uuid" } }
       }
@@ -20,6 +21,7 @@
       "alias": "grand_referrer",
       "on": {
         "operator": "equal",
+        "type": { "name": "boolean" },
         "left": { "source": "referrer", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "grand_referrer", "field": "id", "type": { "name": "uuid" } }
       }
@@ -50,16 +52,20 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "if",
+        "type": { "name": "integer" },
         "condition": {
           "operator": "equal",
+          "type": { "name": "boolean" },
           "left": { "source": "referrer", "field": "id", "type": { "name": "uuid", "nullable": true } },
           "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
         },
         "then": { "type": { "name": "integer" }, "value": 0 },
         "else": {
           "operator": "if",
+          "type": { "name": "integer" },
           "condition": {
             "operator": "equal",
+            "type": { "name": "boolean" },
             "left": {
               "source": "grand_referrer",
               "field": "id",

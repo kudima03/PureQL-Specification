@@ -13,6 +13,7 @@
       "type": { "name": "decimal" },
       "expression": {
         "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
         "over": "group",
         "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
         "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }

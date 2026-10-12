@@ -4,8 +4,15 @@
   },
   "where": {
     "operator": "lessThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "dateDiffDays",
+      "type": {
+        "name": "integer",
+        "nullable": true
+      },
       "left": {
         "source": "orders",
         "field": "shipped_date",
@@ -63,8 +70,14 @@
       },
       "expression": {
         "operator": "dateDiffDays",
+        "type": {
+          "name": "integer"
+        },
         "left": {
           "operator": "max",
+          "type": {
+            "name": "date"
+          },
           "selector": {
             "source": "orders",
             "field": "order_date",
@@ -75,6 +88,9 @@
         },
         "right": {
           "operator": "min",
+          "type": {
+            "name": "date"
+          },
           "selector": {
             "source": "orders",
             "field": "order_date",
@@ -88,8 +104,14 @@
   ],
   "having": {
     "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
     "left": {
       "operator": "max",
+      "type": {
+        "name": "date"
+      },
       "selector": {
         "source": "orders",
         "field": "order_date",
@@ -100,6 +122,9 @@
     },
     "right": {
       "operator": "dateAddDays",
+      "type": {
+        "name": "date"
+      },
       "left": {
         "param_name": "as_of",
         "type": {

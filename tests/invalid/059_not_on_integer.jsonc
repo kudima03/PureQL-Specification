@@ -10,6 +10,7 @@
   ],
   "where": {
     "operator": "not",
+    "type": { "name": "boolean" },
     "condition": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
   }
 }

@@ -7,6 +7,7 @@
       "type": { "name": "integer" },
       "expression": {
         "operator": "coalesce",
+        "type": { "name": "decimal" },
         "values": [
           { "source": "orders", "field": "bonus_points", "type": { "name": "integer", "nullable": true } },
           { "source": "orders", "field": "total", "type": { "name": "decimal" } }

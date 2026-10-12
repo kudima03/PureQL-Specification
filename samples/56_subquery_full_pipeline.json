@@ -12,6 +12,9 @@
             "entity": "orders",
             "on": {
               "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
               "left": {
                 "source": "order_items",
                 "field": "order_id",
@@ -57,6 +60,9 @@
             },
             "expression": {
               "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
               "values": [
                 {
                   "source": "order_items",
@@ -100,8 +106,14 @@
         ],
         "having": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "operator": "sum",
+            "type": {
+              "name": "decimal"
+            },
             "selector": {
               "source": "paid_lines",
               "field": "line_total",
@@ -137,6 +149,9 @@
             },
             "expression": {
               "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
               "selector": {
                 "source": "paid_lines",
                 "field": "line_total",
@@ -152,7 +167,10 @@
               "name": "integer"
             },
             "expression": {
-              "operator": "count"
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
             }
           }
         ]
@@ -166,6 +184,9 @@
         },
         "where": {
           "operator": "lessThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "users",
             "field": "last_login_at",
@@ -209,6 +230,9 @@
       "subquery": "user_revenue",
       "on": {
         "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
         "left": {
           "source": "u",
           "field": "id",
@@ -228,8 +252,14 @@
   ],
   "where": {
     "operator": "not",
+    "type": {
+      "name": "boolean"
+    },
     "condition": {
       "operator": "in",
+      "type": {
+        "name": "boolean"
+      },
       "value": {
         "source": "u",
         "field": "id",
@@ -280,6 +310,9 @@
       },
       "expression": {
         "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
         "values": [
           {
             "source": "user_revenue",

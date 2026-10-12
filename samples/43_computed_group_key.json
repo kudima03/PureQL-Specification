@@ -10,8 +10,14 @@
       },
       "expression": {
         "operator": "if",
+        "type": {
+          "name": "string"
+        },
         "condition": {
           "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
           "left": {
             "source": "orders",
             "field": "total",
@@ -60,7 +66,10 @@
         "name": "integer"
       },
       "expression": {
-        "operator": "count"
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
       }
     },
     {
@@ -70,6 +79,9 @@
       },
       "expression": {
         "operator": "average",
+        "type": {
+          "name": "decimal"
+        },
         "selector": {
           "source": "orders",
           "field": "total",
