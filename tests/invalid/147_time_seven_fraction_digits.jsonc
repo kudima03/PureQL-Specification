@@ -1,4 +1,4 @@
-// time literal with 10 fractional digits (at most 9)
+// time literal with 7 fractional digits (at most 6: microseconds)
 {
   "from": { "entity": "orders" },
   "select": [
@@ -11,6 +11,6 @@
     "operator": "lessThan",
     "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
-    "right": { "type": { "name": "time" }, "value": "12:30:00.1234567890" }
+    "right": { "type": { "name": "time" }, "value": "12:30:00.1234567" }
   }
 }

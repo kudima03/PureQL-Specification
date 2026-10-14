@@ -1,6 +1,7 @@
 // Literal values at the edges of each format: 5.0 is a JSON integer, a decimal may be written without a fraction,
-// decimals of 28 digits and of 28 decimal places, leap day, year 0000, nine fractional digits, datetimes in UTC with
-// a fraction, a uuid of hex letters, and the largest and smallest 64-bit integers.
+// decimals of 28 digits and of 28 decimal places, leap day, the first and last days of the range (0001-01-01 and
+// 9999-12-31), six fractional digits, datetimes in UTC with a fraction, a uuid of hex letters, and the largest and
+// smallest 64-bit integers.
 {
   "from": { "entity": "orders" },
   "select": [
@@ -29,24 +30,28 @@
       "expression": { "type": { "name": "date" }, "value": "2024-02-29" }
     },
     {
-      "alias": "year_zero",
-      "expression": { "type": { "name": "date" }, "value": "0000-01-01" }
+      "alias": "first_day",
+      "expression": { "type": { "name": "date" }, "value": "0001-01-01" }
+    },
+    {
+      "alias": "last_day",
+      "expression": { "type": { "name": "date" }, "value": "9999-12-31" }
     },
     {
       "alias": "midnight",
       "expression": { "type": { "name": "time" }, "value": "00:00:00" }
     },
     {
-      "alias": "nanoseconds",
-      "expression": { "type": { "name": "time" }, "value": "23:59:59.999999999" }
+      "alias": "microseconds",
+      "expression": { "type": { "name": "time" }, "value": "23:59:59.999999" }
     },
     {
       "alias": "utc_half_second",
       "expression": { "type": { "name": "datetime" }, "value": "2024-12-31T23:59:59.5Z" }
     },
     {
-      "alias": "utc_one_nanosecond",
-      "expression": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00.000000001Z" }
+      "alias": "utc_one_microsecond",
+      "expression": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00.000001Z" }
     },
     {
       "alias": "hex_letters_uuid",

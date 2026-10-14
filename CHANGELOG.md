@@ -7,6 +7,21 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.2.0.1] - 2026-10-14
+
+`time` and `datetime` have microsecond precision, and dates start at year 0001, so every value the schema accepts is held exactly by the common stores and runtimes.
+
+### 🐛 Fixed
+
+- **Microsecond `time` and `datetime`**: a literal has at most 6 fractional digits (`"18:30:00.123456"`), and arithmetic and `average` round to microseconds. Nanoseconds are not held by PostgreSQL, MySQL, Python or `System.DateTime` / SQL Server (100 ns), so an interpreter on them could not store or compare such a value exactly.
+- **Dates from `0001-01-01`**: `date` and `datetime` literals in year 0000 are rejected, and a result before year 0001 is an execution error. Year 0000 is not stored by `System.DateTime`, Python's `date`, PostgreSQL or SQL Server.
+
+### ⚠️ Breaking Changes
+
+- A `time` or `datetime` literal with 7 to 9 fractional digits, or a `date` or `datetime` literal in year 0000, is now rejected.
+
+---
+
 ## [0.1.0-preview.2.0.0] - 2026-10-12
 
 Every operator node now declares the type it yields, as fields, parameters, literals and group keys already did. The declaration is exact and checked by the schema against the operands, so every node of a query carries its type: an interpreter reads it instead of computing it, and a query has one valid form. `select` columns and `groupBy` keys lose their own `type`, which now only repeated it: they have the type their expression declares. The release also adds total queries and `distinctBy`, makes `decimal` literals exact strings and group keys named, and leaves one spelling for each form; every existing query needs migrating (see Versioning).

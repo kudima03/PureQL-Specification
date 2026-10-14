@@ -132,7 +132,7 @@ Tags have no `v` prefix.
 
 ### Execution semantics
 
-What an interpreter computes is defined under **Semantics** in `README.md`: evaluation order and laziness, execution errors, 64-bit `integer` and exact `decimal` arithmetic, code-point strings, the order of every type, nanosecond times with wrap-around, aggregate results on no rows, parameter binding and source names. Change it there, never only in a sample. Samples and tests must not depend on anything listed under *Not specified yet*, and every query in `samples/` and `tests/valid/` should also pass name resolution: declared subqueries, unique source names, aliased sources referenced by alias.
+What an interpreter computes is defined under **Semantics** in `README.md`: evaluation order and laziness, execution errors, 64-bit `integer` and exact `decimal` arithmetic, code-point strings, the order of every type, microsecond times with wrap-around, dates from year 0001, aggregate results on no rows, parameter binding and source names. Change it there, never only in a sample. Samples and tests must not depend on anything listed under *Not specified yet*, and every query in `samples/` and `tests/valid/` should also pass name resolution: declared subqueries, unique source names, aliased sources referenced by alias.
 
 ## Adding samples and tests
 

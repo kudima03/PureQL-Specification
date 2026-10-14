@@ -1,0 +1,16 @@
+// date literal 0000-02-29 (year 0000 is out of range, though divisible by 400)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "right": { "type": { "name": "date" }, "value": "0000-02-29" }
+  }
+}
