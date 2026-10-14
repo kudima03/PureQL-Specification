@@ -63,7 +63,7 @@ Null semantics:
 import json
 from pathlib import Path
 
-VERSION = "0.1.0-preview.2.0.0"
+VERSION = "0.1.0-preview.2.0.1"
 SCHEMA_ID = f"https://github.com/kudima03/PureQL-Specification/releases/download/{VERSION}/PureQL-Specification.json"
 
 TYPES = ["integer", "decimal", "string", "boolean", "date", "time", "datetime", "uuid"]
@@ -80,17 +80,22 @@ AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime":
 
 # [0-9] rather than \d: in Python's `re` \d also matches non-ASCII digits,
 # in ECMA-262 it does not. No lookahead, for the same portability reason.
-# A real calendar date: 31-day and 30-day months, February up to the 28th, and
-# February 29 only in leap years (divisible by 4, centuries only by 400).
+# A real calendar date from 0001-01-01 to 9999-12-31: 31-day and 30-day months,
+# February up to the 28th, and February 29 only in leap years (divisible by 4,
+# centuries only by 400). Year 0000 is not stored by System.DateTime, Python's
+# date, PostgreSQL or SQL Server, so no year has a value some interpreter lacks.
+YEAR = r"[0-9]{3}[1-9]|[0-9]{2}[1-9]0|[0-9][1-9]00|[1-9]000"
 MONTH_DAY = (
     r"(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])"
     r"|(0[469]|11)-(0[1-9]|[12][0-9]|30)"
     r"|02-(0[1-9]|1[0-9]|2[0-8])"
 )
-LEAP_YEAR = r"[0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[048]|[2468][048]|[13579][26])00"
-DATE = rf"([0-9]{{4}}-({MONTH_DAY})|({LEAP_YEAR})-02-29)"
-# Up to nanoseconds, without trailing zeros: 18:30:00.5, never 18:30:00.500.
-TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{0,8}[1-9])?"
+LEAP_YEAR = r"[0-9]{2}(0[48]|[2468][048]|[13579][26])|(0[48]|[2468][048]|[13579][26])00"
+DATE = rf"(({YEAR})-({MONTH_DAY})|({LEAP_YEAR})-02-29)"
+# Up to microseconds, without trailing zeros: 18:30:00.5, never 18:30:00.500.
+# Microseconds are held exactly by every common store and runtime (PostgreSQL,
+# MySQL, SQL Server, Python, .NET, Java); nanoseconds are not.
+TIME = r"([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]{0,5}[1-9])?"
 # A decimal as a string: no exponent, no leading zeros, no trailing zeros in the
 # fraction and no "-0", so each value has one spelling and every client reads it
 # exactly. 0, 12, -0.5 and 19.99 are decimals; 1.50, 01, -0, .5 and 1e3 are not.

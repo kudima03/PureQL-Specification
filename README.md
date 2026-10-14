@@ -42,8 +42,8 @@ Each has its own rules for what its columns may read (see [Contexts](#contexts))
 | `decimal` | a JSON string holding the number in one spelling: no exponent, no leading zeros, no trailing zeros in the fraction, no `-0`; at most 28 significant digits and 28 decimal places | `"19.99"` |
 | `string` | JSON string | `"active"` |
 | `boolean` | `true` / `false` | `true` |
-| `date` | `YYYY-MM-DD`, a real calendar date (February 29 only in leap years) | `"2024-01-31"` |
-| `time` | `hh:mm:ss[.fraction]`: hours `00`–`23`, seconds `00`–`59`, 1 to 9 fractional digits, the last not `0` | `"18:30:00.125"` |
+| `date` | `YYYY-MM-DD`, a real calendar date from `0001-01-01` to `9999-12-31` (February 29 only in leap years) | `"2024-01-31"` |
+| `time` | `hh:mm:ss[.fraction]`: hours `00`–`23`, seconds `00`–`59`, 1 to 6 fractional digits (microseconds), the last not `0` | `"18:30:00.125"` |
 | `datetime` | a `date`, `T`, a `time`, then `Z`: always in UTC (see [Temporal types](#temporal-types)) | `"2024-01-31T15:30:00Z"` |
 | `uuid` | 8-4-4-4-12 hexadecimal digits in lower case, no braces or prefix | `"3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f"` |
 
@@ -375,7 +375,7 @@ A query fails at execution with an error when it:
 
 - produces an `integer` outside the 64-bit range, or a `decimal` of magnitude 10²⁸ or more;
 - divides by zero in `divide`, `integerDivide` or `modulo`;
-- produces a `date` or `datetime` outside the years 0000–9999;
+- produces a `date` or `datetime` outside the years 0001–9999;
 - is run with a missing parameter, a parameter of the wrong type, `null` for a non-null parameter, a parameter value not written like a literal of its type (a `decimal` outside its range, a `datetime` not in UTC, and so on), or a `pagination` parameter below its minimum (`skip` < 0, `take` < 1).
 
 ### Integer and decimal arithmetic
@@ -409,10 +409,10 @@ Every type is ordered, and the same order serves comparisons, `min` / `max` and 
 
 ### Dates and times
 
-- **`date`** follows the proleptic Gregorian calendar. `dateAddDays` adds whole calendar days, and `dateDiffDays` is `left − right` in days.
-- **`time`** is a time of day with nanosecond precision, from `00:00:00` up to but excluding `24:00:00`. `timeAddSeconds` wraps around midnight: `23:00:00` plus 7200 seconds is `01:00:00`, and negative seconds go backwards. `timeDiffSeconds` is `left − right` in seconds without wrapping, so it is negative when `left` is earlier.
-- **`datetime`** is an instant with nanosecond precision; every day has 86400 seconds. `datetimeAddSeconds` and `datetimeDiffSeconds` work on the instant, and `datetime` results are returned in UTC, written with `Z`.
-- A number of seconds with more than 9 fractional digits is rounded to nanoseconds, half away from zero.
+- **`date`** follows the proleptic Gregorian calendar, from `0001-01-01` to `9999-12-31`: year 0000 is excluded, as `System.DateTime`, Python, PostgreSQL and SQL Server cannot store it. `dateAddDays` adds whole calendar days, and `dateDiffDays` is `left − right` in days.
+- **`time`** is a time of day with microsecond precision, from `00:00:00` up to but excluding `24:00:00`. `timeAddSeconds` wraps around midnight: `23:00:00` plus 7200 seconds is `01:00:00`, and negative seconds go backwards. `timeDiffSeconds` is `left − right` in seconds without wrapping, so it is negative when `left` is earlier.
+- **`datetime`** is an instant with microsecond precision; every day has 86400 seconds. `datetimeAddSeconds` and `datetimeDiffSeconds` work on the instant, and `datetime` results are returned in UTC, written with `Z`.
+- A number of seconds with more than 6 fractional digits is rounded to microseconds, half away from zero. Microseconds are the finest precision that PostgreSQL, MySQL, SQL Server, Python, .NET and Java all hold exactly.
 
 ### Aggregate evaluation
 
@@ -422,7 +422,7 @@ An aggregate sees the rows of its group, or every row left by `where` with `over
 |---|---|---|
 | `count` | number of rows | `0` |
 | `sum` | exact sum of the non-`null` values; an `integer` overflow is an error | `0` |
-| `average` | mean of the non-`null` values. Numbers: `sum` divided as by `divide`. `date`: mean day, rounded half away from zero to a whole day. `time`: mean of the times as seconds since midnight, without wrapping. `datetime`: mean instant, returned in UTC. `time` and `datetime` round to nanoseconds | `null` |
+| `average` | mean of the non-`null` values. Numbers: `sum` divided as by `divide`. `date`: mean day, rounded half away from zero to a whole day. `time`: mean of the times as seconds since midnight, without wrapping. `datetime`: mean instant, returned in UTC. `time` and `datetime` round to microseconds | `null` |
 | `min`, `max` | least and greatest non-`null` value by [the order of its type](#ordering-and-equality) | `null` |
 | `any` | `true` when some row satisfies the predicate | `false` |
 | `all` | `true` when every row satisfies the predicate | `true` |
