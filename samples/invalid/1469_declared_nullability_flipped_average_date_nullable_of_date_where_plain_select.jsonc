@@ -1,0 +1,16 @@
+// average declared date? over a date selector with a predicate declares the opposite nullability of date? in a plain
+// select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

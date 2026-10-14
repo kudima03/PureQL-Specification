@@ -1,0 +1,15 @@
+// greaterThan declared boolean declares the opposite nullability of boolean in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean", "nullable": true },
+        "left": { "type": { "name": "time" }, "value": "08:30:00" },
+        "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

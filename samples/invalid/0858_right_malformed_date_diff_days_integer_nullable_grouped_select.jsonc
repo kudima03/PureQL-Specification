@@ -1,0 +1,21 @@
+// dateDiffDays declared integer? has right as a date literal with a malformed value (February 30) in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "date", "nullable": true }, "value": "2024-02-30" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// coalesce declared boolean declares the opposite nullability of boolean in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "boolean", "nullable": true },
+        "values": [
+          { "type": { "name": "boolean", "nullable": true }, "value": null },
+          { "type": { "name": "boolean" }, "value": true }
+        ]
+      }
+    }
+  ]
+}

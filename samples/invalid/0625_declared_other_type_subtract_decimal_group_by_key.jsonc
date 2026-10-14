@@ -1,0 +1,18 @@
+// subtract declared decimal declares another type than decimal in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

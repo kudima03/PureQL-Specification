@@ -1,0 +1,8 @@
+// a stringList parameter as an orderBy key
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [ { "expression": { "param": "p", "type": { "name": "stringList" } } } ]
+}

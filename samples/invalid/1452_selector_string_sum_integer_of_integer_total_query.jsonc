@@ -1,0 +1,14 @@
+// sum declared integer over a integer selector takes the sum of a string in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

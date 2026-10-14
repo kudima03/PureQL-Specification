@@ -1,0 +1,10 @@
+// all declared boolean with a predicate has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "all", "predicate": { "type": { "name": "boolean" }, "value": true } }
+    }
+  ]
+}

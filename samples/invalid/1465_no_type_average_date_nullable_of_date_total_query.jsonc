@@ -1,0 +1,13 @@
+// average declared date? over a date selector has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

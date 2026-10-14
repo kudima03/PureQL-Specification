@@ -1,0 +1,14 @@
+// min declared string? over a string selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

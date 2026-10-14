@@ -1,0 +1,17 @@
+// a stringList parameter inside coalesce
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "m",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "param": "p", "type": { "name": "stringList" } },
+          { "type": { "name": "string", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

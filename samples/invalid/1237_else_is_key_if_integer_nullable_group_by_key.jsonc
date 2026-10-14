@@ -1,0 +1,18 @@
+// if declared integer? has else as a group key reference, which only a grouped select, having and orderBy have, in a
+// groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "integer", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "else": { "key": "k", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

@@ -1,0 +1,14 @@
+// all declared boolean with a predicate declares boolean? although it is never null in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean", "nullable": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

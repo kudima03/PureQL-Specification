@@ -1,0 +1,10 @@
+// round declared integer has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "round", "operand": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

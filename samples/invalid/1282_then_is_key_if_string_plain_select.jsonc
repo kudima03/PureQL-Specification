@@ -1,0 +1,17 @@
+// if declared string has then as a group key reference, which only a grouped select, having and orderBy have, in a plain
+// select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "key": "k", "type": { "name": "string" } },
+        "else": { "type": { "name": "string" }, "value": "b" }
+      }
+    }
+  ]
+}

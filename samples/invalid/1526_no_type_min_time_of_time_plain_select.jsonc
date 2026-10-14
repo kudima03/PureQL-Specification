@@ -1,0 +1,10 @@
+// min declared time over a time selector has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "min", "selector": { "type": { "name": "time" }, "value": "08:30:00" } }
+    }
+  ]
+}

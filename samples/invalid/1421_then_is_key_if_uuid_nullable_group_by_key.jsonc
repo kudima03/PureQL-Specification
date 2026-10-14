@@ -1,0 +1,18 @@
+// if declared uuid? has then as a group key reference, which only a grouped select, having and orderBy have, in a
+// groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "uuid", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "key": "k", "type": { "name": "uuid", "nullable": true } },
+        "else": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

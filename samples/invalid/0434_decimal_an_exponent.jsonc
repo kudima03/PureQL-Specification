@@ -1,0 +1,13 @@
+// decimal literal "1.5e0": an exponent
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "decimal" }, "value": "1.5e0" }
+  }
+}

@@ -1,0 +1,17 @@
+// if declared datetime? has else as a group key reference, which only a grouped select, having and orderBy have, in a
+// total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "datetime", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "else": { "key": "k", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

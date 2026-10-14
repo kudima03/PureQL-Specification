@@ -1,0 +1,19 @@
+// in declared boolean has operand as a group key reference, which only a grouped select, having and orderBy have, in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "key": "k", "type": { "name": "datetime" } },
+        "list": {
+          "type": { "name": "datetimeList" },
+          "value": [ "2024-01-31T08:30:00Z", "2024-03-01T17:45:30.5Z" ]
+        }
+      }
+    }
+  ]
+}

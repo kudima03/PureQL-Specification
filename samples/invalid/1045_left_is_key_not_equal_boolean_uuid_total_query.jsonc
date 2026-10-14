@@ -1,0 +1,16 @@
+// notEqual declared boolean has left as a group key reference, which only a grouped select, having and orderBy have, in
+// a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": { "key": "k", "type": { "name": "uuid" } },
+        "right": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+// floor declared integer has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": { "operator": "floor", "operand": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

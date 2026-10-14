@@ -1,0 +1,14 @@
+// datetimeDiffSeconds declared decimal has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// if declared string has else of a type that does not fit in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "string" }, "value": "a" },
+        "else": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

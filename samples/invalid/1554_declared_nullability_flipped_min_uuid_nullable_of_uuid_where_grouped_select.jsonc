@@ -1,0 +1,22 @@
+// min declared uuid? over a uuid selector with a predicate declares the opposite nullability of uuid? in a grouped
+// select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid" },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

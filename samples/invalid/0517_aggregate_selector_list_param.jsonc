@@ -1,0 +1,14 @@
+// a stringList parameter as an aggregate selector
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "m",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "selector": { "param": "p", "type": { "name": "stringList" } }
+      }
+    }
+  ]
+}

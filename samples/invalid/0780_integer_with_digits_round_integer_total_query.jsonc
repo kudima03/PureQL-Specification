@@ -1,0 +1,15 @@
+// round declared integer declares integer although digits is given in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

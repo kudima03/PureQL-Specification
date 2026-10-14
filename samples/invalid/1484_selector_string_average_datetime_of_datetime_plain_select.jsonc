@@ -1,0 +1,14 @@
+// average declared datetime over a datetime selector takes the average of a string in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

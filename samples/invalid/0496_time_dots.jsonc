@@ -1,0 +1,13 @@
+// time literal with dots
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "window_start", "type": { "name": "time" } },
+    "right": { "type": { "name": "time" }, "value": "12.30.00" }
+  }
+}

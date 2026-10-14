@@ -1,0 +1,20 @@
+// divide declared decimal has a single item in values in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [ { "type": { "name": "integer" }, "value": 7 } ]
+      }
+    }
+  ]
+}

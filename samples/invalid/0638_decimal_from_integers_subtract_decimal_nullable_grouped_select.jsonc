@@ -1,0 +1,23 @@
+// subtract declared decimal? declares decimal with integer operands only in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "integer", "nullable": true }, "value": null },
+          { "type": { "name": "integer" }, "value": 7 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// average declared nullable with a non-null selector and no predicate in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

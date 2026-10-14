@@ -1,0 +1,17 @@
+// greaterThanOrEqual declared boolean has left as a group key reference, which only a grouped select, having and orderBy
+// have, in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "key": "k", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "decimal" }, "value": "0.1" }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

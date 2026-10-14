@@ -1,0 +1,19 @@
+// if declared uuid? has then as a uuid literal with a malformed value (upper case) in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "uuid", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": {
+          "type": { "name": "uuid", "nullable": true },
+          "value": "3F2A6C1E-8B4D-4E2A-9C1F-1A2B3C4D5E6F"
+        },
+        "else": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    }
+  ]
+}

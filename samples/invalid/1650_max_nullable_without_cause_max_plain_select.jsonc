@@ -1,0 +1,14 @@
+// max declared nullable with a non-null selector and no predicate in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

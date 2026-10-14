@@ -1,0 +1,16 @@
+// datetimeDiffSeconds declared decimal? has left as a group key reference, which only a grouped select, having and
+// orderBy have, in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "key": "k", "type": { "name": "datetime", "nullable": true } },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    }
+  ]
+}

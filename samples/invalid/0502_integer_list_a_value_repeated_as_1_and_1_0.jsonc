@@ -1,0 +1,13 @@
+// integerList literal with a value repeated as 1 and 1.0: a list literal is a set
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "n", "type": { "name": "integer" } },
+    "list": { "type": { "name": "integerList" }, "value": [ 1, 1.0 ] }
+  }
+}

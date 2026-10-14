@@ -1,0 +1,16 @@
+// timeDiffSeconds declared decimal has left as a group key reference, which only a grouped select, having and orderBy
+// have, in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": { "key": "k", "type": { "name": "time" } },
+        "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// coalesce declared string declares the opposite nullability of string in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "a" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

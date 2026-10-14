@@ -1,0 +1,14 @@
+// and declared boolean has a single item in conditions in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [ { "type": { "name": "boolean" }, "value": true } ]
+      }
+    }
+  ]
+}

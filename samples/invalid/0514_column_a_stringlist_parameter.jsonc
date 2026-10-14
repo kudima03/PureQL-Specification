@@ -1,0 +1,5 @@
+// a stringList parameter as a select column: lists are values for in, never columns
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "x", "expression": { "param": "p", "type": { "name": "stringList" } } } ]
+}

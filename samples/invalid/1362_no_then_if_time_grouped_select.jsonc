@@ -1,0 +1,21 @@
+// if declared time has no then in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "time" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "else": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

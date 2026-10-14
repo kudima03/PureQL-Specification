@@ -1,0 +1,14 @@
+// min declared datetime over a datetime selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime" },
+        "selector": { "key": "k", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

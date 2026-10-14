@@ -1,0 +1,20 @@
+// in whose list is an operator
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "f", "type": { "name": "string" } },
+    "list": {
+      "operator": "coalesce",
+      "type": { "name": "string" },
+      "values": [
+        { "type": { "name": "string" }, "value": "a" },
+        { "type": { "name": "string" }, "value": "b" }
+      ]
+    }
+  }
+}

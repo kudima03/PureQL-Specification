@@ -1,0 +1,14 @@
+// max declared decimal? over a decimal selector has a group key reference as its selector in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

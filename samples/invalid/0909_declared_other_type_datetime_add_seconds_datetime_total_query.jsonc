@@ -1,0 +1,15 @@
+// datetimeAddSeconds declared datetime declares another type than datetime in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "string" },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

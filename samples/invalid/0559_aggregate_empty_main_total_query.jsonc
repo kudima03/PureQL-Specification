@@ -1,0 +1,2 @@
+// a total query as the main query: with an empty aggregate
+{ "from": { "entity": "orders" }, "aggregate": [] }

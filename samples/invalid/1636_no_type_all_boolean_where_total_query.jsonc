@@ -1,0 +1,10 @@
+// all declared boolean with a predicate has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": { "operator": "all", "predicate": { "type": { "name": "boolean" }, "value": true } }
+    }
+  ]
+}

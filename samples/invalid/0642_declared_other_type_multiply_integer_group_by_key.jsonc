@@ -1,0 +1,18 @@
+// multiply declared integer declares another type than integer in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

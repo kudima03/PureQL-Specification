@@ -1,0 +1,14 @@
+// max declared uuid? over a uuid selector declares another type than uuid? in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

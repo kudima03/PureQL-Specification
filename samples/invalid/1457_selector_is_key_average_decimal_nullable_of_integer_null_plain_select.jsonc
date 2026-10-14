@@ -1,0 +1,14 @@
+// average declared decimal? over a integer selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

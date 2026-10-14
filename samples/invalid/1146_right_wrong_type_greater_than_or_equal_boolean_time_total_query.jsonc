@@ -1,0 +1,15 @@
+// greaterThanOrEqual declared boolean has right of a type that does not fit in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "type": { "name": "time" }, "value": "08:30:00" },
+        "right": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

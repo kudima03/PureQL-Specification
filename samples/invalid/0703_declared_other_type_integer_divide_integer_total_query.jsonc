@@ -1,0 +1,15 @@
+// integerDivide declared integer declares another type than integer in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "string" },
+        "left": { "type": { "name": "integer" }, "value": 7 },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

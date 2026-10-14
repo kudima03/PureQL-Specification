@@ -1,0 +1,14 @@
+// datetimeAddSeconds declared datetime has no left in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

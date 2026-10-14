@@ -1,0 +1,20 @@
+// max declared date? over a date selector has a group key reference as its selector in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "date", "nullable": true } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// in declared boolean has operand of a type that does not fit in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "list": { "type": { "name": "dateList" }, "value": [ "2024-01-31", "2024-03-01" ] }
+      }
+    }
+  ]
+}

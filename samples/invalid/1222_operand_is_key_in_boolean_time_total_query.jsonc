@@ -1,0 +1,16 @@
+// in declared boolean has operand as a group key reference, which only a grouped select, having and orderBy have, in a
+// total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "key": "k", "type": { "name": "time" } },
+        "list": { "type": { "name": "timeList" }, "value": [ "08:30:00", "17:45:30.5" ] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// min declared uuid over a uuid selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid" },
+        "selector": { "key": "k", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

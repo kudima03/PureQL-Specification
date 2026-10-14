@@ -1,0 +1,21 @@
+// lessThan declared boolean has right of a type that does not fit in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

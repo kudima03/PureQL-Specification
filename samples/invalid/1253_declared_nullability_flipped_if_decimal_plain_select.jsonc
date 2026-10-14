@@ -1,0 +1,16 @@
+// if declared decimal declares the opposite nullability of decimal in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "decimal" }, "value": "2.5" },
+        "else": { "type": { "name": "decimal" }, "value": "0.1" }
+      }
+    }
+  ]
+}

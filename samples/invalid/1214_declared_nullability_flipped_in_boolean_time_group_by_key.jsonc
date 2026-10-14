@@ -1,0 +1,16 @@
+// in declared boolean declares the opposite nullability of boolean in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "list": { "type": { "name": "timeList" }, "value": [ "08:30:00", "17:45:30.5" ] }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

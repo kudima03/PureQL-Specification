@@ -1,0 +1,7 @@
+// count declared integer declares integer? although it is never null in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    { "alias": "c", "expression": { "operator": "count", "type": { "name": "integer", "nullable": true } } }
+  ]
+}

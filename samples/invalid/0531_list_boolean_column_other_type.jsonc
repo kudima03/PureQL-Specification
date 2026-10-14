@@ -1,0 +1,22 @@
+// subquery column declared integer for a boolean operand
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [ { "alias": "f", "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "boolean" }, "value": true },
+    "list": { "subquery": "s", "field": "f", "type": { "name": "integer" } }
+  }
+}

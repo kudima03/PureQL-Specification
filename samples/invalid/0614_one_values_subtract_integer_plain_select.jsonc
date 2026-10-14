@@ -1,0 +1,14 @@
+// subtract declared integer has a single item in values in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [ { "type": { "name": "integer" }, "value": 7 } ]
+      }
+    }
+  ]
+}

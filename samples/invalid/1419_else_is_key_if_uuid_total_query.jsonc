@@ -1,0 +1,17 @@
+// if declared uuid has else as a group key reference, which only a grouped select, having and orderBy have, in a total
+// query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "uuid" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "else": { "key": "k", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

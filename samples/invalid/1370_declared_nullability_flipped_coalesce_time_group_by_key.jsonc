@@ -1,0 +1,18 @@
+// coalesce declared time declares the opposite nullability of time in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "time", "nullable": true },
+        "values": [
+          { "type": { "name": "time", "nullable": true }, "value": null },
+          { "type": { "name": "time" }, "value": "08:30:00" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

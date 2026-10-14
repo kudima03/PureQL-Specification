@@ -1,0 +1,22 @@
+// if declared time? has then as a field, which this context has no rows to read from, in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "time", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "source": "orders", "field": "f", "type": { "name": "time", "nullable": true } },
+        "else": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    }
+  ]
+}

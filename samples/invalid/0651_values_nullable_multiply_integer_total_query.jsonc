@@ -1,0 +1,17 @@
+// multiply declared integer has a nullable values but declares a non-null result in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "integer" },
+        "values": [
+          { "type": { "name": "integer", "nullable": true }, "value": null },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    }
+  ]
+}

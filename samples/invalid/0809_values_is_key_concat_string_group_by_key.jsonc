@@ -1,0 +1,19 @@
+// concat declared string has values as a group key reference, which only a grouped select, having and orderBy have, in a
+// groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "key": "k", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

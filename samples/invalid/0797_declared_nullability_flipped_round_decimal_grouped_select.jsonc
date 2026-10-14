@@ -1,0 +1,21 @@
+// round declared decimal declares the opposite nullability of decimal in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

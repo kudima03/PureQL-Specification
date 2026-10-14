@@ -1,0 +1,14 @@
+// min declared date over a date selector declares the opposite nullability of date in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

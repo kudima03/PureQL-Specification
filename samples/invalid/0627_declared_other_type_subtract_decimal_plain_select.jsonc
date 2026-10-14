@@ -1,0 +1,17 @@
+// subtract declared decimal declares another type than decimal in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    }
+  ]
+}

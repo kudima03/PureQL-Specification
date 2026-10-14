@@ -1,0 +1,21 @@
+// max with a predicate declared non-null in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

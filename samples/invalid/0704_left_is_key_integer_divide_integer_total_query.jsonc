@@ -1,0 +1,16 @@
+// integerDivide declared integer has left as a group key reference, which only a grouped select, having and orderBy
+// have, in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "key": "k", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// concat declared string has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    }
+  ]
+}

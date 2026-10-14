@@ -1,0 +1,2 @@
+// a total query as the main query: without from
+{ "aggregate": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ] }

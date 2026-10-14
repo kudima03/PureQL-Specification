@@ -1,0 +1,14 @@
+// sum declared decimal over a decimal selector declares another type than decimal in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

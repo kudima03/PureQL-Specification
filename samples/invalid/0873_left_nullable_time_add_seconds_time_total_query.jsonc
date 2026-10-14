@@ -1,0 +1,15 @@
+// timeAddSeconds declared time has a nullable left but declares a non-null result in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "left": { "type": { "name": "time", "nullable": true }, "value": null },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

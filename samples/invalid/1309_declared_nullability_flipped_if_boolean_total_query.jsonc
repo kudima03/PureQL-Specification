@@ -1,0 +1,16 @@
+// if declared boolean declares the opposite nullability of boolean in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "boolean", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "boolean" }, "value": true },
+        "else": { "type": { "name": "boolean" }, "value": false }
+      }
+    }
+  ]
+}

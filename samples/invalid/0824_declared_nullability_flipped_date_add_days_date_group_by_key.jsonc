@@ -1,0 +1,16 @@
+// dateAddDays declared date declares the opposite nullability of date in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

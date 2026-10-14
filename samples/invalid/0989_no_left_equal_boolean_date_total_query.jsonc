@@ -1,0 +1,14 @@
+// equal declared boolean has no left in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "right": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

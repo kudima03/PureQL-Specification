@@ -1,0 +1,5 @@
+// a null operator in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [ { "alias": "c", "expression": { "operator": null, "type": { "name": "integer" } } } ]
+}

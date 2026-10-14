@@ -1,0 +1,15 @@
+// equal declared boolean has right of a type that does not fit in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    }
+  ]
+}

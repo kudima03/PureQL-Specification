@@ -1,0 +1,14 @@
+// round declared integer declares the opposite nullability of integer in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

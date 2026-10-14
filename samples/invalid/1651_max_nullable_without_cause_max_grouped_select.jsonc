@@ -1,0 +1,20 @@
+// max declared nullable with a non-null selector and no predicate in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

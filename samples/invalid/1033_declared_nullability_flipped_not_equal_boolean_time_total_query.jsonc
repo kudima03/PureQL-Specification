@@ -1,0 +1,15 @@
+// notEqual declared boolean declares the opposite nullability of boolean in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "notEqual",
+        "type": { "name": "boolean", "nullable": true },
+        "left": { "type": { "name": "time" }, "value": "08:30:00" },
+        "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+// ceiling declared integer has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": { "operator": "ceiling", "operand": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

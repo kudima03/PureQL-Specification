@@ -1,0 +1,13 @@
+// timeList literal repeating a value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+    "list": { "type": { "name": "timeList" }, "value": [ "08:30:00", "08:30:00" ] }
+  }
+}

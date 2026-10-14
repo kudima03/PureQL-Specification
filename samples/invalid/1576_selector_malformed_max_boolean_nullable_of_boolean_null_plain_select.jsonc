@@ -1,0 +1,14 @@
+// max declared boolean? over a boolean selector has a selector with a malformed value (a string) in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": "true" }
+      }
+    }
+  ]
+}

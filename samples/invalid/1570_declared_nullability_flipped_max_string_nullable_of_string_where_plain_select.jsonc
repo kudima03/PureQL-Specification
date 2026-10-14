@@ -1,0 +1,16 @@
+// max declared string? over a string selector with a predicate declares the opposite nullability of string? in a plain
+// select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

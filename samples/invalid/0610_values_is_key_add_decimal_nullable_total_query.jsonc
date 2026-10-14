@@ -1,0 +1,18 @@
+// add declared decimal? has values as a group key reference, which only a grouped select, having and orderBy have, in a
+// total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "key": "k", "type": { "name": "decimal", "nullable": true } },
+          { "type": { "name": "integer" }, "value": 7 }
+        ]
+      }
+    }
+  ]
+}

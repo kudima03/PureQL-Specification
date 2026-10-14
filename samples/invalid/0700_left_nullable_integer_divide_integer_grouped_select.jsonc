@@ -1,0 +1,21 @@
+// integerDivide declared integer has a nullable left but declares a non-null result in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

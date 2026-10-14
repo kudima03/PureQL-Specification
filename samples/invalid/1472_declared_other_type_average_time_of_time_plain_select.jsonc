@@ -1,0 +1,14 @@
+// average declared time over a time selector declares another type than time in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    }
+  ]
+}

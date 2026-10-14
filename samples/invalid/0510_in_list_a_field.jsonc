@@ -1,0 +1,13 @@
+// in whose list is a field
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "f", "type": { "name": "string" } },
+    "list": { "source": "orders", "field": "g", "type": { "name": "string" } }
+  }
+}

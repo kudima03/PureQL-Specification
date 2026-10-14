@@ -1,0 +1,16 @@
+// max declared decimal? over a decimal selector with a predicate declares the opposite nullability of decimal? in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

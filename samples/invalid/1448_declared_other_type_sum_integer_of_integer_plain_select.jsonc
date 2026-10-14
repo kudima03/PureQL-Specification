@@ -1,0 +1,14 @@
+// sum declared integer over a integer selector declares another type than integer in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

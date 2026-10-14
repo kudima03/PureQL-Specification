@@ -1,0 +1,16 @@
+// if declared decimal declares decimal with integer branches only in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "integer" }, "value": 7 },
+        "else": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

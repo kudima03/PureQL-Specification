@@ -1,0 +1,15 @@
+// integerDivide declared integer declares the opposite nullability of integer in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "type": { "name": "integer" }, "value": 7 },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

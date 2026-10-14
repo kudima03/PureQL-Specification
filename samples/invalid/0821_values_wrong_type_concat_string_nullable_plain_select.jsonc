@@ -1,0 +1,17 @@
+// concat declared string? has values of a type that does not fit in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "string", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

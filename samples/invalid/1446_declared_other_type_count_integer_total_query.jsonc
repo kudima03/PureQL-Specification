@@ -1,0 +1,5 @@
+// count declared integer declares another type than integer in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [ { "alias": "c", "expression": { "operator": "count", "type": { "name": "string" } } } ]
+}

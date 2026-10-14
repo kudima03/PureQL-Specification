@@ -1,0 +1,16 @@
+// coalesce declared time has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "type": { "name": "time", "nullable": true }, "value": null },
+          { "type": { "name": "time" }, "value": "08:30:00" }
+        ]
+      }
+    }
+  ]
+}

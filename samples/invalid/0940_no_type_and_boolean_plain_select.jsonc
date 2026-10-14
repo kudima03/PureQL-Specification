@@ -1,0 +1,16 @@
+// and declared boolean has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "and",
+        "conditions": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    }
+  ]
+}

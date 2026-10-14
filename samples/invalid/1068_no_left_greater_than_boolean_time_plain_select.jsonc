@@ -1,0 +1,14 @@
+// greaterThan declared boolean has no left in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

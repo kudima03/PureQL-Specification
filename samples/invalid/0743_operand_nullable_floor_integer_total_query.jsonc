@@ -1,0 +1,14 @@
+// floor declared integer has a nullable operand but declares a non-null result in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

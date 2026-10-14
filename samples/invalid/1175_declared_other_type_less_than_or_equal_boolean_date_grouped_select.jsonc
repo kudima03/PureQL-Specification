@@ -1,0 +1,21 @@
+// lessThanOrEqual declared boolean declares another type than boolean in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "string" },
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

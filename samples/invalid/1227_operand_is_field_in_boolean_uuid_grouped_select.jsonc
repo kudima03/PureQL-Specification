@@ -1,0 +1,24 @@
+// in declared boolean has operand as a field, which this context has no rows to read from, in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "f", "type": { "name": "uuid" } },
+        "list": {
+          "type": { "name": "uuidList" },
+          "value": [ "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f", "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// if declared datetime declares the opposite nullability of datetime in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "datetime", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "else": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+      }
+    }
+  ]
+}

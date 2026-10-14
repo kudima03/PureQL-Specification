@@ -1,0 +1,14 @@
+// timeAddSeconds declared time has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "left": { "type": { "name": "time" }, "value": "08:30:00" },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

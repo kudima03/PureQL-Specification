@@ -1,0 +1,20 @@
+// coalesce declared uuid? has a single item in values in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "uuid", "nullable": true },
+        "values": [ { "type": { "name": "uuid", "nullable": true }, "value": null } ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// if declared boolean? has then as a group key reference, which only a grouped select, having and orderBy have, in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "boolean", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "key": "k", "type": { "name": "boolean", "nullable": true } },
+        "else": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

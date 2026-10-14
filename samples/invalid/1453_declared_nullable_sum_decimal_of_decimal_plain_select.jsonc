@@ -1,0 +1,14 @@
+// sum declared decimal over a decimal selector declares decimal? although it is never null in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

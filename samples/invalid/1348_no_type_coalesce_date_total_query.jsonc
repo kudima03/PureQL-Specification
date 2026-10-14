@@ -1,0 +1,16 @@
+// coalesce declared date has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "values": [
+          { "type": { "name": "date", "nullable": true }, "value": null },
+          { "type": { "name": "date" }, "value": "2024-01-31" }
+        ]
+      }
+    }
+  ]
+}

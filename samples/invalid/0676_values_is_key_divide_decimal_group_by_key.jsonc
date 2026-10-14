@@ -1,0 +1,19 @@
+// divide declared decimal has values as a group key reference, which only a grouped select, having and orderBy have, in
+// a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "key": "k", "type": { "name": "integer" } },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

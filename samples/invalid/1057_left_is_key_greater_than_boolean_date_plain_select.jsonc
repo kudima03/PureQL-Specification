@@ -1,0 +1,16 @@
+// greaterThan declared boolean has left as a group key reference, which only a grouped select, having and orderBy have,
+// in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "key": "k", "type": { "name": "date" } },
+        "right": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

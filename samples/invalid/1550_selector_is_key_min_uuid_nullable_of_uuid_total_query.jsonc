@@ -1,0 +1,14 @@
+// min declared uuid? over a uuid selector has a group key reference as its selector in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

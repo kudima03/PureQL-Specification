@@ -1,0 +1,13 @@
+// date literal with month 13 in year 9999
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "right": { "type": { "name": "date" }, "value": "9999-13-01" }
+  }
+}
