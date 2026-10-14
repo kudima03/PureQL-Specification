@@ -1,0 +1,129 @@
+// Names are any text without a line break or a leading or trailing space or tab: JavaScript object members (__proto__,
+// constructor, toString), JSON Schema keywords ($ref, $defs), quotes, backslashes, slashes, a tab and a no-break space
+// inside or at the edge, an emoji, SQL keywords and a name of 1000 characters, as aliases, a subquery name, a source
+// alias and a parameter name.
+{
+  "subqueries": [
+    {
+      "name": "__proto__",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "constructor",
+            "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "__proto__", "alias": "hasOwnProperty" },
+  "select": [
+    {
+      "alias": "__proto__",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "constructor",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "toString",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "hasOwnProperty",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "$ref",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "$defs",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a\tb",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": " nbsp",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "nbsp ",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "😀",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "é",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a.b",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a\"b",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a\\b",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a/b",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "-",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "0",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "null",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "true",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "select",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "from",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "order by",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "AND",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "a  b",
+      "expression": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "hasOwnProperty", "field": "constructor", "type": { "name": "uuid" } },
+    "right": { "param": "$ref", "type": { "name": "uuid" } }
+  }
+}
