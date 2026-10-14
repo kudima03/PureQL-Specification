@@ -1,0 +1,16 @@
+// datetimeAddSeconds declared datetime declares the opposite nullability of datetime in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime", "nullable": true },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

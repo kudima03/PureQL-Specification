@@ -1,0 +1,14 @@
+// greaterThan declared boolean has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThan",
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+// a stringList parameter as a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [ { "alias": "k", "expression": { "param": "p", "type": { "name": "stringList" } } } ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

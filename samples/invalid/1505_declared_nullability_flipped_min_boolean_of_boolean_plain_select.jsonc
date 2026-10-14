@@ -1,0 +1,14 @@
+// min declared boolean over a boolean selector declares the opposite nullability of boolean in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

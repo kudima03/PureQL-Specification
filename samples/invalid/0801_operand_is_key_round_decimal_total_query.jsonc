@@ -1,0 +1,16 @@
+// round declared decimal has operand as a group key reference, which only a grouped select, having and orderBy have, in
+// a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "key": "k", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

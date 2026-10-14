@@ -1,0 +1,14 @@
+// max declared string over a string selector declares the opposite nullability of string in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// coalesce declared decimal declares the opposite nullability of decimal in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "decimal", "nullable": true }, "value": null },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    }
+  ]
+}

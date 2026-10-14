@@ -1,0 +1,13 @@
+// stringList literal with a repeated string: a list literal is a set
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "f", "type": { "name": "string" } },
+    "list": { "type": { "name": "stringList" }, "value": [ "a", "b", "a" ] }
+  }
+}

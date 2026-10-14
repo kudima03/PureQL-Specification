@@ -1,0 +1,23 @@
+// coalesce declared decimal declares the opposite nullability of decimal in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "decimal", "nullable": true }, "value": null },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    }
+  ]
+}

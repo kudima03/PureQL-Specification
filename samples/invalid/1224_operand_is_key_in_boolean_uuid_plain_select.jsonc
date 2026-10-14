@@ -1,0 +1,19 @@
+// in declared boolean has operand as a group key reference, which only a grouped select, having and orderBy have, in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "key": "k", "type": { "name": "uuid" } },
+        "list": {
+          "type": { "name": "uuidList" },
+          "value": [ "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f", "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" ]
+        }
+      }
+    }
+  ]
+}

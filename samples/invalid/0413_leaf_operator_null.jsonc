@@ -1,0 +1,5 @@
+// a null operator in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": null, "type": { "name": "integer" } } } ]
+}

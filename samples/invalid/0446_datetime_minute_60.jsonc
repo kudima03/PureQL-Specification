@@ -1,0 +1,13 @@
+// datetime literal with minute 60
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": { "type": { "name": "datetime" }, "value": "2024-01-01T12:60:00Z" }
+  }
+}

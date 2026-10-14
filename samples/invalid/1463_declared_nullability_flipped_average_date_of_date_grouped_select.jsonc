@@ -1,0 +1,20 @@
+// average declared date over a date selector declares the opposite nullability of date in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

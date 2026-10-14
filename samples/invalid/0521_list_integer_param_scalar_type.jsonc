@@ -1,0 +1,13 @@
+// parameter declared integer, not integerList, as a list
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "integer" }, "value": 7 },
+    "list": { "param": "p", "type": { "name": "integer" } }
+  }
+}

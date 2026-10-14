@@ -1,0 +1,15 @@
+// modulo declared integer? has left as a integer literal with a malformed value (a fractional integer) in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "type": { "name": "integer", "nullable": true }, "value": 1.5 },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    }
+  ]
+}

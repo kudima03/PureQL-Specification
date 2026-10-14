@@ -1,0 +1,17 @@
+// coalesce declared date declares the opposite nullability of date in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "date", "nullable": true },
+        "values": [
+          { "type": { "name": "date", "nullable": true }, "value": null },
+          { "type": { "name": "date" }, "value": "2024-01-31" }
+        ]
+      }
+    }
+  ]
+}

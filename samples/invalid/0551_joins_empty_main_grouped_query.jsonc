@@ -1,0 +1,9 @@
+// a grouped query as the main query: with an empty joins
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "select": [ { "alias": "id", "expression": { "key": "id", "type": { "name": "uuid" } } } ],
+  "joins": []
+}

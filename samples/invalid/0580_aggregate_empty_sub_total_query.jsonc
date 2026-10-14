@@ -1,0 +1,6 @@
+// a total query as a subquery: with an empty aggregate
+{
+  "subqueries": [ { "name": "s", "query": { "from": { "entity": "orders" }, "aggregate": [] } } ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "source": "s", "field": "n", "type": { "name": "integer" } } } ]
+}

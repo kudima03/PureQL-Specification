@@ -1,0 +1,17 @@
+// a grouped query as a subquery: with a groupBy key with an empty alias
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          { "alias": "", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "select": [ { "alias": "id", "expression": { "key": "id", "type": { "name": "uuid" } } } ]
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "source": "s", "field": "id", "type": { "name": "uuid" } } } ]
+}

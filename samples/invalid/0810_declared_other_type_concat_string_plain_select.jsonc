@@ -1,0 +1,17 @@
+// concat declared string declares another type than string in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "boolean" },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    }
+  ]
+}

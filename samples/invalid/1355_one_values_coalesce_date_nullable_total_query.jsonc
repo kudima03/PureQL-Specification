@@ -1,0 +1,14 @@
+// coalesce declared date? has a single item in values in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "date", "nullable": true },
+        "values": [ { "type": { "name": "date", "nullable": true }, "value": null } ]
+      }
+    }
+  ]
+}

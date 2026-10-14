@@ -1,0 +1,14 @@
+// not declared boolean declares the opposite nullability of boolean in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "not",
+        "type": { "name": "boolean", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

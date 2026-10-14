@@ -1,0 +1,16 @@
+// dateAddDays declared date? has left as a group key reference, which only a grouped select, having and orderBy have, in
+// a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "left": { "key": "k", "type": { "name": "date", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// divide declared decimal has a single item in values in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [ { "type": { "name": "integer" }, "value": 7 } ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+// timeDiffSeconds declared decimal declares another type than decimal in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeDiffSeconds",
+        "type": { "name": "string" },
+        "left": { "type": { "name": "time" }, "value": "08:30:00" },
+        "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// datetimeAddSeconds declared datetime declares the opposite nullability of datetime in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime", "nullable": true },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// ceiling declared integer declares the opposite nullability of integer in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// not declared boolean declares another type than boolean in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "not",
+        "type": { "name": "string" },
+        "condition": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

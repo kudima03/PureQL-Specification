@@ -1,0 +1,14 @@
+// or declared boolean has a single item in conditions in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "or",
+        "type": { "name": "boolean" },
+        "conditions": [ { "type": { "name": "boolean" }, "value": true } ]
+      }
+    }
+  ]
+}

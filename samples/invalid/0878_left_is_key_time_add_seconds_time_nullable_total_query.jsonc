@@ -1,0 +1,16 @@
+// timeAddSeconds declared time? has left as a group key reference, which only a grouped select, having and orderBy have,
+// in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time", "nullable": true },
+        "left": { "key": "k", "type": { "name": "time" } },
+        "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

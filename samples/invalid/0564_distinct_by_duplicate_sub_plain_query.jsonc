@@ -1,0 +1,17 @@
+// a plain query as a subquery: with distinctBy listing an alias twice
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "distinctBy": [ "id", "id" ]
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "source": "s", "field": "id", "type": { "name": "uuid" } } } ]
+}

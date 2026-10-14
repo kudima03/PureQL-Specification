@@ -1,0 +1,15 @@
+// ceiling declared integer has operand as a group key reference, which only a grouped select, having and orderBy have,
+// in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": { "key": "k", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

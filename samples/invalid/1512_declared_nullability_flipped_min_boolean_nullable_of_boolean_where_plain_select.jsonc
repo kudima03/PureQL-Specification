@@ -1,0 +1,16 @@
+// min declared boolean? over a boolean selector with a predicate declares the opposite nullability of boolean? in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "boolean" },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

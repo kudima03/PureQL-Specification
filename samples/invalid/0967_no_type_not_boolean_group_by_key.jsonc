@@ -1,0 +1,11 @@
+// not declared boolean has no declared type in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "operator": "not", "condition": { "type": { "name": "boolean" }, "value": true } }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

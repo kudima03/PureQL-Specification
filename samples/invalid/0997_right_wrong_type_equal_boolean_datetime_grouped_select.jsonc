@@ -1,0 +1,21 @@
+// equal declared boolean has right of a type that does not fit in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

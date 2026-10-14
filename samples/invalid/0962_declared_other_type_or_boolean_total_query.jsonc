@@ -1,0 +1,17 @@
+// or declared boolean declares another type than boolean in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "or",
+        "type": { "name": "string" },
+        "conditions": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+// subquery column without type
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [ { "alias": "f", "expression": { "type": { "name": "date" }, "value": "2024-01-31" } } ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+    "list": { "subquery": "s", "field": "f" }
+  }
+}

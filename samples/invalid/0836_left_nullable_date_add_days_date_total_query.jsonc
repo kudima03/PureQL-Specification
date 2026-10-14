@@ -1,0 +1,15 @@
+// dateAddDays declared date has a nullable left but declares a non-null result in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "left": { "type": { "name": "date", "nullable": true }, "value": null },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

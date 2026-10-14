@@ -1,0 +1,17 @@
+// add declared decimal? declares decimal with integer operands only in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "integer", "nullable": true }, "value": null },
+          { "type": { "name": "integer" }, "value": 7 }
+        ]
+      }
+    }
+  ]
+}

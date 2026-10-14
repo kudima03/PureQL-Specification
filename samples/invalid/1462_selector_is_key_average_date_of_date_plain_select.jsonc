@@ -1,0 +1,14 @@
+// average declared date over a date selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "key": "k", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

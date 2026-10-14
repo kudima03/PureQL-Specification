@@ -1,0 +1,20 @@
+// and declared boolean has a single item in conditions in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [ { "type": { "name": "boolean" }, "value": true } ]
+      }
+    }
+  ]
+}

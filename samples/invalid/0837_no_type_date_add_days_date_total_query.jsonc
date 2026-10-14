@@ -1,0 +1,14 @@
+// dateAddDays declared date has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "left": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+// decimal literal "-00.5": a leading zero after a sign
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "decimal" }, "value": "-00.5" }
+  }
+}

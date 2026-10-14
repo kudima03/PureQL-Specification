@@ -1,0 +1,17 @@
+// if declared integer has else as a group key reference, which only a grouped select, having and orderBy have, in a
+// total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "integer" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "integer" }, "value": 7 },
+        "else": { "key": "k", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

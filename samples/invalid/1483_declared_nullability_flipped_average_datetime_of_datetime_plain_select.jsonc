@@ -1,0 +1,14 @@
+// average declared datetime over a datetime selector declares the opposite nullability of datetime in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    }
+  ]
+}

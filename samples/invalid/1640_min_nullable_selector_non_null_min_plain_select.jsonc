@@ -1,0 +1,14 @@
+// min of a nullable selector declared non-null in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

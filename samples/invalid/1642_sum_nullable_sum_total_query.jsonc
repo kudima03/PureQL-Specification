@@ -1,0 +1,14 @@
+// sum declared nullable although it is 0 over no rows in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

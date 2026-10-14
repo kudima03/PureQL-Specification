@@ -1,0 +1,17 @@
+// coalesce declared time declares the opposite nullability of time in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "time", "nullable": true },
+        "values": [
+          { "type": { "name": "time", "nullable": true }, "value": null },
+          { "type": { "name": "time" }, "value": "08:30:00" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// coalesce declared string declares the opposite nullability of string in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "a" }
+        ]
+      }
+    }
+  ]
+}

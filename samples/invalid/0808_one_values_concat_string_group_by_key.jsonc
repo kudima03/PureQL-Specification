@@ -1,0 +1,15 @@
+// concat declared string has a single item in values in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [ { "type": { "name": "string" }, "value": "a" } ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

@@ -1,0 +1,17 @@
+// if declared date has else as a group key reference, which only a grouped select, having and orderBy have, in a total
+// query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "date" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "else": { "key": "k", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

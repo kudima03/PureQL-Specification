@@ -1,0 +1,13 @@
+// booleanList literal with true twice: a list literal is a set
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "f", "type": { "name": "boolean" } },
+    "list": { "type": { "name": "booleanList" }, "value": [ true, true ] }
+  }
+}

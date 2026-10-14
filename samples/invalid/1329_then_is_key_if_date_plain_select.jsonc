@@ -1,0 +1,17 @@
+// if declared date has then as a group key reference, which only a grouped select, having and orderBy have, in a plain
+// select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "date" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "key": "k", "type": { "name": "date" } },
+        "else": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

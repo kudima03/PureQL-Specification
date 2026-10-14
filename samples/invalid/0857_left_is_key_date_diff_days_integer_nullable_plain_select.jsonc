@@ -1,0 +1,16 @@
+// dateDiffDays declared integer? has left as a group key reference, which only a grouped select, having and orderBy
+// have, in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "key": "k", "type": { "name": "date" } },
+        "right": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

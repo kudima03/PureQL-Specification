@@ -1,0 +1,15 @@
+// a total query as a subquery: without from
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "aggregate": [
+          { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "source": "s", "field": "n", "type": { "name": "integer" } } } ]
+}

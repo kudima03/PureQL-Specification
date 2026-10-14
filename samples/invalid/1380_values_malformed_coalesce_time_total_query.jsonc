@@ -1,0 +1,17 @@
+// coalesce declared time has values as a time literal with a malformed value (hour 24) in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "time" },
+        "values": [
+          { "type": { "name": "time", "nullable": true }, "value": "24:00:00" },
+          { "type": { "name": "time" }, "value": "08:30:00" }
+        ]
+      }
+    }
+  ]
+}

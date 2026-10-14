@@ -1,0 +1,14 @@
+// a total query as a subquery: with a aggregate item without alias
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "aggregate": [ { "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "source": "s", "field": "n", "type": { "name": "integer" } } } ]
+}

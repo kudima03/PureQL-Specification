@@ -1,0 +1,15 @@
+// min declared time? over a time selector with a predicate declares the opposite nullability of time? in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

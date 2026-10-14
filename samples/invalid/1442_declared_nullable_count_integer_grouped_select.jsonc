@@ -1,0 +1,13 @@
+// count declared integer declares integer? although it is never null in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "c", "expression": { "operator": "count", "type": { "name": "integer", "nullable": true } } }
+  ]
+}

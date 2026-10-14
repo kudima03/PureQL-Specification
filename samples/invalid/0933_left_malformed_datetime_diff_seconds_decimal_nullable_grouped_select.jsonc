@@ -1,0 +1,22 @@
+// datetimeDiffSeconds declared decimal? has left as a datetime literal with a malformed value (an offset other than Z)
+// in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "datetime", "nullable": true }, "value": "2024-01-31T08:30:00+02:00" },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    }
+  ]
+}

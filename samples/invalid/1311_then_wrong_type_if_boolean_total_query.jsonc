@@ -1,0 +1,16 @@
+// if declared boolean has then of a type that does not fit in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "boolean" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "integer" }, "value": 7 },
+        "else": { "type": { "name": "boolean" }, "value": false }
+      }
+    }
+  ]
+}

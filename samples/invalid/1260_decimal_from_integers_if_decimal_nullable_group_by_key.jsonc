@@ -1,0 +1,17 @@
+// if declared decimal? declares decimal with integer branches only in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "else": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

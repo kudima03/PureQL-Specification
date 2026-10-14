@@ -1,0 +1,17 @@
+// if declared time? has else as a group key reference, which only a grouped select, having and orderBy have, in a plain
+// select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "time", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "time", "nullable": true }, "value": null },
+        "else": { "key": "k", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

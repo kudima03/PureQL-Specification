@@ -1,0 +1,16 @@
+// a stringList parameter as an if branch
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "m",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "param": "p", "type": { "name": "stringList" } },
+        "else": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

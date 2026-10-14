@@ -1,0 +1,13 @@
+// dateList literal without a value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+    "list": { "type": { "name": "dateList" } }
+  }
+}

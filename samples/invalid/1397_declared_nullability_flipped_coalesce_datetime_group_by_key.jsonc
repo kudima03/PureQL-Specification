@@ -1,0 +1,18 @@
+// coalesce declared datetime declares the opposite nullability of datetime in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "datetime", "nullable": true },
+        "values": [
+          { "type": { "name": "datetime", "nullable": true }, "value": null },
+          { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

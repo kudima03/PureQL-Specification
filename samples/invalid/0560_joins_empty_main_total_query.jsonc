@@ -1,0 +1,6 @@
+// a total query as the main query: with an empty joins
+{
+  "from": { "entity": "orders" },
+  "aggregate": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ],
+  "joins": []
+}

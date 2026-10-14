@@ -1,0 +1,14 @@
+// min declared time? over a time selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "time", "nullable": true } }
+      }
+    }
+  ]
+}

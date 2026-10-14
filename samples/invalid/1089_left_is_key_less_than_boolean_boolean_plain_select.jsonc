@@ -1,0 +1,16 @@
+// lessThan declared boolean has left as a group key reference, which only a grouped select, having and orderBy have, in
+// a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "key": "k", "type": { "name": "boolean" } },
+        "right": { "type": { "name": "boolean" }, "value": false }
+      }
+    }
+  ]
+}

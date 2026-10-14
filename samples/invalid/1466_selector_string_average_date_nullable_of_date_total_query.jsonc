@@ -1,0 +1,14 @@
+// average declared date? over a date selector takes the average of a string in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    }
+  ]
+}

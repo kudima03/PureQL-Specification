@@ -1,0 +1,16 @@
+// round declared integer has no declared type in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "round", "operand": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

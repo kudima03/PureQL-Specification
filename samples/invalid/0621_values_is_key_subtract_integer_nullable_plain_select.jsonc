@@ -1,0 +1,18 @@
+// subtract declared integer? has values as a group key reference, which only a grouped select, having and orderBy have,
+// in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          { "key": "k", "type": { "name": "integer" } },
+          { "type": { "name": "integer", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

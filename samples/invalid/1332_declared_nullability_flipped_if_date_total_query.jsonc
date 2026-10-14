@@ -1,0 +1,16 @@
+// if declared date declares the opposite nullability of date in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "date", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "else": { "type": { "name": "date" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

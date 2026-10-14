@@ -1,0 +1,10 @@
+// not declared boolean has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": { "operator": "not", "condition": { "type": { "name": "boolean" }, "value": true } }
+    }
+  ]
+}

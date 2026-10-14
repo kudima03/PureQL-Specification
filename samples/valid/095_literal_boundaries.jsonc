@@ -1,0 +1,83 @@
+// Literals at the edges of each format: leap days of 4, 400, 1600, 2000, 2400 and 9996, the last day of February in the
+// centuries that are not leap years, the first and last instants, the first and last microsecond of a day, the nil and
+// the largest uuid, decimals with the most digits and the most places, a negative-zero integer and a string that looks
+// like an invalid date.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "leap_day_0004", "expression": { "type": { "name": "date" }, "value": "0004-02-29" } },
+    { "alias": "leap_day_0400", "expression": { "type": { "name": "date" }, "value": "0400-02-29" } },
+    { "alias": "leap_day_1600", "expression": { "type": { "name": "date" }, "value": "1600-02-29" } },
+    { "alias": "leap_day_2000", "expression": { "type": { "name": "date" }, "value": "2000-02-29" } },
+    { "alias": "leap_day_2400", "expression": { "type": { "name": "date" }, "value": "2400-02-29" } },
+    { "alias": "leap_day_9996", "expression": { "type": { "name": "date" }, "value": "9996-02-29" } },
+    {
+      "alias": "last_day_of_february_1900",
+      "expression": { "type": { "name": "date" }, "value": "1900-02-28" }
+    },
+    {
+      "alias": "last_day_of_february_2100",
+      "expression": { "type": { "name": "date" }, "value": "2100-02-28" }
+    },
+    {
+      "alias": "thirty_first_of_december",
+      "expression": { "type": { "name": "date" }, "value": "2024-12-31" }
+    },
+    { "alias": "thirtieth_of_november", "expression": { "type": { "name": "date" }, "value": "2024-11-30" } },
+    {
+      "alias": "first_instant",
+      "expression": { "type": { "name": "datetime" }, "value": "0001-01-01T00:00:00Z" }
+    },
+    {
+      "alias": "last_instant",
+      "expression": { "type": { "name": "datetime" }, "value": "9999-12-31T23:59:59.999999Z" }
+    },
+    {
+      "alias": "leap_instant",
+      "expression": { "type": { "name": "datetime" }, "value": "2024-02-29T23:59:59.000001Z" }
+    },
+    { "alias": "one_microsecond", "expression": { "type": { "name": "time" }, "value": "00:00:00.000001" } },
+    { "alias": "last_second", "expression": { "type": { "name": "time" }, "value": "23:59:59" } },
+    { "alias": "last_microsecond", "expression": { "type": { "name": "time" }, "value": "23:59:59.999999" } },
+    {
+      "alias": "nil_uuid",
+      "expression": { "type": { "name": "uuid" }, "value": "00000000-0000-0000-0000-000000000000" }
+    },
+    {
+      "alias": "max_uuid",
+      "expression": { "type": { "name": "uuid" }, "value": "ffffffff-ffff-ffff-ffff-ffffffffffff" }
+    },
+    { "alias": "zero", "expression": { "type": { "name": "decimal" }, "value": "0" } },
+    { "alias": "negative_half", "expression": { "type": { "name": "decimal" }, "value": "-0.5" } },
+    {
+      "alias": "largest_decimal",
+      "expression": { "type": { "name": "decimal" }, "value": "9999999999999999999999999999" }
+    },
+    {
+      "alias": "smallest_fraction",
+      "expression": { "type": { "name": "decimal" }, "value": "0.0000000000000000000000000001" }
+    },
+    {
+      "alias": "most_digits_with_fraction",
+      "expression": { "type": { "name": "decimal" }, "value": "99999999999999999999999999.99" }
+    },
+    { "alias": "negative_zero_integer", "expression": { "type": { "name": "integer" }, "value": 0 } },
+    { "alias": "zero_integer", "expression": { "type": { "name": "integer" }, "value": 0 } },
+    {
+      "alias": "integer_written_with_fraction_zero",
+      "expression": { "type": { "name": "integer" }, "value": 100.0 }
+    },
+    { "alias": "empty_string", "expression": { "type": { "name": "string" }, "value": "" } },
+    { "alias": "string_with_newline", "expression": { "type": { "name": "string" }, "value": "a\nb" } },
+    {
+      "alias": "string_with_quote_and_backslash",
+      "expression": { "type": { "name": "string" }, "value": "say \"hi\" \\ bye" }
+    },
+    { "alias": "string_with_emoji", "expression": { "type": { "name": "string" }, "value": "😀 é" } },
+    { "alias": "string_of_spaces", "expression": { "type": { "name": "string" }, "value": "   " } },
+    {
+      "alias": "string_looking_like_a_date",
+      "expression": { "type": { "name": "string" }, "value": "2024-02-30" }
+    }
+  ]
+}

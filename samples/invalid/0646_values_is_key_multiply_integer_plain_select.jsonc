@@ -1,0 +1,18 @@
+// multiply declared integer has values as a group key reference, which only a grouped select, having and orderBy have,
+// in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "integer" },
+        "values": [
+          { "key": "k", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    }
+  ]
+}

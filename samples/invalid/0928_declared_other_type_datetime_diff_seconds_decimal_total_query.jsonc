@@ -1,0 +1,15 @@
+// datetimeDiffSeconds declared decimal declares another type than decimal in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "string" },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "right": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+      }
+    }
+  ]
+}

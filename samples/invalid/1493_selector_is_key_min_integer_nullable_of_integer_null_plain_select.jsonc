@@ -1,0 +1,14 @@
+// min declared integer? over a integer selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

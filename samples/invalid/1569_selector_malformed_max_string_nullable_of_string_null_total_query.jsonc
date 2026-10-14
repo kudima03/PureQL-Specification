@@ -1,0 +1,14 @@
+// max declared string? over a string selector has a selector with a malformed value (a number) in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": 5 }
+      }
+    }
+  ]
+}

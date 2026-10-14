@@ -1,0 +1,10 @@
+// ceiling declared integer has no declared type in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "ceiling", "operand": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

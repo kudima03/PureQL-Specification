@@ -1,0 +1,14 @@
+// max declared boolean over a boolean selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "boolean" },
+        "selector": { "key": "k", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// average declared time? over a time selector has a group key reference as its selector in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

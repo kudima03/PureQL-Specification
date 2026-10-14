@@ -1,0 +1,21 @@
+// datetimeDiffSeconds declared decimal has a nullable left but declares a non-null result in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "right": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+      }
+    }
+  ]
+}

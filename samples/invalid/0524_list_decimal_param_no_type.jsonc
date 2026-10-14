@@ -1,0 +1,13 @@
+// decimalList parameter without a type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+    "list": { "param": "p" }
+  }
+}

@@ -1,0 +1,14 @@
+// in declared boolean has no list in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    }
+  ]
+}

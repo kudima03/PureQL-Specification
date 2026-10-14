@@ -1,0 +1,20 @@
+// average declared decimal? over a decimal selector has a group key reference as its selector in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "key": "k", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

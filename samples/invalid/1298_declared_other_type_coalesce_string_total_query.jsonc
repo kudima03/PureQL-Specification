@@ -1,0 +1,17 @@
+// coalesce declared string declares another type than string in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "boolean" },
+        "values": [
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "a" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// if declared time has else as a group key reference, which only a grouped select, having and orderBy have, in a groupBy
+// key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "time" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "time" }, "value": "08:30:00" },
+        "else": { "key": "k", "type": { "name": "time" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

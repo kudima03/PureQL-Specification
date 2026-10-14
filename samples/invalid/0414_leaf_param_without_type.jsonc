@@ -1,0 +1,2 @@
+// a parameter without type in a total query
+{ "from": { "entity": "orders" }, "aggregate": [ { "alias": "c", "expression": { "param": "p" } } ] }

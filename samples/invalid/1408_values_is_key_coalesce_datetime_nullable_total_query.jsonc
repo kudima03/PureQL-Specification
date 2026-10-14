@@ -1,0 +1,18 @@
+// coalesce declared datetime? has values as a group key reference, which only a grouped select, having and orderBy have,
+// in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "datetime", "nullable": true },
+        "values": [
+          { "key": "k", "type": { "name": "datetime", "nullable": true } },
+          { "type": { "name": "datetime", "nullable": true }, "value": null }
+        ]
+      }
+    }
+  ]
+}

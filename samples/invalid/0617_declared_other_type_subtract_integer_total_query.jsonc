@@ -1,0 +1,17 @@
+// subtract declared integer declares another type than integer in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    }
+  ]
+}

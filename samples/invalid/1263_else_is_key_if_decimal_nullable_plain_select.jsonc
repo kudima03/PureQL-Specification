@@ -1,0 +1,17 @@
+// if declared decimal? has else as a group key reference, which only a grouped select, having and orderBy have, in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal", "nullable": true },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "else": { "key": "k", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

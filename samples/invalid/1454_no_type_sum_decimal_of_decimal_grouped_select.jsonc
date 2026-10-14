@@ -1,0 +1,16 @@
+// sum declared decimal over a decimal selector has no declared type in a grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "sum", "selector": { "type": { "name": "decimal" }, "value": "2.5" } }
+    }
+  ]
+}

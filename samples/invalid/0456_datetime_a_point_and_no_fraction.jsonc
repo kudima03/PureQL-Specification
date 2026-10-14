@@ -1,0 +1,13 @@
+// datetime literal with a point and no fraction
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": { "type": { "name": "datetime" }, "value": "2024-01-01T00:00:00.Z" }
+  }
+}

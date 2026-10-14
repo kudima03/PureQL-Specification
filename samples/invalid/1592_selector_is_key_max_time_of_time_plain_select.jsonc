@@ -1,0 +1,14 @@
+// max declared time over a time selector has a group key reference as its selector in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "time" },
+        "selector": { "key": "k", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

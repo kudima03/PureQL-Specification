@@ -1,0 +1,10 @@
+// max declared time? over a time selector has no declared type in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": { "operator": "max", "selector": { "type": { "name": "time" }, "value": "08:30:00" } }
+    }
+  ]
+}

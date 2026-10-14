@@ -1,0 +1,14 @@
+// min declared time over a time selector declares the opposite nullability of time in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    }
+  ]
+}

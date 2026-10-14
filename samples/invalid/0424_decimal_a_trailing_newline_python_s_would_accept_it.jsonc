@@ -1,0 +1,14 @@
+// decimal literal with a trailing newline (Python's $ would accept it): patterns accept ASCII [0-9] only, and nothing
+// around the value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "decimal" }, "value": "1.5\n" }
+  }
+}

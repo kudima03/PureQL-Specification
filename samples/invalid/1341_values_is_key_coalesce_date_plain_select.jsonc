@@ -1,0 +1,18 @@
+// coalesce declared date has values as a group key reference, which only a grouped select, having and orderBy have, in a
+// plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "date" },
+        "values": [
+          { "key": "k", "type": { "name": "date", "nullable": true } },
+          { "type": { "name": "date" }, "value": "2024-01-31" }
+        ]
+      }
+    }
+  ]
+}

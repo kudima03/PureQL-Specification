@@ -1,0 +1,14 @@
+// add declared integer has a single item in values in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [ { "type": { "name": "integer" }, "value": 7 } ]
+      }
+    }
+  ]
+}

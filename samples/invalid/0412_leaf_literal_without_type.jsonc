@@ -1,0 +1,6 @@
+// a literal without type in a groupBy key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [ { "alias": "k", "expression": { "value": 1 } } ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}
