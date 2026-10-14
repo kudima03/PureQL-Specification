@@ -8,8 +8,8 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 
 - `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
 - `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
-- `samples/valid/*.json` — samples: valid queries, numbered from simple to complex. Formatting is checked by CI and they ship as `samples.zip`
-- `samples/valid/*.jsonc` — valid tests: valid queries that are not worth a sample (`001_deep_nesting.jsonc` guards against exponential validation)
+- `samples/valid/*.json` — samples: valid queries, numbered `001`… from simple to complex. Formatting is checked by CI and they ship as `samples.zip`
+- `samples/valid/*.jsonc` — valid tests, numbered on after the last sample (one sequence with the samples, three digits): valid queries that are not worth a sample (`058_deep_nesting.jsonc` guards against exponential validation)
 - `samples/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
 
@@ -51,7 +51,7 @@ The schema reads as tables of named definitions, and validation is linear by con
 - `<type>[.nullable]@<ctx>` is a position: `allOf` of `accepts.<type>[.nullable]` (shallow) and `expr@<ctx>`.
 - Shallow checks are named definitions that read only the node's `type`: `declares.<type>[.nullable]` (exactly that type), `accepts.<type>[.nullable]` (the type or a subtype, non-null unless nullable), `accepts.equatable` / `accepts.comparable`, `declares.nullable` / `declares.nonNull`. They may be repeated anywhere (`contains`, `anyOf`, `if`) at no cost in depth. Type names are an `enum` even when there is one, so errors say which type was expected.
 
-Dispatch on a value (`operator`, the declared type, an operand's family) is always `if` / `then` with a shallow `if`, never `anyOf` / `oneOf` over branches that reach `expr@…`. ajv stops at the first matching `anyOf` branch only without `allErrors`; Python `jsonschema` and `allErrors` evaluate every branch in full, which is exponential in depth: an `anyOf` prototype took over a minute at depth 2 in Python and ran out of memory at depth 4 with `allErrors`. Likewise never reference `expr@…` or a position from two branches that can both apply to one node. `samples/valid/001_deep_nesting.jsonc`, `samples/valid/010_deep_operand_chains.jsonc` and `samples/invalid/330_deep_malformed_operand_type.jsonc` check this under the CI timeout; when touching dispatch, also time a 30-level query with `allErrors` and with Python `jsonschema`.
+Dispatch on a value (`operator`, the declared type, an operand's family) is always `if` / `then` with a shallow `if`, never `anyOf` / `oneOf` over branches that reach `expr@…`. ajv stops at the first matching `anyOf` branch only without `allErrors`; Python `jsonschema` and `allErrors` evaluate every branch in full, which is exponential in depth: an `anyOf` prototype took over a minute at depth 2 in Python and ran out of memory at depth 4 with `allErrors`. Likewise never reference `expr@…` or a position from two branches that can both apply to one node. `samples/valid/058_deep_nesting.jsonc`, `samples/valid/067_deep_operand_chains.jsonc` and `samples/invalid/330_deep_malformed_operand_type.jsonc` check this under the CI timeout; when touching dispatch, also time a 30-level query with `allErrors` and with Python `jsonschema`.
 
 ### Aggregates
 
@@ -136,8 +136,8 @@ What an interpreter computes is defined under **Semantics** in `README.md`: eval
 
 ## Adding samples and tests
 
-1. **Sample:** add a bare query as `samples/valid/NN_name.json` at the position matching its complexity, and renumber the following files if needed. Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/valid/NN_name.json`, which CI checks; declare every operator's type by hand (`"type"` right after `"operator"`); columns and group keys have no `type`, and update the samples table in `README.md`.
+1. **Sample:** add a bare query as `samples/valid/NNN_name.json` at the position matching its complexity, and renumber the following files, tests included, if needed (`samples/valid` is one sequence of three-digit numbers: samples first, then tests). Format it with `npx --yes @prantlf/jsonlint@17.0.1 --in-place --indent 2 --trailing-newline samples/valid/NNN_name.json`, which CI checks; declare every operator's type by hand (`"type"` right after `"operator"`); columns and group keys have no `type`, and update the samples table in `README.md`.
 2. **Invalid test:** write `samples/invalid/NNN_name.jsonc` by hand with the next free number: a `//` comment describing what is broken, then the bare query. Test formatting is not checked; keep the compact style of the existing tests (an object or array on one line while it fits in 110 columns). Break exactly one thing in a valid base, and check that it is rejected for the intended reason: ajv prints the failing path when you validate the file on its own with `ajv validate`.
-3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `samples/valid/NNN_name.jsonc`, in the same JSONC format.
+3. **Valid test:** a valid query that is not worth a sample (an edge case, a corner of the type rules) goes to `samples/valid/NNN_name.jsonc` with the next free number, after the last test, in the same JSONC format.
 4. Use the e-commerce domain (users, orders, order_items, products, coupons, referrals) for consistency.
 5. Run both ajv commands from [Schema validation](#schema-validation) before committing.
