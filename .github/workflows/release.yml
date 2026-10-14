@@ -25,19 +25,19 @@ jobs:
       - uses: actions/checkout@v4
 
       # Same checks as validate.yml, so nothing broken is ever released:
-      # every sample and every query in tests/valid must be accepted.
+      # every query in samples/valid, .json samples and .jsonc tests, must be accepted.
       - name: Valid queries must pass
         run: |
           npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
-            -s PureQL-Specification.json -d "samples/*.json" -d "tests/valid/*.jsonc" --valid > /dev/null
-          echo "$(ls samples/*.json tests/valid/*.jsonc | wc -l) valid queries accepted"
+            -s PureQL-Specification.json -d "samples/valid/*.json" -d "samples/valid/*.jsonc" --valid > /dev/null
+          echo "$(ls samples/valid/*.json samples/valid/*.jsonc | wc -l) valid queries accepted"
 
-      # Every query in tests/invalid must be rejected, each file on its own.
+      # Every query in samples/invalid must be rejected, each file on its own.
       - name: Invalid queries must fail
         run: |
           npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false \
-            -s PureQL-Specification.json -d "tests/invalid/*.jsonc" --invalid > /dev/null
-          echo "$(ls tests/invalid/*.jsonc | wc -l) invalid queries rejected"
+            -s PureQL-Specification.json -d "samples/invalid/*.jsonc" --invalid > /dev/null
+          echo "$(ls samples/invalid/*.jsonc | wc -l) invalid queries rejected"
 
       # The tag must equal the `version` field of the schema, so a release
       # never ships a schema that names another version. jq is preinstalled
@@ -66,7 +66,7 @@ jobs:
 
       # Samples ship as one archive next to the schema.
       - name: Package samples
-        run: zip -r samples.zip samples/
+        run: zip samples.zip samples/valid/*.json
 
       # Publish the release with its assets; a tag containing "-preview"
       # is marked as a pre-release.
