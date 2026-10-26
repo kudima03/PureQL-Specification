@@ -9,7 +9,7 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 - `tools/generate_schema.py` — **source of truth** for the schema. Generates `PureQL-Specification.json`
 - `PureQL-Specification.json` — the generated JSON Schema (draft 2020-12). **Never edit it by hand**
 - `samples/valid/*.json` — samples: valid queries, numbered `001`… from simple to complex. Formatting is checked by CI and they ship as `samples.zip`
-- `samples/valid/*.jsonc` — valid tests, numbered on after the last sample (one sequence with the samples, three digits): valid queries that are not worth a sample (`058_deep_nesting.jsonc` guards against exponential validation)
+- `samples/valid/*.jsonc` — valid tests, numbered on after the last sample (one sequence with the samples, three digits): valid queries that are not worth a sample (`087_deep_nesting.jsonc` guards against exponential validation)
 - `samples/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
 
@@ -51,7 +51,7 @@ The schema reads as tables of named definitions, and validation is linear by con
 - `<type>[.nullable]@<ctx>` is a position: `allOf` of `accepts.<type>[.nullable]` (shallow) and `expr@<ctx>`.
 - Shallow checks are named definitions that read only the node's `type`: `declares.<type>[.nullable]` (exactly that type), `accepts.<type>[.nullable]` (the type or a subtype, non-null unless nullable), `accepts.equatable` / `accepts.comparable`, `declares.nullable` / `declares.nonNull`. They may be repeated anywhere (`contains`, `anyOf`, `if`) at no cost in depth. Type names are an `enum` even when there is one, so errors say which type was expected.
 
-Dispatch on a value (`operator`, the declared type, an operand's family) is always `if` / `then` with a shallow `if`, never `anyOf` / `oneOf` over branches that reach `expr@…`. ajv stops at the first matching `anyOf` branch only without `allErrors`; Python `jsonschema` and `allErrors` evaluate every branch in full, which is exponential in depth: an `anyOf` prototype took over a minute at depth 2 in Python and ran out of memory at depth 4 with `allErrors`. Likewise never reference `expr@…` or a position from two branches that can both apply to one node. `samples/valid/058_deep_nesting.jsonc`, `samples/valid/067_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` check this under the CI timeout; when touching dispatch, also time a 30-level query with `allErrors` and with Python `jsonschema`.
+Dispatch on a value (`operator`, the declared type, an operand's family) is always `if` / `then` with a shallow `if`, never `anyOf` / `oneOf` over branches that reach `expr@…`. ajv stops at the first matching `anyOf` branch only without `allErrors`; Python `jsonschema` and `allErrors` evaluate every branch in full, which is exponential in depth: an `anyOf` prototype took over a minute at depth 2 in Python and ran out of memory at depth 4 with `allErrors`. Likewise never reference `expr@…` or a position from two branches that can both apply to one node. `samples/valid/087_deep_nesting.jsonc`, `samples/valid/096_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` check this under the CI timeout; when touching dispatch, also time a 30-level query with `allErrors` and with Python `jsonschema`.
 
 ### Aggregates
 

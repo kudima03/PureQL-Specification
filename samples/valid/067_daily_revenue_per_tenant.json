@@ -1,0 +1,283 @@
+{
+  "from": {
+    "entity": "schema_with_foreign_keys.order_items"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.orders",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_order_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.products",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_product_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.products",
+          "field": "product_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "not",
+    "type": {
+      "name": "boolean"
+    },
+    "condition": {
+      "operator": "in",
+      "type": {
+        "name": "boolean"
+      },
+      "operand": {
+        "source": "schema_with_foreign_keys.orders",
+        "field": "order_status",
+        "type": {
+          "name": "string"
+        }
+      },
+      "list": {
+        "type": {
+          "name": "stringList"
+        },
+        "value": [
+          "cancelled",
+          "refunded"
+        ]
+      }
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "placed_on",
+      "expression": {
+        "source": "schema_with_foreign_keys.orders",
+        "field": "placed_on",
+        "type": {
+          "name": "date"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "placed_on",
+      "expression": {
+        "key": "placed_on",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "alias": "revenue_tenant_385",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          },
+          "predicate": {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_tenant_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "uuid"
+              },
+              "value": "00000385-0000-0000-0000-000000000000"
+            }
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "revenue_tenant_386",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          },
+          "predicate": {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_tenant_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "uuid"
+              },
+              "value": "00000386-0000-0000-0000-000000000000"
+            }
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "revenue_all_tenants",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "key": "placed_on",
+        "type": {
+          "name": "date"
+        }
+      }
+    }
+  ]
+}

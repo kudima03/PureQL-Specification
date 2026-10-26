@@ -1,0 +1,301 @@
+{
+  "subqueries": [
+    {
+      "name": "orders_by_user",
+      "query": {
+        "from": {
+          "entity": "schema_with_foreign_keys.orders"
+        },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "avg_order_total",
+            "expression": {
+              "operator": "average",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_total",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          },
+          {
+            "alias": "orders",
+            "expression": {
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "items_by_user",
+      "query": {
+        "from": {
+          "entity": "schema_with_foreign_keys.order_items"
+        },
+        "joins": [
+          {
+            "kind": "inner",
+            "entity": "schema_with_foreign_keys.orders",
+            "on": {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              },
+              "right": {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          },
+          {
+            "alias": "item_lines",
+            "expression": {
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "entity": "schema_with_foreign_keys.users"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "orders_by_user",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "orders_by_user",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "subquery": "items_by_user",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "items_by_user",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "source": "orders_by_user",
+      "field": "orders",
+      "type": {
+        "name": "integer"
+      }
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 2
+    }
+  },
+  "select": [
+    {
+      "alias": "user_name",
+      "expression": {
+        "source": "schema_with_foreign_keys.users",
+        "field": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "user_active",
+      "expression": {
+        "source": "schema_with_foreign_keys.users",
+        "field": "user_active",
+        "type": {
+          "name": "boolean"
+        }
+      }
+    },
+    {
+      "alias": "avg_order_total",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "orders_by_user",
+          "field": "avg_order_total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "items_by_user",
+          "field": "units",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "item_lines",
+      "expression": {
+        "source": "items_by_user",
+        "field": "item_lines",
+        "type": {
+          "name": "integer"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders_by_user",
+        "field": "avg_order_total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    }
+  ]
+}

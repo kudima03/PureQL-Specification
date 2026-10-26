@@ -1,0 +1,795 @@
+{
+  "subqueries": [
+    {
+      "name": "recent_units",
+      "query": {
+        "from": {
+          "entity": "schema_with_foreign_keys.order_items"
+        },
+        "joins": [
+          {
+            "kind": "inner",
+            "entity": "schema_with_foreign_keys.orders",
+            "on": {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              },
+              "right": {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "where": {
+          "operator": "greaterThanOrEqual",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "placed_on",
+            "type": {
+              "name": "date"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "date"
+            },
+            "value": "2024-06-03"
+          }
+        },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "product_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.order_items",
+              "field": "item_product_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "product_id",
+            "expression": {
+              "key": "product_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "entity": "schema_with_foreign_keys.order_items"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.orders",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_order_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.users",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.products",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_product_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.products",
+          "field": "product_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "left",
+      "subquery": "recent_units",
+      "on": {
+        "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "source": "recent_units",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "schema_with_foreign_keys.order_items",
+              "field": "item_product_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "source": "recent_units",
+              "field": "product_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "subtract",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            {
+              "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "schema_with_foreign_keys.order_items",
+                  "field": "item_qty",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "source": "schema_with_foreign_keys.products",
+                  "field": "product_price",
+                  "type": {
+                    "name": "decimal"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "right": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "200"
+        }
+      },
+      {
+        "source": "schema_with_foreign_keys.products",
+        "field": "product_in_stock",
+        "type": {
+          "name": "boolean"
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "user_name",
+      "expression": {
+        "source": "schema_with_foreign_keys.users",
+        "field": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "product_name",
+      "expression": {
+        "source": "schema_with_foreign_keys.products",
+        "field": "product_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "order_total",
+      "expression": {
+        "source": "schema_with_foreign_keys.orders",
+        "field": "order_total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "line_value",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "schema_with_foreign_keys.order_items",
+            "field": "item_qty",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "source": "schema_with_foreign_keys.products",
+            "field": "product_price",
+            "type": {
+              "name": "decimal"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "rest_of_order",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "order_total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "daily_units",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "divide",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "coalesce",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "recent_units",
+                  "field": "units",
+                  "type": {
+                    "name": "decimal",
+                    "nullable": true
+                  }
+                },
+                {
+                  "type": {
+                    "name": "decimal"
+                  },
+                  "value": "0"
+                }
+              ]
+            },
+            {
+              "type": {
+                "name": "decimal"
+              },
+              "value": "3"
+            }
+          ]
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "days_of_cover",
+      "expression": {
+        "operator": "if",
+        "type": {
+          "name": "decimal"
+        },
+        "condition": {
+          "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "operator": "divide",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "coalesce",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "recent_units",
+                    "field": "units",
+                    "type": {
+                      "name": "decimal",
+                      "nullable": true
+                    }
+                  },
+                  {
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "value": "0"
+                  }
+                ]
+              },
+              {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "3"
+              }
+            ]
+          },
+          "right": {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "0"
+          }
+        },
+        "then": {
+          "operator": "round",
+          "type": {
+            "name": "decimal"
+          },
+          "operand": {
+            "operator": "divide",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "subtract",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "schema_with_foreign_keys.orders",
+                    "field": "order_total",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "operator": "multiply",
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "values": [
+                      {
+                        "source": "schema_with_foreign_keys.order_items",
+                        "field": "item_qty",
+                        "type": {
+                          "name": "decimal"
+                        }
+                      },
+                      {
+                        "source": "schema_with_foreign_keys.products",
+                        "field": "product_price",
+                        "type": {
+                          "name": "decimal"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "operator": "divide",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "operator": "coalesce",
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "values": [
+                      {
+                        "source": "recent_units",
+                        "field": "units",
+                        "type": {
+                          "name": "decimal",
+                          "nullable": true
+                        }
+                      },
+                      {
+                        "type": {
+                          "name": "decimal"
+                        },
+                        "value": "0"
+                      }
+                    ]
+                  },
+                  {
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "value": "3"
+                  }
+                ]
+              }
+            ]
+          },
+          "digits": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        },
+        "else": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "999"
+        }
+      }
+    },
+    {
+      "alias": "suggested_units",
+      "expression": {
+        "operator": "if",
+        "type": {
+          "name": "decimal"
+        },
+        "condition": {
+          "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "operator": "subtract",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "schema_with_foreign_keys.order_items",
+                    "field": "item_qty",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "value": "2"
+                  }
+                ]
+              },
+              {
+                "operator": "coalesce",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "recent_units",
+                    "field": "units",
+                    "type": {
+                      "name": "decimal",
+                      "nullable": true
+                    }
+                  },
+                  {
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "value": "0"
+                  }
+                ]
+              }
+            ]
+          },
+          "right": {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "0"
+          }
+        },
+        "then": {
+          "operator": "subtract",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "schema_with_foreign_keys.order_items",
+                  "field": "item_qty",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "type": {
+                    "name": "decimal"
+                  },
+                  "value": "2"
+                }
+              ]
+            },
+            {
+              "operator": "coalesce",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "recent_units",
+                  "field": "units",
+                  "type": {
+                    "name": "decimal",
+                    "nullable": true
+                  }
+                },
+                {
+                  "type": {
+                    "name": "decimal"
+                  },
+                  "value": "0"
+                }
+              ]
+            }
+          ]
+        },
+        "else": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "order_total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "expression": {
+        "source": "schema_with_foreign_keys.products",
+        "field": "product_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ],
+  "pagination": {
+    "skip": 0,
+    "take": 100
+  }
+}
