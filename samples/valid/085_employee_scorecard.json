@@ -1,0 +1,787 @@
+{
+  "subqueries": [
+    {
+      "name": "revenue_by_user",
+      "query": {
+        "from": {
+          "entity": "schema_with_foreign_keys.order_items"
+        },
+        "joins": [
+          {
+            "kind": "inner",
+            "entity": "schema_with_foreign_keys.orders",
+            "on": {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              },
+              "right": {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "kind": "inner",
+            "entity": "schema_with_foreign_keys.products",
+            "on": {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_product_id",
+                "type": {
+                  "name": "uuid"
+                }
+              },
+              "right": {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "where": {
+          "operator": "and",
+          "type": {
+            "name": "boolean"
+          },
+          "conditions": [
+            {
+              "operator": "not",
+              "type": {
+                "name": "boolean"
+              },
+              "condition": {
+                "operator": "in",
+                "type": {
+                  "name": "boolean"
+                },
+                "operand": {
+                  "source": "schema_with_foreign_keys.orders",
+                  "field": "order_status",
+                  "type": {
+                    "name": "string"
+                  }
+                },
+                "list": {
+                  "type": {
+                    "name": "stringList"
+                  },
+                  "value": [
+                    "cancelled",
+                    "refunded"
+                  ]
+                }
+              }
+            },
+            {
+              "operator": "and",
+              "type": {
+                "name": "boolean"
+              },
+              "conditions": [
+                {
+                  "operator": "greaterThanOrEqual",
+                  "type": {
+                    "name": "boolean"
+                  },
+                  "left": {
+                    "source": "schema_with_foreign_keys.orders",
+                    "field": "placed_on",
+                    "type": {
+                      "name": "date"
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "date"
+                    },
+                    "value": "2024-06-01"
+                  }
+                },
+                {
+                  "operator": "lessThan",
+                  "type": {
+                    "name": "boolean"
+                  },
+                  "left": {
+                    "source": "schema_with_foreign_keys.orders",
+                    "field": "placed_on",
+                    "type": {
+                      "name": "date"
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "date"
+                    },
+                    "value": "2024-06-06"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "revenue",
+            "expression": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "schema_with_foreign_keys.order_items",
+                    "field": "item_qty",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "source": "schema_with_foreign_keys.products",
+                    "field": "product_price",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "orders_by_user",
+      "query": {
+        "from": {
+          "entity": "schema_with_foreign_keys.orders"
+        },
+        "where": {
+          "operator": "and",
+          "type": {
+            "name": "boolean"
+          },
+          "conditions": [
+            {
+              "operator": "not",
+              "type": {
+                "name": "boolean"
+              },
+              "condition": {
+                "operator": "in",
+                "type": {
+                  "name": "boolean"
+                },
+                "operand": {
+                  "source": "schema_with_foreign_keys.orders",
+                  "field": "order_status",
+                  "type": {
+                    "name": "string"
+                  }
+                },
+                "list": {
+                  "type": {
+                    "name": "stringList"
+                  },
+                  "value": [
+                    "cancelled",
+                    "refunded"
+                  ]
+                }
+              }
+            },
+            {
+              "operator": "and",
+              "type": {
+                "name": "boolean"
+              },
+              "conditions": [
+                {
+                  "operator": "greaterThanOrEqual",
+                  "type": {
+                    "name": "boolean"
+                  },
+                  "left": {
+                    "source": "schema_with_foreign_keys.orders",
+                    "field": "placed_on",
+                    "type": {
+                      "name": "date"
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "date"
+                    },
+                    "value": "2024-06-01"
+                  }
+                },
+                {
+                  "operator": "lessThan",
+                  "type": {
+                    "name": "boolean"
+                  },
+                  "left": {
+                    "source": "schema_with_foreign_keys.orders",
+                    "field": "placed_on",
+                    "type": {
+                      "name": "date"
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "date"
+                    },
+                    "value": "2024-06-06"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "schema_with_foreign_keys.orders",
+              "field": "order_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "orders",
+            "expression": {
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
+            }
+          },
+          {
+            "alias": "avg_order_total",
+            "expression": {
+              "operator": "average",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_total",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          },
+          {
+            "alias": "tenant_385_share_pct",
+            "expression": {
+              "operator": "if",
+              "type": {
+                "name": "decimal"
+              },
+              "condition": {
+                "operator": "equal",
+                "type": {
+                  "name": "boolean"
+                },
+                "left": {
+                  "operator": "count",
+                  "type": {
+                    "name": "integer"
+                  }
+                },
+                "right": {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 0
+                }
+              },
+              "then": {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "0"
+              },
+              "else": {
+                "operator": "round",
+                "type": {
+                  "name": "decimal"
+                },
+                "operand": {
+                  "operator": "multiply",
+                  "type": {
+                    "name": "decimal"
+                  },
+                  "values": [
+                    {
+                      "type": {
+                        "name": "decimal"
+                      },
+                      "value": "100"
+                    },
+                    {
+                      "operator": "divide",
+                      "type": {
+                        "name": "decimal"
+                      },
+                      "values": [
+                        {
+                          "operator": "count",
+                          "type": {
+                            "name": "integer"
+                          },
+                          "predicate": {
+                            "operator": "equal",
+                            "type": {
+                              "name": "boolean"
+                            },
+                            "left": {
+                              "source": "schema_with_foreign_keys.orders",
+                              "field": "order_tenant_id",
+                              "type": {
+                                "name": "uuid"
+                              }
+                            },
+                            "right": {
+                              "type": {
+                                "name": "uuid"
+                              },
+                              "value": "00000385-0000-0000-0000-000000000000"
+                            }
+                          }
+                        },
+                        {
+                          "operator": "count",
+                          "type": {
+                            "name": "integer"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "digits": {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "logins_by_user",
+      "query": {
+        "from": {
+          "entity": "audit.logins"
+        },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "source": "audit.logins",
+              "field": "login_user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": {
+              "key": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "logins",
+            "expression": {
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "entity": "schema_with_foreign_keys.employees",
+    "alias": "rep"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.employees",
+      "alias": "lead",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_manager_id",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "lead",
+          "field": "employee_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.users",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "subquery": "revenue_by_user",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "revenue_by_user",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "subquery": "orders_by_user",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "orders_by_user",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "left",
+      "subquery": "logins_by_user",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "logins_by_user",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "rep",
+      "expression": {
+        "source": "rep",
+        "field": "employee_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "team_lead",
+      "expression": {
+        "source": "lead",
+        "field": "employee_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "user_name",
+      "expression": {
+        "source": "schema_with_foreign_keys.users",
+        "field": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "source": "orders_by_user",
+        "field": "orders",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "revenue_by_user",
+          "field": "revenue",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "alias": "avg_order_total",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "orders_by_user",
+          "field": "avg_order_total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "tenant_385_share_pct",
+      "expression": {
+        "source": "orders_by_user",
+        "field": "tenant_385_share_pct",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "logins",
+      "expression": {
+        "operator": "coalesce",
+        "type": {
+          "name": "integer"
+        },
+        "values": [
+          {
+            "source": "logins_by_user",
+            "field": "logins",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "alias": "revenue_per_login",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "divide",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "revenue_by_user",
+              "field": "revenue",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            {
+              "operator": "coalesce",
+              "type": {
+                "name": "integer"
+              },
+              "values": [
+                {
+                  "source": "logins_by_user",
+                  "field": "logins",
+                  "type": {
+                    "name": "integer",
+                    "nullable": true
+                  }
+                },
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 1
+                }
+              ]
+            }
+          ]
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "revenue_by_user",
+        "field": "revenue",
+        "type": {
+          "name": "decimal"
+        }
+      },
+      "direction": "desc"
+    }
+  ]
+}

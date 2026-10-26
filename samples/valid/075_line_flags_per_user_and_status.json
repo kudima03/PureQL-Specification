@@ -1,0 +1,371 @@
+{
+  "from": {
+    "entity": "schema_with_foreign_keys.order_items"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.orders",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_order_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.products",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.order_items",
+          "field": "item_product_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.products",
+          "field": "product_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.users",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "user_name",
+      "expression": {
+        "source": "schema_with_foreign_keys.users",
+        "field": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "order_status",
+      "expression": {
+        "source": "schema_with_foreign_keys.orders",
+        "field": "order_status",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_name",
+      "expression": {
+        "key": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "order_status",
+      "expression": {
+        "key": "order_status",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "item_lines",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "single_unit_out_of_stock",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "operator": "and",
+          "type": {
+            "name": "boolean"
+          },
+          "conditions": [
+            {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "right": {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "1"
+              }
+            },
+            {
+              "operator": "not",
+              "type": {
+                "name": "boolean"
+              },
+              "condition": {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_in_stock",
+                "type": {
+                  "name": "boolean"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "leaving_under_100",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "operator": "lessThan",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "operator": "subtract",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.orders",
+                "field": "order_total",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "schema_with_foreign_keys.order_items",
+                    "field": "item_qty",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "source": "schema_with_foreign_keys.products",
+                    "field": "product_price",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "right": {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "100"
+          }
+        }
+      }
+    },
+    {
+      "alias": "item_value",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_price",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "alias": "in_stock_lines",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "source": "schema_with_foreign_keys.products",
+          "field": "product_in_stock",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    },
+    {
+      "alias": "active_user_lines",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "source": "schema_with_foreign_keys.users",
+          "field": "user_active",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "operator": "and",
+          "type": {
+            "name": "boolean"
+          },
+          "conditions": [
+            {
+              "operator": "equal",
+              "type": {
+                "name": "boolean"
+              },
+              "left": {
+                "source": "schema_with_foreign_keys.order_items",
+                "field": "item_qty",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "right": {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "1"
+              }
+            },
+            {
+              "operator": "not",
+              "type": {
+                "name": "boolean"
+              },
+              "condition": {
+                "source": "schema_with_foreign_keys.products",
+                "field": "product_in_stock",
+                "type": {
+                  "name": "boolean"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "key": "user_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "from": {
+    "entity": "schema_with_foreign_keys.orders"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.employees",
+      "alias": "rep",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "schema_with_foreign_keys.orders",
+          "field": "order_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "rep",
+          "field": "employee_user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "kind": "inner",
+      "entity": "schema_with_foreign_keys.employees",
+      "alias": "lead",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "rep",
+          "field": "employee_manager_id",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "lead",
+          "field": "employee_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "not",
+    "type": {
+      "name": "boolean"
+    },
+    "condition": {
+      "operator": "in",
+      "type": {
+        "name": "boolean"
+      },
+      "operand": {
+        "source": "schema_with_foreign_keys.orders",
+        "field": "order_status",
+        "type": {
+          "name": "string"
+        }
+      },
+      "list": {
+        "type": {
+          "name": "stringList"
+        },
+        "value": [
+          "cancelled",
+          "refunded"
+        ]
+      }
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "period_no",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "dateDiffDays",
+          "type": {
+            "name": "integer"
+          },
+          "left": {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "placed_on",
+            "type": {
+              "name": "date"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "date"
+            },
+            "value": "2024-06-01"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 3
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "period_start",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": {
+          "name": "date"
+        },
+        "left": {
+          "type": {
+            "name": "date"
+          },
+          "value": "2024-06-01"
+        },
+        "right": {
+          "operator": "multiply",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "key": "period_no",
+              "type": {
+                "name": "integer"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "revenue_team_grace",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "order_total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "predicate": {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "lead",
+              "field": "employee_name",
+              "type": {
+                "name": "string"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Grace"
+            }
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "alias": "revenue_team_hank",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "sum",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "source": "schema_with_foreign_keys.orders",
+            "field": "order_total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "predicate": {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "lead",
+              "field": "employee_name",
+              "type": {
+                "name": "string"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Hank"
+            }
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "key": "period_no",
+        "type": {
+          "name": "integer"
+        }
+      }
+    }
+  ]
+}
