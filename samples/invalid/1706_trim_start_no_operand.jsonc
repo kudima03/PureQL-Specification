@@ -1,4 +1,4 @@
-// trimStart of a nullable operand, declared non-null
+// trimStart without its operand
 {
   "from": { "entity": "users" },
   "select": [
@@ -7,7 +7,7 @@
       "expression": {
         "operator": "trimStart",
         "type": { "name": "string" },
-        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

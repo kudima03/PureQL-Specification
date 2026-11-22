@@ -342,28 +342,12 @@
       "expression": {
         "operator": "trim",
         "type": { "name": "string" },
-        "operand": { "type": { "name": "string" }, "value": " a " }
-      }
-    },
-    {
-      "alias": "trim_string_nullable",
-      "expression": {
-        "operator": "trim",
-        "type": { "name": "string", "nullable": true },
-        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
-      }
-    },
-    {
-      "alias": "trim_string_characters",
-      "expression": {
-        "operator": "trim",
-        "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
         "characters": { "type": { "name": "string" }, "value": "x" }
       }
     },
     {
-      "alias": "trim_string_nullable_characters",
+      "alias": "trim_string_nullable",
       "expression": {
         "operator": "trim",
         "type": { "name": "string", "nullable": true },
@@ -376,28 +360,12 @@
       "expression": {
         "operator": "trimStart",
         "type": { "name": "string" },
-        "operand": { "type": { "name": "string" }, "value": " a " }
-      }
-    },
-    {
-      "alias": "trimStart_string_nullable",
-      "expression": {
-        "operator": "trimStart",
-        "type": { "name": "string", "nullable": true },
-        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
-      }
-    },
-    {
-      "alias": "trimStart_string_characters",
-      "expression": {
-        "operator": "trimStart",
-        "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
         "characters": { "type": { "name": "string" }, "value": "x" }
       }
     },
     {
-      "alias": "trimStart_string_nullable_characters",
+      "alias": "trimStart_string_nullable",
       "expression": {
         "operator": "trimStart",
         "type": { "name": "string", "nullable": true },
@@ -410,28 +378,12 @@
       "expression": {
         "operator": "trimEnd",
         "type": { "name": "string" },
-        "operand": { "type": { "name": "string" }, "value": " a " }
-      }
-    },
-    {
-      "alias": "trimEnd_string_nullable",
-      "expression": {
-        "operator": "trimEnd",
-        "type": { "name": "string", "nullable": true },
-        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
-      }
-    },
-    {
-      "alias": "trimEnd_string_characters",
-      "expression": {
-        "operator": "trimEnd",
-        "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
         "characters": { "type": { "name": "string" }, "value": "x" }
       }
     },
     {
-      "alias": "trimEnd_string_nullable_characters",
+      "alias": "trimEnd_string_nullable",
       "expression": {
         "operator": "trimEnd",
         "type": { "name": "string", "nullable": true },

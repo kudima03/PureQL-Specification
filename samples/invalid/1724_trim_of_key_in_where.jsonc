@@ -7,7 +7,8 @@
     "left": {
       "operator": "trim",
       "type": { "name": "string" },
-      "operand": { "key": "name", "type": { "name": "string" } }
+      "operand": { "key": "name", "type": { "name": "string" } },
+      "characters": { "type": { "name": "string" }, "value": "0" }
     },
     "right": { "type": { "name": "string" }, "value": "abc" }
   },

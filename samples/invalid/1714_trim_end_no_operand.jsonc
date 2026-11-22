@@ -1,11 +1,11 @@
-// trimStart with characters but without its operand
+// trimEnd without its operand
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trimStart",
+        "operator": "trimEnd",
         "type": { "name": "string" },
         "characters": { "type": { "name": "string" }, "value": "0" }
       }

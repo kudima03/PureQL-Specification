@@ -1,0 +1,14 @@
+// trim without its operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "characters": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}

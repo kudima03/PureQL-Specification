@@ -394,10 +394,10 @@ for ctx, rules in CONTEXTS.items():
     # Unicode default case conversion, full mappings, no locale: upper("ß") is "SS"
     for name in ["upper", "lower"]:
         lifted(name, {"operand": "string"}, "string")
-    # trim removes white space, or the code points of `characters`, which is never null
+    # trim removes the code points of `characters`, which is required and never null
     characters = {"characters": expr("string", ctx)}
     for name in ["trim", "trimStart", "trimEnd"]:
-        lifted(name, {"operand": "string"}, "string", optional=characters)
+        lifted(name, {"operand": "string"}, "string", extra=characters)
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

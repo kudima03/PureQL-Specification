@@ -1,13 +1,12 @@
-// trimStart of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand
-// is
+// trim without characters: there is no default set of code points to remove
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trimStart",
-        "type": { "name": "string", "nullable": true },
+        "operator": "trim",
+        "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
       }
     }

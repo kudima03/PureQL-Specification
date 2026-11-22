@@ -1,14 +1,13 @@
-// trim with a side: trimStart and trimEnd are separate operators, and no other property is allowed
+// trimEnd without a declared type
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trim",
-        "type": { "name": "string" },
+        "operator": "trimEnd",
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "side": "start"
+        "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

@@ -318,7 +318,7 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 | `concat` | `{ values: [string, …] }` (at least 2) | `string` |
 | `length` | `{ operand: string }` | `integer`: the number of code points |
 | `upper`, `lower` | `{ operand: string }` | `string` |
-| `trim`, `trimStart`, `trimEnd` | `{ operand: string }` / `{ operand: string, characters: string }`; `characters` is non-null and may be computed | `string` |
+| `trim`, `trimStart`, `trimEnd` | `{ operand: string, characters: string }`; `characters` is required, non-null and may be computed | `string` |
 | `dateAddDays` | `{ left: date, right: integer }` | `date` |
 | `dateDiffDays` | `{ left: date, right: date }` | `integer` (`left − right`) |
 | `timeAddSeconds` | `{ left: time, right: decimal }` | `time` |
@@ -405,8 +405,8 @@ Equality stays code point by code point: for a match that ignores case, compare 
 
 `trim` removes code points from both ends of a string, `trimStart` from its start and `trimEnd` from its end, for as long as the code point at that end is one of those to remove; code points inside the string are kept. A string made only of such code points becomes the empty string, never `null`.
 
-- Without `characters`, the code points removed are the 25 with the Unicode `White_Space` property: U+0009 to U+000D (tab, line feed, vertical tab, form feed, carriage return), U+0020 (space), U+0085, U+00A0 (no-break space), U+1680, U+2000 to U+200A, U+2028, U+2029, U+202F, U+205F and U+3000. The zero-width space U+200B and the byte order mark U+FEFF are not white space and are kept.
-- With `characters`, the code points removed are exactly those of that string, read as a set and not as a substring: `trimStart("000120", "0")` is `"120"`, and `trim("xyHixy", "yx")` is `"Hi"`. Its order and repeated code points do not matter, white space is removed only if listed, and an empty `characters` removes nothing.
+- The code points removed are exactly those of `characters`, read as a set and not as a substring: `trimStart("000120", "0")` is `"120"`, and `trim("xyHixy", "yx")` is `"Hi"`. Its order and repeated code points do not matter, and an empty `characters` removes nothing.
+- `characters` is always written: there is no default set, so a query says what it removes and every interpreter removes the same. To trim spaces pass `" "`; tabs, line breaks, the no-break space U+00A0 and any other white space are removed only if listed.
 - `characters` is never null, like `digits` of `round`: the result is nullable exactly when `operand` is.
 
 ### Ordering and equality
@@ -546,7 +546,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`019_concat.json`](samples/valid/019_concat.json) | String concatenation |
 | [`020_string_length.json`](samples/valid/020_string_length.json) | `length` of a string in code points: as a column, lifted over a nullable field, in `where` and `orderBy` |
 | [`021_upper_lower.json`](samples/valid/021_upper_lower.json) | `upper` / `lower`: a column in upper case, lifted over a nullable field, and a `where` that ignores case |
-| [`022_trim.json`](samples/valid/022_trim.json) | `trim` / `trimStart` / `trimEnd`: white space, a set of `characters`, a nullable field, and a `where` that skips blank names |
+| [`022_trim.json`](samples/valid/022_trim.json) | `trim` / `trimStart` / `trimEnd`: the set of `characters` to remove, a nullable field, and a `where` that skips blank names |
 | [`023_if_column.json`](samples/valid/023_if_column.json) | `if` as a column; an `integer` branch widens to `decimal` |
 | [`024_order_by_computed.json`](samples/valid/024_order_by_computed.json) | `orderBy` on a computed per-row expression |
 | [`025_date_math.json`](samples/valid/025_date_math.json) | `dateAddDays` / `dateDiffDays` as columns and in `where` |

@@ -1,14 +1,15 @@
-// trimStart with integer characters: characters is a string
+// trim with a side: trimStart and trimEnd are separate operators, and no other property is allowed
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trimStart",
+        "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "integer" }, "value": 0 }
+        "characters": { "type": { "name": "string" }, "value": "0" },
+        "side": "start"
       }
     }
   ]

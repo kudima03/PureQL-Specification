@@ -1,4 +1,4 @@
-// trimEnd with integer characters: characters is a string
+// trimEnd of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand is
 {
   "from": { "entity": "users" },
   "select": [
@@ -6,9 +6,9 @@
       "alias": "c",
       "expression": {
         "operator": "trimEnd",
-        "type": { "name": "string" },
+        "type": { "name": "string", "nullable": true },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "integer" }, "value": 0 }
+        "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

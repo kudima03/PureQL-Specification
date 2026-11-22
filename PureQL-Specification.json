@@ -26578,7 +26578,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26624,7 +26625,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26670,7 +26672,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26716,7 +26719,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26866,7 +26870,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26912,7 +26917,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -26958,7 +26964,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -27004,7 +27011,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -27154,7 +27162,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -27200,7 +27209,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -27246,7 +27256,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {
@@ -27292,7 +27303,8 @@
       "required": [
         "operator",
         "type",
-        "operand"
+        "operand",
+        "characters"
       ],
       "properties": {
         "operator": {

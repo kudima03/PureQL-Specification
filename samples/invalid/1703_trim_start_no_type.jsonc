@@ -1,12 +1,12 @@
-// trim with characters but without its operand
+// trimStart without a declared type
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trim",
-        "type": { "name": "string" },
+        "operator": "trimStart",
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
         "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }

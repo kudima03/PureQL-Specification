@@ -18,6 +18,12 @@
         "type": {
           "name": "string"
         }
+      },
+      "characters": {
+        "type": {
+          "name": "string"
+        },
+        "value": " "
       }
     },
     "right": {
@@ -41,6 +47,12 @@
           "type": {
             "name": "string"
           }
+        },
+        "characters": {
+          "type": {
+            "name": "string"
+          },
+          "value": " "
         }
       }
     },
@@ -59,6 +71,12 @@
             "name": "string",
             "nullable": true
           }
+        },
+        "characters": {
+          "type": {
+            "name": "string"
+          },
+          "value": " \t"
         }
       }
     },

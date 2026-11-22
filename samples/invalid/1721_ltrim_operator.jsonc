@@ -7,7 +7,8 @@
       "expression": {
         "operator": "ltrim",
         "type": { "name": "string" },
-        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

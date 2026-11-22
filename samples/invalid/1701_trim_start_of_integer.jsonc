@@ -7,7 +7,8 @@
       "expression": {
         "operator": "trimStart",
         "type": { "name": "string" },
-        "operand": { "source": "users", "field": "age", "type": { "name": "integer" } }
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer" } },
+        "characters": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

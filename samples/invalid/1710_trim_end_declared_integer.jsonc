@@ -1,0 +1,15 @@
+// trimEnd declared integer: it yields string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimEnd",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "characters": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}
