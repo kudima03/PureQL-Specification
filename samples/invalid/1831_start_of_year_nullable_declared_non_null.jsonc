@@ -1,0 +1,14 @@
+// startOfYear of a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfYear",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// startOfMonth of a datetime, declared date: truncation keeps the type, and there is no implicit conversion
+// to date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

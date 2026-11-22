@@ -1,0 +1,15 @@
+// startOfMonth with a unit property: each period is its own operator, and no other property is allowed
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "unit": "month"
+      }
+    }
+  ]
+}

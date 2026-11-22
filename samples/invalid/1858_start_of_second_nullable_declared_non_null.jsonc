@@ -1,0 +1,14 @@
+// startOfSecond of a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfSecond",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

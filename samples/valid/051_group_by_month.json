@@ -1,0 +1,116 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "source": "orders",
+      "field": "order_date",
+      "type": {
+        "name": "date"
+      }
+    },
+    "right": {
+      "operator": "startOfYear",
+      "type": {
+        "name": "date"
+      },
+      "operand": {
+        "param": "today",
+        "type": {
+          "name": "date"
+        }
+      }
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "month",
+      "expression": {
+        "key": "month",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "last_order_hour",
+      "expression": {
+        "operator": "startOfHour",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "operator": "max",
+          "type": {
+            "name": "datetime"
+          },
+          "selector": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "key": "month",
+        "type": {
+          "name": "date"
+        }
+      }
+    }
+  ]
+}

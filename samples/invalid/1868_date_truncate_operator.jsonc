@@ -1,0 +1,15 @@
+// dateTruncate is not an operator: each period is its own startOf operator
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateTruncate",
+        "type": { "name": "date" },
+        "unit": "month",
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// startOfMonth of a string: a date written as a string is not a date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "2024-08-15" }
+      }
+    }
+  ]
+}
