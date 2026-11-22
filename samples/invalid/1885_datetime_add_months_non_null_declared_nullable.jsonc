@@ -1,0 +1,16 @@
+// datetimeAddMonths of non-null operands, declared nullable: a lifted operator is nullable exactly when an
+// operand is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// dateAddMonths with a decimal number of months: months are whole, and decimal does not narrow to integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

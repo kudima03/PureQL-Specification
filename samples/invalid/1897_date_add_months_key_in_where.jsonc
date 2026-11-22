@@ -1,0 +1,18 @@
+// dateAddMonths to a group key reference in where, which has no group keys
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateAddMonths",
+      "type": { "name": "date" },
+      "left": { "key": "d", "type": { "name": "date" } },
+      "right": { "type": { "name": "integer" }, "value": 1 }
+    },
+    "right": { "type": { "name": "date" }, "value": "2024-01-31" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

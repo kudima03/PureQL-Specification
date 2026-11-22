@@ -1,0 +1,152 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "source": "orders",
+      "field": "order_date",
+      "type": {
+        "name": "date"
+      }
+    },
+    "right": {
+      "operator": "dateAddMonths",
+      "type": {
+        "name": "date"
+      },
+      "left": {
+        "param": "today",
+        "type": {
+          "name": "date"
+        }
+      },
+      "right": {
+        "type": {
+          "name": "integer"
+        },
+        "value": -3
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "payment_due",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": {
+          "name": "date"
+        },
+        "left": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "warranty_until",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": {
+          "name": "date"
+        },
+        "left": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "operator": "multiply",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "param": "warranty_years",
+              "type": {
+                "name": "integer"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 12
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "return_until",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "left": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "subscription_renews_at",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "left": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    }
+  ]
+}

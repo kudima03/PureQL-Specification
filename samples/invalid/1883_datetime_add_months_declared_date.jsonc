@@ -1,0 +1,15 @@
+// datetimeAddMonths declared date: it yields a datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

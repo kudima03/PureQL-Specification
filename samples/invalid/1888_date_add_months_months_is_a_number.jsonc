@@ -1,0 +1,15 @@
+// dateAddMonths with a bare JSON number of months: an operand is an expression
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": 1
+      }
+    }
+  ]
+}

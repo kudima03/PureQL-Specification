@@ -1,0 +1,15 @@
+// dateAddMonths with a string number of months: no implicit conversion to integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "string" }, "value": "1" }
+      }
+    }
+  ]
+}

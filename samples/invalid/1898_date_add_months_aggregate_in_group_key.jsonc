@@ -1,0 +1,17 @@
+// dateAddMonths with an aggregate as the number of months in a groupBy key: a row expression has no
+// aggregates
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "operator": "count", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}
