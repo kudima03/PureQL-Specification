@@ -1,0 +1,20 @@
+// substring with a nullable length: length is never null; omit it to read to the end
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": {
+          "source": "users",
+          "field": "referral_count",
+          "type": { "name": "integer", "nullable": true }
+        }
+      }
+    }
+  ]
+}

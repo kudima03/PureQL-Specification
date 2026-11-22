@@ -1,0 +1,19 @@
+// substring with a group key reference as length in where, which has no group keys
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "substring",
+      "type": { "name": "string" },
+      "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+      "start": { "type": { "name": "integer" }, "value": 2 },
+      "length": { "key": "n", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

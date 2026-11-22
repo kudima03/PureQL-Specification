@@ -1,0 +1,18 @@
+// substring with `values` instead of named operands
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "name", "type": { "name": "string" } },
+          { "type": { "name": "integer" }, "value": 2 },
+          { "type": { "name": "integer" }, "value": 3 }
+        ]
+      }
+    }
+  ]
+}

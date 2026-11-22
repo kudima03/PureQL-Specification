@@ -1,10 +1,10 @@
-// Every operator in every signature as columns of a total query, over literals: the lifted operators with and without a
+// Every operator in every signature as columns of a plain select, over literals: the lifted operators with and without a
 // nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
 // comparisons / in for every family, and every aggregate over a literal selector, with and without a predicate and with
-// a nullable selector. Each definition of the total context is used at least once.
+// a nullable selector. Each definition of the projection context is used at least once.
 {
   "from": { "entity": "orders" },
-  "aggregate": [
+  "select": [
     {
       "alias": "add_integer",
       "expression": {
@@ -392,6 +392,44 @@
           { "type": { "name": "string" }, "value": "x" },
           { "type": { "name": "string" }, "value": "xa" }
         ]
+      }
+    },
+    {
+      "alias": "substring_string",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "hello" },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_string_nullable",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_string_length",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "hello" },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "substring_string_nullable_length",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "integer" }, "value": 0 }
       }
     },
     {
@@ -1375,10 +1413,10 @@
       }
     },
     {
-      "alias": "average_decimal_nullable_of_integer",
+      "alias": "average_decimal_of_integer",
       "expression": {
         "operator": "average",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -1400,10 +1438,10 @@
       }
     },
     {
-      "alias": "average_decimal_nullable_of_decimal",
+      "alias": "average_decimal_of_decimal",
       "expression": {
         "operator": "average",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -1425,10 +1463,10 @@
       }
     },
     {
-      "alias": "average_date_nullable_of_date",
+      "alias": "average_date_of_date",
       "expression": {
         "operator": "average",
-        "type": { "name": "date", "nullable": true },
+        "type": { "name": "date" },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -1450,10 +1488,10 @@
       }
     },
     {
-      "alias": "average_time_nullable_of_time",
+      "alias": "average_time_of_time",
       "expression": {
         "operator": "average",
-        "type": { "name": "time", "nullable": true },
+        "type": { "name": "time" },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -1475,10 +1513,10 @@
       }
     },
     {
-      "alias": "average_datetime_nullable_of_datetime",
+      "alias": "average_datetime_of_datetime",
       "expression": {
         "operator": "average",
-        "type": { "name": "datetime", "nullable": true },
+        "type": { "name": "datetime" },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -1500,10 +1538,10 @@
       }
     },
     {
-      "alias": "min_integer_nullable_of_integer",
+      "alias": "min_integer_of_integer",
       "expression": {
         "operator": "min",
-        "type": { "name": "integer", "nullable": true },
+        "type": { "name": "integer" },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -1525,10 +1563,10 @@
       }
     },
     {
-      "alias": "min_decimal_nullable_of_decimal",
+      "alias": "min_decimal_of_decimal",
       "expression": {
         "operator": "min",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -1550,10 +1588,10 @@
       }
     },
     {
-      "alias": "min_string_nullable_of_string",
+      "alias": "min_string_of_string",
       "expression": {
         "operator": "min",
-        "type": { "name": "string", "nullable": true },
+        "type": { "name": "string" },
         "selector": { "type": { "name": "string" }, "value": "a" }
       }
     },
@@ -1575,10 +1613,10 @@
       }
     },
     {
-      "alias": "min_boolean_nullable_of_boolean",
+      "alias": "min_boolean_of_boolean",
       "expression": {
         "operator": "min",
-        "type": { "name": "boolean", "nullable": true },
+        "type": { "name": "boolean" },
         "selector": { "type": { "name": "boolean" }, "value": true }
       }
     },
@@ -1600,10 +1638,10 @@
       }
     },
     {
-      "alias": "min_date_nullable_of_date",
+      "alias": "min_date_of_date",
       "expression": {
         "operator": "min",
-        "type": { "name": "date", "nullable": true },
+        "type": { "name": "date" },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -1625,10 +1663,10 @@
       }
     },
     {
-      "alias": "min_time_nullable_of_time",
+      "alias": "min_time_of_time",
       "expression": {
         "operator": "min",
-        "type": { "name": "time", "nullable": true },
+        "type": { "name": "time" },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -1650,10 +1688,10 @@
       }
     },
     {
-      "alias": "min_datetime_nullable_of_datetime",
+      "alias": "min_datetime_of_datetime",
       "expression": {
         "operator": "min",
-        "type": { "name": "datetime", "nullable": true },
+        "type": { "name": "datetime" },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -1675,10 +1713,10 @@
       }
     },
     {
-      "alias": "min_uuid_nullable_of_uuid",
+      "alias": "min_uuid_of_uuid",
       "expression": {
         "operator": "min",
-        "type": { "name": "uuid", "nullable": true },
+        "type": { "name": "uuid" },
         "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
       }
     },
@@ -1700,10 +1738,10 @@
       }
     },
     {
-      "alias": "max_integer_nullable_of_integer",
+      "alias": "max_integer_of_integer",
       "expression": {
         "operator": "max",
-        "type": { "name": "integer", "nullable": true },
+        "type": { "name": "integer" },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -1725,10 +1763,10 @@
       }
     },
     {
-      "alias": "max_decimal_nullable_of_decimal",
+      "alias": "max_decimal_of_decimal",
       "expression": {
         "operator": "max",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "decimal" },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -1750,10 +1788,10 @@
       }
     },
     {
-      "alias": "max_string_nullable_of_string",
+      "alias": "max_string_of_string",
       "expression": {
         "operator": "max",
-        "type": { "name": "string", "nullable": true },
+        "type": { "name": "string" },
         "selector": { "type": { "name": "string" }, "value": "a" }
       }
     },
@@ -1775,10 +1813,10 @@
       }
     },
     {
-      "alias": "max_boolean_nullable_of_boolean",
+      "alias": "max_boolean_of_boolean",
       "expression": {
         "operator": "max",
-        "type": { "name": "boolean", "nullable": true },
+        "type": { "name": "boolean" },
         "selector": { "type": { "name": "boolean" }, "value": true }
       }
     },
@@ -1800,10 +1838,10 @@
       }
     },
     {
-      "alias": "max_date_nullable_of_date",
+      "alias": "max_date_of_date",
       "expression": {
         "operator": "max",
-        "type": { "name": "date", "nullable": true },
+        "type": { "name": "date" },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -1825,10 +1863,10 @@
       }
     },
     {
-      "alias": "max_time_nullable_of_time",
+      "alias": "max_time_of_time",
       "expression": {
         "operator": "max",
-        "type": { "name": "time", "nullable": true },
+        "type": { "name": "time" },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -1850,10 +1888,10 @@
       }
     },
     {
-      "alias": "max_datetime_nullable_of_datetime",
+      "alias": "max_datetime_of_datetime",
       "expression": {
         "operator": "max",
-        "type": { "name": "datetime", "nullable": true },
+        "type": { "name": "datetime" },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -1875,10 +1913,10 @@
       }
     },
     {
-      "alias": "max_uuid_nullable_of_uuid",
+      "alias": "max_uuid_of_uuid",
       "expression": {
         "operator": "max",
-        "type": { "name": "uuid", "nullable": true },
+        "type": { "name": "uuid" },
         "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
       }
     },

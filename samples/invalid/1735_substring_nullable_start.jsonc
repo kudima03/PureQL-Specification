@@ -1,0 +1,19 @@
+// substring with a nullable start: start is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": {
+          "source": "users",
+          "field": "referral_count",
+          "type": { "name": "integer", "nullable": true }
+        }
+      }
+    }
+  ]
+}

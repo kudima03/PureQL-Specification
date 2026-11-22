@@ -1,9 +1,15 @@
-// Every operator in every signature as columns of a plain select, over literals: the lifted operators with and without a
-// nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
+// Every operator in every signature as columns of a grouped select, over literals: the lifted operators with and without
+// a nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
 // comparisons / in for every family, and every aggregate over a literal selector, with and without a predicate and with
-// a nullable selector. Each definition of the projection context is used at least once.
+// a nullable selector, also over all rows. Each definition of the group context is used at least once.
 {
   "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
   "select": [
     {
       "alias": "add_integer",
@@ -392,6 +398,44 @@
           { "type": { "name": "string" }, "value": "x" },
           { "type": { "name": "string" }, "value": "xa" }
         ]
+      }
+    },
+    {
+      "alias": "substring_string",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "hello" },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_string_nullable",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_string_length",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "hello" },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "substring_string_nullable_length",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "integer" }, "value": 0 }
       }
     },
     {
@@ -1912,6 +1956,681 @@
       "expression": {
         "operator": "all",
         "type": { "name": "boolean" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "count_integer_over_all",
+      "expression": { "operator": "count", "type": { "name": "integer" }, "over": "all" }
+    },
+    {
+      "alias": "count_integer_where_over_all",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": "all",
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "sum_integer_of_integer_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "sum_integer_of_integer_null_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "over": "all",
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "sum_integer_of_integer_where_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "sum_decimal_of_decimal_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "sum_decimal_of_decimal_null_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "sum_decimal_of_decimal_where_over_all",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "average_decimal_of_integer_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "average_decimal_nullable_of_integer_null_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "average_decimal_nullable_of_integer_where_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "average_decimal_of_decimal_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "average_decimal_nullable_of_decimal_null_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "average_decimal_nullable_of_decimal_where_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "average_date_of_date_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "average_date_nullable_of_date_null_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "average_date_nullable_of_date_where_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "average_time_of_time_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "time" },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "average_time_nullable_of_time_null_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "average_time_nullable_of_time_where_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "average_datetime_of_datetime_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime" },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "average_datetime_nullable_of_datetime_null_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "average_datetime_nullable_of_datetime_where_over_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_integer_of_integer_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer" },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "min_integer_nullable_of_integer_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_integer_nullable_of_integer_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_decimal_of_decimal_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "min_decimal_nullable_of_decimal_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_decimal_nullable_of_decimal_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_string_of_string_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "over": "all",
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "min_string_nullable_of_string_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_string_nullable_of_string_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_boolean_of_boolean_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "boolean" },
+        "over": "all",
+        "selector": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_boolean_nullable_of_boolean_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "boolean", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_boolean_nullable_of_boolean_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "boolean", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_date_of_date_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date" },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "min_date_nullable_of_date_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_date_nullable_of_date_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_time_of_time_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time" },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "min_time_nullable_of_time_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_time_nullable_of_time_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_datetime_of_datetime_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime" },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "min_datetime_nullable_of_datetime_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_datetime_nullable_of_datetime_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "min_uuid_of_uuid_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid" },
+        "over": "all",
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
+      "alias": "min_uuid_nullable_of_uuid_null_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "min_uuid_nullable_of_uuid_where_over_all",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "uuid", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_integer_of_integer_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "max_integer_nullable_of_integer_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_integer_nullable_of_integer_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_decimal_of_decimal_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "max_decimal_nullable_of_decimal_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_decimal_nullable_of_decimal_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_string_of_string_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string" },
+        "over": "all",
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "max_string_nullable_of_string_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_string_nullable_of_string_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_boolean_of_boolean_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "boolean" },
+        "over": "all",
+        "selector": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_boolean_nullable_of_boolean_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "boolean", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_boolean_nullable_of_boolean_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "boolean", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_date_of_date_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "date" },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "max_date_nullable_of_date_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_date_nullable_of_date_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "date", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_time_of_time_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "time" },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "max_time_nullable_of_time_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_time_nullable_of_time_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "time", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_datetime_of_datetime_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "datetime" },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "max_datetime_nullable_of_datetime_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_datetime_nullable_of_datetime_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "datetime", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "max_uuid_of_uuid_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "uuid" },
+        "over": "all",
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
+      "alias": "max_uuid_nullable_of_uuid_null_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "uuid", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "max_uuid_nullable_of_uuid_where_over_all",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "uuid", "nullable": true },
+        "over": "all",
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "any_boolean_where_over_all",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "over": "all",
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "all_boolean_where_over_all",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean" },
+        "over": "all",
         "predicate": { "type": { "name": "boolean" }, "value": true }
       }
     }

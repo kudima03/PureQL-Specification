@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, length, upper/lower, trim, date/time math, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, upper/lower, trim, substring, date/time math, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -353,7 +353,7 @@ for ctx, rules in CONTEXTS.items():
     def lifted(name, types, t, *checks, extra=None, optional=None):
         """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
         `extra` / `optional`: required / optional properties of the node besides
-        its operands (if.condition, round.digits, trim.removables), never null."""
+        its operands (if.condition, round.digits, trim.removables, substring.start), never null."""
         shape(name, list(types) + list(extra or {}),
               {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(types, False), *checks)
@@ -399,6 +399,9 @@ for ctx, rules in CONTEXTS.items():
     removables = {"removables": array_of(expr("string", ctx), 1)}
     for name in ["trim", "trimStart", "trimEnd"]:
         lifted(name, {"operand": "string"}, "string", extra=removables)
+    # code points from `start`, counted from 1, to the end or for `length` of them
+    lifted("substring", {"operand": "string"}, "string",
+           extra={"start": expr("integer", ctx)}, optional={"length": expr("integer", ctx)})
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

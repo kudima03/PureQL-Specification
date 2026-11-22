@@ -1,0 +1,16 @@
+// substring with a bare JSON number as length: length is an expression
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": 3
+      }
+    }
+  ]
+}

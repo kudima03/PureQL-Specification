@@ -1,0 +1,15 @@
+// substring with a field as start in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "hello" },
+        "start": { "source": "users", "field": "age", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

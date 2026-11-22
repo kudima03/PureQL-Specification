@@ -1,0 +1,134 @@
+{
+  "from": {
+    "entity": "products"
+  },
+  "where": {
+    "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "substring",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "source": "products",
+        "field": "sku",
+        "type": {
+          "name": "string"
+        }
+      },
+      "start": {
+        "type": {
+          "name": "integer"
+        },
+        "value": 1
+      },
+      "length": {
+        "type": {
+          "name": "integer"
+        },
+        "value": 3
+      }
+    },
+    "right": {
+      "param": "family",
+      "type": {
+        "name": "string"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "sku",
+      "expression": {
+        "source": "products",
+        "field": "sku",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "family",
+      "expression": {
+        "operator": "substring",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "products",
+          "field": "sku",
+          "type": {
+            "name": "string"
+          }
+        },
+        "start": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        },
+        "length": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 3
+        }
+      }
+    },
+    {
+      "alias": "number",
+      "expression": {
+        "operator": "substring",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "products",
+          "field": "sku",
+          "type": {
+            "name": "string"
+          }
+        },
+        "start": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 5
+        }
+      }
+    },
+    {
+      "alias": "description_preview",
+      "expression": {
+        "operator": "substring",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "products",
+          "field": "description",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "start": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        },
+        "length": {
+          "param": "preview_length",
+          "type": {
+            "name": "integer"
+          }
+        }
+      }
+    }
+  ]
+}

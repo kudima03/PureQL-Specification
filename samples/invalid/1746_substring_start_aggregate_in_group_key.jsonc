@@ -1,0 +1,16 @@
+// substring with an aggregate as start in a groupBy key: a row expression has no aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "operator": "count", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

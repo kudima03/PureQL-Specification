@@ -1,0 +1,15 @@
+// substring without start: start is required, length is not
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}
