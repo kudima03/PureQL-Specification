@@ -1,0 +1,17 @@
+// trim of a group key reference in where, which has no group keys
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "trim",
+      "type": { "name": "string" },
+      "operand": { "key": "name", "type": { "name": "string" } }
+    },
+    "right": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

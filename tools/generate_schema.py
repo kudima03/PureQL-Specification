@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, length, upper/lower, date/time math, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, upper/lower, trim, date/time math, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -353,7 +353,7 @@ for ctx, rules in CONTEXTS.items():
     def lifted(name, types, t, *checks, extra=None, optional=None):
         """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
         `extra` / `optional`: required / optional properties of the node besides
-        its operands (if.condition, round.digits), never null."""
+        its operands (if.condition, round.digits, trim.characters), never null."""
         shape(name, list(types) + list(extra or {}),
               {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(types, False), *checks)
@@ -394,6 +394,10 @@ for ctx, rules in CONTEXTS.items():
     # Unicode default case conversion, full mappings, no locale: upper("ß") is "SS"
     for name in ["upper", "lower"]:
         lifted(name, {"operand": "string"}, "string")
+    # trim removes white space, or the code points of `characters`, which is never null
+    characters = {"characters": expr("string", ctx)}
+    for name in ["trim", "trimStart", "trimEnd"]:
+        lifted(name, {"operand": "string"}, "string", optional=characters)
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

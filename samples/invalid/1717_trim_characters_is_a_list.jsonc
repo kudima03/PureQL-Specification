@@ -1,0 +1,15 @@
+// trim with a string list as characters: characters is one string, read as a set of code points
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "characters": { "type": { "name": "stringList" }, "value": [ "0", " " ] }
+      }
+    }
+  ]
+}

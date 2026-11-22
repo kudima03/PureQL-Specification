@@ -1,0 +1,14 @@
+// trimEnd of a nullable operand, declared non-null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

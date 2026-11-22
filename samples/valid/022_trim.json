@@ -1,0 +1,110 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "notEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "trim",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    "right": {
+      "type": {
+        "name": "string"
+      },
+      "value": ""
+    }
+  },
+  "select": [
+    {
+      "alias": "name",
+      "expression": {
+        "operator": "trim",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname",
+      "expression": {
+        "operator": "trim",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "postal_code_without_leading_zeros",
+      "expression": {
+        "operator": "trimStart",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "postal_code",
+          "type": {
+            "name": "string"
+          }
+        },
+        "characters": {
+          "type": {
+            "name": "string"
+          },
+          "value": "0"
+        }
+      }
+    },
+    {
+      "alias": "email",
+      "expression": {
+        "operator": "trimEnd",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "characters": {
+          "type": {
+            "name": "string"
+          },
+          "value": ".,; "
+        }
+      }
+    }
+  ]
+}

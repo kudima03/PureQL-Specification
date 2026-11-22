@@ -21718,6 +21718,9 @@
             "length",
             "upper",
             "lower",
+            "trim",
+            "trimStart",
+            "trimEnd",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -21901,6 +21904,42 @@
           },
           "then": {
             "$ref": "#/$defs/lower@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trim"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trim@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd@group"
           }
         },
         {
@@ -22222,6 +22261,9 @@
             "length",
             "upper",
             "lower",
+            "trim",
+            "trimStart",
+            "trimEnd",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -22405,6 +22447,42 @@
           },
           "then": {
             "$ref": "#/$defs/lower@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trim"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trim@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd@projection"
           }
         },
         {
@@ -22726,6 +22804,9 @@
             "length",
             "upper",
             "lower",
+            "trim",
+            "trimStart",
+            "trimEnd",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -22902,6 +22983,42 @@
           },
           "then": {
             "$ref": "#/$defs/lower@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trim"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trim@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd@row"
           }
         },
         {
@@ -23139,6 +23256,9 @@
             "length",
             "upper",
             "lower",
+            "trim",
+            "trimStart",
+            "trimEnd",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -23322,6 +23442,42 @@
           },
           "then": {
             "$ref": "#/$defs/lower@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trim"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trim@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "trimEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd@total"
           }
         },
         {
@@ -26312,6 +26468,870 @@
         }
       },
       "additionalProperties": false
+    },
+    "trim.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trim.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trim.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trim.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trim.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "trim.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "trim.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "trim.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "trim@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trim"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "trim@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trim"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "trim@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trim"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "trim@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trim"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trim.string.nullable@total"
+          }
+        }
+      ]
+    },
+    "trimEnd.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimEnd.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimEnd.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimEnd.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimEnd.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "trimEnd.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "trimEnd.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "trimEnd.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "trimEnd@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "trimEnd@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "trimEnd@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "trimEnd@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimEnd.string.nullable@total"
+          }
+        }
+      ]
+    },
+    "trimStart.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimStart.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimStart.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimStart.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "trimStart.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "trimStart.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "trimStart.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "trimStart.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "trimStart@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "trimStart@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "trimStart@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "trimStart@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "trimStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "characters": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/trimStart.string.nullable@total"
+          }
+        }
+      ]
     },
     "type": {
       "type": "object",

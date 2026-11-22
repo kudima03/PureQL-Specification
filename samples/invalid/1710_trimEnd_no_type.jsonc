@@ -1,0 +1,13 @@
+// trimEnd without a declared type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimEnd",
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

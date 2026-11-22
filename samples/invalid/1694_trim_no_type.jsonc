@@ -1,0 +1,13 @@
+// trim without a declared type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

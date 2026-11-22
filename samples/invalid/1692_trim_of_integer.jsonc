@@ -1,0 +1,14 @@
+// trim of an integer: no implicit conversion to string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

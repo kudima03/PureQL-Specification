@@ -1,0 +1,15 @@
+// trim with a bare JSON string as characters: characters is an expression
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "characters": "0"
+      }
+    }
+  ]
+}

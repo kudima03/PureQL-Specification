@@ -1,0 +1,14 @@
+// trimStart with characters but without its operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimStart",
+        "type": { "name": "string" },
+        "characters": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}
