@@ -1,0 +1,82 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "lower",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "source": "users",
+        "field": "email",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    "right": {
+      "operator": "lower",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "param": "email",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "last_name_upper",
+      "expression": {
+        "operator": "upper",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname_lower",
+      "expression": {
+        "operator": "lower",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "email",
+      "expression": {
+        "source": "users",
+        "field": "email",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}
