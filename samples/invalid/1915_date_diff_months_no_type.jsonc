@@ -1,0 +1,14 @@
+// dateDiffMonths without a declared type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

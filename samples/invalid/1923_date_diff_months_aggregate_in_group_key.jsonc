@@ -1,0 +1,20 @@
+// dateDiffMonths of an aggregate in a groupBy key: a row expression has no aggregates
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "max",
+          "type": { "name": "date" },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

@@ -664,6 +664,42 @@
       }
     },
     {
+      "alias": "dateDiffMonths_integer",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "type": { "name": "date" }, "value": "2023-02-28" },
+        "right": { "type": { "name": "date" }, "value": "2023-01-31" }
+      }
+    },
+    {
+      "alias": "dateDiffMonths_integer_nullable",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "type": { "name": "date", "nullable": true }, "value": null },
+        "right": { "type": { "name": "date" }, "value": "2023-01-31" }
+      }
+    },
+    {
+      "alias": "datetimeDiffMonths_integer",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "type": { "name": "datetime" }, "value": "2024-02-15T11:59:59Z" },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-15T12:00:00Z" }
+      }
+    },
+    {
+      "alias": "datetimeDiffMonths_integer_nullable",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-15T12:00:00Z" }
+      }
+    },
+    {
       "alias": "year_date",
       "expression": {
         "operator": "year",

@@ -5987,6 +5987,370 @@
         }
       ]
     },
+    "dateDiffMonths.integer.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateDiffMonths.integer.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateDiffMonths.integer.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateDiffMonths.integer.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateDiffMonths.integer@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date@group"
+        },
+        "right": {
+          "$ref": "#/$defs/date@group"
+        }
+      }
+    },
+    "dateDiffMonths.integer@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/date@projection"
+        }
+      }
+    },
+    "dateDiffMonths.integer@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date@row"
+        },
+        "right": {
+          "$ref": "#/$defs/date@row"
+        }
+      }
+    },
+    "dateDiffMonths.integer@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date@total"
+        },
+        "right": {
+          "$ref": "#/$defs/date@total"
+        }
+      }
+    },
+    "dateDiffMonths@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "dateDiffMonths@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "dateDiffMonths@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "dateDiffMonths@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths.integer.nullable@total"
+          }
+        }
+      ]
+    },
     "datetime.nullable@group": {
       "allOf": [
         {
@@ -6791,6 +7155,370 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeAddSeconds.datetime.nullable@total"
+          }
+        }
+      ]
+    },
+    "datetimeDiffMonths.integer.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeDiffMonths.integer.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeDiffMonths.integer.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeDiffMonths.integer.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeDiffMonths.integer@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime@group"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime@group"
+        }
+      }
+    },
+    "datetimeDiffMonths.integer@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime@projection"
+        }
+      }
+    },
+    "datetimeDiffMonths.integer@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime@row"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      }
+    },
+    "datetimeDiffMonths.integer@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime@total"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime@total"
+        }
+      }
+    },
+    "datetimeDiffMonths@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "datetimeDiffMonths@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "datetimeDiffMonths@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "datetimeDiffMonths@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeDiffMonths"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths.integer.nullable@total"
           }
         }
       ]
@@ -26694,6 +27422,8 @@
             "datetimeDiffSeconds",
             "dateAddMonths",
             "datetimeAddMonths",
+            "dateDiffMonths",
+            "datetimeDiffMonths",
             "year",
             "quarter",
             "month",
@@ -27038,6 +27768,30 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeAddMonths@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths@group"
           }
         },
         {
@@ -27575,6 +28329,8 @@
             "datetimeDiffSeconds",
             "dateAddMonths",
             "datetimeAddMonths",
+            "dateDiffMonths",
+            "datetimeDiffMonths",
             "year",
             "quarter",
             "month",
@@ -27919,6 +28675,30 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeAddMonths@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths@projection"
           }
         },
         {
@@ -28456,6 +29236,8 @@
             "datetimeDiffSeconds",
             "dateAddMonths",
             "datetimeAddMonths",
+            "dateDiffMonths",
+            "datetimeDiffMonths",
             "year",
             "quarter",
             "month",
@@ -28793,6 +29575,30 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeAddMonths@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths@row"
           }
         },
         {
@@ -29246,6 +30052,8 @@
             "datetimeDiffSeconds",
             "dateAddMonths",
             "datetimeAddMonths",
+            "dateDiffMonths",
+            "datetimeDiffMonths",
             "year",
             "quarter",
             "month",
@@ -29590,6 +30398,30 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeAddMonths@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateDiffMonths@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeDiffMonths"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeDiffMonths@total"
           }
         },
         {

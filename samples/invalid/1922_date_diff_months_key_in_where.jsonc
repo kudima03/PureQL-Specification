@@ -1,0 +1,18 @@
+// dateDiffMonths of a group key reference in where, which has no group keys
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateDiffMonths",
+      "type": { "name": "integer" },
+      "left": { "key": "d", "type": { "name": "date" } },
+      "right": { "param": "today", "type": { "name": "date" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 6 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

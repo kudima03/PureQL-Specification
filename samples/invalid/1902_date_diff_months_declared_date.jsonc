@@ -1,0 +1,15 @@
+// dateDiffMonths declared date: a difference is a number of months, not a date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// dateDiffMonths with a datetime on the left: both operands are dates, and there is no conversion between
+// date and datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}
