@@ -1,0 +1,13 @@
+// contains with a bare JSON string as pattern: pattern is an expression
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": "abc"
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

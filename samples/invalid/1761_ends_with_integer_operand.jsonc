@@ -1,0 +1,13 @@
+// endsWith over an integer operand: no implicit conversion to string
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "endsWith",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "age", "type": { "name": "integer" } },
+    "pattern": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

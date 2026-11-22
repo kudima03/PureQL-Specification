@@ -1,0 +1,15 @@
+// endsWith with a field as pattern in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "endsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

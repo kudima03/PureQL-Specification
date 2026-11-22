@@ -1,0 +1,12 @@
+// contains without its operand
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "pattern": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

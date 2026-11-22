@@ -1,0 +1,13 @@
+// contains with left / right: its operands are operand and pattern
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "left": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

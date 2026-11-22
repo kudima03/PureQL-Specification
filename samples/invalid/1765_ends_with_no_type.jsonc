@@ -1,0 +1,12 @@
+// endsWith without a declared type
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "endsWith",
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

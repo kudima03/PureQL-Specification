@@ -1,0 +1,142 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "contains",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "operator": "lower",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "name",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "pattern": {
+          "operator": "lower",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "param": "search",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      },
+      {
+        "operator": "endsWith",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "@example.com"
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "name",
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "email",
+      "expression": {
+        "source": "users",
+        "field": "email",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "has_plus_alias",
+      "expression": {
+        "operator": "contains",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "+"
+        }
+      }
+    },
+    {
+      "alias": "nickname_starts_with_first_name",
+      "expression": {
+        "operator": "startsWith",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "pattern": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

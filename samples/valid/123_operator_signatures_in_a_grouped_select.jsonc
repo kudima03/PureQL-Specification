@@ -439,6 +439,87 @@
       }
     },
     {
+      "alias": "contains_boolean",
+      "expression": {
+        "operator": "contains",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "contains_boolean_nullable_operand",
+      "expression": {
+        "operator": "contains",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "contains_boolean_nullable_pattern",
+      "expression": {
+        "operator": "contains",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "startsWith_boolean",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "startsWith_boolean_nullable_operand",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "startsWith_boolean_nullable_pattern",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "endsWith_boolean",
+      "expression": {
+        "operator": "endsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "endsWith_boolean_nullable_operand",
+      "expression": {
+        "operator": "endsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "endsWith_boolean_nullable_pattern",
+      "expression": {
+        "operator": "endsWith",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "abcabc" },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "dateAddDays_date",
       "expression": {
         "operator": "dateAddDays",

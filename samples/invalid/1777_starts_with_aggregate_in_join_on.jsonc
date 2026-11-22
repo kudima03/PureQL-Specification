@@ -1,0 +1,23 @@
+// startsWith over an aggregate in join.on: a row expression has no aggregates
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "c", "expression": { "source": "users", "field": "name", "type": { "name": "string" } } }
+  ],
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "string" },
+          "selector": { "source": "users", "field": "name", "type": { "name": "string" } }
+        },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    }
+  ]
+}

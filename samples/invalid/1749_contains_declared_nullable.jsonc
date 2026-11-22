@@ -1,0 +1,15 @@
+// contains over a nullable operand, declared nullable: it is false on null, so its result is never nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "contains",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "abc" }
+      }
+    }
+  ]
+}

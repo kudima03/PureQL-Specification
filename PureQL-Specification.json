@@ -4543,6 +4543,142 @@
         }
       ]
     },
+    "contains@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "contains"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contains@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "contains"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contains@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "contains"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contains@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "contains"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
     "count@group": {
       "type": "object",
       "required": [
@@ -7041,6 +7177,142 @@
           }
         }
       ]
+    },
+    "endsWith@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "endsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endsWith@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "endsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endsWith@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "endsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endsWith@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "endsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
     },
     "equal.boolean@group": {
       "properties": {
@@ -21737,6 +22009,9 @@
             "lessThan",
             "greaterThanOrEqual",
             "lessThanOrEqual",
+            "contains",
+            "startsWith",
+            "endsWith",
             "in",
             "if",
             "coalesce",
@@ -22139,6 +22414,42 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "contains"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/contains@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "startsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/startsWith@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "endsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/endsWith@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "in"
               }
             }
@@ -22293,6 +22604,9 @@
             "lessThan",
             "greaterThanOrEqual",
             "lessThanOrEqual",
+            "contains",
+            "startsWith",
+            "endsWith",
             "in",
             "if",
             "coalesce",
@@ -22695,6 +23009,42 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "contains"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/contains@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "startsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/startsWith@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "endsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/endsWith@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "in"
               }
             }
@@ -22849,6 +23199,9 @@
             "lessThan",
             "greaterThanOrEqual",
             "lessThanOrEqual",
+            "contains",
+            "startsWith",
+            "endsWith",
             "in",
             "if",
             "coalesce"
@@ -23244,6 +23597,42 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "contains"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/contains@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "startsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/startsWith@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "endsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/endsWith@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "in"
               }
             }
@@ -23314,6 +23703,9 @@
             "lessThan",
             "greaterThanOrEqual",
             "lessThanOrEqual",
+            "contains",
+            "startsWith",
+            "endsWith",
             "in",
             "if",
             "coalesce",
@@ -23710,6 +24102,42 @@
           },
           "then": {
             "$ref": "#/$defs/lessThanOrEqual@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "contains"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/contains@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "startsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/startsWith@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "endsWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/endsWith@total"
           }
         },
         {
@@ -24777,6 +25205,142 @@
         },
         "expression": {
           "$ref": "#/$defs/expr@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "startsWith@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "startsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "startsWith@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "startsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "startsWith@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "startsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "startsWith@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "startsWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "pattern": {
+          "$ref": "#/$defs/string.nullable@total"
         }
       },
       "additionalProperties": false

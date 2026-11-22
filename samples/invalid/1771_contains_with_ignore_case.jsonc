@@ -1,0 +1,15 @@
+// contains with an ignoreCase flag: matching is by code point (apply lower to both operands), and no other
+// property is allowed
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "abc" },
+    "ignoreCase": true
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

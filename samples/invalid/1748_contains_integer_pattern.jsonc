@@ -1,0 +1,13 @@
+// contains with an integer pattern: no implicit conversion to string
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
