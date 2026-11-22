@@ -1,4 +1,4 @@
-// trimEnd with nullable characters: characters is never null
+// trimEnd with a nullable removable: a removable is never null
 {
   "from": { "entity": "users" },
   "select": [
@@ -8,11 +8,10 @@
         "operator": "trimEnd",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": {
-          "source": "users",
-          "field": "nickname",
-          "type": { "name": "string", "nullable": true }
-        }
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        ]
       }
     }
   ]

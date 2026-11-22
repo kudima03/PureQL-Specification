@@ -1,14 +1,14 @@
-// ltrim is not an operator: the operators are trim, trimStart and trimEnd
+// trim with one string expression as removables: removables is an array, also for one removable
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "ltrim",
+        "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "string" }, "value": "0" }
+        "removables": { "type": { "name": "string" }, "value": "0" }
       }
     }
   ]

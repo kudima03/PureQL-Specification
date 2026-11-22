@@ -1,4 +1,4 @@
-// trim with integer characters: characters is a string
+// trim with a bare JSON string as a removable: a removable is an expression
 {
   "from": { "entity": "users" },
   "select": [
@@ -8,7 +8,7 @@
         "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "integer" }, "value": 0 }
+        "removables": [ { "type": { "name": "string" }, "value": "0" }, "0 " ]
       }
     }
   ]

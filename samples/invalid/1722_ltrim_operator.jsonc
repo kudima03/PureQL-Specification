@@ -1,0 +1,18 @@
+// ltrim is not an operator: the operators are trim, trimStart and trimEnd
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ltrim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "type": { "name": "string" }, "value": "0 " }
+        ]
+      }
+    }
+  ]
+}

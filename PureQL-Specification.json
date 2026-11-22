@@ -26579,7 +26579,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26596,8 +26596,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@group"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@group"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26626,7 +26630,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26643,8 +26647,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@projection"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@projection"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26673,7 +26681,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26690,8 +26698,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@row"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@row"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26720,7 +26732,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26737,8 +26749,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@total"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@total"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26871,7 +26887,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26888,8 +26904,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@group"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@group"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26918,7 +26938,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26935,8 +26955,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@projection"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@projection"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -26965,7 +26989,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -26982,8 +27006,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@row"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@row"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -27012,7 +27040,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -27029,8 +27057,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@total"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@total"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -27163,7 +27195,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -27180,8 +27212,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@group"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@group"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -27210,7 +27246,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -27227,8 +27263,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@projection"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@projection"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -27257,7 +27297,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -27274,8 +27314,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@row"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@row"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,
@@ -27304,7 +27348,7 @@
         "operator",
         "type",
         "operand",
-        "characters"
+        "removables"
       ],
       "properties": {
         "operator": {
@@ -27321,8 +27365,12 @@
           }
         },
         "operand": true,
-        "characters": {
-          "$ref": "#/$defs/string@total"
+        "removables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string@total"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false,

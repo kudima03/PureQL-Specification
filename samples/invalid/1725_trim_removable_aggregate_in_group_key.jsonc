@@ -1,4 +1,4 @@
-// trim with an aggregate as characters in a groupBy key: a row expression has no aggregates
+// trim with an aggregate as a removable in a groupBy key: a row expression has no aggregates
 {
   "from": { "entity": "users" },
   "groupBy": [
@@ -8,11 +8,13 @@
         "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": {
-          "operator": "max",
-          "type": { "name": "string" },
-          "selector": { "source": "users", "field": "name", "type": { "name": "string" } }
-        }
+        "removables": [
+          {
+            "operator": "max",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "name", "type": { "name": "string" } }
+          }
+        ]
       }
     }
   ],

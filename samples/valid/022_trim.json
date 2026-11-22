@@ -19,12 +19,14 @@
           "name": "string"
         }
       },
-      "characters": {
-        "type": {
-          "name": "string"
-        },
-        "value": " "
-      }
+      "removables": [
+        {
+          "type": {
+            "name": "string"
+          },
+          "value": " "
+        }
+      ]
     },
     "right": {
       "type": {
@@ -48,12 +50,14 @@
             "name": "string"
           }
         },
-        "characters": {
-          "type": {
-            "name": "string"
-          },
-          "value": " "
-        }
+        "removables": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": " "
+          }
+        ]
       }
     },
     {
@@ -72,12 +76,20 @@
             "nullable": true
           }
         },
-        "characters": {
-          "type": {
-            "name": "string"
+        "removables": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": " "
           },
-          "value": " \t"
-        }
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "\t"
+          }
+        ]
       }
     },
     {
@@ -94,16 +106,18 @@
             "name": "string"
           }
         },
-        "characters": {
-          "type": {
-            "name": "string"
-          },
-          "value": "0"
-        }
+        "removables": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "0"
+          }
+        ]
       }
     },
     {
-      "alias": "email",
+      "alias": "email_without_tag",
       "expression": {
         "operator": "trimEnd",
         "type": {
@@ -116,12 +130,26 @@
             "name": "string"
           }
         },
-        "characters": {
-          "type": {
-            "name": "string"
+        "removables": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "."
           },
-          "value": ".,; "
-        }
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": " "
+          },
+          {
+            "param": "tag",
+            "type": {
+              "name": "string"
+            }
+          }
+        ]
       }
     }
   ]

@@ -71,7 +71,7 @@ Dispatch on a value (`operator`, the declared type, an operand's family) is alwa
 
 - Field reference: `{ "source": <entity, subquery or alias>, "field": …, "type": … }`.
 - `from` / `join` name exactly one of `entity` or `subquery`, plus an optional `alias`. A join's kind is `kind` (`inner` / `left` / `right` / `full`): `type` always means a type object.
-- A parameter is `{ "param": …, "type": … }`. A unary operator's operand is `operand` (`floor`, `ceiling`, `round`, `in`, the string operators), and an extra operand is named by its role and never null (`digits` of `round`, `characters` of `trim`, which is required: there is no default set), so `value` only ever means a literal's value.
+- A parameter is `{ "param": …, "type": … }`. A unary operator's operand is `operand` (`floor`, `ceiling`, `round`, `in`, the string operators), and an extra operand is named by its role and never null (`digits` of `round`, the items of `removables` of `trim`, a required array of at least one string: there is no default set), so `value` only ever means a literal's value.
 - Defaults are never written: no `"direction": "asc"` (ascending is the absence of `direction`).
 - `distinctBy` lists `select` aliases (each once, checked by `uniqueItems`); of the rows equal on them it keeps the first in `orderBy` order, so it applies after `orderBy` and before `pagination`. Listing every alias is SQL `DISTINCT`; there is no `distinct` flag. Select aliases must be unique: the interpreter checks this, a schema cannot compare items by one property.
 - `equal` keeps its null semantics in `join.on`: two null keys match. Samples that join on keys nullable on both sides guard with `notEqual(key, null)`.

@@ -353,7 +353,7 @@ for ctx, rules in CONTEXTS.items():
     def lifted(name, types, t, *checks, extra=None, optional=None):
         """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
         `extra` / `optional`: required / optional properties of the node besides
-        its operands (if.condition, round.digits, trim.characters), never null."""
+        its operands (if.condition, round.digits, trim.removables), never null."""
         shape(name, list(types) + list(extra or {}),
               {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(types, False), *checks)
@@ -394,10 +394,11 @@ for ctx, rules in CONTEXTS.items():
     # Unicode default case conversion, full mappings, no locale: upper("ß") is "SS"
     for name in ["upper", "lower"]:
         lifted(name, {"operand": "string"}, "string")
-    # trim removes the code points of `characters`, which is required and never null
-    characters = {"characters": expr("string", ctx)}
+    # trim removes the strings of `removables` from the ends, the longest match first;
+    # at least one is listed, and none is null
+    removables = {"removables": array_of(expr("string", ctx), 1)}
     for name in ["trim", "trimStart", "trimEnd"]:
-        lifted(name, {"operand": "string"}, "string", extra=characters)
+        lifted(name, {"operand": "string"}, "string", extra=removables)
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

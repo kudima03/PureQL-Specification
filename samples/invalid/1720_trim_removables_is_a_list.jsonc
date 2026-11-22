@@ -1,4 +1,5 @@
-// trim with a bare JSON string as characters: characters is an expression
+// trim with a string list literal as removables: removables is an array of string expressions, not a list
+// value
 {
   "from": { "entity": "users" },
   "select": [
@@ -8,7 +9,7 @@
         "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": "0"
+        "removables": { "type": { "name": "stringList" }, "value": [ "0", "0 " ] }
       }
     }
   ]

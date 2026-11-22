@@ -1,4 +1,4 @@
-// trimStart without characters: there is no default set of code points to remove
+// trimStart without removables: there is no default set of strings to remove
 {
   "from": { "entity": "users" },
   "select": [

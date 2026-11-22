@@ -1,4 +1,4 @@
-// trim with a string list as characters: characters is one string, read as a set of code points
+// trim with a nullable removable: a removable is never null
 {
   "from": { "entity": "users" },
   "select": [
@@ -8,7 +8,10 @@
         "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "stringList" }, "value": [ "0", " " ] }
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        ]
       }
     }
   ]

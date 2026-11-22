@@ -336,7 +336,7 @@
         "operator": "trim",
         "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [ { "type": { "name": "string" }, "value": "x" } ]
       }
     },
     {
@@ -345,7 +345,10 @@
         "operator": "trim",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "string", "nullable": true }, "value": null },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [
+          { "type": { "name": "string" }, "value": "x" },
+          { "type": { "name": "string" }, "value": "xa" }
+        ]
       }
     },
     {
@@ -354,7 +357,7 @@
         "operator": "trimStart",
         "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [ { "type": { "name": "string" }, "value": "x" } ]
       }
     },
     {
@@ -363,7 +366,10 @@
         "operator": "trimStart",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "string", "nullable": true }, "value": null },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [
+          { "type": { "name": "string" }, "value": "x" },
+          { "type": { "name": "string" }, "value": "xa" }
+        ]
       }
     },
     {
@@ -372,7 +378,7 @@
         "operator": "trimEnd",
         "type": { "name": "string" },
         "operand": { "type": { "name": "string" }, "value": "xax" },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [ { "type": { "name": "string" }, "value": "x" } ]
       }
     },
     {
@@ -381,7 +387,10 @@
         "operator": "trimEnd",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "string", "nullable": true }, "value": null },
-        "characters": { "type": { "name": "string" }, "value": "x" }
+        "removables": [
+          { "type": { "name": "string" }, "value": "x" },
+          { "type": { "name": "string" }, "value": "xa" }
+        ]
       }
     },
     {

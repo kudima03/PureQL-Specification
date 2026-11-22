@@ -1,11 +1,11 @@
-// trimEnd without characters: there is no default set of code points to remove
+// trim without removables: there is no default set of strings to remove
 {
   "from": { "entity": "users" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "trimEnd",
+        "operator": "trim",
         "type": { "name": "string" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
       }

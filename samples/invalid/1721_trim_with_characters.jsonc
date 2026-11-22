@@ -1,12 +1,6 @@
-// trim of a field in a grouped select, which reads only group keys and aggregates
+// trim with characters instead of removables: no other property is allowed
 {
   "from": { "entity": "users" },
-  "groupBy": [
-    {
-      "alias": "country",
-      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
-    }
-  ],
   "select": [
     {
       "alias": "c",

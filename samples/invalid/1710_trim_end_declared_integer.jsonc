@@ -8,7 +8,10 @@
         "operator": "trimEnd",
         "type": { "name": "integer" },
         "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
-        "characters": { "type": { "name": "string" }, "value": "0" }
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "type": { "name": "string" }, "value": "0 " }
+        ]
       }
     }
   ]
