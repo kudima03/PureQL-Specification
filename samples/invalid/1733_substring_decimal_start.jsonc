@@ -1,0 +1,15 @@
+// substring with a decimal start: a position is an integer, and decimal does not narrow to it
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

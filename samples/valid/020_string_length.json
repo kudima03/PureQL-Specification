@@ -1,0 +1,103 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "length",
+      "type": {
+        "name": "integer"
+      },
+      "operand": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 20
+    }
+  },
+  "select": [
+    {
+      "alias": "name",
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "name_length",
+      "expression": {
+        "operator": "length",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname_length",
+      "expression": {
+        "operator": "length",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "length",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

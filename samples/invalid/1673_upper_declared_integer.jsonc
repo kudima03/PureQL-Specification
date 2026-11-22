@@ -1,0 +1,14 @@
+// upper declared integer: it yields string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "upper",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

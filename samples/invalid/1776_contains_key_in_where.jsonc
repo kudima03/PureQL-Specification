@@ -1,0 +1,13 @@
+// contains over a group key reference in where, which has no group keys
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": { "key": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "abc" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

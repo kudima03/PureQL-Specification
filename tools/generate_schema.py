@@ -53,10 +53,12 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, date/time math, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, upper/lower, trim, substring, date/time math, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
+  - contains / startsWith / endsWith accept nullable strings and return a
+    non-null boolean, false when either operand is null;
   - every condition (where, having, on, and/or/not, if.condition, aggregate
     predicate) requires a non-null boolean.
 """
@@ -353,7 +355,7 @@ for ctx, rules in CONTEXTS.items():
     def lifted(name, types, t, *checks, extra=None, optional=None):
         """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
         `extra` / `optional`: required / optional properties of the node besides
-        its operands (if.condition, round.digits), never null."""
+        its operands (if.condition, round.digits, trim.removables, substring.start), never null."""
         shape(name, list(types) + list(extra or {}),
               {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(types, False), *checks)
@@ -389,6 +391,19 @@ for ctx, rules in CONTEXTS.items():
 
     # strings
     lifted("concat", {"values": "string"}, "string")
+    # the number of code points
+    lifted("length", {"operand": "string"}, "integer")
+    # Unicode default case conversion, full mappings, no locale: upper("ß") is "SS"
+    for name in ["upper", "lower"]:
+        lifted(name, {"operand": "string"}, "string")
+    # trim removes the strings of `removables` from the ends, the longest match first;
+    # at least one is listed, and none is null
+    removables = {"removables": array_of(expr("string", ctx), 1)}
+    for name in ["trim", "trimStart", "trimEnd"]:
+        lifted(name, {"operand": "string"}, "string", extra=removables)
+    # code points from `start`, counted from 1, to the end or for `length` of them
+    lifted("substring", {"operand": "string"}, "string",
+           extra={"start": expr("integer", ctx)}, optional={"length": expr("integer", ctx)})
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")
@@ -420,6 +435,11 @@ for ctx, rules in CONTEXTS.items():
         signature(name, "boolean", False, by_family(
             name, "left", families, lambda f: operands({"left": f, "right": f}, True)
         ))
+    # string matching, code point by code point: nullable operands, false when either is null
+    for name in ["contains", "startsWith", "endsWith"]:
+        shape(name, ["operand", "pattern"],
+              {"operand": expr("string", ctx, True), "pattern": expr("string", ctx, True)})
+        signature(name, "boolean", False)
     shape("in", ["operand", "list"], {"operand": check("accepts.equatable"), "list": True})
     signature("in", "boolean", False, by_family(
         "in", "operand", EQUATABLE,

@@ -1,0 +1,5 @@
+// length without its operand
+{
+  "from": { "entity": "users" },
+  "select": [ { "alias": "c", "expression": { "operator": "length", "type": { "name": "integer" } } } ]
+}

@@ -1,0 +1,16 @@
+// substring with an end position: the extent is given by length, and no other property is allowed
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "end": { "type": { "name": "integer" }, "value": 4 }
+      }
+    }
+  ]
+}

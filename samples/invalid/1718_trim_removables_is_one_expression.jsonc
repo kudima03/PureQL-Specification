@@ -1,0 +1,15 @@
+// trim with one string expression as removables: removables is an array, also for one removable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "removables": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}

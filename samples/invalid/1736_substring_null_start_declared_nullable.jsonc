@@ -1,0 +1,15 @@
+// substring with a null start, declared nullable: start is never null, so it cannot make the result nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

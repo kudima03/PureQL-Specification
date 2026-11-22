@@ -1,0 +1,14 @@
+// length of an integer: no implicit conversion to string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

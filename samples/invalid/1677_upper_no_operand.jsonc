@@ -1,0 +1,5 @@
+// upper without its operand
+{
+  "from": { "entity": "users" },
+  "select": [ { "alias": "c", "expression": { "operator": "upper", "type": { "name": "string" } } } ]
+}

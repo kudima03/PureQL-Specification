@@ -1,0 +1,15 @@
+// trim with a bare JSON string as a removable: a removable is an expression
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "removables": [ { "type": { "name": "string" }, "value": "0" }, "0 " ]
+      }
+    }
+  ]
+}

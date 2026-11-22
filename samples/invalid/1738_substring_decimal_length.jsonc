@@ -1,0 +1,16 @@
+// substring with a decimal length: a number of code points is an integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

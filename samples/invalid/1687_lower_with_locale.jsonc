@@ -1,0 +1,15 @@
+// lower with a locale: the case conversion has none, and no other property is allowed
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lower",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "locale": "tr"
+      }
+    }
+  ]
+}

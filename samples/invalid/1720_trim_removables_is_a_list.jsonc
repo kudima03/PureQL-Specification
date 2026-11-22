@@ -1,0 +1,16 @@
+// trim with a string list literal as removables: removables is an array of string expressions, not a list
+// value
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "removables": { "type": { "name": "stringList" }, "value": [ "0", "0 " ] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// substring without a declared type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

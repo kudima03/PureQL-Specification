@@ -1,0 +1,17 @@
+// trimEnd without its operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimEnd",
+        "type": { "name": "string" },
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "type": { "name": "string" }, "value": "0 " }
+        ]
+      }
+    }
+  ]
+}

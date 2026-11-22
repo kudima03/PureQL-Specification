@@ -1,0 +1,15 @@
+// trim with an empty removables array: at least one removable is listed
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "removables": []
+      }
+    }
+  ]
+}

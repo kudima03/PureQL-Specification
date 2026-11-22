@@ -1,0 +1,13 @@
+// like is not an operator: literal matching is contains, startsWith and endsWith
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "like",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "%abc%" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

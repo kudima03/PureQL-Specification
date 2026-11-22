@@ -1,0 +1,18 @@
+// trim with a field as a removable in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": " a " },
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "source": "users", "field": "name", "type": { "name": "string" } }
+        ]
+      }
+    }
+  ]
+}

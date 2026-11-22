@@ -1,0 +1,21 @@
+// substring of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

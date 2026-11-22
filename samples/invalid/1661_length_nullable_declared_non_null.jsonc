@@ -1,0 +1,14 @@
+// length of a nullable operand, declared non-null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

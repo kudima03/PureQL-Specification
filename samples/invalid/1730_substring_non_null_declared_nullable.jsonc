@@ -1,0 +1,17 @@
+// substring of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand
+// is
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

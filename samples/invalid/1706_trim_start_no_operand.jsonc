@@ -1,0 +1,17 @@
+// trimStart without its operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimStart",
+        "type": { "name": "string" },
+        "removables": [
+          { "type": { "name": "string" }, "value": "0" },
+          { "type": { "name": "string" }, "value": "0 " }
+        ]
+      }
+    }
+  ]
+}

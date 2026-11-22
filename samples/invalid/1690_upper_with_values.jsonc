@@ -1,0 +1,17 @@
+// upper with `values` instead of `operand`: it takes one string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "upper",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// trim with characters instead of removables: no other property is allowed
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "characters": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}

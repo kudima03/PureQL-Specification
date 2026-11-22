@@ -1,0 +1,7 @@
+// length with a bare JSON string as its operand: an operand is an expression
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "length", "type": { "name": "integer" }, "operand": "abc" } }
+  ]
+}

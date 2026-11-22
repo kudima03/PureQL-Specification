@@ -1,0 +1,19 @@
+// lower of an aggregate in a groupBy key: a row expression has no aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "lower",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "string" },
+          "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

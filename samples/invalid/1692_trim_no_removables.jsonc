@@ -1,0 +1,14 @@
+// trim without removables: there is no default set of strings to remove
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

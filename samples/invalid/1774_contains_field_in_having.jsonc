@@ -1,0 +1,17 @@
+// contains over a field in having, which reads only group keys and aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    }
+  ],
+  "select": [ { "alias": "c", "expression": { "operator": "count", "type": { "name": "integer" } } } ],
+  "having": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "abc" }
+  }
+}
