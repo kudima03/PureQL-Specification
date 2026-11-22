@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, date/time math, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, date/time math, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -389,6 +389,8 @@ for ctx, rules in CONTEXTS.items():
 
     # strings
     lifted("concat", {"values": "string"}, "string")
+    # the number of code points
+    lifted("length", {"operand": "string"}, "integer")
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

@@ -1,0 +1,14 @@
+// length declared decimal: its declared type is exactly integer, never wider
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "decimal" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// length with an unknown property
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "unit": "bytes"
+      }
+    }
+  ]
+}

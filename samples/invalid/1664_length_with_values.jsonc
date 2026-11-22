@@ -1,0 +1,17 @@
+// length with `values` instead of `operand`: it takes one string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "users", "field": "name", "type": { "name": "string" } },
+          { "source": "users", "field": "name", "type": { "name": "string" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+// length without a declared type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

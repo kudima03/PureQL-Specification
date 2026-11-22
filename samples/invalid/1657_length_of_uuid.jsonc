@@ -1,0 +1,14 @@
+// length of a uuid: the operand must be a string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

@@ -290,6 +290,22 @@
       }
     },
     {
+      "alias": "length_integer",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "abc" }
+      }
+    },
+    {
+      "alias": "length_integer_nullable",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "dateAddDays_date",
       "expression": {
         "operator": "dateAddDays",

@@ -1,0 +1,21 @@
+// length of an aggregate in where: a row expression has no aggregates
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "length",
+      "type": { "name": "integer" },
+      "operand": {
+        "operator": "max",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "name", "type": { "name": "string" } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 3 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
