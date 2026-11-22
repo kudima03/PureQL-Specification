@@ -1,0 +1,13 @@
+// month without a declared type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "month",
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

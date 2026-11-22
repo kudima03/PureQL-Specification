@@ -1,0 +1,14 @@
+// hour of a date: a date has no clock parts
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

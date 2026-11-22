@@ -1,0 +1,15 @@
+// microsecond of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand
+// is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

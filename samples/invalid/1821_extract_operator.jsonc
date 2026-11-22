@@ -1,0 +1,15 @@
+// extract is not an operator: each part is its own operator
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extract",
+        "type": { "name": "integer" },
+        "part": "month",
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

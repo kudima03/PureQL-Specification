@@ -1,0 +1,10 @@
+// month with a bare JSON string as its operand: an operand is an expression
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "month", "type": { "name": "integer" }, "operand": "2024-12-30" }
+    }
+  ]
+}

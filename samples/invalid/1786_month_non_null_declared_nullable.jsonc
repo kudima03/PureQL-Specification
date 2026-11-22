@@ -1,0 +1,14 @@
+// month of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

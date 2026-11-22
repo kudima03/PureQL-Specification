@@ -1,0 +1,14 @@
+// year of an integer: the operand is a date or a datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": 2024 }
+      }
+    }
+  ]
+}

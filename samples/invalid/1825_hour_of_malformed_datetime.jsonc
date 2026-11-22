@@ -1,0 +1,14 @@
+// hour of a datetime literal with an offset: the operand is validated in full
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15+03:00" }
+      }
+    }
+  ]
+}

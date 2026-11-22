@@ -115,6 +115,28 @@
         }
       }
     },
+    "accepts.dateOrDatetime": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "date",
+                "datetime"
+              ]
+            }
+          }
+        }
+      }
+    },
     "accepts.datetime": {
       "type": "object",
       "required": [
@@ -364,6 +386,28 @@
             "name": {
               "enum": [
                 "time"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "accepts.timeOrDatetime": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "time",
+                "datetime"
               ]
             }
           }
@@ -6387,6 +6431,1686 @@
         }
       ]
     },
+    "day.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "day.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "day.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "day.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "day.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "day.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "day.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "day.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "day.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@group"
+          }
+        }
+      ]
+    },
+    "day.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@projection"
+          }
+        }
+      ]
+    },
+    "day.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@row"
+          }
+        }
+      ]
+    },
+    "day.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@total"
+          }
+        }
+      ]
+    },
+    "day.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@group"
+          }
+        }
+      ]
+    },
+    "day.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@projection"
+          }
+        }
+      ]
+    },
+    "day.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@row"
+          }
+        }
+      ]
+    },
+    "day.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day.datetime@total"
+          }
+        }
+      ]
+    },
+    "day@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "day"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "day@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "day"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "day@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "day"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "day@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "day"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/day.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "dayOfWeek.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "dayOfWeek.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "dayOfWeek.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "dayOfWeek.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "dayOfWeek.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "dayOfWeek.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "dayOfWeek.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "dayOfWeek.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@group"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@projection"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@row"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@total"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@group"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@projection"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@row"
+          }
+        }
+      ]
+    },
+    "dayOfWeek.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.datetime@total"
+          }
+        }
+      ]
+    },
+    "dayOfWeek@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfWeek"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "dayOfWeek@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfWeek"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "dayOfWeek@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfWeek"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "dayOfWeek@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfWeek"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "dayOfYear.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "dayOfYear.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "dayOfYear.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "dayOfYear.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "dayOfYear.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "dayOfYear.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "dayOfYear.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "dayOfYear.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "dayOfYear.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@group"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@projection"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@row"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@total"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@group"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@projection"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@row"
+          }
+        }
+      ]
+    },
+    "dayOfYear.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.datetime@total"
+          }
+        }
+      ]
+    },
+    "dayOfYear@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "dayOfYear@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "dayOfYear@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "dayOfYear@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dayOfYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear.integer.nullable@total"
+          }
+        }
+      ]
+    },
     "decimal.nullable@group": {
       "allOf": [
         {
@@ -10332,6 +12056,566 @@
           ]
         }
       }
+    },
+    "hour.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "hour.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "hour.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "hour.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "hour.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@group"
+          }
+        }
+      ]
+    },
+    "hour.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@projection"
+          }
+        }
+      ]
+    },
+    "hour.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@row"
+          }
+        }
+      ]
+    },
+    "hour.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@total"
+          }
+        }
+      ]
+    },
+    "hour.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@group"
+          }
+        }
+      ]
+    },
+    "hour.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@projection"
+          }
+        }
+      ]
+    },
+    "hour.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@row"
+          }
+        }
+      ]
+    },
+    "hour.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour.datetime@total"
+          }
+        }
+      ]
+    },
+    "hour.time@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      }
+    },
+    "hour.time@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      }
+    },
+    "hour.time@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "hour.time@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      }
+    },
+    "hour@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "hour"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "hour@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "hour"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "hour@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "hour"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "hour@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "hour"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/hour.integer.nullable@total"
+          }
+        }
+      ]
     },
     "if.boolean.nullable@group": {
       "properties": {
@@ -18831,6 +21115,566 @@
         }
       ]
     },
+    "microsecond.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "microsecond.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "microsecond.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "microsecond.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "microsecond.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@group"
+          }
+        }
+      ]
+    },
+    "microsecond.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@projection"
+          }
+        }
+      ]
+    },
+    "microsecond.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@row"
+          }
+        }
+      ]
+    },
+    "microsecond.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@total"
+          }
+        }
+      ]
+    },
+    "microsecond.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@group"
+          }
+        }
+      ]
+    },
+    "microsecond.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@projection"
+          }
+        }
+      ]
+    },
+    "microsecond.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@row"
+          }
+        }
+      ]
+    },
+    "microsecond.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.datetime@total"
+          }
+        }
+      ]
+    },
+    "microsecond.time@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      }
+    },
+    "microsecond.time@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      }
+    },
+    "microsecond.time@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "microsecond.time@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      }
+    },
+    "microsecond@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "microsecond"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "microsecond@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "microsecond"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "microsecond@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "microsecond"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "microsecond@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "microsecond"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond.integer.nullable@total"
+          }
+        }
+      ]
+    },
     "min.boolean.nullable@group": {
       "properties": {
         "selector": {
@@ -20073,6 +22917,566 @@
         }
       ]
     },
+    "minute.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "minute.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "minute.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "minute.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "minute.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@group"
+          }
+        }
+      ]
+    },
+    "minute.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@projection"
+          }
+        }
+      ]
+    },
+    "minute.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@row"
+          }
+        }
+      ]
+    },
+    "minute.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@total"
+          }
+        }
+      ]
+    },
+    "minute.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@group"
+          }
+        }
+      ]
+    },
+    "minute.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@projection"
+          }
+        }
+      ]
+    },
+    "minute.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@row"
+          }
+        }
+      ]
+    },
+    "minute.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute.datetime@total"
+          }
+        }
+      ]
+    },
+    "minute.time@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      }
+    },
+    "minute.time@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      }
+    },
+    "minute.time@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "minute.time@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      }
+    },
+    "minute@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "minute"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "minute@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "minute"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "minute@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "minute"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "minute@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "minute"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/minute.integer.nullable@total"
+          }
+        }
+      ]
+    },
     "modulo.integer.nullable@group": {
       "properties": {
         "left": {
@@ -20433,6 +23837,566 @@
           },
           "then": {
             "$ref": "#/$defs/modulo.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "month.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "month.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "month.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "month.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "month.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "month.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "month.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "month.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "month.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@group"
+          }
+        }
+      ]
+    },
+    "month.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@projection"
+          }
+        }
+      ]
+    },
+    "month.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@row"
+          }
+        }
+      ]
+    },
+    "month.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@total"
+          }
+        }
+      ]
+    },
+    "month.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@group"
+          }
+        }
+      ]
+    },
+    "month.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@projection"
+          }
+        }
+      ]
+    },
+    "month.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@row"
+          }
+        }
+      ]
+    },
+    "month.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month.datetime@total"
+          }
+        }
+      ]
+    },
+    "month@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "month"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "month@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "month"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "month@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "month"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "month@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "month"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/month.integer.nullable@total"
           }
         }
       ]
@@ -22000,6 +25964,18 @@
             "timeDiffSeconds",
             "datetimeAddSeconds",
             "datetimeDiffSeconds",
+            "year",
+            "quarter",
+            "month",
+            "day",
+            "dayOfWeek",
+            "dayOfYear",
+            "week",
+            "weekYear",
+            "hour",
+            "minute",
+            "second",
+            "microsecond",
             "and",
             "or",
             "not",
@@ -22306,6 +26282,150 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "year"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "quarter"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "month"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "day"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfWeek"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "week"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "weekYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "hour"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "minute"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "second"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "microsecond"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -22595,6 +26715,18 @@
             "timeDiffSeconds",
             "datetimeAddSeconds",
             "datetimeDiffSeconds",
+            "year",
+            "quarter",
+            "month",
+            "day",
+            "dayOfWeek",
+            "dayOfYear",
+            "week",
+            "weekYear",
+            "hour",
+            "minute",
+            "second",
+            "microsecond",
             "and",
             "or",
             "not",
@@ -22901,6 +27033,150 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "year"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "quarter"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "month"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "day"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfWeek"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "week"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "weekYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "hour"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "minute"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "second"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "microsecond"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -23190,6 +27466,18 @@
             "timeDiffSeconds",
             "datetimeAddSeconds",
             "datetimeDiffSeconds",
+            "year",
+            "quarter",
+            "month",
+            "day",
+            "dayOfWeek",
+            "dayOfYear",
+            "week",
+            "weekYear",
+            "hour",
+            "minute",
+            "second",
+            "microsecond",
             "and",
             "or",
             "not",
@@ -23489,6 +27777,150 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "year"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "quarter"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "month"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "day"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfWeek"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "week"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "weekYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "hour"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "minute"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "second"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "microsecond"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -23694,6 +28126,18 @@
             "timeDiffSeconds",
             "datetimeAddSeconds",
             "datetimeDiffSeconds",
+            "year",
+            "quarter",
+            "month",
+            "day",
+            "dayOfWeek",
+            "dayOfYear",
+            "week",
+            "weekYear",
+            "hour",
+            "minute",
+            "second",
+            "microsecond",
             "and",
             "or",
             "not",
@@ -23994,6 +28438,150 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeDiffSeconds@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "year"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "quarter"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "month"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/month@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "day"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/day@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfWeek"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfWeek@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dayOfYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dayOfYear@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "week"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "weekYear"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "hour"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/hour@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "minute"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/minute@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "second"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "microsecond"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/microsecond@total"
           }
         },
         {
@@ -24575,6 +29163,566 @@
         }
       }
     },
+    "quarter.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "quarter.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "quarter.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "quarter.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "quarter.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "quarter.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "quarter.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "quarter.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "quarter.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@group"
+          }
+        }
+      ]
+    },
+    "quarter.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@projection"
+          }
+        }
+      ]
+    },
+    "quarter.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@row"
+          }
+        }
+      ]
+    },
+    "quarter.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@total"
+          }
+        }
+      ]
+    },
+    "quarter.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@group"
+          }
+        }
+      ]
+    },
+    "quarter.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@projection"
+          }
+        }
+      ]
+    },
+    "quarter.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@row"
+          }
+        }
+      ]
+    },
+    "quarter.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.datetime@total"
+          }
+        }
+      ]
+    },
+    "quarter@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "quarter"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "quarter@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "quarter"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "quarter@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "quarter"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "quarter@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "quarter"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/quarter.integer.nullable@total"
+          }
+        }
+      ]
+    },
     "query": {
       "if": {
         "required": [
@@ -25142,6 +30290,566 @@
           },
           "then": {
             "$ref": "#/$defs/round.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "second.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "second.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "second.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "second.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "second.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@group"
+          }
+        }
+      ]
+    },
+    "second.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@projection"
+          }
+        }
+      ]
+    },
+    "second.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@row"
+          }
+        }
+      ]
+    },
+    "second.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@total"
+          }
+        }
+      ]
+    },
+    "second.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@group"
+          }
+        }
+      ]
+    },
+    "second.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@projection"
+          }
+        }
+      ]
+    },
+    "second.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@row"
+          }
+        }
+      ]
+    },
+    "second.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.time.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.time@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/second.datetime@total"
+          }
+        }
+      ]
+    },
+    "second.time@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      }
+    },
+    "second.time@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      }
+    },
+    "second.time@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "second.time@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      }
+    },
+    "second@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "second"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "second@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "second"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "second@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "second"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "second@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "second"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.timeOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/second.integer.nullable@total"
           }
         }
       ]
@@ -28865,6 +34573,1686 @@
         "type": "string",
         "pattern": "\\n"
       }
+    },
+    "week.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "week.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "week.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "week.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "week.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "week.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "week.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "week.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "week.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@group"
+          }
+        }
+      ]
+    },
+    "week.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@projection"
+          }
+        }
+      ]
+    },
+    "week.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@row"
+          }
+        }
+      ]
+    },
+    "week.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@total"
+          }
+        }
+      ]
+    },
+    "week.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@group"
+          }
+        }
+      ]
+    },
+    "week.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@projection"
+          }
+        }
+      ]
+    },
+    "week.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@row"
+          }
+        }
+      ]
+    },
+    "week.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/week.datetime@total"
+          }
+        }
+      ]
+    },
+    "week@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "week"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "week@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "week"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "week@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "week"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "week@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "week"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/week.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "weekYear.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "weekYear.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "weekYear.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "weekYear.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "weekYear.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "weekYear.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "weekYear.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "weekYear.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "weekYear.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@group"
+          }
+        }
+      ]
+    },
+    "weekYear.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@projection"
+          }
+        }
+      ]
+    },
+    "weekYear.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@row"
+          }
+        }
+      ]
+    },
+    "weekYear.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@total"
+          }
+        }
+      ]
+    },
+    "weekYear.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@group"
+          }
+        }
+      ]
+    },
+    "weekYear.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@projection"
+          }
+        }
+      ]
+    },
+    "weekYear.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@row"
+          }
+        }
+      ]
+    },
+    "weekYear.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.datetime@total"
+          }
+        }
+      ]
+    },
+    "weekYear@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "weekYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "weekYear@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "weekYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "weekYear@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "weekYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "weekYear@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "weekYear"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/weekYear.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "year.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "year.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "year.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "year.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "year.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "year.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "year.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "year.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "year.integer.nullable@group": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@group"
+          }
+        }
+      ]
+    },
+    "year.integer.nullable@projection": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@projection"
+          }
+        }
+      ]
+    },
+    "year.integer.nullable@row": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@row"
+          }
+        }
+      ]
+    },
+    "year.integer.nullable@total": {
+      "required": [
+        "operand"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nullable"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@total"
+          }
+        }
+      ]
+    },
+    "year.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@group"
+          }
+        }
+      ]
+    },
+    "year.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@projection"
+          }
+        }
+      ]
+    },
+    "year.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@row"
+          }
+        }
+      ]
+    },
+    "year.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.date.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.date@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.datetime.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/year.datetime@total"
+          }
+        }
+      ]
+    },
+    "year@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "year"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "year@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "year"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "year@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "year"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "year@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "year"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/accepts.dateOrDatetime"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/year.integer.nullable@total"
+          }
+        }
+      ]
     }
   }
 }

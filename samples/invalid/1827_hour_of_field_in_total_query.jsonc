@@ -1,0 +1,14 @@
+// hour of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

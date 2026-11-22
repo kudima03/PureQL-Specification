@@ -1,0 +1,5 @@
+// month without its operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "month", "type": { "name": "integer" } } } ]
+}

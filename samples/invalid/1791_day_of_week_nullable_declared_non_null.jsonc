@@ -1,0 +1,14 @@
+// dayOfWeek of a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}
