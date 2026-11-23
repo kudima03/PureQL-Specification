@@ -1,0 +1,19 @@
+// concatWith with a selector: it joins the values of one row; the values of the rows of a group are joined
+// with concatAll
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "selector": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

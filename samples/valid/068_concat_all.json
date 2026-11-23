@@ -1,0 +1,254 @@
+{
+  "from": {
+    "entity": "order_items"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "order_items",
+          "field": "product_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "products",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": {
+        "source": "order_items",
+        "field": "order_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "order_id",
+      "expression": {
+        "key": "order_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "lines",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "skus",
+      "expression": {
+        "operator": "concatAll",
+        "type": {
+          "name": "string"
+        },
+        "selector": {
+          "source": "products",
+          "field": "sku",
+          "type": {
+            "name": "string"
+          }
+        },
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": ", "
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "products",
+              "field": "sku",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "order_items",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "distinct_skus",
+      "expression": {
+        "operator": "concatAll",
+        "type": {
+          "name": "string"
+        },
+        "selector": {
+          "source": "products",
+          "field": "sku",
+          "type": {
+            "name": "string"
+          }
+        },
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": ", "
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "products",
+              "field": "sku",
+              "type": {
+                "name": "string"
+              }
+            }
+          }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "descriptions",
+      "expression": {
+        "operator": "concatAll",
+        "type": {
+          "name": "string"
+        },
+        "selector": {
+          "source": "products",
+          "field": "description",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": " | "
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "products",
+              "field": "sku",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "order_items",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "large_lines",
+      "expression": {
+        "operator": "concatAll",
+        "type": {
+          "name": "string"
+        },
+        "selector": {
+          "source": "products",
+          "field": "sku",
+          "type": {
+            "name": "string"
+          }
+        },
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": ", "
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "order_items",
+              "field": "quantity",
+              "type": {
+                "name": "integer"
+              }
+            },
+            "direction": "desc"
+          },
+          {
+            "expression": {
+              "source": "order_items",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "predicate": {
+          "operator": "greaterThan",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 10
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "key": "order_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

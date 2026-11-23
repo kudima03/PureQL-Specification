@@ -1,0 +1,72 @@
+// concatAll in a plain query runs over all rows and repeats on every row: the distinct statuses as one string
+// next to each order, and a timeline whose values are built with concatWith and joined with a line break.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    },
+    {
+      "alias": "all_statuses",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "status_is_listed_first",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "concatAll",
+          "type": { "name": "string" },
+          "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "separator": { "type": { "name": "string" }, "value": ", " },
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+          ],
+          "distinct": true
+        },
+        "pattern": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "timeline",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "concatWith",
+          "type": { "name": "string" },
+          "values": [
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            },
+            { "source": "orders", "field": "status", "type": { "name": "string" } }
+          ],
+          "separator": { "type": { "name": "string" }, "value": " " }
+        },
+        "separator": { "type": { "name": "string" }, "value": "\n" },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

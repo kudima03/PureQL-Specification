@@ -1,0 +1,18 @@
+// concatAll in a total query declared string?: unlike min and max it has a value over no rows, as sum has
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+        ]
+      }
+    }
+  ]
+}

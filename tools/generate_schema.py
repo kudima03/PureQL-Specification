@@ -359,6 +359,15 @@ defs["regexGroup"] = {
     "else": ref("param"),
 }
 
+# The separator of concatAll is a string literal or a string parameter: an
+# aggregate has one separator, not one for each row.
+defs["separator"] = {
+    "type": "object",
+    "allOf": [declares("string", False)],
+    "if": {"required": ["value"]},
+    "then": ref("literal"),
+    "else": ref("param"),
+}
 # The fraction of a percentile is a decimal literal from 0 to 1 or a decimal
 # parameter, never computed per row: an aggregate has one fraction.
 defs["fraction"] = {
@@ -725,6 +734,18 @@ for ctx, rules in CONTEXTS.items():
         for name in ["varianceSample", "standardDeviationSample"]:
             shape(name, ["selector"], {**aggregate_props, "selector": expr("decimal", "row", True)})
             signature(name, "decimal", True)
+        # concatAll joins the strings of its rows with a separator, in the order of its
+        # own orderBy, as first and last have one. Null values are skipped and no row
+        # gives the empty string, so it is never null, as sum is never null.
+        # `distinct` drops a value equal to an earlier one; false is never written.
+        shape("concatAll", ["selector", "separator", "orderBy"], {
+            **aggregate_props,
+            "selector": expr("string", "row", True),
+            "separator": ref("separator"),
+            "orderBy": array_of(ref("orderItem@row"), 1),
+            "distinct": {"const": True},
+        })
+        signature("concatAll", "string", False)
         for name in ["any", "all"]:
             shape(name, ["predicate"], aggregate_props)
             signature(name, "boolean", False)
@@ -832,7 +853,7 @@ for ctx in ["projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(
         ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
     )
-# `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last).
+# `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last / concatAll).
 for ctx in ["row", "projection", "group"]:
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}

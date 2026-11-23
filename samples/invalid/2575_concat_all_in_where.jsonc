@@ -1,0 +1,19 @@
+// concatAll in where, a row context without aggregates
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "contains",
+    "type": { "name": "boolean" },
+    "operand": {
+      "operator": "concatAll",
+      "type": { "name": "string" },
+      "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+      "separator": { "type": { "name": "string" }, "value": "," },
+      "orderBy": [ { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } } ]
+    },
+    "pattern": { "type": { "name": "string" }, "value": "paid" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

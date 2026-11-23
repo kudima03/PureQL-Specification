@@ -9130,6 +9130,155 @@
         }
       ]
     },
+    "concatAll@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "separator",
+        "orderBy"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatAll"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "separator": {
+          "$ref": "#/$defs/separator"
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/orderItem@row"
+          },
+          "minItems": 1
+        },
+        "distinct": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatAll@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "separator",
+        "orderBy"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatAll"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "separator": {
+          "$ref": "#/$defs/separator"
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/orderItem@row"
+          },
+          "minItems": 1
+        },
+        "distinct": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatAll@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "separator",
+        "orderBy"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatAll"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "separator": {
+          "$ref": "#/$defs/separator"
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/orderItem@row"
+          },
+          "minItems": 1
+        },
+        "distinct": {
+          "const": true
+        }
+      },
+      "additionalProperties": false
+    },
     "concatWith@group": {
       "type": "object",
       "required": [
@@ -41986,6 +42135,7 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "concatAll",
             "any",
             "all"
           ]
@@ -43376,6 +43526,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "concatAll"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatAll@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "any"
               }
             }
@@ -43517,6 +43679,7 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "concatAll",
             "any",
             "all"
           ]
@@ -44901,6 +45064,18 @@
           },
           "then": {
             "$ref": "#/$defs/standardDeviationSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatAll"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatAll@projection"
           }
         },
         {
@@ -46358,6 +46533,7 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "concatAll",
             "any",
             "all"
           ]
@@ -47742,6 +47918,18 @@
           },
           "then": {
             "$ref": "#/$defs/standardDeviationSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatAll"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatAll@total"
           }
         },
         {
@@ -54230,6 +54418,25 @@
         }
       },
       "additionalProperties": false
+    },
+    "separator": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.string"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/literal"
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
     },
     "sign.integer.nullable@group": {
       "properties": {
