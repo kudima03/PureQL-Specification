@@ -1,0 +1,18 @@
+// asNullable of a nullable field: it is the one type the operator would not change
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        }
+      }
+    }
+  ]
+}

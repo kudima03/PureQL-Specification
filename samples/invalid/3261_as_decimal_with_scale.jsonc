@@ -1,0 +1,15 @@
+// asDecimal with a scale
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "scale": 2
+      }
+    }
+  ]
+}

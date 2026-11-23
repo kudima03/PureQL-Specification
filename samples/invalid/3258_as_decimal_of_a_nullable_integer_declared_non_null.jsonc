@@ -1,0 +1,14 @@
+// asDecimal of a nullable integer declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "param": "units", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

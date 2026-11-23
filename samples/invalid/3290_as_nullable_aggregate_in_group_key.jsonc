@@ -1,0 +1,19 @@
+// asNullable of an aggregate as a groupBy key, a row expression
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "uuid" },
+          "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+        }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

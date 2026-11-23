@@ -1,0 +1,14 @@
+// widen is not an operator: an integer is widened with asDecimal and a value with asNullable
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "widen",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+// asNullable without a declared type
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asNullable",
+        "operand": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

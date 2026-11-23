@@ -1,0 +1,14 @@
+// asDecimal of a non-null integer declared decimal?: it is lifted, and widening adds no null
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

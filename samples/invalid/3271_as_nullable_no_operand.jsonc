@@ -1,0 +1,7 @@
+// asNullable without an operand
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "asNullable", "type": { "name": "uuid", "nullable": true } } }
+  ]
+}

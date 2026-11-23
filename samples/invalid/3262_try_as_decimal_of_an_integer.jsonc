@@ -1,12 +1,12 @@
-// asDecimal of an integer: it reads a string; an integer stands wherever a decimal is expected
+// tryAsDecimal of an integer: it reads strings only, since widening an integer cannot fail
 {
   "from": { "entity": "order_items" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "asDecimal",
-        "type": { "name": "decimal" },
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
       }
     }

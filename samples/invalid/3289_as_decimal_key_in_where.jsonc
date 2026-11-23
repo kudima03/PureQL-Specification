@@ -1,0 +1,17 @@
+// asDecimal of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "asDecimal",
+      "type": { "name": "decimal" },
+      "operand": { "key": "quantity", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "decimal" }, "value": "1.5" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

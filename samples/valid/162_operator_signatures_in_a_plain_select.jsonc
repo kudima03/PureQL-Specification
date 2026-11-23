@@ -2136,6 +2136,86 @@
       }
     },
     {
+      "alias": "asDecimal_decimal_of_integer",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "asDecimal_decimal_nullable_of_integer",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "asNullable_integer_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "asNullable_decimal_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "asNullable_string_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "asNullable_boolean_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "asNullable_date_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "asNullable_time_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "asNullable_datetime_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "asNullable_uuid_nullable",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
       "alias": "tryAsDecimal_decimal_nullable",
       "expression": {
         "operator": "tryAsDecimal",
