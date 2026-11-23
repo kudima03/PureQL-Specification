@@ -1,0 +1,14 @@
+// asString of a field without a declared type: the type picks the spelling
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "total" }
+      }
+    }
+  ]
+}

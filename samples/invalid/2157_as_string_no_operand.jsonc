@@ -1,0 +1,5 @@
+// asString without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "asString", "type": { "name": "string" } } } ]
+}

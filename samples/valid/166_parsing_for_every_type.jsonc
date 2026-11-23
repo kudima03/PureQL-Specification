@@ -1,6 +1,6 @@
 // parse and tryParse for every type that is not a string, over text parameters: parse is non-null over a non-
 // null string and lifted over a nullable one, tryParse is always nullable. The text a type gives through
-// toString parses back to the value, and text built with concat or cut with substring is parsed like any
+// asString parses back to the value, and text built with concat or cut with substring is parsed like any
 // other.
 {
   "from": { "entity": "orders" },
@@ -248,7 +248,7 @@
           "operator": "parseDate",
           "type": { "name": "date" },
           "operand": {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
           }
@@ -262,7 +262,7 @@
         "operator": "equal",
         "type": { "name": "boolean" },
         "left": {
-          "operator": "toString",
+          "operator": "asString",
           "type": { "name": "string", "nullable": true },
           "operand": {
             "operator": "tryParseDecimal",
@@ -283,7 +283,7 @@
           "type": { "name": "string" },
           "values": [
             {
-              "operator": "toString",
+              "operator": "asString",
               "type": { "name": "string" },
               "operand": {
                 "operator": "year",

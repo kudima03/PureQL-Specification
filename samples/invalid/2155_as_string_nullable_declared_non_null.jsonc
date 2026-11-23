@@ -1,0 +1,18 @@
+// asString of a nullable operand declared string: it is lifted, so null stays null and is not the text "null"
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        }
+      }
+    }
+  ]
+}

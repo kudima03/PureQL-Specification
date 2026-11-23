@@ -1,4 +1,4 @@
-// parseDate of a datetime: the day of a datetime is toDate
+// parseDate of a datetime: the day of a datetime is asDate
 {
   "from": { "entity": "users" },
   "select": [

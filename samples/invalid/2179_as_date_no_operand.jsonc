@@ -1,0 +1,5 @@
+// asDate without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "asDate", "type": { "name": "date" } } } ]
+}

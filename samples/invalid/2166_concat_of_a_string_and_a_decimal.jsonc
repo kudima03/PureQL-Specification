@@ -1,4 +1,4 @@
-// concat of a string and a decimal: nothing converts to string implicitly, the decimal goes through toString
+// concat of a string and a decimal: nothing converts to string implicitly, the decimal goes through asString
 {
   "from": { "entity": "orders" },
   "select": [

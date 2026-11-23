@@ -8,7 +8,7 @@
       "name": "boolean"
     },
     "left": {
-      "operator": "toDate",
+      "operator": "asDate",
       "type": {
         "name": "date"
       },
@@ -53,7 +53,7 @@
             "value": "Order of "
           },
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": {
               "name": "string"
             },
@@ -72,7 +72,7 @@
             "value": ": "
           },
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": {
               "name": "string"
             },
@@ -90,7 +90,7 @@
     {
       "alias": "paid",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": {
           "name": "string"
         },
@@ -106,7 +106,7 @@
     {
       "alias": "shipped_label",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": {
           "name": "string",
           "nullable": true
@@ -124,7 +124,7 @@
     {
       "alias": "ordered_on",
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": {
           "name": "date"
         },
@@ -140,7 +140,7 @@
     {
       "alias": "ordered_time",
       "expression": {
-        "operator": "toTime",
+        "operator": "asTime",
         "type": {
           "name": "time"
         },
@@ -156,7 +156,7 @@
     {
       "alias": "order_day_start",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": {
           "name": "datetime"
         },
@@ -177,7 +177,7 @@
           "name": "boolean"
         },
         "left": {
-          "operator": "toDate",
+          "operator": "asDate",
           "type": {
             "name": "date"
           },

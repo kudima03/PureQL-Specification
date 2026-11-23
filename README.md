@@ -355,14 +355,14 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 
 | Operator | Shape | Result |
 |---|---|---|
-| `toString` | `{ operand: T }`, `T` any type but `string` | `string`: the value as a literal of `T` is written |
-| `toDate` | `{ operand: datetime }` | `date`: its day, in UTC |
-| `toTime` | `{ operand: datetime }` | `time`: its time of day, in UTC |
-| `toDatetime` | `{ operand: date }` | `datetime`: midnight of that day, in UTC |
+| `asString` | `{ operand: T }`, `T` any type but `string` | `string`: the value as a literal of `T` is written |
+| `asDate` | `{ operand: datetime }` | `date`: its day, in UTC |
+| `asTime` | `{ operand: datetime }` | `time`: its time of day, in UTC |
+| `asDatetime` | `{ operand: date }` | `datetime`: midnight of that day, in UTC |
 | `parseInteger`, `parseDecimal`, `parseBoolean`, `parseDate`, `parseTime`, `parseDatetime`, `parseUuid` | `{ operand: string }` | the type in the name. Text that is not a literal of it is an [execution error](#execution-errors) |
 | `tryParseInteger`, `tryParseDecimal`, `tryParseBoolean`, `tryParseDate`, `tryParseTime`, `tryParseDatetime`, `tryParseUuid` | `{ operand: string? }` | the type in the name, always nullable: `null` for text that is not a literal of it |
 
-`toString` and the conversions between temporal types never fail, and each takes only the types it changes: there is no `toString` of a `string` and no `toDate` of a `date`. The other conversions need no operator of their own. An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. Parsing is the one conversion that depends on the data: `parse…` fails the query on text it cannot read, for values that must be right, and `tryParse…` gives `null` instead, so that dirty source data does not break a whole report; `coalesce` over it supplies a default. The text each type gives, and reads, is defined under [Conversion results](#conversion-results).
+`asString` and the conversions between temporal types never fail, and each takes only the types it changes: there is no `asString` of a `string` and no `asDate` of a `date`. The other conversions need no operator of their own. An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. Parsing is the one conversion that depends on the data: `parse…` fails the query on text it cannot read, for values that must be right, and `tryParse…` gives `null` instead, so that dirty source data does not break a whole report; `coalesce` over it supplies a default. The text each type gives, and reads, is defined under [Conversion results](#conversion-results).
 
 ### Conditional and null handling
 
@@ -552,7 +552,7 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 
 ### Conversion results
 
-`toString` writes a value the way a literal of its type is written, in the one spelling of [Types](#types). The text is therefore the same in every interpreter, whatever its locale, and reading it back as a literal gives the value again.
+`asString` writes a value the way a literal of its type is written, in the one spelling of [Types](#types). The text is therefore the same in every interpreter, whatever its locale, and reading it back as a literal gives the value again.
 
 | Type | Text | Example |
 |---|---|---|
@@ -564,19 +564,19 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 | `datetime` | the date, `T`, the time, `Z` | `2024-01-31T18:30:00Z` |
 | `uuid` | 8-4-4-4-12 hexadecimal digits in lower case | `3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f` |
 
-- A `decimal` is written by its value, not by how it was computed: `toString(divide(1, 8))` is `0.125`, `toString` of `19.90` is `19.9`, and a `decimal` that is a whole number reads like an `integer`. `round` before the conversion limits the decimal places; nothing adds trailing zeros.
+- A `decimal` is written by its value, not by how it was computed: `asString(divide(1, 8))` is `0.125`, `asString` of `19.90` is `19.9`, and a `decimal` that is a whole number reads like an `integer`. `round` before the conversion limits the decimal places; nothing adds trailing zeros.
 - `null` stays `null`, never the text `null`: the result is nullable exactly when the operand is, and `coalesce` gives a text for it.
 - Display formats (thousands separators, month names, a local time zone) are left to the client.
 
-`toDate` and `toTime` read a `datetime` in UTC, as it is written: for `2024-01-31T23:30:00Z` they give `2024-01-31` and `23:30:00`. `toDatetime` gives midnight UTC of a `date`: `2024-01-31T00:00:00Z`. So `toDatetime(toDate(dt))` equals `startOfDay(dt)`, a `datetime` is grouped or joined by its day with `toDate`, and a `date` and a `time` are combined into an instant with `datetimeAddSeconds(toDatetime(d), timeDiffSeconds(t, 00:00:00))`.
+`asDate` and `asTime` read a `datetime` in UTC, as it is written: for `2024-01-31T23:30:00Z` they give `2024-01-31` and `23:30:00`. `asDatetime` gives midnight UTC of a `date`: `2024-01-31T00:00:00Z`. So `asDatetime(asDate(dt))` equals `startOfDay(dt)`, a `datetime` is grouped or joined by its day with `asDate`, and a `date` and a `time` are combined into an instant with `datetimeAddSeconds(asDatetime(d), timeDiffSeconds(t, 00:00:00))`.
 
-`parse…` and `tryParse…` read exactly the text that `toString` writes for the type, the one spelling in the table above, and nothing else:
+`parse…` and `tryParse…` read exactly the text that `asString` writes for the type, the one spelling in the table above, and nothing else:
 
 - an `integer` within 64 bits and a `decimal` within its 28 digits; a real calendar `date` from year 0001; a `datetime` in UTC with `Z`; a `uuid` in lower case;
 - no surrounding spaces, no `+`, no leading zeros, no trailing zeros in a fraction, no exponent, no other letter case: ` 12`, `+5`, `007`, `1.50`, `1e3`, `TRUE`, `2024-1-5`, `2024-02-30`, `18:30`, `18:30:00.500` and `2024-01-31T18:30:00+00:00` do not parse. This is the rule a [parameter](#parameters) value follows;
 - the empty string does not parse as any type.
 
-So `parseDecimal(toString(x))` is `x` and `toString(parseDecimal(s))` is `s` for every text that parses. Text in a wider format is cleaned first, e.g. with `trim`; a postal code such as `01234` is not an `integer` literal and stays a string. `parse…` of text that does not parse is an [execution error](#execution-errors), and of `null` is `null`. `tryParse…` gives `null` in both cases and never fails, so `equal(tryParseInteger(s), null)` finds the rows that hold something else.
+So `parseDecimal(asString(x))` is `x` and `asString(parseDecimal(s))` is `s` for every text that parses. Text in a wider format is cleaned first, e.g. with `trim`; a postal code such as `01234` is not an `integer` literal and stays a string. `parse…` of text that does not parse is an [execution error](#execution-errors), and of `null` is `null`. `tryParse…` gives `null` in both cases and never fails, so `equal(tryParseInteger(s), null)` finds the rows that hold something else.
 
 ### Aggregate evaluation
 
@@ -713,7 +713,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`033_time_datetime.json`](samples/valid/033_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
 | [`034_datetime_utc.json`](samples/valid/034_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
 | [`035_date_parts.json`](samples/valid/035_date_parts.json) | Parts of a `date`, a `datetime` and a `time` as `integer` columns, lifted over a nullable field, and weekend orders in `where` |
-| [`036_conversions.json`](samples/valid/036_conversions.json) | `toString` / `toDate` / `toTime` / `toDatetime`: a label built from a date and a decimal, a nullable date as text, the day and the time of a `datetime`, midnight of a `date`, and a `datetime` filtered by its day in `where` |
+| [`036_conversions.json`](samples/valid/036_conversions.json) | `asString` / `asDate` / `asTime` / `asDatetime`: a label built from a date and a decimal, a nullable date as text, the day and the time of a `datetime`, midnight of a `date`, and a `datetime` filtered by its day in `where` |
 | [`037_parsing.json`](samples/valid/037_parsing.json) | `parse…` / `tryParse…`: a text column read as an `integer`, failing the query or giving `null` on other text, a default through `coalesce` after `trim`, a nullable string, and a date sent as text in `where` |
 | [`038_nullable_columns.json`](samples/valid/038_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`039_typed_null.json`](samples/valid/039_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |

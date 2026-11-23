@@ -462,19 +462,19 @@ for ctx, rules in CONTEXTS.items():
         for t in types:
             lifted(name, {"operand": t}, t)
 
-    # Conversions. toString writes a value of any other type as its literal is
+    # Conversions. asString writes a value of any other type as its literal is
     # spelled; the type its operand declares picks the position, as for the parts.
     families = [f for f in EQUATABLE if f != "string"]
-    shape("toString", ["operand"], {"operand": check("accepts.nonString", [m for f in families for m in members(f)])})
-    operand = by_family("toString", "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
-    signature("toString", "string", False, {"properties": {"operand": NON_NULL}}, operand)
-    signature("toString", "string", True, some(["operand"], NULLABLE), operand)
+    shape("asString", ["operand"], {"operand": check("accepts.nonString", [m for f in families for m in members(f)])})
+    operand = by_family("asString", "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
+    signature("asString", "string", False, {"properties": {"operand": NON_NULL}}, operand)
+    signature("asString", "string", True, some(["operand"], NULLABLE), operand)
     # Between the temporal types, in UTC: the day or the time of day of a datetime,
     # and midnight of a date.
-    lifted("toDate", {"operand": "datetime"}, "date")
-    lifted("toTime", {"operand": "datetime"}, "time")
-    lifted("toDatetime", {"operand": "date"}, "datetime")
-    # Parsing reads a string written as toString writes a value of the type.
+    lifted("asDate", {"operand": "datetime"}, "date")
+    lifted("asTime", {"operand": "datetime"}, "time")
+    lifted("asDatetime", {"operand": "date"}, "datetime")
+    # Parsing reads a string written as asString writes a value of the type.
     # parse<Type> is lifted and fails the query on any other text; tryParse<Type>
     # takes a nullable string and yields null instead, so it is always nullable.
     for t in families:

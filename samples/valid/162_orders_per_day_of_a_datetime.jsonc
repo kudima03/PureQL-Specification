@@ -1,5 +1,5 @@
-// A datetime grouped by its date: toDate and toString as groupBy keys, toTime and toDatetime over aggregates
-// and keys in having and select, a title built with concat over toString of a date, an integer and a decimal,
+// A datetime grouped by its date: asDate and asString as groupBy keys, asTime and asDatetime over aggregates
+// and keys in having and select, a title built with concat over asString of a date, an integer and a decimal,
 // and conversions inside a predicate and a selector.
 {
   "from": { "entity": "orders" },
@@ -7,7 +7,7 @@
     {
       "alias": "day",
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
@@ -15,7 +15,7 @@
     {
       "alias": "paid",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
       }
@@ -25,7 +25,7 @@
     "operator": "greaterThan",
     "type": { "name": "boolean" },
     "left": {
-      "operator": "toTime",
+      "operator": "asTime",
       "type": { "name": "time" },
       "operand": {
         "operator": "max",
@@ -46,19 +46,19 @@
         "type": { "name": "string" },
         "values": [
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": { "key": "day", "type": { "name": "date" } }
           },
           { "type": { "name": "string" }, "value": ": " },
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": { "operator": "count", "type": { "name": "integer" } }
           },
           { "type": { "name": "string" }, "value": " orders, " },
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": {
               "operator": "sum",
@@ -72,7 +72,7 @@
     {
       "alias": "first_order_time",
       "expression": {
-        "operator": "toTime",
+        "operator": "asTime",
         "type": { "name": "time" },
         "operand": {
           "operator": "min",
@@ -84,7 +84,7 @@
     {
       "alias": "day_start",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": { "name": "datetime" },
         "operand": { "key": "day", "type": { "name": "date" } }
       }
@@ -98,7 +98,7 @@
           "operator": "equal",
           "type": { "name": "boolean" },
           "left": {
-            "operator": "toDate",
+            "operator": "asDate",
             "type": { "name": "date" },
             "operand": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
           },
@@ -115,7 +115,7 @@
           "operator": "length",
           "type": { "name": "integer" },
           "operand": {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           }
