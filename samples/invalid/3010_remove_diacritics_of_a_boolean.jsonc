@@ -1,0 +1,14 @@
+// removeDiacritics of a boolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

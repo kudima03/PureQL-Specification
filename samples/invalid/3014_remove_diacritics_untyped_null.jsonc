@@ -1,0 +1,14 @@
+// removeDiacritics of an untyped null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+// removeDiacritics as a group key, over foldCase and over a nullable field, so that spellings with and
+// without accents fall in one group; in a selector, a predicate and over a key.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country_key",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "nickname",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "count",
+      "type": { "name": "integer" },
+      "predicate": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFC"
+        },
+        "right": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "country_key", "expression": { "key": "country_key", "type": { "name": "string" } } },
+    {
+      "alias": "nickname",
+      "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } }
+    },
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "spellings",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": " | " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "country", "type": { "name": "string" } } }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "first_plain_last_name",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "key_in_upper_case",
+      "expression": {
+        "operator": "upper",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "key": "country_key", "type": { "name": "string" } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "operator": "count", "type": { "name": "integer" } }, "direction": "desc" },
+    { "expression": { "key": "country_key", "type": { "name": "string" } } },
+    { "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } } }
+  ]
+}

@@ -1,0 +1,14 @@
+// removeDiacritics whose type says "nullable": false
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string", "nullable": false },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

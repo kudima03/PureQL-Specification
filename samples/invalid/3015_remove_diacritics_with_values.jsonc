@@ -1,0 +1,17 @@
+// removeDiacritics with a values array
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "contains",
+    "type": {
+      "name": "boolean"
+    },
+    "operand": {
+      "operator": "removeDiacritics",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    "pattern": {
+      "operator": "removeDiacritics",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "param": "search",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "last_name",
+      "expression": {
+        "source": "users",
+        "field": "last_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "last_name_without_accents",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "search_key",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "has_accents",
+      "expression": {
+        "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "normalize",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          },
+          "form": "NFC"
+        },
+        "right": {
+          "operator": "removeDiacritics",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname_without_accents",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "same_name_as_parameter",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "removeDiacritics",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "operator": "foldCase",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "users",
+              "field": "first_name",
+              "type": {
+                "name": "string"
+              }
+            }
+          }
+        },
+        "right": {
+          "operator": "removeDiacritics",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "operator": "foldCase",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "param": "first_name",
+              "type": {
+                "name": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "wide_search_key",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "operator": "normalize",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "operator": "foldCase",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "users",
+              "field": "first_name",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "form": "NFKC"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "last_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

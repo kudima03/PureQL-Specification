@@ -1,0 +1,271 @@
+// Corners of removeDiacritics: applied twice, over a literal, a nullable parameter, a concat and a decomposed
+// string, with foldCase in both orders, and inside length, startsWith, matchesRegex, substring and window
+// keys.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "removed_twice",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_literal",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "Crème Brûlée" }
+      }
+    },
+    {
+      "alias": "of_a_nullable_parameter",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "param": "label", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "of_a_concat",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            { "type": { "name": "string" }, "value": " " },
+            { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "fold_then_remove",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "remove_then_fold",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_decomposed_string",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFD"
+        }
+      }
+    },
+    {
+      "alias": "is_already_composed",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          },
+          "form": "NFC"
+        }
+      }
+    },
+    {
+      "alias": "marks_removed",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+              "form": "NFD"
+            }
+          },
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "removeDiacritics",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+              },
+              "form": "NFD"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "starts_with_needle",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        },
+        "pattern": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "param": "needle", "type": { "name": "string" } }
+          }
+        }
+      }
+    },
+    {
+      "alias": "ascii_only",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "pattern": { "type": { "name": "string" }, "value": "^[ -~]*$" }
+      }
+    },
+    {
+      "alias": "initial",
+      "expression": {
+        "operator": "upper",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "substring",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          },
+          "start": { "type": { "name": "integer" }, "value": 1 },
+          "length": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "name_or_nickname",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "removeDiacritics",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "nickname",
+              "type": { "name": "string", "nullable": true }
+            }
+          },
+          {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "position_among_namesakes",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "removeDiacritics",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "removeDiacritics",
+                "type": { "name": "string" },
+                "operand": {
+                  "operator": "foldCase",
+                  "type": { "name": "string" },
+                  "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+                }
+              }
+            },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

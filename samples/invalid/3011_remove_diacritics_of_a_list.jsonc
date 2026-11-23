@@ -1,0 +1,14 @@
+// removeDiacritics of a list: a list is accepted only by in
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "stringList" }, "value": [ "é", "e" ] }
+      }
+    }
+  ]
+}

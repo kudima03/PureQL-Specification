@@ -1,0 +1,14 @@
+// asciiFold is not an operator: nothing transliterates a string to ASCII
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asciiFold",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// removeDiacritics with a locale: it is the same in every locale
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "locale": "fr"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// removeDiacritics with a foldCase flag: case is folded by its own operator
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "foldCase": true
+      }
+    }
+  ]
+}

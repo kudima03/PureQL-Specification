@@ -1,0 +1,143 @@
+// removeDiacritics in a total query: in where, in predicates and selectors, and lifted over min, which is
+// nullable there.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "removeDiacritics",
+      "type": { "name": "string" },
+      "operand": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    },
+    "right": {
+      "operator": "removeDiacritics",
+      "type": { "name": "string" },
+      "operand": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "param": "excluded_country", "type": { "name": "string" } }
+      }
+    }
+  },
+  "aggregate": [
+    {
+      "alias": "with_accents",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "normalize",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+            "form": "NFC"
+          },
+          "right": {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        }
+      }
+    },
+    {
+      "alias": "first_last_name",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "first_plain_last_name",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "countries",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+        },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "removeDiacritics",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+            }
+          }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "any_like_needle",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "contains",
+          "type": { "name": "boolean" },
+          "operand": {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            }
+          },
+          "pattern": {
+            "operator": "removeDiacritics",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "param": "needle", "type": { "name": "string" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "most_common_key",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+// removeDiacritics on both sides of equal in join.on, as the operand of in, and lifted over the nullable
+// fields of a left join.
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "alias": "other",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "removeDiacritics",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+              }
+            },
+            "right": {
+              "operator": "removeDiacritics",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "other", "field": "last_name", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+            "right": { "source": "other", "field": "id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": {
+      "operator": "removeDiacritics",
+      "type": { "name": "string" },
+      "operand": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    },
+    "list": { "param": "country_keys", "type": { "name": "stringList" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "other_id", "expression": { "source": "other", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "same_first_name",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          }
+        },
+        "right": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "other", "field": "first_name", "type": { "name": "string" } }
+          }
+        }
+      }
+    },
+    {
+      "alias": "status",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "status_is_paid",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string", "nullable": true },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "orders",
+              "field": "status",
+              "type": { "name": "string", "nullable": true }
+            }
+          }
+        },
+        "right": { "type": { "name": "string" }, "value": "paid" }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    { "expression": { "source": "other", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
