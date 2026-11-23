@@ -1,0 +1,15 @@
+// percentileContinuous of a time declared decimal: it is a time, not a number of seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    }
+  ]
+}

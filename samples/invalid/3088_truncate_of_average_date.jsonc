@@ -1,0 +1,18 @@
+// truncate of an average date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "date" },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    }
+  ]
+}

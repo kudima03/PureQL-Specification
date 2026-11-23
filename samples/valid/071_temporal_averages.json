@@ -1,0 +1,192 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": {
+        "key": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "average_order_date",
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "date"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "alias": "median_order_date",
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "date"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "alias": "median_ordered_at",
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "datetime"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "average_window_start",
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "time"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "delivery_window_start",
+          "type": {
+            "name": "time"
+          }
+        }
+      }
+    },
+    {
+      "alias": "ninth_decile_ordered_at",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": {
+          "name": "datetime"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "fraction": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0.9"
+        }
+      }
+    },
+    {
+      "alias": "average_shipped_date",
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "days_from_average_to_latest",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "max",
+          "type": {
+            "name": "date"
+          },
+          "selector": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        },
+        "right": {
+          "operator": "average",
+          "type": {
+            "name": "date"
+          },
+          "selector": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "date"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "expression": {
+        "key": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

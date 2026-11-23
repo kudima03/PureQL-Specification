@@ -1,0 +1,15 @@
+// average of a date with a precision: a time and a datetime are rounded to microseconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "precision": "second"
+      }
+    }
+  ]
+}

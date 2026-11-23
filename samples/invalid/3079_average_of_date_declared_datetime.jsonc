@@ -1,0 +1,14 @@
+// average of a date declared datetime: it is rounded to a whole day
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}
