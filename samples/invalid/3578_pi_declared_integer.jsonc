@@ -1,0 +1,5 @@
+// pi declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "pi", "type": { "name": "integer" } } } ]
+}

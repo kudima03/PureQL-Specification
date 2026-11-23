@@ -1,0 +1,14 @@
+// pi with digits: it is pi rounded to the decimal precision; fewer digits are round
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "pi",
+        "type": { "name": "decimal" },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

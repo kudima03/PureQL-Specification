@@ -1,0 +1,14 @@
+// tan of an untyped null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// sin of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    { "alias": "k", "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

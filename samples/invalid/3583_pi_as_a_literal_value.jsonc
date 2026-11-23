@@ -1,0 +1,5 @@
+// pi as the value of a decimal literal
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "type": { "name": "decimal" }, "value": "pi" } } ]
+}

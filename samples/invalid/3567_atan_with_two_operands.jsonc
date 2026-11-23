@@ -1,0 +1,15 @@
+// atan with a second operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

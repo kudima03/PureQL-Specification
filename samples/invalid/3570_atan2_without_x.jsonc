@@ -1,0 +1,14 @@
+// atan2 without x: the angle of a slope is atan
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// sin with a degrees flag: angles are in radians; degrees are multiplied by pi over 180
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "degrees": true
+      }
+    }
+  ]
+}

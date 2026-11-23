@@ -1,0 +1,14 @@
+// acos of a boolean
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "acos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

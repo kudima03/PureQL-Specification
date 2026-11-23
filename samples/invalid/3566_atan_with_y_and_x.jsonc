@@ -1,0 +1,15 @@
+// atan with y and x: the angle of a point is atan2
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

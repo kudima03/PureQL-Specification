@@ -1,0 +1,15 @@
+// atan2 of strings
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "type": { "name": "string" }, "value": "1" },
+        "x": { "type": { "name": "string" }, "value": "1" }
+      }
+    }
+  ]
+}

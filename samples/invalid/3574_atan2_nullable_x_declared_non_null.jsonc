@@ -1,0 +1,15 @@
+// atan2 with a nullable x declared decimal: it is lifted over both operands
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "param": "x", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

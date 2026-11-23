@@ -1,0 +1,14 @@
+// pi with an operand: it is a constant
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "pi",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+// cos of a bare number
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "cos", "type": { "name": "decimal" }, "operand": 1 } }
+  ]
+}

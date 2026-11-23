@@ -1,0 +1,15 @@
+// sin with digits: it is rounded to the decimal precision; fewer digits are round
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 4 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// sin of a nullable operand declared decimal: it is lifted
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "param": "angle", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+// pi with a value: a constant written out is a decimal literal
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "pi", "type": { "name": "decimal" }, "value": "3.14" } }
+  ]
+}

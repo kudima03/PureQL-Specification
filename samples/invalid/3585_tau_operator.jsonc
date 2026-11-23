@@ -1,0 +1,5 @@
+// tau is not an operator: it is two times pi
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "tau", "type": { "name": "decimal" } } } ]
+}

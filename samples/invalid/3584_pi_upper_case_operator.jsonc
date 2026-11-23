@@ -1,0 +1,5 @@
+// PI is not an operator: it is pi
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "PI", "type": { "name": "decimal" } } } ]
+}

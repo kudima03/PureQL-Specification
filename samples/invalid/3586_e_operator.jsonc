@@ -1,0 +1,5 @@
+// e is not an operator: it is exp of 1
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "e", "type": { "name": "decimal" } } } ]
+}

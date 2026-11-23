@@ -1,0 +1,15 @@
+// atan2 of non-null operands declared decimal?: the angle of (0, 0) is an error, not null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
