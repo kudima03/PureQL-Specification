@@ -1,0 +1,14 @@
+// ceiling of count: an integer is a whole number already
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

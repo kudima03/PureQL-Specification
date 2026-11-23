@@ -1,0 +1,17 @@
+// floor of an integer in where
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "floor",
+      "type": { "name": "integer" },
+      "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

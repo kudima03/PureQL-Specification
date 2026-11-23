@@ -1,0 +1,155 @@
+// floor, ceiling, round and truncate over decimal results: a quotient, a product, a power, a coalesce and an
+// if declared decimal, a nullable parameter, an average, a decimal abs and a string read as a decimal.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "of_a_quotient",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "of_a_product",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "of_a_power",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "power",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "exponent": { "type": { "name": "decimal" }, "value": "0.5" }
+        }
+      }
+    },
+    {
+      "alias": "of_a_square_root",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "sqrt",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_decimal_coalesce",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "coalesce",
+          "type": { "name": "decimal" },
+          "values": [
+            { "param": "discount", "type": { "name": "decimal", "nullable": true } },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "of_a_decimal_if",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "if",
+          "type": { "name": "decimal" },
+          "condition": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 10 }
+          },
+          "then": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "else": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "of_a_nullable_decimal",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "discount", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "of_a_decimal_literal",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "of_an_average_over_all",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_decimal_abs",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "abs",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "subtract",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              { "type": { "name": "decimal" }, "value": "9.99" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "of_a_string_read_as_decimal",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": { "param": "text", "type": { "name": "string" } }
+        }
+      }
+    }
+  ]
+}

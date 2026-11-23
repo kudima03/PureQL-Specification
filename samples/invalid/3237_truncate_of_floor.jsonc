@@ -1,0 +1,18 @@
+// truncate of floor
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "floor",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+// ceiling of dateDiffDays
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "param": "since", "type": { "name": "date" } }
+        }
+      }
+    }
+  ]
+}

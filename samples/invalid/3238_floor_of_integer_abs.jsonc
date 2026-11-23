@@ -1,0 +1,18 @@
+// floor of the abs of an integer, which is an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "abs",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    }
+  ]
+}

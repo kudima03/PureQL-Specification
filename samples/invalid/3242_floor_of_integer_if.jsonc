@@ -1,0 +1,25 @@
+// floor of an if with integer branches
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "if",
+          "type": { "name": "integer" },
+          "condition": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 10 }
+          },
+          "then": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "else": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    }
+  ]
+}

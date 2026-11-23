@@ -1,0 +1,15 @@
+// round of an integer as a group key
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

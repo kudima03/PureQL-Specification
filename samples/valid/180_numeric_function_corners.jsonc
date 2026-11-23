@@ -1,5 +1,5 @@
 // Corners of abs, sign and truncate: integer and decimal literals and parameters, a nullable operand, an
-// integer operand where a decimal is expected, digits that are negative, a parameter or computed, and round,
+// integer operand with digits, digits that are negative, a parameter or computed, and round,
 // floor and truncate of the same value side by side.
 {
   "from": { "entity": "order_items" },
@@ -67,11 +67,12 @@
       }
     },
     {
-      "alias": "truncate_of_integer",
+      "alias": "truncate_of_integer_with_digits",
       "expression": {
         "operator": "truncate",
-        "type": { "name": "integer" },
-        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
       }
     },
     {

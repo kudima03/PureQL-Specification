@@ -1,0 +1,175 @@
+{
+  "from": {
+    "entity": "order_items"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "quantity",
+      "expression": {
+        "source": "order_items",
+        "field": "quantity",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "whole_price",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "price_floor",
+      "expression": {
+        "operator": "floor",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "line_total_rounded_up",
+      "expression": {
+        "operator": "ceiling",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "order_items",
+              "field": "unit_price",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            {
+              "source": "order_items",
+              "field": "quantity",
+              "type": {
+                "name": "integer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "half_the_quantity",
+      "expression": {
+        "operator": "truncate",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "operator": "divide",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "order_items",
+              "field": "quantity",
+              "type": {
+                "name": "integer"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "quantity_in_tens",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -1
+        }
+      }
+    },
+    {
+      "alias": "pairs",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

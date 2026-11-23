@@ -1,0 +1,14 @@
+// truncate of a nullable integer: without digits truncate cannot change an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "units", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

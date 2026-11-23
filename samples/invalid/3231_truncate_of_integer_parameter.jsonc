@@ -1,0 +1,14 @@
+// truncate of an integer parameter: without digits truncate cannot change an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "param": "units", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

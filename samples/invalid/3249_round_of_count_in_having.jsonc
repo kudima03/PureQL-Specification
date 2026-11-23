@@ -1,0 +1,21 @@
+// round of count in having
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "round",
+      "type": { "name": "integer" },
+      "operand": { "operator": "count", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}
