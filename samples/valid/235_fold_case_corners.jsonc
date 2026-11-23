@@ -1,0 +1,279 @@
+// Corners of foldCase: applied twice, over upper, a literal, a nullable parameter and a concat, inside
+// length, position, replace, splitPart and if, and as a partition and sort key of windows.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "folded_twice",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "fold_of_upper",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "upper",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "lower_is_already_folded",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "lower",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_literal",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "Straße" }
+      }
+    },
+    {
+      "alias": "of_a_nullable_parameter",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "param": "label", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "of_a_concat",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            { "type": { "name": "string" }, "value": " " },
+            { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "first_folded_name",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "foldCase",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "nickname",
+              "type": { "name": "string", "nullable": true }
+            }
+          },
+          {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "length_may_change",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            }
+          },
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "position_of_needle",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "pattern": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "param": "needle", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "without_needle",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "pattern": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "param": "needle", "type": { "name": "string" } }
+        },
+        "replacement": { "type": { "name": "string" }, "value": "" }
+      }
+    },
+    {
+      "alias": "email_domain",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } }
+        },
+        "delimiter": { "type": { "name": "string" }, "value": "@" },
+        "index": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "kind",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": {
+          "operator": "endsWith",
+          "type": { "name": "boolean" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "email", "type": { "name": "string" } }
+          },
+          "pattern": { "type": { "name": "string" }, "value": ".org" }
+        },
+        "then": { "type": { "name": "string" }, "value": "organisation" },
+        "else": { "type": { "name": "string" }, "value": "other" }
+      }
+    },
+    {
+      "alias": "birth_date_key",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "position_among_namesakes",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+              }
+            },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "namesakes",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_in_order_without_case",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+              }
+            },
+            { "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } } },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

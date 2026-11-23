@@ -1,0 +1,16 @@
+// startsWith with an ignoreCase flag
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startsWith",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "pattern": { "param": "needle", "type": { "name": "string" } },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

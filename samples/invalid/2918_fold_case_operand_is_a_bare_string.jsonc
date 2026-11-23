@@ -1,0 +1,10 @@
+// foldCase of a bare string instead of a literal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "foldCase", "type": { "name": "string" }, "operand": "Straße" }
+    }
+  ]
+}

@@ -18446,6 +18446,282 @@
         }
       ]
     },
+    "foldCase.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "foldCase.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "foldCase.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "foldCase.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "foldCase.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "foldCase.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "foldCase.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "foldCase.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "foldCase@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "foldCase"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "foldCase@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "foldCase"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "foldCase@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "foldCase"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "foldCase@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "foldCase"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase.string.nullable@total"
+          }
+        }
+      ]
+    },
     "fraction": {
       "type": "object",
       "allOf": [
@@ -43028,6 +43304,7 @@
             "length",
             "upper",
             "lower",
+            "foldCase",
             "trim",
             "trimStart",
             "trimEnd",
@@ -43390,6 +43667,18 @@
           },
           "then": {
             "$ref": "#/$defs/lower@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "foldCase"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase@group"
           }
         },
         {
@@ -44572,6 +44861,7 @@
             "length",
             "upper",
             "lower",
+            "foldCase",
             "trim",
             "trimStart",
             "trimEnd",
@@ -44942,6 +45232,18 @@
           },
           "then": {
             "$ref": "#/$defs/lower@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "foldCase"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase@projection"
           }
         },
         {
@@ -46220,6 +46522,7 @@
             "length",
             "upper",
             "lower",
+            "foldCase",
             "trim",
             "trimStart",
             "trimEnd",
@@ -46564,6 +46867,18 @@
           },
           "then": {
             "$ref": "#/$defs/lower@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "foldCase"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase@row"
           }
         },
         {
@@ -47530,6 +47845,7 @@
             "length",
             "upper",
             "lower",
+            "foldCase",
             "trim",
             "trimStart",
             "trimEnd",
@@ -47892,6 +48208,18 @@
           },
           "then": {
             "$ref": "#/$defs/lower@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "foldCase"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/foldCase@total"
           }
         },
         {

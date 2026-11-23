@@ -1,0 +1,16 @@
+// in with an ignoreCase flag
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [ "gold" ] },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

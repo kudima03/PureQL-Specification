@@ -1,0 +1,16 @@
+// notEqual with an ignoreCase flag
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "right": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

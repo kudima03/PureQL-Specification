@@ -1,0 +1,20 @@
+// A sort key with an ignoreCase flag: sorting without case sorts by foldCase
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+      "ignoreCase": true
+    }
+  ]
+}

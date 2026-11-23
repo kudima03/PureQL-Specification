@@ -1,0 +1,14 @@
+// foldCase of a nullable operand declared string: it is lifted
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

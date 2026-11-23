@@ -1,0 +1,14 @@
+// foldCase of a boolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

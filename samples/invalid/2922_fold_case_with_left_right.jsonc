@@ -1,0 +1,15 @@
+// foldCase with left and right: it folds one string, and equal compares two folded ones
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "left": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "right": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// ilike is not an operator
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ilike",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "pattern": { "param": "needle", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

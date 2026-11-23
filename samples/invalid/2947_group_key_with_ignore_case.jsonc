@@ -1,0 +1,12 @@
+// A group key with an ignoreCase flag: grouping without case groups by foldCase
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } },
+      "ignoreCase": true
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

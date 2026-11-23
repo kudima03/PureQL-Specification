@@ -1,0 +1,17 @@
+// foldCase compared with an integer
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "foldCase",
+      "type": { "name": "string" },
+      "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

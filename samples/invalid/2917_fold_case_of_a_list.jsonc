@@ -1,0 +1,14 @@
+// foldCase of a list: a list is accepted only by in
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "stringList" }, "value": [ "A", "b" ] }
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// contains with an ignoreCase flag: matching is by code point (apply lower to both operands), and no other
+// contains with an ignoreCase flag: matching is by code point (apply foldCase to both operands), and no other
 // property is allowed
 {
   "from": { "entity": "users" },

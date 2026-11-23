@@ -1,0 +1,136 @@
+// foldCase on both sides of equal in join.on, in an in list, and lifted over the nullable fields of a left
+// join, where equal still gives a non-null boolean.
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "alias": "other",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "email", "type": { "name": "string" } }
+            },
+            "right": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "other", "field": "email", "type": { "name": "string" } }
+            }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+            "right": { "source": "other", "field": "id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": {
+      "operator": "foldCase",
+      "type": { "name": "string" },
+      "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+    },
+    "list": { "type": { "name": "stringList" }, "value": [ "gold", "silver" ] }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "other_id", "expression": { "source": "other", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "email", "expression": { "source": "users", "field": "email", "type": { "name": "string" } } },
+    {
+      "alias": "other_email",
+      "expression": { "source": "other", "field": "email", "type": { "name": "string" } }
+    },
+    {
+      "alias": "same_name",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+            },
+            "right": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "other", "field": "first_name", "type": { "name": "string" } }
+            }
+          },
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            },
+            "right": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "other", "field": "last_name", "type": { "name": "string" } }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "status_key",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "is_paid_status",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "foldCase",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string", "nullable": true } }
+        },
+        "right": { "type": { "name": "string" }, "value": "paid" }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } }
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    { "expression": { "source": "other", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

@@ -1,0 +1,14 @@
+// caseFold is not an operator: it is foldCase
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "caseFold",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}
