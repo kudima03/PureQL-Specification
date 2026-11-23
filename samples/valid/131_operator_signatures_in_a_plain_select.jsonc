@@ -1,7 +1,8 @@
-// Every operator in every signature as columns of a plain select, over literals: the lifted operators with and without a
-// nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
-// comparisons / in for every family, and every aggregate over a literal selector, with and without a predicate and with
-// a nullable selector. Each definition of the projection context is used at least once.
+// Every operator in every signature as columns of a plain select, over literals: the lifted operators with
+// and without a nullable operand, integer and decimal operands, if and coalesce for every type, equal /
+// notEqual / the four comparisons / in for every family, and every aggregate over a literal selector, with
+// and without a predicate and with a nullable selector. Each definition of the projection context is used at
+// least once.
 {
   "from": { "entity": "orders" },
   "select": [
@@ -2371,108 +2372,108 @@
       }
     },
     {
-      "alias": "nullIf_integer_nullable",
+      "alias": "nullIfEqual_integer_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "integer", "nullable": true },
         "left": { "type": { "name": "integer" }, "value": 7 },
         "right": { "type": { "name": "integer" }, "value": -3 }
       }
     },
     {
-      "alias": "nullIf_decimal_nullable",
+      "alias": "nullIfEqual_decimal_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "decimal", "nullable": true },
         "left": { "type": { "name": "decimal" }, "value": "2.5" },
         "right": { "type": { "name": "decimal" }, "value": "0.1" }
       }
     },
     {
-      "alias": "nullIf_string_nullable",
+      "alias": "nullIfEqual_string_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "string", "nullable": true },
         "left": { "type": { "name": "string" }, "value": "a" },
         "right": { "type": { "name": "string" }, "value": "b" }
       }
     },
     {
-      "alias": "nullIf_boolean_nullable",
+      "alias": "nullIfEqual_boolean_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "boolean", "nullable": true },
         "left": { "type": { "name": "boolean" }, "value": true },
         "right": { "type": { "name": "boolean" }, "value": false }
       }
     },
     {
-      "alias": "nullIf_date_nullable",
+      "alias": "nullIfEqual_date_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "date", "nullable": true },
         "left": { "type": { "name": "date" }, "value": "2024-01-31" },
         "right": { "type": { "name": "date" }, "value": "2024-03-01" }
       }
     },
     {
-      "alias": "nullIf_time_nullable",
+      "alias": "nullIfEqual_time_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "time", "nullable": true },
         "left": { "type": { "name": "time" }, "value": "08:30:00" },
         "right": { "type": { "name": "time" }, "value": "17:45:30.5" }
       }
     },
     {
-      "alias": "nullIf_datetime_nullable",
+      "alias": "nullIfEqual_datetime_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "datetime", "nullable": true },
         "left": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
         "right": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
       }
     },
     {
-      "alias": "nullIf_uuid_nullable",
+      "alias": "nullIfEqual_uuid_nullable",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "uuid", "nullable": true },
         "left": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
         "right": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
       }
     },
     {
-      "alias": "nullIf_integer_nullable_decimal_right",
+      "alias": "nullIfEqual_integer_nullable_decimal_right",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "integer", "nullable": true },
         "left": { "type": { "name": "integer" }, "value": 7 },
         "right": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
     {
-      "alias": "nullIf_decimal_nullable_integer_right",
+      "alias": "nullIfEqual_decimal_nullable_integer_right",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "decimal", "nullable": true },
         "left": { "type": { "name": "decimal" }, "value": "2.5" },
         "right": { "type": { "name": "integer" }, "value": 7 }
       }
     },
     {
-      "alias": "nullIf_string_nullable_null_left",
+      "alias": "nullIfEqual_string_nullable_null_left",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "string", "nullable": true },
         "left": { "type": { "name": "string", "nullable": true }, "value": null },
         "right": { "type": { "name": "string" }, "value": "a" }
       }
     },
     {
-      "alias": "nullIf_string_nullable_null_right",
+      "alias": "nullIfEqual_string_nullable_null_right",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "string", "nullable": true },
         "left": { "type": { "name": "string" }, "value": "a" },
         "right": { "type": { "name": "string", "nullable": true }, "value": null }
