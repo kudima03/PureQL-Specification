@@ -1,0 +1,177 @@
+// nullIfEqual in every clause of a grouped query: a join key that never matches a placeholder user, a where
+// that drops a sentinel status, nullable group keys, a guarded ratio in having, select and orderBy, and
+// inside an aggregate's selector and predicate, where average skips the zeros turned into null.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "nullIfEqual",
+          "type": { "name": "uuid", "nullable": true },
+          "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+          "right": { "param": "guest_user_id", "type": { "name": "uuid" } }
+        },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "nullIfEqual",
+      "type": { "name": "string", "nullable": true },
+      "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "unknown" }
+    },
+    "right": { "type": { "name": "string", "nullable": true }, "value": null }
+  },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "string", "nullable": true },
+        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "unknown" }
+      }
+    },
+    {
+      "alias": "country",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "string", "nullable": true },
+        "left": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "" }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "divide",
+      "type": { "name": "decimal", "nullable": true },
+      "values": [
+        {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        {
+          "operator": "nullIfEqual",
+          "type": { "name": "decimal", "nullable": true },
+          "left": {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+          },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      ]
+    },
+    "right": { "type": { "name": "decimal" }, "value": "0.5" }
+  },
+  "select": [
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string", "nullable": true } } },
+    {
+      "alias": "country",
+      "expression": { "key": "country", "type": { "name": "string", "nullable": true } }
+    },
+    {
+      "alias": "credit_share",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "average_non_zero_total",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": {
+          "operator": "nullIfEqual",
+          "type": { "name": "decimal", "nullable": true },
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "zero_totals",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          },
+          "right": { "type": { "name": "decimal", "nullable": true }, "value": null }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "divide",
+            "type": { "name": "decimal", "nullable": true },
+            "values": [
+              {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              },
+              {
+                "operator": "nullIfEqual",
+                "type": { "name": "decimal", "nullable": true },
+                "left": {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+                },
+                "right": { "type": { "name": "integer" }, "value": 0 }
+              }
+            ]
+          },
+          { "type": { "name": "decimal" }, "value": "0" }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "status", "type": { "name": "string", "nullable": true } } },
+    { "expression": { "key": "country", "type": { "name": "string", "nullable": true } } }
+  ]
+}
