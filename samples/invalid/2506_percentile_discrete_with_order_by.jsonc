@@ -1,0 +1,24 @@
+// percentileDiscrete with orderBy
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+// percentileContinuous with the fraction 1.5: a fraction is from 0 to 1
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

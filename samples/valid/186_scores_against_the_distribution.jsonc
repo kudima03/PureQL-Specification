@@ -1,0 +1,141 @@
+// Statistics over all rows of a plain query, repeated on every row: a z-score guarded by nullIfEqual against
+// a zero spread, each order compared with the median and the ninth decile, a control limit, the most frequent
+// order date, and a median with a predicate, which is nullable.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "z_score",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "subtract",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              {
+                "operator": "average",
+                "type": { "name": "decimal" },
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              }
+            ]
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "standardDeviationPopulation",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "above_the_median",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "median",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "in_the_top_decile",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "percentileContinuous",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+        }
+      }
+    },
+    {
+      "alias": "upper_control_limit",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "average",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              { "type": { "name": "integer" }, "value": 3 },
+              {
+                "operator": "standardDeviationPopulation",
+                "type": { "name": "decimal" },
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "ordered_on_the_usual_day",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": {
+          "operator": "mode",
+          "type": { "name": "date" },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "median_paid_total",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            {
+              "operator": "median",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          ]
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

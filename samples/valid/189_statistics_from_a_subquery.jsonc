@@ -1,0 +1,108 @@
+// Statistics as columns of a grouped subquery: median and mode are non-null there, standardDeviationSample is
+// nullable, and after a left join every column is nullable.
+{
+  "subqueries": [
+    {
+      "name": "stats",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          {
+            "alias": "median_total",
+            "expression": {
+              "operator": "median",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "spread",
+            "expression": {
+              "operator": "standardDeviationSample",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "usual_status",
+            "expression": {
+              "operator": "mode",
+              "type": { "name": "string" },
+              "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "stats",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "stats", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "coalesce",
+      "type": { "name": "decimal" },
+      "values": [
+        { "source": "stats", "field": "median_total", "type": { "name": "decimal", "nullable": true } },
+        { "type": { "name": "integer" }, "value": 0 }
+      ]
+    },
+    "right": { "param": "minimum_median", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "median_total",
+      "expression": {
+        "source": "stats",
+        "field": "median_total",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    },
+    {
+      "alias": "spread",
+      "expression": { "source": "stats", "field": "spread", "type": { "name": "decimal", "nullable": true } }
+    },
+    {
+      "alias": "usual_status",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "stats", "field": "usual_status", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "no orders" }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "stats",
+        "field": "median_total",
+        "type": { "name": "decimal", "nullable": true }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

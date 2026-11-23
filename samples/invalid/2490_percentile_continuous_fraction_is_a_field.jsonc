@@ -1,0 +1,21 @@
+// percentileContinuous with a field as fraction: an aggregate has one fraction, a literal or a parameter
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

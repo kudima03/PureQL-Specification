@@ -1,0 +1,20 @@
+// mode of an integer selector declared decimal: it keeps the type of its selector
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

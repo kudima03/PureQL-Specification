@@ -1,0 +1,22 @@
+// percentileContinuous of an integer selector declared integer: it interpolates, so over numbers it is
+// decimal
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    }
+  ]
+}

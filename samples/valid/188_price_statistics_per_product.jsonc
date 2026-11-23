@@ -1,0 +1,186 @@
+// Statistics in a grouped query: over the group and over all rows, in having and orderBy, over integer and
+// computed selectors, with a predicate, an interquartile range from two percentiles, and a relative spread
+// guarded by nullIfEqual. The sample forms are nullable even in a group, since one row has no sample
+// variance.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "coalesce",
+      "type": { "name": "decimal" },
+      "values": [
+        {
+          "operator": "standardDeviationSample",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        { "type": { "name": "integer" }, "value": 0 }
+      ]
+    },
+    "right": { "param": "minimum_spread", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "product_id", "expression": { "key": "product_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "median_price",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "median_price_of_all",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "over": "all"
+      }
+    },
+    {
+      "alias": "median_quantity",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "usual_quantity",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "usual_quantity_of_all",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": "all"
+      }
+    },
+    {
+      "alias": "quartile_range",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "percentileContinuous",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            "fraction": { "type": { "name": "decimal" }, "value": "0.75" }
+          },
+          {
+            "operator": "percentileContinuous",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            "fraction": { "type": { "name": "decimal" }, "value": "0.25" }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "third_quartile_quantity",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.75" }
+      }
+    },
+    {
+      "alias": "median_line_value",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "median_of_large_lines",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 10 }
+        }
+      }
+    },
+    {
+      "alias": "relative_spread",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "standardDeviationPopulation",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "average",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "spread_of_all",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "over": "all"
+      }
+    },
+    {
+      "alias": "quantity_variance",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "product_id", "type": { "name": "uuid" } } }
+  ]
+}
