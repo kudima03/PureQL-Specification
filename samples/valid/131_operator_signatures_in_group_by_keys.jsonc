@@ -1,7 +1,6 @@
-// Every operator in every signature as groupBy keys, which are row-context expressions, over literals: the
-// lifted operators with and without a nullable operand, integer and decimal operands, if and coalesce for
-// every type, equal / notEqual / the four comparisons / in for every family. Each definition of the row
-// context is used at least once.
+// Every operator in every signature as groupBy keys, which are row-context expressions, over literals: the lifted
+// operators with and without a nullable operand, integer and decimal operands, if and coalesce for every type, equal /
+// notEqual / the four comparisons / in for every family. Each definition of the row context is used at least once.
 {
   "from": { "entity": "orders" },
   "groupBy": [
