@@ -1,0 +1,15 @@
+// foldCase with a locale: folding is the same in every locale
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "locale": "tr"
+      }
+    }
+  ]
+}

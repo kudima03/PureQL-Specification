@@ -571,6 +571,22 @@
       }
     },
     {
+      "alias": "foldCase_string",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "foldCase_string_nullable",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "trim_string",
       "expression": {
         "operator": "trim",

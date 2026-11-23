@@ -1,0 +1,5 @@
+// foldCase without an operand
+{
+  "from": { "entity": "users" },
+  "select": [ { "alias": "c", "expression": { "operator": "foldCase", "type": { "name": "string" } } } ]
+}

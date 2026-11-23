@@ -1,0 +1,16 @@
+// equal with an ignoreCase flag: there is no flag, both operands go through foldCase
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "right": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+// foldCase as a group key, over a nullable field too, so that spellings that differ only in case fall in one
+// group; in having, in an aggregate's selector and over a key.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nickname",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "count",
+      "type": { "name": "integer" },
+      "predicate": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "right": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+        }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    {
+      "alias": "nickname",
+      "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } }
+    },
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "spellings",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "country", "type": { "name": "string" } } }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "first_last_name",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "label",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "upper",
+            "type": { "name": "string" },
+            "operand": { "key": "country", "type": { "name": "string" } }
+          },
+          { "type": { "name": "string" }, "value": ": " },
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "operator": "count", "type": { "name": "integer" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "nickname_or_country",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "key": "nickname", "type": { "name": "string", "nullable": true } },
+          {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "key": "country", "type": { "name": "string" } }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "operator": "count", "type": { "name": "integer" } }, "direction": "desc" },
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    { "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } } }
+  ]
+}

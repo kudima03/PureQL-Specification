@@ -1,0 +1,17 @@
+// replaceRegex with an ignoreCase flag
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "[a-z]+" },
+        "replacement": { "type": { "name": "string" }, "value": "" },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

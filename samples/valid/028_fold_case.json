@@ -1,0 +1,226 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "contains",
+    "type": {
+      "name": "boolean"
+    },
+    "operand": {
+      "operator": "foldCase",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "source": "users",
+        "field": "last_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    "pattern": {
+      "operator": "foldCase",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "param": "search",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "last_name",
+      "expression": {
+        "source": "users",
+        "field": "last_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "email_key",
+      "expression": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname_key",
+      "expression": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "nickname_is_first_name",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string",
+            "nullable": true
+          },
+          "operand": {
+            "source": "users",
+            "field": "nickname",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          }
+        },
+        "right": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "first_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "starts_with_prefix",
+      "expression": {
+        "operator": "startsWith",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "first_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "pattern": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "param": "prefix",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "postal_code_has_letters",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "postal_code",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "[a-z]"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "last_name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

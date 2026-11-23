@@ -1,0 +1,14 @@
+// foldCase of an integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// equalIgnoreCase is not an operator: equal compares two folded strings
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equalIgnoreCase",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "right": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

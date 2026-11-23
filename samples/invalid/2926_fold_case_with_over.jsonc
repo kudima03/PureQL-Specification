@@ -1,0 +1,15 @@
+// foldCase with over: it is not an aggregate
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "over": { "partitionBy": [ { "source": "users", "field": "country", "type": { "name": "string" } } ] }
+      }
+    }
+  ]
+}

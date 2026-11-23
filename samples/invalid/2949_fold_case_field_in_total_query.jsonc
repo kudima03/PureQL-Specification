@@ -1,0 +1,14 @@
+// foldCase of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

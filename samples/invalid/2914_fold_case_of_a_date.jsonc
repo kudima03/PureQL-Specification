@@ -1,0 +1,14 @@
+// foldCase of a date: a date is written as text with asString first
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

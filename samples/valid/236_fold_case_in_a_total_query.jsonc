@@ -1,0 +1,135 @@
+// foldCase in a total query: in where, in predicates and selectors, and lifted over min, which is nullable
+// there.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "foldCase",
+      "type": { "name": "string" },
+      "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    "right": {
+      "operator": "foldCase",
+      "type": { "name": "string" },
+      "operand": { "param": "excluded_country", "type": { "name": "string" } }
+    }
+  },
+  "aggregate": [
+    {
+      "alias": "gold",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "string" }, "value": "gold" }
+        }
+      }
+    },
+    {
+      "alias": "first_last_name",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "first_folded_last_name",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "tiers",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+        },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "foldCase",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+            }
+          }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "any_mc",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "startsWith",
+          "type": { "name": "boolean" },
+          "operand": {
+            "operator": "foldCase",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          },
+          "pattern": { "type": { "name": "string" }, "value": "mc" }
+        }
+      }
+    },
+    {
+      "alias": "most_common_country",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "country", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "nicknames",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "foldCase",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "nickname",
+              "type": { "name": "string", "nullable": true }
+            }
+          },
+          "right": { "type": { "name": "string", "nullable": true }, "value": null }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+// foldCase as where: it is a string, and a condition is a boolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "foldCase",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "foldCase",
+    "type": { "name": "string" },
+    "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+  }
+}

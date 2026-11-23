@@ -59,7 +59,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, replace, position,
+  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, trim, substring, replace, position,
     splitPart, padStart/padEnd, repeat, reverse, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
@@ -564,6 +564,9 @@ for ctx, rules in CONTEXTS.items():
     # Unicode default case conversion, full mappings, no locale: upper("ß") is "SS"
     for name in ["upper", "lower"]:
         lifted(name, {"operand": "string"}, "string")
+    # Unicode full case folding, no locale: strings that differ only in case fold to
+    # the same string, so a match that ignores case compares folded strings
+    lifted("foldCase", {"operand": "string"}, "string")
     # trim removes the strings of `removables` from the ends, the longest match first;
     # at least one is listed, and none is null
     removables = {"removables": array_of(expr("string", ctx), 1)}

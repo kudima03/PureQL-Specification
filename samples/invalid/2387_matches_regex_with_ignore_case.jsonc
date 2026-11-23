@@ -1,5 +1,5 @@
 // matchesRegex with ignoreCase: matching is case-sensitive; both cases are written in a class, or the operand
-// goes through lower
+// goes through foldCase
 {
   "from": { "entity": "users" },
   "select": [
