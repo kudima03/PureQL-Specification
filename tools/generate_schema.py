@@ -61,9 +61,11 @@ schema is name resolution and is left to the interpreter.
 Null semantics:
   - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, normalize, removeDiacritics, trim,
     substring, replace, position,
-    splitPart, padStart/padEnd, repeat, reverse, date/time math, parts and startOf, conversions, if,
-    round/truncate/floor/ceiling are lifted:
+    splitPart, padStart/padEnd, repeat, reverse, replaceRegex, date/time math, parts and startOf,
+    conversions, round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
+  - if is nullable when either branch is, and yields the branch taken, so
+    if(true, 1, null) is 1;
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
   - contains / startsWith / endsWith accept nullable strings and return a
