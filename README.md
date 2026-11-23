@@ -90,7 +90,7 @@ Every expression has a `type`: a field, parameter, literal or group key declares
 ```
 
 - **Exact.** An operator declares exactly the type it yields from the types its operands declare, as given under [Operators](#operators) and [Null semantics](#null-semantics), never a wider one. `add` of two `integer` operands is declared `integer`, not `decimal`; a lifted operator is declared nullable exactly when one of its operands is; `coalesce` is non-null exactly when one of its operands is. So an expression has one valid declared type.
-- **One spelling.** Redundant spellings are rejected as well, where the form of the query alone shows them: `"nullable": false`; `and` / `or` with a single condition; defaults written out (`over` stating the default, a window that names nothing, a frame side of `0` rows, an `offset` of `1`, `"direction": "asc"`); a literal written in a second way (`decimal` `"1.50"`, `time` `"18:30:00.500"`, a `datetime` with an offset other than `Z`, a `uuid` in upper case); a repeated value in a list literal; and a `coalesce` operand that is never reached, after another non-null one (that the non-null operand comes last is beyond a schema). Equivalences between expressions are out of scope: `and(a, and(b, c))` and `and(a, b, c)`, `not(not(x))` and `x`, `not(equal(a, b))` and `notEqual(a, b)`, `if(true, a, b)` and `a` are all accepted, as any language accepts them. Nor can the schema see how a JSON number is written: `5` and `5.0` are the same `integer`.
+- **One spelling.** Redundant spellings are rejected as well, where the form of the query alone shows them: `"nullable": false`; `and` / `or` with a single condition; defaults written out (`over` stating the default, a window that names nothing, a frame side of `0` rows, an `offset` of `1`, `"direction": "asc"`, `"distinct": false`); a literal written in a second way (`decimal` `"1.50"`, `time` `"18:30:00.500"`, a `datetime` with an offset other than `Z`, a `uuid` in upper case); a repeated value in a list literal; and a `coalesce` operand that is never reached, after another non-null one (that the non-null operand comes last is beyond a schema). Equivalences between expressions are out of scope: `and(a, and(b, c))` and `and(a, b, c)`, `not(not(x))` and `x`, `not(equal(a, b))` and `notEqual(a, b)`, `if(true, a, b)` and `a` are all accepted, as any language accepts them. Nor can the schema see how a JSON number is written: `5` and `5.0` are the same `integer`.
 - **Implicit conversions apply at the position, not in the declaration.** An `integer` operator stands wherever a `decimal` is expected, and a non-null one wherever a nullable one is, exactly as a field would.
 - **Checked by the schema.** A position reads only the type its operand declares, and each operator checks its declared type against its operands' declared types. Each node is therefore validated once, and validation time grows linearly with the size of the query, whatever its depth.
 - **Read by the interpreter.** The type of any node is the one it declares, so building a typed expression tree needs no type computation.
@@ -367,7 +367,7 @@ A combined query puts the rows of two or more queries together. It has one of fo
 
 ## Operators
 
-The tables use `T` for any type and `T?` for its nullable form. Every operator node also has a `type`: the result in the last column, declared exactly (see [Declared types](#declared-types)). Unless stated otherwise, the result is nullable exactly when an operand is: arithmetic, powers and logarithms, `concat`, `length`, `upper` / `lower`, `trim` / `trimStart` / `trimEnd`, `substring`, `replace`, `position`, `splitPart`, `padStart` / `padEnd`, `repeat`, `reverse`, `replaceRegex`, date and time math, parts and `startOf…`, the conversions, `abs`, `sign`, `round`, `truncate`, `floor`, `ceiling`, `greatest` and `least` are lifted (see [Null semantics](#null-semantics)).
+The tables use `T` for any type and `T?` for its nullable form. Every operator node also has a `type`: the result in the last column, declared exactly (see [Declared types](#declared-types)). Unless stated otherwise, the result is nullable exactly when an operand is: arithmetic, powers and logarithms, `concat`, `length`, `upper` / `lower`, `foldCase`, `normalize`, `removeDiacritics`, `trim` / `trimStart` / `trimEnd`, `substring`, `replace`, `position`, `splitPart`, `padStart` / `padEnd`, `repeat`, `reverse`, `replaceRegex`, date and time math, parts and `startOf…`, the conversions, `abs`, `sign`, `round`, `truncate`, `floor`, `ceiling`, `greatest` and `least` are lifted (see [Null semantics](#null-semantics)).
 
 ### Boolean and comparison
 
@@ -608,7 +608,7 @@ A query fails at execution with an error when it:
 
 ### Strings
 
-A string is a sequence of Unicode code points. `equal` compares code point by code point: it applies no case folding, Unicode normalisation or trimming, so `"a"` and `"A"` differ, and so do `"a"` and `"a "`. Ordering, used by comparisons, `orderBy`, `min` and `max`, is lexicographic by code point, and a string sorts before every longer string it is a prefix of. `concat` joins its operands unchanged. `length` is the number of code points, so the empty string has length `0`, a character outside the Basic Multilingual Plane counts once (not as two UTF-16 code units), and a combining sequence counts each of its code points.
+A string is a sequence of Unicode code points. `equal` compares code point by code point: it applies no case folding, Unicode normalization or trimming, so `"a"` and `"A"` differ, and so do `"a"` and `"a "`. Ordering, used by comparisons, `orderBy`, `min` / `max` and `greatest` / `least`, is lexicographic by code point, and a string sorts before every longer string it is a prefix of. `concat` joins its operands unchanged. `length` is the number of code points, so the empty string has length `0`, a character outside the Basic Multilingual Plane counts once (not as two UTF-16 code units), and a combining sequence counts each of its code points.
 
 `upper` and `lower` apply the default case conversion of the Unicode Standard (`toUppercase` and `toLowercase`): the full mappings, those of `SpecialCasing.txt` included, and no locale. So:
 
@@ -623,7 +623,7 @@ A string is a sequence of Unicode code points. `equal` compares code point by co
 - every sigma folds to `σ`, so `foldCase("ΟΔΟΣ")` equals `foldCase("οδος")`, while `lower` keeps the final `ς` apart;
 - no language-specific rule applies: `foldCase("I")` is `"i"` and the dotless `ı` stays `ı`, in every locale;
 - folding a folded string changes nothing;
-- folding does not normalise: `é` written as one code point and as `e` with a combining accent stay different; that is what `normalize` is for.
+- folding does not normalize: `é` written as one code point and as `e` with a combining accent stay different; that is what `normalize` is for.
 
 Equality stays code point by code point, and no operator takes a flag for case. To match, group or sort without regard to case, apply `foldCase` to both sides: `equal(foldCase(a), foldCase(b))`, `contains(foldCase(text), foldCase(search))`, a `groupBy` key or a sort key `foldCase(name)` ([`028_fold_case.json`](samples/valid/028_fold_case.json)). For a regular expression, fold the operand and write the pattern in its folded form: in lower case, with `ss` for `ß`.
 
@@ -707,7 +707,7 @@ So `substring(s, 1, n)` is the first `n` code points of `s`, or all of `s` when 
 
 `contains`, `startsWith` and `endsWith` test whether the code points of `pattern` occur in `operand` as one consecutive run: anywhere, at its start, or at its end.
 
-- The match is code point by code point, like `equal`: case and accents matter, and nothing is normalised. For a match that ignores case, apply `foldCase` to both operands.
+- The match is code point by code point, like `equal`: case and accents matter, and nothing is normalized. For a match that ignores case, apply `foldCase` to both operands.
 - `pattern` is literal text, not a pattern language: `%`, `_`, `*` and `\` stand for themselves, so a value from a user needs no escaping.
 - An empty `pattern` matches every non-null `operand`, the empty string included.
 - Either operand may be any string expression, and the result is `false` when either is `null` (see [Null semantics](#null-semantics)).
@@ -872,22 +872,6 @@ The statistical aggregates are computed from exact values and rounded once, as `
 - Rows equal on every key come in an unspecified order, and so do their values. To list values in their own order, sort by the selector: equal values are interchangeable, so the result is then the same in every interpreter. Otherwise end the keys with one that identifies a row.
 - An empty string is a value like any other and is joined in; only `null` is skipped, as by `concatWith`.
 
-### Parameters
-
-- A query is run with a value for every parameter it uses. A value is written exactly like a literal of the declared type, in the same one spelling: a JSON number for `integer`, the literal formats for `decimal` (a string within its range), `date`, `time`, `datetime` (in UTC) and `uuid` (in lower case). A list parameter is a JSON array of non-`null` values of the element type, possibly empty, and may repeat a value.
-- A nullable parameter may be bound to `null`; a non-null one may not. Bound values that the query does not use are ignored.
-- One parameter name has one type in the whole document, subqueries included.
-
-### Names and sources
-
-- Each source of a query, the main query or a subquery, has a name: its `alias`, or its entity or subquery name when there is no alias. These names are unique within the query, and fields are referenced through them only: a source with an alias cannot be referenced by its entity or subquery name.
-- Subquery names are unique in the document. A subquery may read entities and the subqueries declared before it; a recursive subquery also reads itself, in its `next`; the main query may read every subquery.
-- A subquery's columns are its `select` (or `aggregate`) aliases, each with the type its expression declares.
-- The columns of a combined query are those of its inputs, matched by alias, in the order of its first input. Each has the least type that accepts the column in every input. The columns of inline rows are those of its rows, matched and typed in the same way.
-- Names compare exactly, code point by code point.
-
----
-
 ### Window evaluation
 
 Window functions are computed once the rows of a plain query are known: after `where`, and before `orderBy`, `distinctBy` and `pagination`. For each row, its window is found in three steps:
@@ -915,6 +899,22 @@ An aggregate over a window is evaluated as under [Aggregate evaluation](#aggrega
 - **Parameters.** A frame count, an `offset` and `buckets` given as parameters are read once for the query. A frame count of `0` leaves no rows on that side; binding a frame count below 0, an `offset` below 1 or `buckets` below 1 is an [execution error](#execution-errors).
 - Over five rows with the totals `10`, `20`, `20`, `30`, `40`, ordered by total: `rowNumber` is 1 to 5; `rank` is 1, 2, 2, 4, 5 and `denseRank` 1, 2, 2, 3, 4; `percentRank` is `0`, `0.25`, `0.25`, `0.75`, `1` and `cumulativeDistribution` `0.2`, `0.6`, `0.6`, `0.8`, `1`; `ntile` with 2 buckets is 1, 1, 1, 2, 2; `sum` of the total with `{ "preceding": 1 }` is `10`, `30`, `40`, `50`, `70`; `previous` of the total is `null`, `10`, `20`, `20`, `30`, and `next` with the default `0` is `20`, `20`, `30`, `40`, `0`.
 
+### Parameters
+
+- A query is run with a value for every parameter it uses. A value is written exactly like a literal of the declared type, in the same one spelling: a JSON number for `integer`, the literal formats for `decimal` (a string within its range), `date`, `time`, `datetime` (in UTC) and `uuid` (in lower case). A list parameter is a JSON array of non-`null` values of the element type, possibly empty, and may repeat a value.
+- A nullable parameter may be bound to `null`; a non-null one may not. Bound values that the query does not use are ignored.
+- One parameter name has one type in the whole document, subqueries included.
+
+### Names and sources
+
+- Each source of a query, the main query or a subquery, has a name: its `alias`, or its entity or subquery name when there is no alias. These names are unique within the query, and fields are referenced through them only: a source with an alias cannot be referenced by its entity or subquery name.
+- Subquery names are unique in the document. A subquery may read entities and the subqueries declared before it; a recursive subquery also reads itself, in its `next`; the main query may read every subquery.
+- A subquery's columns are its `select` (or `aggregate`) aliases, each with the type its expression declares.
+- The columns of a combined query are those of its inputs, matched by alias, in the order of its first input. Each has the least type that accepts the column in every input. The columns of inline rows are those of its rows, matched and typed in the same way.
+- Names compare exactly, code point by code point.
+
+---
+
 ## Validation
 
 The schema checks everything about a query's shape and types. The interpreter checks what depends on the catalog, on parameter values or on names:
@@ -930,7 +930,7 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A subquery is a query, inline rows or recursive; a cell of an inline row is a typed literal or a parameter | schema |
 | A recursive subquery has `seed`, `next` and `maxDepth`; `next` is a plain query without aggregates, window functions, `orderBy`, `distinctBy` or `pagination`; a literal `maxDepth` is 1 or more | schema |
 | `pagination` has an `orderBy`, and so do `first`, `last` and `concatAll`; a subquery has `orderBy` only with `pagination` or `distinctBy`; `distinctBy` lists each alias once | schema |
-| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`), one spelling of each literal value, no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`, `distinct`), one spelling of each literal value, no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
 | A literal `fraction` of a percentile is a `decimal` from 0 to 1 | schema |
 | A window is written only in a plain query and names a partition, an order or a frame; an aggregate's window has an order exactly when it has a frame; a ranking function, `previous` and `next` have a window with an order and no frame | schema |
 | A frame has a side, not `"all"` on both, and a count of 1 or more; a literal `offset` is 2 or more and literal `buckets` 1 or more | schema |
@@ -970,6 +970,11 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 | Path | Purpose |
 |---|---|
 | `tools/generate_schema.py` | Generates `PureQL-Specification.json`. Edit this file, never the schema |
+| `samples/valid/` | Queries that must be accepted: the [samples](#samples) (`.json`) and valid tests (`.jsonc`) |
+| `samples/invalid/` | Queries that must be rejected, each a valid query with one thing broken (`.jsonc`) |
+| `.github/workflows/validate.yml` | Runs on every pull request: checks formatting, then validates both directories |
+| `.github/workflows/release.yml` | Runs on a version tag: validates again and publishes a release |
+| `CHANGELOG.md` | The changes of each release |
 
 ```bash
 python3 tools/generate_schema.py   # after changing the generator
@@ -981,7 +986,9 @@ npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specifica
 
 The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and that every sample is formatted the same way, and fails with a diff otherwise. `jsonlint --in-place` with the same options formats a new sample. It runs the two ajv commands on every pull request and before every release: everything in `samples/valid/` must pass, everything in `samples/invalid/` must fail. `samples/valid/126_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time; `samples/valid/135_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` do the same for other operators and for a malformed node.
 
-**Reading the schema.** Every definition is short and named after what it checks. `expr@row` is any expression in row context (likewise `@projection` and `@group`); it sends an operator node to `operator@row`, which sends it to the section it belongs to (`operator.string@row`, `operator.arithmetic@row`, …) and from there to its own definition, and a leaf to `leaf@row`. An operator definition lists its signatures by declared type: in `add@row`, a node declaring `decimal?` is checked by `add.decimal.nullable@row`. A position that expects a type is `decimal.nullable@row`: an expression of row context whose declared type `accepts.decimal.nullable`. `declares.*` and `accepts.*` read only the `type` a node declares.
+**Releases.** Each release is a GitHub release named after its version, with no `v` prefix, and has `PureQL-Specification.json`, `samples.zip` (the samples of `samples/valid/`), `README.md` and `CHANGELOG.md` as assets. A preview version is `major.minor.patch-preview.major.minor.patch`, e.g. `0.1.0-preview.2.0.1`, and is published as a pre-release. The schema's root `version` is its version and its `$id` its download URL, `https://github.com/kudima03/PureQL-Specification/releases/download/<version>/PureQL-Specification.json`, so a client can pin the exact schema it validates against. A query document is the bare query: it has no `$schema` key, which would be rejected like any unknown property, so the schema is given to the validator rather than named in the query. The changes of each version are in [`CHANGELOG.md`](CHANGELOG.md).
+
+**Reading the schema.** Every definition is short and named after what it checks. `expr@row` is any expression in row context (likewise `@projection`, `@group` and `@total`); it sends an operator node to `operator@row`, which sends it to the section it belongs to (`operator.string@row`, `operator.arithmetic@row`, …) and from there to its own definition, and a leaf to `leaf@row`. An operator definition lists its signatures by declared type: in `add@row`, a node declaring `decimal?` is checked by `add.decimal.nullable@row`. A position that expects a type is `decimal.nullable@row`: an expression of row context whose declared type `accepts.decimal.nullable`. `declares.*` and `accepts.*` read only the `type` a node declares.
 
 Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number. `samples/valid/155`–`158` use every operator in every signature, and every aggregate, once in each context (a `groupBy` key, a plain select, a grouped select, a total query). The invalid tests after `0411` break one thing at a time in each context: an unknown property, a missing operand, an operand of the wrong type or with a malformed value, a field, group key or aggregate where the context has none, a declared type that is not the exact one, `in` lists of every kind, and the clauses of each kind of query. They were chosen by deleting or loosening each constraint of the schema in turn and keeping the tests that notice it.
 

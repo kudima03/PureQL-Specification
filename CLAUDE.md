@@ -12,6 +12,8 @@ A JSON Schema specification (`PureQL-Specification.json`) for a JSON-based relat
 - `samples/valid/*.jsonc` — valid tests, numbered on after the last sample (one sequence with the samples, three digits): valid queries that are not worth a sample (`126_deep_nesting.jsonc` guards against exponential validation)
 - `samples/invalid/` — invalid queries, written by hand, each a valid base with exactly one thing broken. Every file is JSONC: a `//` comment with the description, then the bare query
 - `README.md` — human-readable language reference
+- `CHANGELOG.md` — the changes of each release; a release's section is its GitHub release body (see Release flow)
+- `.github/workflows/validate.yml` / `release.yml` — CI on every pull request, and publishing on a version tag
 
 ## Schema validation
 
