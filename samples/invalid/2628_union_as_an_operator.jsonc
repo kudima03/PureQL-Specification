@@ -1,0 +1,17 @@
+// union as an expression operator: a set operation combines queries, not values
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "union",
+        "type": { "name": "uuid" },
+        "values": [
+          { "source": "users", "field": "id", "type": { "name": "uuid" } },
+          { "source": "users", "field": "id", "type": { "name": "uuid" } }
+        ]
+      }
+    }
+  ]
+}

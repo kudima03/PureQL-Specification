@@ -1,0 +1,28 @@
+// unionAll with an array of queries as one input
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    [
+      {
+        "from": { "entity": "users" },
+        "select": [
+          { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      },
+      {
+        "from": { "entity": "users" },
+        "select": [
+          { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    ]
+  ]
+}

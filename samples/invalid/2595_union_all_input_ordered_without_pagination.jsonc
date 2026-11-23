@@ -1,0 +1,24 @@
+// unionAll with an input that has orderBy alone: like a subquery, an input is unordered, so orderBy only
+// serves pagination or distinctBy
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ],
+      "orderBy": [
+        { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ]
+}

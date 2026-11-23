@@ -21,14 +21,16 @@ The design goal is a **type system enforced by the schema itself**. Where an exp
 | `orderBy` | no | Sort keys, each `{ expression, direction }`. Omit rather than leave empty |
 | `distinctBy` | no | `select` aliases: of the rows equal on those columns, keep the first in `orderBy` order. Listing every alias removes duplicate rows |
 | `pagination` | no | `{ skip, take }`, each a number or an `integer` parameter. Requires `orderBy` |
+| `unionAll`, `union`, `intersect`, `except` | instead of every clause but `subqueries` | Two or more queries whose rows are combined. See [Set operations](#set-operations) |
 
-There are three kinds of query, told apart by their shape:
+There are four kinds of query, told apart by their shape:
 
 - a **plain query** has `select` and returns one row per row of its sources;
 - a **grouped query** has `groupBy` and `select`, and returns one row per group;
-- a **total query** has `aggregate` instead of `select`, and returns exactly one row, even when there are no rows.
+- a **total query** has `aggregate` instead of `select`, and returns exactly one row, even when there are no rows;
+- a **combined query** has `unionAll`, `union`, `intersect` or `except`, and returns the rows of the queries listed there, put together.
 
-Each has its own rules for what its columns may read (see [Contexts](#contexts)).
+The first three have their own rules for what their columns may read (see [Contexts](#contexts)); a combined query has no columns of its own, only those of its inputs.
 
 ---
 
@@ -293,6 +295,32 @@ The main query may declare named helper queries:
 - `in` accepts one column of a subquery as its list, which gives a semi-join or, with `not`, an anti-join: `{ "subquery": <name>, "field": <column alias>, "type": … }`.
 - The list is flat: subqueries cannot declare subqueries, and there is no recursion.
 
+### Set operations
+
+A combined query puts the rows of two or more queries together. It has one of four properties, each holding the queries to combine, and no other clause:
+
+```json
+{ "unionAll": [
+    { "from": { "entity": "orders" },
+      "select": [ { "alias": "at",   "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+                  { "alias": "kind", "expression": { "type": { "name": "string" }, "value": "placed" } } ] },
+    { "from": { "entity": "orders" },
+      "select": [ { "alias": "at",   "expression": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } } },
+                  { "alias": "kind", "expression": { "type": { "name": "string" }, "value": "shipped" } } ] } ] }
+```
+
+| Operation | Result |
+|---|---|
+| `unionAll` | every row of every input, duplicates kept |
+| `union` | the same rows, each distinct row once |
+| `intersect` | the distinct rows that every input returns |
+| `except` | the distinct rows of the first input that no other input returns |
+
+- **Inputs.** At least two queries of any kind: plain, grouped, total, or combined again, so `(a union b) except c` is an `except` whose first input is a `union`. An input reads entities and subqueries like any query, and does not declare subqueries.
+- **Columns** are matched by alias, not by position: every input has the same aliases, in any order, and the result lists them in the order of the first input. A column takes the least type that accepts it in every input: `integer` and `decimal` give `decimal`, and it is nullable if it is nullable in any input. Types that do not meet this way, such as `date` and `datetime`, are an error.
+- **No clause of its own.** A combined query is unordered and has no `where`, `orderBy`, `distinctBy` or `pagination`. To filter, sort, deduplicate by columns or page the combined rows, declare it as a subquery and read it with `from`, as [`079_union_all.json`](samples/valid/079_union_all.json) does. Its inputs are unordered too: as in a subquery, an input has `orderBy` only together with `pagination` or `distinctBy`, e.g. the ten latest orders of each kind.
+- **Where it stands.** Wherever a query does: as the main query, which may declare `subqueries` next to the operation ([`080_union_intersect_except.json`](samples/valid/080_union_intersect_except.json)), or as the `query` of a subquery.
+
 ---
 
 ## Operators
@@ -444,6 +472,7 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **`distinctBy`** then walks the sorted rows and drops each row equal, on the listed columns compared with `equal`, to a row before it. The rows kept stay in `orderBy` order.
 - **`pagination`** skips `skip` rows, then returns at most `take`.
 - **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` and `distinctBy` keep, so a subquery has `orderBy` only together with one of them, and `pagination` only with `orderBy`.
+- **Set operations** compare rows column by column with `equal`, so two `null`s are the same value, and `1` and `1.0` are. `unionAll` returns every row of every input: a row that one input returns twice and another three times is returned five times. `union` returns each distinct row of those once. `intersect` returns each distinct row that occurs in every input, and `except` each distinct row of the first input that occurs in no other. The result is unordered. Each input behaves as if it ran once, on its own.
 - **Laziness.** An operation raises an error only if it is evaluated, and evaluation is lazy where it matters: `if` evaluates only the branch it takes, `coalesce` stops at its first non-`null` operand, `and` stops at the first `false` condition and `or` at the first `true`. So `if(equal(n, 0), 0, divide(x, n))` never divides by zero.
 - **`greatest`** and **`least`** evaluate every operand and yield the largest or the smallest by [the order of their type](#ordering-and-equality), or `null` when any operand is `null`. Numbers compare by value, and with a `decimal` operand the result is a `decimal` whichever operand it comes from. Operands that are equal are the same value, so it does not matter which one is returned.
 - **`nullIfEqual`** evaluates both operands and compares them with `equal`. It is `null` when they are equal and the value of `left` otherwise. Numbers compare by value, so `nullIfEqual(x, 0)` is `null` for every zero, `integer` or `decimal`; strings compare code point by code point. A `null` `left` gives `null`, and a `null` `right` leaves `left` as it is.
@@ -726,6 +755,7 @@ The statistical aggregates are computed from exact values and rounded once, as `
 - Each source of a query, the main query or a subquery, has a name: its `alias`, or its entity or subquery name when there is no alias. These names are unique within the query, and fields are referenced through them only: a source with an alias cannot be referenced by its entity or subquery name.
 - Subquery names are unique in the document. A subquery may read entities and the subqueries declared before it; the main query may read every subquery.
 - A subquery's columns are its `select` (or `aggregate`) aliases, each with the type its expression declares.
+- The columns of a combined query are those of its inputs, matched by alias, in the order of its first input. Each has the least type that accepts the column in every input.
 - Names compare exactly, code point by code point.
 
 ---
@@ -741,6 +771,7 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | Each operator declares exactly the type it yields from its operands | schema |
 | Where fields, keys and aggregates may appear (contexts) | schema |
 | Only the main query declares subqueries; a source is an entity or a subquery | schema |
+| A combined query names one set operation over two or more queries and has no other clause | schema |
 | `pagination` has an `orderBy`, and so do `first`, `last` and `concatAll`; a subquery has `orderBy` only with `pagination` or `distinctBy`; `distinctBy` lists each alias once | schema |
 | One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`), one spelling of each literal value, no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
 | A literal `fraction` of a percentile is a `decimal` from 0 to 1 | schema |
@@ -756,6 +787,7 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A field references a source introduced at that point: a join's `on` sees `from`, the earlier joins and the joined source; later clauses see every source | interpreter |
 | A subquery references only its own sources, never one of the query that reads it (a correlated reference is an error) | interpreter |
 | Referenced subquery columns exist with the declared types | interpreter |
+| The inputs of a set operation have the same column aliases, and the types of each column agree up to the implicit conversions | interpreter |
 | Column aliases are unique within a `select` (and within an `aggregate`) | interpreter |
 | Each `distinctBy` entry is an alias of the query's `select` | interpreter |
 
@@ -767,7 +799,7 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 - the longest string a query may produce: `repeat`, `padStart`, `padEnd` and `concatAll` can ask for more than an interpreter holds;
 - other string functions (matching with `%` and `_` wildcards, matching that ignores case, case folding and normalisation), time zones other than UTC;
 - the version of the Unicode Character Database behind `upper` and `lower`: a code point that a later version assigns, or gives a case mapping, may be converted differently by two interpreters;
-- set operations. Correlated subqueries are not part of the language: a reference from a subquery to a source of the query that reads it is an error.
+- Correlated subqueries are not part of the language: a reference from a subquery to a source of the query that reads it is an error.
 
 ---
 
@@ -785,17 +817,17 @@ npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specifica
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/invalid/*.jsonc" --invalid
 ```
 
-The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and that every sample is formatted the same way, and fails with a diff otherwise. `jsonlint --in-place` with the same options formats a new sample. It runs the two ajv commands on every pull request and before every release: everything in `samples/valid/` must pass, everything in `samples/invalid/` must fail. `samples/valid/108_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time; `samples/valid/117_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` do the same for other operators and for a malformed node.
+The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and that every sample is formatted the same way, and fails with a diff otherwise. `jsonlint --in-place` with the same options formats a new sample. It runs the two ajv commands on every pull request and before every release: everything in `samples/valid/` must pass, everything in `samples/invalid/` must fail. `samples/valid/110_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time; `samples/valid/119_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` do the same for other operators and for a malformed node.
 
 **Reading the schema.** Every definition is short and named after what it checks. `expr@row` is any expression in row context (likewise `@projection` and `@group`); it sends an operator node to `operator@row`, which sends each operator to its own definition, and a leaf to `leaf@row`. An operator definition lists its signatures by declared type: in `add@row`, a node declaring `decimal?` is checked by `add.decimal.nullable@row`. A position that expects a type is `decimal.nullable@row`: an expression of row context whose declared type `accepts.decimal.nullable`. `declares.*` and `accepts.*` read only the `type` a node declares.
 
-Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number. `samples/valid/137`–`140` use every operator in every signature, and every aggregate, once in each context (a `groupBy` key, a plain select, a grouped select, a total query). The invalid tests after `0411` break one thing at a time in each context: an unknown property, a missing operand, an operand of the wrong type or with a malformed value, a field, group key or aggregate where the context has none, a declared type that is not the exact one, `in` lists of every kind, and the clauses of each kind of query. They were chosen by deleting or loosening each constraint of the schema in turn and keeping the tests that notice it.
+Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number. `samples/valid/139`–`142` use every operator in every signature, and every aggregate, once in each context (a `groupBy` key, a plain select, a grouped select, a total query). The invalid tests after `0411` break one thing at a time in each context: an unknown property, a missing operand, an operand of the wrong type or with a malformed value, a field, group key or aggregate where the context has none, a declared type that is not the exact one, `in` lists of every kind, and the clauses of each kind of query. They were chosen by deleting or loosening each constraint of the schema in turn and keeping the tests that notice it.
 
 ---
 
 ## Samples
 
-The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json`), valid queries ordered from simple to complex, in the e-commerce domain. Samples `079`–`107` are dashboard queries: each mirrors one PureQL query a dashboard backend stores, combining many features at once, and is written over the `schema_with_foreign_keys` and `audit` fixture schemas of [`Pure.RelationalSchema.Samples`](https://github.com/kudima03/Pure.RelationalSchema.Samples), as in [`PureQL.CSharp.Model.Samples`](https://github.com/kudima03/PureQL.CSharp.Model.Samples), so they can be executed over its fixture rows. Next to them are valid tests (`.jsonc`) for edge cases, and [`samples/invalid/`](samples/invalid/) holds the queries that must be rejected.
+The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json`), valid queries ordered from simple to complex, in the e-commerce domain. Samples `081`–`109` are dashboard queries: each mirrors one PureQL query a dashboard backend stores, combining many features at once, and is written over the `schema_with_foreign_keys` and `audit` fixture schemas of [`Pure.RelationalSchema.Samples`](https://github.com/kudima03/Pure.RelationalSchema.Samples), as in [`PureQL.CSharp.Model.Samples`](https://github.com/kudima03/PureQL.CSharp.Model.Samples), so they can be executed over its fixture rows. Next to them are valid tests (`.jsonc`) for edge cases, and [`samples/invalid/`](samples/invalid/) holds the queries that must be rejected.
 
 | File | Description |
 |------|-------------|
@@ -877,32 +909,34 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`076_subquery_chain.json`](samples/valid/076_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
 | [`077_left_join_subquery.json`](samples/valid/077_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
 | [`078_subquery_full_pipeline.json`](samples/valid/078_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |
-| [`079_recent_orders_per_active_user.json`](samples/valid/079_recent_orders_per_active_user.json) | Orders per active user since a `datetime`, with a coalesced nullable `average`, ordered by `count` then the key |
-| [`080_billed_with_fee_per_employee.json`](samples/valid/080_billed_with_fee_per_employee.json) | A join chain and a date range; `sum` of `add`, ordered by it |
-| [`081_revenue_per_user_name.json`](samples/valid/081_revenue_per_user_name.json) | Revenue per user name: a key from a joined entity, ordered by an aggregate descending |
-| [`082_item_value_share_of_order_total_per_product.json`](samples/valid/082_item_value_share_of_order_total_per_product.json) | Item value per product and its ratio of two `sum`s |
-| [`083_item_value_per_user_and_product.json`](samples/valid/083_item_value_per_user_and_product.json) | A `concat` group key and a `greaterThan` filter |
-| [`084_order_stage_excluding_user.json`](samples/valid/084_order_stage_excluding_user.json) | `and` of `in` and `notEqual`; a nested `if` group key over `equal` |
-| [`085_revenue_per_team_lead_per_period.json`](samples/valid/085_revenue_per_team_lead_per_period.json) | The same entity joined twice through aliases; revenue per team lead per computed period |
-| [`086_login_stats_per_tenant.json`](samples/valid/086_login_stats_per_tenant.json) | `average` of `datetimeDiffSeconds`, a coalesced nullable `average` and a guarded share per tenant |
-| [`087_user_funnel_stage.json`](samples/valid/087_user_funnel_stage.json) | A left joined subquery; a nested `if` group key over `not`, `coalesce` and `lessThan` |
-| [`088_daily_revenue_per_tenant.json`](samples/valid/088_daily_revenue_per_tenant.json) | Daily revenue: a `sum` with a predicate per tenant next to the total |
-| [`089_order_totals_per_status_and_tenant.json`](samples/valid/089_order_totals_per_status_and_tenant.json) | Filtered `sum`s per status, the total, `average` of `dateDiffDays` and `count` per tenant |
-| [`090_placed_versus_shipped_per_day.json`](samples/valid/090_placed_versus_shipped_per_day.json) | Reading from a subquery left joined to another; `coalesce` and `subtract` |
-| [`091_weekly_units_per_product.json`](samples/valid/091_weekly_units_per_product.json) | A computed week key, `dateAddDays` over the key and filtered `sum`s per product |
-| [`092_repeat_buyer_order_and_item_profile.json`](samples/valid/092_repeat_buyer_order_and_item_profile.json) | Two grouped subqueries inner joined, filtered on a subquery column |
-| [`093_score_by_product_per_order_day.json`](samples/valid/093_score_by_product_per_order_day.json) | An `integer` computed key; `average`s with `equal` / `notEqual` predicates |
-| [`094_direct_reports_per_manager.json`](samples/valid/094_direct_reports_per_manager.json) | A `from` alias self-joined; `notEqual` on a nullable field; `min` of `time` and `date` |
-| [`095_daily_in_stock_revenue_share.json`](samples/valid/095_daily_in_stock_revenue_share.json) | `subtract`, `divide` and `multiply` over aggregates |
-| [`096_line_flags_per_user_and_status.json`](samples/valid/096_line_flags_per_user_and_status.json) | Two `string` keys; `count`s with `and` / `not` / `lessThan` / boolean predicates |
-| [`097_item_revenue_to_order_total_per_employee.json`](samples/valid/097_item_revenue_to_order_total_per_employee.json) | An entity joined to two grouped subqueries, filtered by an `in` list |
-| [`098_revenue_per_employee_and_age.json`](samples/valid/098_revenue_per_employee_and_age.json) | Four group keys of different types; an aggregate divided by a `decimal` key |
-| [`099_in_stock_item_value_versus_ordered_per_user.json`](samples/valid/099_in_stock_item_value_versus_ordered_per_user.json) | A subquery filtered by `and(equal, in)`, left joined; a variance percentage |
-| [`100_orders_per_weekday.json`](samples/valid/100_orders_per_weekday.json) | A six-level `if` group key over `modulo` of `dateDiffDays`; a guarded share |
-| [`101_shipped_share_per_user_and_tenant.json`](samples/valid/101_shipped_share_per_user_and_tenant.json) | `if`-guarded ratios of filtered `count`s, one column per user |
-| [`102_unbilled_order_aging.json`](samples/valid/102_unbilled_order_aging.json) | `dateDiffDays` from a literal, `if` buckets over it, ordered by two expressions, paged |
-| [`103_product_sales_performance.json`](samples/valid/103_product_sales_performance.json) | A guarded percentage, `average` of `datetimeDiffSeconds` and `max` of `dateDiffDays` in a subquery; ratios of its columns |
-| [`104_user_sales_summary.json`](samples/valid/104_user_sales_summary.json) | One inner and two left joined subqueries; a guard comparing `coalesce` with `integer` 0 |
-| [`105_user_account_overview.json`](samples/valid/105_user_account_overview.json) | Five subqueries, one reading another; inner and left joins; `max`; paged |
-| [`106_employee_scorecard.json`](samples/valid/106_employee_scorecard.json) | A `from` alias self-joined through a join alias; three subqueries with nested `and` ranges |
-| [`107_line_restock_suggestion.json`](samples/valid/107_line_restock_suggestion.json) | A left join on two keys; arithmetic in `if` branches; paged |
+| [`079_union_all.json`](samples/valid/079_union_all.json) | `unionAll` as a subquery: orders placed, orders shipped and sign-ups as one timeline, a column made nullable by one input, ordered and paged by the main query |
+| [`080_union_intersect_except.json`](samples/valid/080_union_intersect_except.json) | A combined main query: an `intersect` inside a `union` inside an `except`, the users to contact |
+| [`081_recent_orders_per_active_user.json`](samples/valid/081_recent_orders_per_active_user.json) | Orders per active user since a `datetime`, with a coalesced nullable `average`, ordered by `count` then the key |
+| [`082_billed_with_fee_per_employee.json`](samples/valid/082_billed_with_fee_per_employee.json) | A join chain and a date range; `sum` of `add`, ordered by it |
+| [`083_revenue_per_user_name.json`](samples/valid/083_revenue_per_user_name.json) | Revenue per user name: a key from a joined entity, ordered by an aggregate descending |
+| [`084_item_value_share_of_order_total_per_product.json`](samples/valid/084_item_value_share_of_order_total_per_product.json) | Item value per product and its ratio of two `sum`s |
+| [`085_item_value_per_user_and_product.json`](samples/valid/085_item_value_per_user_and_product.json) | A `concat` group key and a `greaterThan` filter |
+| [`086_order_stage_excluding_user.json`](samples/valid/086_order_stage_excluding_user.json) | `and` of `in` and `notEqual`; a nested `if` group key over `equal` |
+| [`087_revenue_per_team_lead_per_period.json`](samples/valid/087_revenue_per_team_lead_per_period.json) | The same entity joined twice through aliases; revenue per team lead per computed period |
+| [`088_login_stats_per_tenant.json`](samples/valid/088_login_stats_per_tenant.json) | `average` of `datetimeDiffSeconds`, a coalesced nullable `average` and a guarded share per tenant |
+| [`089_user_funnel_stage.json`](samples/valid/089_user_funnel_stage.json) | A left joined subquery; a nested `if` group key over `not`, `coalesce` and `lessThan` |
+| [`090_daily_revenue_per_tenant.json`](samples/valid/090_daily_revenue_per_tenant.json) | Daily revenue: a `sum` with a predicate per tenant next to the total |
+| [`091_order_totals_per_status_and_tenant.json`](samples/valid/091_order_totals_per_status_and_tenant.json) | Filtered `sum`s per status, the total, `average` of `dateDiffDays` and `count` per tenant |
+| [`092_placed_versus_shipped_per_day.json`](samples/valid/092_placed_versus_shipped_per_day.json) | Reading from a subquery left joined to another; `coalesce` and `subtract` |
+| [`093_weekly_units_per_product.json`](samples/valid/093_weekly_units_per_product.json) | A computed week key, `dateAddDays` over the key and filtered `sum`s per product |
+| [`094_repeat_buyer_order_and_item_profile.json`](samples/valid/094_repeat_buyer_order_and_item_profile.json) | Two grouped subqueries inner joined, filtered on a subquery column |
+| [`095_score_by_product_per_order_day.json`](samples/valid/095_score_by_product_per_order_day.json) | An `integer` computed key; `average`s with `equal` / `notEqual` predicates |
+| [`096_direct_reports_per_manager.json`](samples/valid/096_direct_reports_per_manager.json) | A `from` alias self-joined; `notEqual` on a nullable field; `min` of `time` and `date` |
+| [`097_daily_in_stock_revenue_share.json`](samples/valid/097_daily_in_stock_revenue_share.json) | `subtract`, `divide` and `multiply` over aggregates |
+| [`098_line_flags_per_user_and_status.json`](samples/valid/098_line_flags_per_user_and_status.json) | Two `string` keys; `count`s with `and` / `not` / `lessThan` / boolean predicates |
+| [`099_item_revenue_to_order_total_per_employee.json`](samples/valid/099_item_revenue_to_order_total_per_employee.json) | An entity joined to two grouped subqueries, filtered by an `in` list |
+| [`100_revenue_per_employee_and_age.json`](samples/valid/100_revenue_per_employee_and_age.json) | Four group keys of different types; an aggregate divided by a `decimal` key |
+| [`101_in_stock_item_value_versus_ordered_per_user.json`](samples/valid/101_in_stock_item_value_versus_ordered_per_user.json) | A subquery filtered by `and(equal, in)`, left joined; a variance percentage |
+| [`102_orders_per_weekday.json`](samples/valid/102_orders_per_weekday.json) | A six-level `if` group key over `modulo` of `dateDiffDays`; a guarded share |
+| [`103_shipped_share_per_user_and_tenant.json`](samples/valid/103_shipped_share_per_user_and_tenant.json) | `if`-guarded ratios of filtered `count`s, one column per user |
+| [`104_unbilled_order_aging.json`](samples/valid/104_unbilled_order_aging.json) | `dateDiffDays` from a literal, `if` buckets over it, ordered by two expressions, paged |
+| [`105_product_sales_performance.json`](samples/valid/105_product_sales_performance.json) | A guarded percentage, `average` of `datetimeDiffSeconds` and `max` of `dateDiffDays` in a subquery; ratios of its columns |
+| [`106_user_sales_summary.json`](samples/valid/106_user_sales_summary.json) | One inner and two left joined subqueries; a guard comparing `coalesce` with `integer` 0 |
+| [`107_user_account_overview.json`](samples/valid/107_user_account_overview.json) | Five subqueries, one reading another; inner and left joins; `max`; paged |
+| [`108_employee_scorecard.json`](samples/valid/108_employee_scorecard.json) | A `from` alias self-joined through a join alias; three subqueries with nested `and` ranges |
+| [`109_line_restock_suggestion.json`](samples/valid/109_line_restock_suggestion.json) | A left join on two keys; arithmetic in `if` branches; paged |

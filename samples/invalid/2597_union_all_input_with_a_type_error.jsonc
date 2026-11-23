@@ -1,0 +1,21 @@
+// unionAll with an input whose where is not a boolean
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ],
+      "where": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ]
+}

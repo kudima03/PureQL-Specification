@@ -1,0 +1,34 @@
+// unionAll with an input that declares subqueries: only the main query declares them
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ],
+      "subqueries": [
+        {
+          "name": "s",
+          "query": {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "id",
+                "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

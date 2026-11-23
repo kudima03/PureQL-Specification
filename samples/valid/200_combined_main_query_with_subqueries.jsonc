@@ -1,0 +1,72 @@
+// A combined query as the main query, with subqueries of its own: an intersect of three inputs, one reading a
+// subquery and one itself a unionAll.
+{
+  "subqueries": [
+    {
+      "name": "spenders",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "having": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          "right": { "param": "threshold", "type": { "name": "decimal" } }
+        },
+        "select": [ { "alias": "id", "expression": { "key": "user_id", "type": { "name": "uuid" } } } ]
+      }
+    }
+  ],
+  "intersect": [
+    {
+      "from": { "subquery": "spenders" },
+      "select": [
+        { "alias": "id", "expression": { "source": "spenders", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "where": { "source": "users", "field": "is_active", "type": { "name": "boolean" } },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    },
+    {
+      "unionAll": [
+        {
+          "from": { "entity": "users" },
+          "where": {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "tier", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "gold" }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        {
+          "from": { "entity": "users" },
+          "where": {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "tier", "type": { "name": "string" } },
+            "right": { "type": { "name": "string" }, "value": "platinum" }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      ]
+    }
+  ]
+}

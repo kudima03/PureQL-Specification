@@ -1,0 +1,121 @@
+// Columns of a union are matched by alias, in any order, and take the least type that accepts every input: an
+// integer and a decimal give a decimal, and a column that is nullable in one input is nullable in the result,
+// which the query that reads it declares.
+{
+  "subqueries": [
+    {
+      "name": "amounts",
+      "query": {
+        "union": [
+          {
+            "from": { "entity": "order_items" },
+            "select": [
+              {
+                "alias": "key",
+                "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+              },
+              {
+                "alias": "amount",
+                "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              { "alias": "note", "expression": { "type": { "name": "string" }, "value": "units" } }
+            ]
+          },
+          {
+            "from": { "entity": "order_items" },
+            "select": [
+              {
+                "alias": "note",
+                "expression": { "type": { "name": "string", "nullable": true }, "value": null }
+              },
+              {
+                "alias": "amount",
+                "expression": {
+                  "source": "order_items",
+                  "field": "unit_price",
+                  "type": { "name": "decimal" }
+                }
+              },
+              {
+                "alias": "key",
+                "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "coupons" },
+            "select": [
+              {
+                "alias": "key",
+                "expression": {
+                  "source": "coupons",
+                  "field": "issued_by",
+                  "type": { "name": "uuid", "nullable": true }
+                }
+              },
+              {
+                "alias": "amount",
+                "expression": {
+                  "source": "coupons",
+                  "field": "discount",
+                  "type": { "name": "decimal", "nullable": true }
+                }
+              },
+              {
+                "alias": "note",
+                "expression": {
+                  "source": "coupons",
+                  "field": "code",
+                  "type": { "name": "string", "nullable": true }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "amounts" },
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } },
+    "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+  },
+  "select": [
+    {
+      "alias": "key",
+      "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } }
+    },
+    {
+      "alias": "amount",
+      "expression": {
+        "source": "amounts",
+        "field": "amount",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    },
+    {
+      "alias": "note",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "amounts", "field": "note", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "" }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } } },
+    {
+      "expression": {
+        "source": "amounts",
+        "field": "amount",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    },
+    { "expression": { "source": "amounts", "field": "note", "type": { "name": "string", "nullable": true } } }
+  ]
+}

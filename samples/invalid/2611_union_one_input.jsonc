@@ -1,0 +1,14 @@
+// union of one query: duplicate rows of one query are removed with distinctBy
+{
+  "union": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    }
+  ]
+}

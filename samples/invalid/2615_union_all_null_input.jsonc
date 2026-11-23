@@ -1,0 +1,15 @@
+// unionAll with null as an input
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    null
+  ]
+}

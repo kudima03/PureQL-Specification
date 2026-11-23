@@ -1,0 +1,20 @@
+// unionDistinct is not an operation: removing duplicates is union
+{
+  "unionDistinct": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ]
+}

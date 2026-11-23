@@ -1,0 +1,52 @@
+// a subquery entry with both query and unionAll
+{
+  "subqueries": [
+    {
+      "name": "ids",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "id",
+                "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "users" },
+            "select": [
+              {
+                "alias": "id",
+                "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+              }
+            ]
+          }
+        ]
+      },
+      "unionAll": [
+        {
+          "from": { "entity": "orders" },
+          "select": [
+            {
+              "alias": "id",
+              "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+            }
+          ]
+        },
+        {
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      ]
+    }
+  ],
+  "from": { "subquery": "ids" },
+  "select": [
+    { "alias": "id", "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [ { "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } } ]
+}

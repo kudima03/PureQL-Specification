@@ -1,0 +1,91 @@
+// A totals row appended to the groups: unionAll of a grouped query and a total query with the same columns,
+// read as a subquery so that the totals row sorts last.
+{
+  "subqueries": [
+    {
+      "name": "report",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "entity": "orders" },
+            "groupBy": [
+              {
+                "alias": "status",
+                "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            ],
+            "select": [
+              { "alias": "label", "expression": { "key": "status", "type": { "name": "string" } } },
+              { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+              {
+                "alias": "revenue",
+                "expression": {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "orders" },
+            "aggregate": [
+              { "alias": "label", "expression": { "type": { "name": "string" }, "value": "all" } },
+              { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+              {
+                "alias": "revenue",
+                "expression": {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "report" },
+  "select": [
+    {
+      "alias": "label",
+      "expression": { "source": "report", "field": "label", "type": { "name": "string" } }
+    },
+    {
+      "alias": "orders",
+      "expression": { "source": "report", "field": "orders", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "revenue",
+      "expression": { "source": "report", "field": "revenue", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "average",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "report", "field": "revenue", "type": { "name": "decimal" } },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "integer", "nullable": true },
+            "left": { "source": "report", "field": "orders", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "report", "field": "label", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "all" }
+      }
+    },
+    { "expression": { "source": "report", "field": "label", "type": { "name": "string" } } }
+  ]
+}
