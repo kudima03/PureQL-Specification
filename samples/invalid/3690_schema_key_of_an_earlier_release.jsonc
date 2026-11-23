@@ -1,0 +1,12 @@
+// $schema naming an earlier release: a query is validated against the release it names
+{
+  "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.1.0.0/PureQL-Specification.json",
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

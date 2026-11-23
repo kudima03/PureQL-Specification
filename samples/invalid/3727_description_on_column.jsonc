@@ -1,0 +1,15 @@
+// A description on a column
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+      "description": "The id"
+    },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

@@ -37944,6 +37944,9 @@
       "type": "object",
       "required": [],
       "properties": {
+        "$schema": {
+          "const": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json"
+        },
         "subqueries": {
           "type": "array",
           "items": {
@@ -38012,6 +38015,9 @@
         "select"
       ],
       "properties": {
+        "$schema": {
+          "const": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json"
+        },
         "subqueries": {
           "type": "array",
           "items": {
@@ -38087,6 +38093,9 @@
         "select"
       ],
       "properties": {
+        "$schema": {
+          "const": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json"
+        },
         "subqueries": {
           "type": "array",
           "items": {
@@ -38152,6 +38161,9 @@
         "aggregate"
       ],
       "properties": {
+        "$schema": {
+          "const": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json"
+        },
         "subqueries": {
           "type": "array",
           "items": {

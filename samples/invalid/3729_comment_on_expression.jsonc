@@ -1,0 +1,14 @@
+// A comment on an expression
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" }, "comment": "the key" }
+    },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

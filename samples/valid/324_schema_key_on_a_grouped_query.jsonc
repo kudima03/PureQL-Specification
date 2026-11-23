@@ -1,0 +1,22 @@
+// $schema on a grouped main query.
+{
+  "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "operator": "count", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "orderBy": [ { "column": "orders", "direction": "desc" }, { "column": "user_id" } ]
+}

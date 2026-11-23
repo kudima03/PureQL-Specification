@@ -1,0 +1,52 @@
+// $schema on a plain main query that declares subqueries: it names the release the query is written for, and
+// is the only key of a document that is not part of the query.
+{
+  "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+  "subqueries": [
+    {
+      "name": "per_user",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ]
+      }
+    },
+    {
+      "name": "limits",
+      "rows": [ [ { "alias": "least", "expression": { "type": { "name": "integer" }, "value": 2 } } ] ]
+    }
+  ],
+  "from": { "subquery": "per_user" },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "limits",
+      "on": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "per_user", "field": "orders", "type": { "name": "integer" } },
+        "right": { "source": "limits", "field": "least", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "per_user", "field": "user_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "orders",
+      "expression": { "source": "per_user", "field": "orders", "type": { "name": "integer" } }
+    }
+  ],
+  "orderBy": [ { "column": "orders", "direction": "desc" }, { "column": "user_id" } ],
+  "pagination": { "take": 10 }
+}

@@ -1,0 +1,12 @@
+// $schema holding only the version: it is the address of the schema
+{
+  "$schema": "0.1.0-preview.2.0.1",
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

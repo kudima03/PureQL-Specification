@@ -1,0 +1,15 @@
+// $schema on a column
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+      "alias": "id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

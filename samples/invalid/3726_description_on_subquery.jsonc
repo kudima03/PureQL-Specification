@@ -1,0 +1,29 @@
+// A description on a subquery entry
+{
+  "subqueries": [
+    {
+      "name": "per_user",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ]
+      },
+      "description": "Orders per user"
+    }
+  ],
+  "from": { "subquery": "per_user" },
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "per_user", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ]
+}

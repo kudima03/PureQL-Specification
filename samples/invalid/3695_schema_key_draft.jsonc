@@ -1,0 +1,12 @@
+// $schema naming the JSON Schema draft: that is the schema of the schema, not of a query
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+// A description on a join
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "description": "the buyer",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

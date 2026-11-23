@@ -1,0 +1,22 @@
+// $schema on a total main query.
+{
+  "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "aggregate": [
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

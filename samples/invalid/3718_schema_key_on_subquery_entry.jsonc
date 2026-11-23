@@ -1,0 +1,29 @@
+// $schema on a subquery entry
+{
+  "subqueries": [
+    {
+      "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+      "name": "per_user",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "per_user" },
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "per_user", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ]
+}

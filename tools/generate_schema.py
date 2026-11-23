@@ -1164,7 +1164,11 @@ grouped = {
 # A total query folds every row into exactly one, even over no rows.
 total = {**sources, "aggregate": array_of(ref("selectItem@total"), 1)}
 # Subqueries are flat: only the main query may declare them.
-main = {"subqueries": array_of(ref("subquery"), 1)}
+# The main query may name the schema it is written for: `$schema` holds the `$id`
+# of this release and nothing else. An editor reads it to pick the schema, a
+# stored query says which release it follows, and a query written for another
+# release fails on that one line instead of somewhere inside it.
+main = {"$schema": {"const": SCHEMA_ID}, "subqueries": array_of(ref("subquery"), 1)}
 
 # A page is chosen by an order, or two interpreters may return different pages.
 # A subquery's result is unordered, so its orderBy only serves pagination and

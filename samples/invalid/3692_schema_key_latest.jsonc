@@ -1,0 +1,12 @@
+// $schema naming the latest release: a query names one release
+{
+  "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/latest/PureQL-Specification.json",
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ]
+}

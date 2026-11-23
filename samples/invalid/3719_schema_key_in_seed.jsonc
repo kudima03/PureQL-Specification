@@ -1,0 +1,27 @@
+// $schema in the seed of a recursive subquery
+{
+  "subqueries": [
+    {
+      "name": "r",
+      "recursive": {
+        "seed": {
+          "$schema": "https://github.com/kudima03/PureQL-Specification/releases/download/0.1.0-preview.2.0.1/PureQL-Specification.json",
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "r" },
+          "where": { "type": { "name": "boolean" }, "value": false },
+          "select": [
+            { "alias": "id", "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "maxDepth": 3
+      }
+    }
+  ],
+  "from": { "subquery": "r" },
+  "select": [ { "alias": "id", "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } } ]
+}
