@@ -492,10 +492,15 @@ for ctx, rules in CONTEXTS.items():
     shapes = {}
     # operator name -> [(result type, result nullable, checks)]
     signatures = {}
+    # section name -> operator names. Operators are declared section by section,
+    # and `operator@<ctx>` sends a node to its section first: see the dispatch below.
+    sections = {}
 
     def shape(name, required, props):
         # an operator called again (another result type) must keep its shape
         assert shapes.get(name, (required, props)) == (required, props), name
+        if name not in shapes:
+            sections.setdefault(section, []).append(name)
         shapes[name] = (required, props)
 
     def signature(name, t, nullable, *checks):
@@ -533,6 +538,7 @@ for ctx, rules in CONTEXTS.items():
             ]
         }
 
+    section = "arithmetic"
     # numbers: integer operands give integer, a decimal operand gives decimal
     for name in ["add", "subtract", "multiply"]:
         lifted(name, {"values": "integer"}, "integer")
@@ -560,6 +566,7 @@ for ctx, rules in CONTEXTS.items():
         lifted(name, {"operand": "decimal"}, "decimal")
     lifted("log", {"operand": "decimal"}, "decimal", extra={"base": expr("decimal", ctx)})
 
+    section = "string"
     # strings
     lifted("concat", {"values": "string"}, "string")
     # the number of code points
@@ -618,6 +625,7 @@ for ctx, rules in CONTEXTS.items():
     lifted("replaceRegex", {"operand": "string"}, "string",
            extra={"pattern": ref("regexPattern"), "replacement": expr("string", ctx)})
 
+    section = "dateMath"
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")
     lifted("dateDiffDays", {"left": "date", "right": "date"}, "integer")
@@ -632,6 +640,7 @@ for ctx, rules in CONTEXTS.items():
     lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
     lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")
 
+    section = "datePart"
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
     # time or a datetime (a datetime is read in UTC). The type the operand declares
     # picks the position it is validated against; the result is lifted.
@@ -641,11 +650,13 @@ for ctx, rules in CONTEXTS.items():
             operand = by_family(name, "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
             signature(name, "integer", False, {"properties": {"operand": NON_NULL}}, operand)
             signature(name, "integer", True, some(["operand"], NULLABLE), operand)
+    section = "startOf"
     # Truncation keeps the type of its operand: the declared type picks the signature.
     for name, types in START_OF.items():
         for t in types:
             lifted(name, {"operand": t}, t)
 
+    section = "conversion"
     # Conversions. asString writes a value of any other type as its literal is
     # spelled; the type its operand declares picks the position, as for the parts.
     families = [f for f in EQUATABLE if f != "string"]
@@ -675,6 +686,7 @@ for ctx, rules in CONTEXTS.items():
             shape(f"tryAs{t.capitalize()}", ["operand"], {"operand": expr("string", ctx, True)})
             signature(f"tryAs{t.capitalize()}", t, True)
 
+    section = "boolean"
     # booleans: conditions are always non-null
     for name in ["and", "or"]:
         # one condition would be the condition itself
@@ -708,6 +720,7 @@ for ctx, rules in CONTEXTS.items():
         lambda f: {"properties": {"operand": expr(f, ctx, True), "list": ref(f"list.{f}")}},
     ))
 
+    section = "conditional"
     # conditional and null handling, for every type
     for t in TYPES:
         wide = [some(["then", "else"], declares_name(t))] if t in SUBTYPES else []
@@ -738,6 +751,7 @@ for ctx, rules in CONTEXTS.items():
             wide = [some(["values"], declares_name(t))] if t in SUBTYPES else []
             lifted(name, {"values": t}, t, *wide)
 
+    section = "aggregate"
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the
     # selector are skipped. An aggregate runs over the group in a grouped query
@@ -836,6 +850,7 @@ for ctx, rules in CONTEXTS.items():
             shape(name, ["predicate"], aggregate_props)
             signature(name, "boolean", False)
 
+    section = "window"
     # Functions of a row's position in its window: only where a window exists,
     # and always over an ordered one. They are never null: every row has a
     # position.
@@ -901,12 +916,26 @@ for ctx, rules in CONTEXTS.items():
             dispatch.append({"if": declares(t, n), "then": ref(sig)})
         defs[f"{name}@{ctx}"]["allOf"] = dispatch
 
-    # `operator@<ctx>`: an operator node of the context, sent to its definition.
+    # `operator@<ctx>`: an operator node of the context, sent to its section, and
+    # `operator.<section>@<ctx>`, which sends it on to its definition. Two short
+    # lists instead of one long one: a validator that compiles a schema to code
+    # (ajv) keeps every branch of a definition in one stack frame, and that frame
+    # is entered once for each level of nesting of a query. With one list of every
+    # operator, each operator added to the language made every level cost more
+    # stack, so a query could nest less deeply; with sections, a level costs the
+    # few sections plus the operators of one of them.
+    for section, names in sections.items():
+        defs[f"operator.{section}@{ctx}"] = {
+            "allOf": [
+                {"if": {"properties": {"operator": {"const": name}}}, "then": ref(f"{name}@{ctx}")}
+                for name in names
+            ],
+        }
     defs[f"operator@{ctx}"] = {
         "properties": {"operator": {"enum": list(shapes)}},
         "allOf": [
-            {"if": {"properties": {"operator": {"const": name}}}, "then": ref(f"{name}@{ctx}")}
-            for name in shapes
+            {"if": {"properties": {"operator": {"enum": names}}}, "then": ref(f"operator.{section}@{ctx}")}
+            for section, names in sections.items()
         ],
     }
     # `leaf@<ctx>`: a literal, parameter, field or group key, told apart by
