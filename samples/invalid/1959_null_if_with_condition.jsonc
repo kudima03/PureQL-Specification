@@ -1,0 +1,15 @@
+// nullIf with a condition instead of right: a value that depends on a condition is written with if
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

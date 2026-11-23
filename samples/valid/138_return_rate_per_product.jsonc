@@ -1,0 +1,176 @@
+// Ratios per product that cannot fail on a zero divisor: divide, integerDivide and modulo by nullIf(…, 0) are
+// null instead, coalesce gives a default, and integer operands keep nullIf an integer.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "product_id", "expression": { "key": "product_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "return_rate",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "integer" },
+            "selector": {
+              "source": "order_items",
+              "field": "returned_quantity",
+              "type": { "name": "integer" }
+            }
+          },
+          {
+            "operator": "nullIf",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "return_rate_or_zero",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "divide",
+            "type": { "name": "decimal", "nullable": true },
+            "values": [
+              {
+                "operator": "sum",
+                "type": { "name": "integer" },
+                "selector": {
+                  "source": "order_items",
+                  "field": "returned_quantity",
+                  "type": { "name": "integer" }
+                }
+              },
+              {
+                "operator": "nullIf",
+                "type": { "name": "integer", "nullable": true },
+                "left": {
+                  "operator": "sum",
+                  "type": { "name": "integer" },
+                  "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                },
+                "right": { "type": { "name": "integer" }, "value": 0 }
+              }
+            ]
+          },
+          { "type": { "name": "decimal" }, "value": "0" }
+        ]
+      }
+    },
+    {
+      "alias": "full_boxes",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "right": {
+          "operator": "nullIf",
+          "type": { "name": "integer", "nullable": true },
+          "left": { "param": "box_size", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "loose_units",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "right": {
+          "operator": "nullIf",
+          "type": { "name": "integer", "nullable": true },
+          "left": { "param": "box_size", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "share_of_all_units",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "integer" },
+            "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          },
+          {
+            "operator": "nullIf",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "over": "all",
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "divide",
+            "type": { "name": "decimal", "nullable": true },
+            "values": [
+              {
+                "operator": "sum",
+                "type": { "name": "integer" },
+                "selector": {
+                  "source": "order_items",
+                  "field": "returned_quantity",
+                  "type": { "name": "integer" }
+                }
+              },
+              {
+                "operator": "nullIf",
+                "type": { "name": "integer", "nullable": true },
+                "left": {
+                  "operator": "sum",
+                  "type": { "name": "integer" },
+                  "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                },
+                "right": { "type": { "name": "integer" }, "value": 0 }
+              }
+            ]
+          },
+          { "type": { "name": "decimal" }, "value": "0" }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "product_id", "type": { "name": "uuid" } } }
+  ]
+}
