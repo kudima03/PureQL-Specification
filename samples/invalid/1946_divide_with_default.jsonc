@@ -1,4 +1,5 @@
-// divide with a default property for a zero divisor: write coalesce over a division by nullIf(divisor, 0)
+// divide with a default property for a zero divisor: write coalesce over a division by nullIfEqual(divisor,
+// 0)
 {
   "from": { "entity": "orders" },
   "select": [

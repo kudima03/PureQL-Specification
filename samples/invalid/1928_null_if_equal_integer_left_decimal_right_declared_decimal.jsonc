@@ -1,0 +1,16 @@
+// nullIfEqual of an integer and a decimal declared decimal?: the right operand is only compared, the result
+// is the integer on the left
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    }
+  ]
+}

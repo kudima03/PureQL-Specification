@@ -1,0 +1,15 @@
+// nullIfEqual of a decimal left operand declared integer?: an integer on the right does not narrow the result
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

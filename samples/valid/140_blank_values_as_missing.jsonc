@@ -1,12 +1,12 @@
-// nullIf for every type: blank strings, a zero age, a false flag, a placeholder date, midnight, a login at
-// sign-up and a nil or self-referencing uuid are read as null, and coalesce falls back to the next value.
+// nullIfEqual for every type: blank strings, a zero age, a false flag, a placeholder date, midnight, a login
+// at sign-up and a nil or self-referencing uuid are read as null, and coalesce falls back to the next value.
 {
   "from": { "entity": "users" },
   "where": {
     "operator": "notEqual",
     "type": { "name": "boolean" },
     "left": {
-      "operator": "nullIf",
+      "operator": "nullIfEqual",
       "type": { "name": "string", "nullable": true },
       "left": { "source": "users", "field": "email", "type": { "name": "string" } },
       "right": { "type": { "name": "string" }, "value": "" }
@@ -22,7 +22,7 @@
         "type": { "name": "string" },
         "values": [
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "string", "nullable": true },
             "left": {
               "operator": "trim",
@@ -47,13 +47,13 @@
         "type": { "name": "string", "nullable": true },
         "values": [
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "string", "nullable": true },
             "left": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
             "right": { "type": { "name": "string" }, "value": "" }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "string", "nullable": true },
             "left": {
               "source": "users",
@@ -68,7 +68,7 @@
     {
       "alias": "age",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "integer", "nullable": true },
         "left": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
         "right": { "type": { "name": "integer" }, "value": 0 }
@@ -77,7 +77,7 @@
     {
       "alias": "opted_in",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "boolean", "nullable": true },
         "left": {
           "source": "users",
@@ -90,7 +90,7 @@
     {
       "alias": "trial_start",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "date", "nullable": true },
         "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
         "right": { "type": { "name": "date" }, "value": "9999-12-31" }
@@ -99,7 +99,7 @@
     {
       "alias": "call_time",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "time", "nullable": true },
         "left": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
         "right": { "type": { "name": "time" }, "value": "00:00:00" }
@@ -108,7 +108,7 @@
     {
       "alias": "returned_at",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "datetime", "nullable": true },
         "left": {
           "source": "users",
@@ -121,7 +121,7 @@
     {
       "alias": "referrer_id",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "uuid", "nullable": true },
         "left": { "source": "users", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "type": { "name": "uuid" }, "value": "00000000-0000-0000-0000-000000000000" }
@@ -130,7 +130,7 @@
     {
       "alias": "other_referrer_id",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "uuid", "nullable": true },
         "left": { "source": "users", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
         "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
