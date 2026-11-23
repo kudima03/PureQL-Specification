@@ -104,7 +104,7 @@ PureQL uses the following null semantics:
 - **String matching:** `contains`, `startsWith` and `endsWith` accept nullable operands and return a non-null `boolean` too, so they are conditions as they are. The result is `false` when either operand is `null`, also when both are: unlike `equal`, a `null` string neither contains nor is contained in anything.
 - **Conditions:** `where`, `having`, `join.on`, `and` / `or` / `not`, `if.condition` and aggregate `predicate` require a non-null `boolean`. To use a nullable boolean as a condition, write `equal(x, true)` or `coalesce(x, false)`.
 - **`coalesce`:** non-null as soon as one operand is non-null.
-- **`nullIf`:** accepts nullable operands and is always nullable, even over two non-null ones: `null` when its operands are equal, as `equal` compares them, and its left operand otherwise.
+- **`nullIfEqual`:** accepts nullable operands and is always nullable, even over two non-null ones: `null` when its operands are equal, as `equal` compares them, and its left operand otherwise.
 - **Sorting:** `null` sorts before every value in ascending order and after every value in descending order.
 
 ### Numbers
@@ -353,11 +353,11 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 | `if` | `{ condition: boolean, then: T, else: T }` | `T` (`T?` if either branch is nullable; `decimal` if either branch is) |
 | `coalesce` | `{ values: [T?, …] }` (at least 2) | `T` if any operand is non-null, otherwise `T?`; `decimal` if any operand is |
 | `greatest`, `least` | `{ values: [T, …] }` (at least 2), `T` any type | `T`: the largest or the smallest operand by [the order of `T`](#ordering-and-equality); `decimal` if any operand is |
-| `nullIf` | `{ left: T?, right: T? }`, `T` any type | `T?`, always nullable, with the type of `left`: an `integer` `left` stays `integer?` next to a `decimal` `right` |
+| `nullIfEqual` | `{ left: T?, right: T? }`, `T` any type | `T?`, always nullable, with the type of `left`: an `integer` `left` stays `integer?` next to a `decimal` `right` |
 
 `greatest` and `least` compare the expressions of one row, where the aggregates `max` and `min` compare the rows of a group: the later of two dates, the larger of plan and actual, and a value clamped to a range with `least(greatest(x, low), high)` ([`020_greatest_least.json`](samples/valid/020_greatest_least.json)). They are lifted, so the result is `null` when any operand is `null`; unlike `max` and `min` they do not skip it. To leave an operand out when it is `null`, give it a default with `coalesce`.
 
-`nullIf` is `null` when `left` equals `right` and `left` otherwise, so it reads a value that stands for "missing" as `null`: an empty string, a sentinel, a zero divisor. It is how a division avoids [failing on zero](#execution-errors): `divide` is lifted, so `divide(total, nullIf(limit, 0))` is `null` where `limit` is zero, and `coalesce` over it gives a default. The same guard serves `integerDivide` and `modulo`, and there is no separate division operator for it ([`038_null_if.json`](samples/valid/038_null_if.json)).
+`nullIfEqual` is `null` when `left` equals `right` and `left` otherwise, so it reads a value that stands for "missing" as `null`: an empty string, a sentinel, a zero divisor. It is how a division avoids [failing on zero](#execution-errors): `divide` is lifted, so `divide(total, nullIfEqual(limit, 0))` is `null` where `limit` is zero, and `coalesce` over it gives a default. The same guard serves `integerDivide` and `modulo`, and there is no separate division operator for it ([`038_null_if_equal.json`](samples/valid/038_null_if_equal.json)). Null on any other condition is `if` with a `null` branch.
 
 ### Aggregates
 
@@ -398,14 +398,14 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **Subqueries** behave as if each ran once, before the main query. A subquery's result is an unordered collection: its `orderBy` only decides which rows its `pagination` and `distinctBy` keep, so a subquery has `orderBy` only together with one of them, and `pagination` only with `orderBy`.
 - **Laziness.** An operation raises an error only if it is evaluated, and evaluation is lazy where it matters: `if` evaluates only the branch it takes, `coalesce` stops at its first non-`null` operand, `and` stops at the first `false` condition and `or` at the first `true`. So `if(equal(n, 0), 0, divide(x, n))` never divides by zero.
 - **`greatest`** and **`least`** evaluate every operand and yield the largest or the smallest by [the order of their type](#ordering-and-equality), or `null` when any operand is `null`. Numbers compare by value, and with a `decimal` operand the result is a `decimal` whichever operand it comes from. Operands that are equal are the same value, so it does not matter which one is returned.
-- **`nullIf`** evaluates both operands and compares them with `equal`. It is `null` when they are equal and the value of `left` otherwise. Numbers compare by value, so `nullIf(x, 0)` is `null` for every zero, `integer` or `decimal`; strings compare code point by code point. A `null` `left` gives `null`, and a `null` `right` leaves `left` as it is.
+- **`nullIfEqual`** evaluates both operands and compares them with `equal`. It is `null` when they are equal and the value of `left` otherwise. Numbers compare by value, so `nullIfEqual(x, 0)` is `null` for every zero, `integer` or `decimal`; strings compare code point by code point. A `null` `left` gives `null`, and a `null` `right` leaves `left` as it is.
 
 ### Execution errors
 
 A query fails at execution with an error when it:
 
 - produces an `integer` outside the 64-bit range, or a `decimal` of magnitude 10²⁸ or more;
-- divides by zero in `divide`, `integerDivide` or `modulo` (for `null` instead, divide by `nullIf(divisor, 0)`);
+- divides by zero in `divide`, `integerDivide` or `modulo` (for `null` instead, divide by `nullIfEqual(divisor, 0)`);
 - takes a `substring` with a `start` below 1 or a negative `length`;
 - produces a `date` or `datetime` outside the years 0001–9999;
 - is run with a missing parameter, a parameter of the wrong type, `null` for a non-null parameter, a parameter value not written like a literal of its type (a `decimal` outside its range, a `datetime` not in UTC, and so on), or a `pagination` parameter below its minimum (`skip` < 0, `take` < 1).
@@ -660,7 +660,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`035_nullable_columns.json`](samples/valid/035_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`036_typed_null.json`](samples/valid/036_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
 | [`037_coalesce.json`](samples/valid/037_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
-| [`038_null_if.json`](samples/valid/038_null_if.json) | `nullIf`: a sentinel read as `null`, a division that is `null` instead of failing on a zero divisor, its default through `coalesce`, and the same guard in `where` |
+| [`038_null_if_equal.json`](samples/valid/038_null_if_equal.json) | `nullIfEqual`: a sentinel read as `null`, a division that is `null` instead of failing on a zero divisor, its default through `coalesce`, and the same guard in `where` |
 | [`039_null_checks.json`](samples/valid/039_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
 | [`040_nullable_boolean_conditions.json`](samples/valid/040_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
 | [`041_lifted_operators.json`](samples/valid/041_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |
