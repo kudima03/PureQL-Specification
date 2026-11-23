@@ -1,0 +1,22 @@
+// pagination after a cursor: a page after a row is a where on the sort keys
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": {
+    "after": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+    "take": 20
+  }
+}

@@ -20,7 +20,7 @@
             },
             { "alias": "depth", "expression": { "type": { "name": "integer" }, "value": 0 } }
           ],
-          "pagination": { "skip": 0, "take": 1 }
+          "pagination": { "take": 1 }
         },
         "next": {
           "from": { "entity": "users" },

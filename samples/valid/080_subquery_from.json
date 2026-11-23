@@ -1,0 +1,93 @@
+{
+  "subqueries": [
+    {
+      "name": "recent_orders",
+      "query": {
+        "from": {
+          "entity": "orders"
+        },
+        "where": {
+          "operator": "greaterThanOrEqual",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "right": {
+            "param": "since",
+            "type": {
+              "name": "datetime"
+            }
+          }
+        },
+        "select": [
+          {
+            "alias": "id",
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          },
+          {
+            "alias": "total",
+            "expression": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "subquery": "recent_orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "recent_orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "expression": {
+        "source": "recent_orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "recent_orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      },
+      "direction": "desc"
+    }
+  ],
+  "pagination": {
+    "take": 10
+  }
+}

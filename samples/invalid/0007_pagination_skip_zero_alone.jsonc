@@ -1,0 +1,12 @@
+// pagination that only skips 0 rows: no rows skipped is the absence of skip, and a pagination names skip or take
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+    }
+  ],
+  "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
+  "pagination": { "skip": 0 }
+}

@@ -1,0 +1,29 @@
+// pagination whose skip is computed: it is a number or a parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": {
+    "skip": {
+      "operator": "multiply",
+      "type": { "name": "integer" },
+      "values": [
+        { "param": "page", "type": { "name": "integer" } },
+        { "param": "page_size", "type": { "name": "integer" } }
+      ]
+    },
+    "take": 20
+  }
+}
