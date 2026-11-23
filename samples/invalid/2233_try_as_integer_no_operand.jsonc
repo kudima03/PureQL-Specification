@@ -1,0 +1,10 @@
+// tryAsInteger without an operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "tryAsInteger", "type": { "name": "integer", "nullable": true } }
+    }
+  ]
+}

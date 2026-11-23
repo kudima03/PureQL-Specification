@@ -1,0 +1,15 @@
+// asInteger of a decimal: it reads a string; a decimal becomes an integer with round, floor, ceiling or
+// truncate, which say how
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

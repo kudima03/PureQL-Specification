@@ -1,0 +1,14 @@
+// asInteger of an integer: it reads a string, and takes only the type it changes
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,342 @@
+// as<Type> and tryAs<Type> of a string for every type that is not one, over text parameters: as is non-null
+// over a non-null string and lifted over a nullable one, tryAs is always nullable. The text a type gives
+// through asString reads back as the value, text built with concat or cut with substring is read like any
+// other, and asDate takes a datetime as well as a string.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": {
+      "operator": "asDatetime",
+      "type": { "name": "datetime" },
+      "operand": { "param": "since", "type": { "name": "string" } }
+    }
+  },
+  "select": [
+    {
+      "alias": "integer_parsed",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "param": "integer_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "decimal_parsed",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "param": "decimal_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "boolean_parsed",
+      "expression": {
+        "operator": "asBoolean",
+        "type": { "name": "boolean" },
+        "operand": { "param": "boolean_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "date_parsed",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "param": "date_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "time_parsed",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": { "param": "time_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "datetime_parsed",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "param": "datetime_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "uuid_parsed",
+      "expression": {
+        "operator": "asUuid",
+        "type": { "name": "uuid" },
+        "operand": { "param": "uuid_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "integer_or_null",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "integer_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "decimal_or_null",
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "decimal_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "boolean_or_null",
+      "expression": {
+        "operator": "tryAsBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "param": "boolean_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "date_or_null",
+      "expression": {
+        "operator": "tryAsDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "param": "date_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "time_or_null",
+      "expression": {
+        "operator": "tryAsTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "param": "time_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "datetime_or_null",
+      "expression": {
+        "operator": "tryAsDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "param": "datetime_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "uuid_or_null",
+      "expression": {
+        "operator": "tryAsUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "param": "uuid_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "integer_lifted",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "optional_integer_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "decimal_lifted",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "optional_decimal_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "boolean_lifted",
+      "expression": {
+        "operator": "asBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "param": "optional_boolean_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "date_lifted",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "param": "optional_date_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "time_lifted",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "param": "optional_time_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "datetime_lifted",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "param": "optional_datetime_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "uuid_lifted",
+      "expression": {
+        "operator": "asUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "param": "optional_uuid_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "integer_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "optional_integer_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "decimal_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "optional_decimal_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "boolean_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "param": "optional_boolean_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "date_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "param": "optional_date_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "time_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "param": "optional_time_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "datetime_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "param": "optional_datetime_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "uuid_of_nullable_or_null",
+      "expression": {
+        "operator": "tryAsUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "param": "optional_uuid_text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "round_trip",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          }
+        },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "same_text",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asString",
+          "type": { "name": "string", "nullable": true },
+          "operand": {
+            "operator": "tryAsDecimal",
+            "type": { "name": "decimal", "nullable": true },
+            "operand": { "param": "decimal_text", "type": { "name": "string" } }
+          }
+        },
+        "right": { "param": "decimal_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "first_of_year",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "year",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+              }
+            },
+            { "type": { "name": "string" }, "value": "-01-01" }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "status_code",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "substring",
+          "type": { "name": "string" },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "start": { "type": { "name": "integer" }, "value": 1 },
+          "length": { "type": { "name": "integer" }, "value": 3 }
+        }
+      }
+    },
+    {
+      "alias": "day_of_a_datetime_text",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "asDatetime",
+          "type": { "name": "datetime" },
+          "operand": { "param": "since", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "day_of_a_datetime",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "day_of_a_date_text",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "param": "date_text", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

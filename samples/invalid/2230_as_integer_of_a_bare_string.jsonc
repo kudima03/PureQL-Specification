@@ -1,0 +1,10 @@
+// asInteger of the bare string "12": an operand is an expression, here a literal with its type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "asInteger", "type": { "name": "integer" }, "operand": "12" }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// asInteger of a non-null string declared integer?: text that is not a integer literal fails the query, it
+// does not give null; that is tryAsInteger
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

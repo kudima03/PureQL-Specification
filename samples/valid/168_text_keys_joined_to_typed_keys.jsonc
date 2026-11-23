@@ -1,5 +1,5 @@
-// A key stored as text joined to a typed key: tryParseUuid and tryParseDecimal in join.on, where text that is
-// not a literal of the type gives null and matches nothing, and parseInteger of a parameter in where.
+// A key stored as text joined to a typed key: tryAsUuid and tryAsDecimal in join.on, where text that is not a
+// literal of the type gives null and matches nothing, and asInteger of a parameter in where.
 {
   "from": { "entity": "order_items" },
   "joins": [
@@ -11,7 +11,7 @@
         "type": { "name": "boolean" },
         "left": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } },
         "right": {
-          "operator": "tryParseUuid",
+          "operator": "tryAsUuid",
           "type": { "name": "uuid", "nullable": true },
           "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
         }
@@ -24,7 +24,7 @@
         "operator": "equal",
         "type": { "name": "boolean" },
         "left": {
-          "operator": "tryParseDecimal",
+          "operator": "tryAsDecimal",
           "type": { "name": "decimal", "nullable": true },
           "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
         },
@@ -37,7 +37,7 @@
     "type": { "name": "boolean" },
     "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
     "right": {
-      "operator": "parseInteger",
+      "operator": "asInteger",
       "type": { "name": "integer" },
       "operand": { "param": "largest_quantity", "type": { "name": "string" } }
     }
@@ -51,7 +51,7 @@
         "operator": "equal",
         "type": { "name": "boolean" },
         "left": {
-          "operator": "tryParseUuid",
+          "operator": "tryAsUuid",
           "type": { "name": "uuid", "nullable": true },
           "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
         },
@@ -61,7 +61,7 @@
     {
       "alias": "coupon_amount",
       "expression": {
-        "operator": "tryParseDecimal",
+        "operator": "tryAsDecimal",
         "type": { "name": "decimal", "nullable": true },
         "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
       }
@@ -70,7 +70,7 @@
   "orderBy": [
     {
       "expression": {
-        "operator": "tryParseDecimal",
+        "operator": "tryAsDecimal",
         "type": { "name": "decimal", "nullable": true },
         "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
       },

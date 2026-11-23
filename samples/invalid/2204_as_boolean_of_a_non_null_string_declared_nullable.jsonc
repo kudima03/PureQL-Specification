@@ -1,0 +1,15 @@
+// asBoolean of a non-null string declared boolean?: text that is not a boolean literal fails the query, it
+// does not give null; that is tryAsBoolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

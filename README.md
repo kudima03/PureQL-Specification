@@ -102,7 +102,7 @@ PureQL uses the following null semantics:
 - **`if`:** the result is nullable when either branch is nullable, and its value is the value of the branch taken, so `if(true, 1, null)` is `1`.
 - **Comparisons:** `equal`, `notEqual`, ordering comparisons and `in` accept nullable operands and return a non-null `boolean`. `null == null` is `true`, and any ordering comparison against `null` is `false`. A `null` value is `in` a list exactly when the list contains `null`, which only a nullable subquery column can. This holds in every clause, `join.on` included.
 - **String matching:** `contains`, `startsWith` and `endsWith` accept nullable operands and return a non-null `boolean` too, so they are conditions as they are. The result is `false` when either operand is `null`, also when both are: unlike `equal`, a `null` string neither contains nor is contained in anything.
-- **Parsing:** `parse…` is lifted like the other conversions. `tryParse…` accepts a nullable string and is always nullable: `null` when the string is `null` or is not written as a literal of the type.
+- **Reading text:** `asInteger` … `asUuid` of a string are lifted like the other conversions. `tryAs…` accepts a nullable string and is always nullable: `null` when the string is `null` or is not written as a literal of the type.
 - **Conditions:** `where`, `having`, `join.on`, `and` / `or` / `not`, `if.condition` and aggregate `predicate` require a non-null `boolean`. To use a nullable boolean as a condition, write `equal(x, true)` or `coalesce(x, false)`.
 - **`coalesce`:** non-null as soon as one operand is non-null.
 - **`nullIf`:** accepts nullable operands and is always nullable, even over two non-null ones: `null` when its operands are equal, as `equal` compares them, and its left operand otherwise.
@@ -356,13 +356,19 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 | Operator | Shape | Result |
 |---|---|---|
 | `asString` | `{ operand: T }`, `T` any type but `string` | `string`: the value as a literal of `T` is written |
-| `asDate` | `{ operand: datetime }` | `date`: its day, in UTC |
-| `asTime` | `{ operand: datetime }` | `time`: its time of day, in UTC |
-| `asDatetime` | `{ operand: date }` | `datetime`: midnight of that day, in UTC |
-| `parseInteger`, `parseDecimal`, `parseBoolean`, `parseDate`, `parseTime`, `parseDatetime`, `parseUuid` | `{ operand: string }` | the type in the name. Text that is not a literal of it is an [execution error](#execution-errors) |
-| `tryParseInteger`, `tryParseDecimal`, `tryParseBoolean`, `tryParseDate`, `tryParseTime`, `tryParseDatetime`, `tryParseUuid` | `{ operand: string? }` | the type in the name, always nullable: `null` for text that is not a literal of it |
+| `asDate` | `{ operand: datetime }` / `{ operand: string }` | `date`: the day of a `datetime`, in UTC, or the date a string spells |
+| `asTime` | `{ operand: datetime }` / `{ operand: string }` | `time`: the time of day of a `datetime`, in UTC, or the time a string spells |
+| `asDatetime` | `{ operand: date }` / `{ operand: string }` | `datetime`: midnight of a `date`, in UTC, or the instant a string spells |
+| `asInteger`, `asDecimal`, `asBoolean`, `asUuid` | `{ operand: string }` | the type in the name: the value a string spells |
+| `tryAsInteger`, `tryAsDecimal`, `tryAsBoolean`, `tryAsDate`, `tryAsTime`, `tryAsDatetime`, `tryAsUuid` | `{ operand: string? }` | the type in the name, always nullable: `null` for text that is not a literal of it |
 
-`asString` and the conversions between temporal types never fail, and each takes only the types it changes: there is no `asString` of a `string` and no `asDate` of a `date`. The other conversions need no operator of their own. An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. Parsing is the one conversion that depends on the data: `parse…` fails the query on text it cannot read, for values that must be right, and `tryParse…` gives `null` instead, so that dirty source data does not break a whole report; `coalesce` over it supplies a default. The text each type gives, and reads, is defined under [Conversion results](#conversion-results).
+Each `as…` operator yields the type in its name and takes only the types it changes: there is no `asString` of a `string` and no `asDate` of a `date`.
+
+- **`asString` and the conversions between temporal types never fail.**
+- **Reading a string depends on the data.** `as…` of a string is an [execution error](#execution-errors) when the text is not a literal of the type, for values that must be right. `tryAs…` gives `null` instead, so that dirty source data does not break a whole report, and `coalesce` over it supplies a default. The `tryAs…` operators read only strings, since nothing else can fail.
+- **The other conversions need no operator.** An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. So `asInteger`, `asDecimal`, `asBoolean` and `asUuid` take a string only.
+
+The text each type gives, and reads, is defined under [Conversion results](#conversion-results).
 
 ### Conditional and null handling
 
@@ -426,7 +432,7 @@ A query fails at execution with an error when it:
 - divides by zero in `divide`, `integerDivide` or `modulo` (for `null` instead, divide by `nullIf(divisor, 0)`);
 - takes the `sqrt` of a negative number; the `ln`, `log10` or `log` of a number that is not positive; a `log` to a `base` that is not positive or is `1`; a `power` of zero to a negative `exponent`, or of a negative number to an `exponent` that is not a whole number;
 - takes a `substring` with a `start` below 1 or a negative `length`;
-- parses, with a `parse…` operator, a string that is not written as a literal of the type;
+- reads, with an `as…` operator, a string that is not written as a literal of the type;
 - produces a `date` or `datetime` outside the years 0001–9999;
 - is run with a missing parameter, a parameter of the wrong type, `null` for a non-null parameter, a parameter value not written like a literal of its type (a `decimal` outside its range, a `datetime` not in UTC, and so on), or a `pagination` parameter below its minimum (`skip` < 0, `take` < 1).
 
@@ -570,13 +576,13 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 
 `asDate` and `asTime` read a `datetime` in UTC, as it is written: for `2024-01-31T23:30:00Z` they give `2024-01-31` and `23:30:00`. `asDatetime` gives midnight UTC of a `date`: `2024-01-31T00:00:00Z`. So `asDatetime(asDate(dt))` equals `startOfDay(dt)`, a `datetime` is grouped or joined by its day with `asDate`, and a `date` and a `time` are combined into an instant with `datetimeAddSeconds(asDatetime(d), timeDiffSeconds(t, 00:00:00))`.
 
-`parse…` and `tryParse…` read exactly the text that `asString` writes for the type, the one spelling in the table above, and nothing else:
+`as…` of a string and `tryAs…` read exactly the text that `asString` writes for the type, the one spelling in the table above, and nothing else:
 
 - an `integer` within 64 bits and a `decimal` within its 28 digits; a real calendar `date` from year 0001; a `datetime` in UTC with `Z`; a `uuid` in lower case;
-- no surrounding spaces, no `+`, no leading zeros, no trailing zeros in a fraction, no exponent, no other letter case: ` 12`, `+5`, `007`, `1.50`, `1e3`, `TRUE`, `2024-1-5`, `2024-02-30`, `18:30`, `18:30:00.500` and `2024-01-31T18:30:00+00:00` do not parse. This is the rule a [parameter](#parameters) value follows;
-- the empty string does not parse as any type.
+- no surrounding spaces, no `+`, no leading zeros, no trailing zeros in a fraction, no exponent, no other letter case: ` 12`, `+5`, `007`, `1.50`, `1e3`, `TRUE`, `2024-1-5`, `2024-02-30`, `18:30`, `18:30:00.500` and `2024-01-31T18:30:00+00:00` are not read. This is the rule a [parameter](#parameters) value follows;
+- the empty string is not a literal of any of these types.
 
-So `parseDecimal(asString(x))` is `x` and `asString(parseDecimal(s))` is `s` for every text that parses. Text in a wider format is cleaned first, e.g. with `trim`; a postal code such as `01234` is not an `integer` literal and stays a string. `parse…` of text that does not parse is an [execution error](#execution-errors), and of `null` is `null`. `tryParse…` gives `null` in both cases and never fails, so `equal(tryParseInteger(s), null)` finds the rows that hold something else.
+So `asDecimal(asString(x))` is `x`, and `asString(asDecimal(s))` is `s` for every text that is read. Text in a wider format is cleaned first, e.g. with `trim`; a postal code such as `01234` is not an `integer` literal and stays a string. `as…` of any other text is an [execution error](#execution-errors), and of `null` is `null`. `tryAs…` gives `null` in both cases and never fails, so `equal(tryAsInteger(s), null)` finds the rows that hold something else.
 
 ### Aggregate evaluation
 
@@ -714,7 +720,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`034_datetime_utc.json`](samples/valid/034_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
 | [`035_date_parts.json`](samples/valid/035_date_parts.json) | Parts of a `date`, a `datetime` and a `time` as `integer` columns, lifted over a nullable field, and weekend orders in `where` |
 | [`036_conversions.json`](samples/valid/036_conversions.json) | `asString` / `asDate` / `asTime` / `asDatetime`: a label built from a date and a decimal, a nullable date as text, the day and the time of a `datetime`, midnight of a `date`, and a `datetime` filtered by its day in `where` |
-| [`037_parsing.json`](samples/valid/037_parsing.json) | `parse…` / `tryParse…`: a text column read as an `integer`, failing the query or giving `null` on other text, a default through `coalesce` after `trim`, a nullable string, and a date sent as text in `where` |
+| [`037_reading_text.json`](samples/valid/037_reading_text.json) | `as…` of a string and `tryAs…`: a text column read as an `integer`, failing the query or giving `null` on other text, a default through `coalesce` after `trim`, a nullable string, and a date sent as text in `where` |
 | [`038_nullable_columns.json`](samples/valid/038_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`039_typed_null.json`](samples/valid/039_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
 | [`040_coalesce.json`](samples/valid/040_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |

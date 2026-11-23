@@ -1,0 +1,14 @@
+// tryAsUuid declared uuid: it is null whenever the text is not a uuid literal, so it is always nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsUuid",
+        "type": { "name": "uuid" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

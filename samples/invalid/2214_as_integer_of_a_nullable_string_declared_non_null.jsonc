@@ -1,0 +1,14 @@
+// asInteger of a nullable string declared integer: it is lifted, so it is integer?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

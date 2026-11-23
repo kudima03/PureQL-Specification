@@ -1,0 +1,5 @@
+// asInteger without an operand
+{
+  "from": { "entity": "users" },
+  "select": [ { "alias": "c", "expression": { "operator": "asInteger", "type": { "name": "integer" } } } ]
+}

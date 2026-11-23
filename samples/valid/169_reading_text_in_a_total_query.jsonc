@@ -1,0 +1,101 @@
+// Reading text in a total query: tryAs inside predicates and selectors, where rows that cannot be read are
+// skipped as nulls, and asInteger and asDatetime of a parameter next to the aggregates.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+    "right": {
+      "operator": "asDatetime",
+      "type": { "name": "datetime" },
+      "operand": { "param": "until", "type": { "name": "string" } }
+    }
+  },
+  "aggregate": [
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "numeric_tiers",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "tryAsInteger",
+            "type": { "name": "integer", "nullable": true },
+            "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+        }
+      }
+    },
+    {
+      "alias": "highest_tier",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "tryAsInteger",
+          "type": { "name": "integer", "nullable": true },
+          "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "average_postal_number",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": {
+          "operator": "tryAsInteger",
+          "type": { "name": "integer", "nullable": true },
+          "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "target",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "param": "target_text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "target_reached",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" } },
+        "right": {
+          "operator": "asInteger",
+          "type": { "name": "integer" },
+          "operand": { "param": "target_text", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "all_mobiles_are_numbers",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "tryAsInteger",
+            "type": { "name": "integer", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "mobile",
+              "type": { "name": "string", "nullable": true }
+            }
+          },
+          "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+        }
+      }
+    }
+  ]
+}

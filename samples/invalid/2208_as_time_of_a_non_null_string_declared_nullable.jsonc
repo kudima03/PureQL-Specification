@@ -1,0 +1,15 @@
+// asTime of a non-null string declared time?: text that is not a time literal fails the query, it does not
+// give null; that is tryAsTime
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

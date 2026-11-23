@@ -1,0 +1,14 @@
+// tryAsInteger of a decimal: the try forms read only strings
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

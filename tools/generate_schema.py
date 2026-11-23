@@ -62,7 +62,7 @@ Null semantics:
     non-null boolean, false when either operand is null;
   - nullIf accepts nullable operands and is always nullable: null when its
     operands are equal, as `equal` compares them, otherwise its left operand;
-  - tryParse<Type> accepts a nullable string and is always nullable: null when
+  - tryAs<Type> accepts a nullable string and is always nullable: null when
     the string is null or is not a literal of the type;
   - every condition (where, having, on, and/or/not, if.condition, aggregate
     predicate) requires a non-null boolean.
@@ -469,20 +469,27 @@ for ctx, rules in CONTEXTS.items():
     operand = by_family("asString", "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
     signature("asString", "string", False, {"properties": {"operand": NON_NULL}}, operand)
     signature("asString", "string", True, some(["operand"], NULLABLE), operand)
-    # Between the temporal types, in UTC: the day or the time of day of a datetime,
-    # and midnight of a date.
-    lifted("asDate", {"operand": "datetime"}, "date")
-    lifted("asTime", {"operand": "datetime"}, "time")
-    lifted("asDatetime", {"operand": "date"}, "datetime")
-    # Parsing reads a string written as asString writes a value of the type.
-    # parse<Type> is lifted and fails the query on any other text; tryParse<Type>
-    # takes a nullable string and yields null instead, so it is always nullable.
-    for t in families:
-        for sub in reversed(members(t)):
-            name = sub[0].upper() + sub[1:]
-            lifted(f"parse{name}", {"operand": "string"}, sub)
-            shape(f"tryParse{name}", ["operand"], {"operand": expr("string", ctx, True)})
-            signature(f"tryParse{name}", sub, True)
+    # asDate, asTime and asDatetime convert between the temporal types, in UTC (the
+    # day or the time of day of a datetime, midnight of a date), and read a string
+    # written as asString writes a value of the type. The type the operand declares
+    # picks the position.
+    for name, source in [("asDate", "datetime"), ("asTime", "datetime"), ("asDatetime", "date")]:
+        sources = [source, "string"]
+        shape(name, ["operand"], {"operand": check(f"accepts.{source}OrString", sources)})
+        operand = by_family(name, "operand", sources, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
+        signature(name, name[2:].lower(), False, {"properties": {"operand": NON_NULL}}, operand)
+        signature(name, name[2:].lower(), True, some(["operand"], NULLABLE), operand)
+    # The other types are read from a string only: an integer is already a decimal,
+    # and a decimal becomes an integer by rounding. as<Type> of a string is lifted and
+    # fails the query on text that is not a literal of the type.
+    for t in ["integer", "decimal", "boolean", "uuid"]:
+        lifted(f"as{t.capitalize()}", {"operand": "string"}, t)
+    # tryAs<Type> reads a nullable string and yields null instead of failing, so it
+    # is always nullable. It takes only strings: no other conversion can fail.
+    for t in TYPES:
+        if t != "string":
+            shape(f"tryAs{t.capitalize()}", ["operand"], {"operand": expr("string", ctx, True)})
+            signature(f"tryAs{t.capitalize()}", t, True)
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:

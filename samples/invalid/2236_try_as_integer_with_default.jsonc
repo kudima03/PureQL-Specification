@@ -1,0 +1,15 @@
+// tryAsInteger with a default: the value for text that cannot be read is given with coalesce
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "default": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

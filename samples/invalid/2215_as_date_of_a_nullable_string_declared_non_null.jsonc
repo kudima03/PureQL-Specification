@@ -1,0 +1,14 @@
+// asDate of a nullable string declared date
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

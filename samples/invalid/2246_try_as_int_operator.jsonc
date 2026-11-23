@@ -1,0 +1,14 @@
+// tryAsInt is not an operator: the type is named in full, tryAsInteger
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsInt",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// asDatetime of a non-null string declared datetime?: text that is not a datetime literal fails the query, it
+// does not give null; that is tryAsDatetime
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}
