@@ -1,0 +1,49 @@
+// recursive written as a flag on a query: the query would have no next
+{
+  "subqueries": [
+    {
+      "name": "referrals",
+      "query": {
+        "from": { "entity": "users" },
+        "where": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+          "right": { "param": "user_id", "type": { "name": "uuid" } }
+        },
+        "select": [
+          { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "first_name",
+            "expression": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          },
+          { "alias": "depth", "expression": { "type": { "name": "integer" }, "value": 0 } }
+        ]
+      },
+      "recursive": true
+    }
+  ],
+  "from": { "subquery": "referrals" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "referrals", "field": "depth", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "first_name",
+      "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } }
+    },
+    {
+      "alias": "depth",
+      "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } } },
+    { "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } } },
+    { "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
