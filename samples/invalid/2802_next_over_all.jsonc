@@ -1,0 +1,15 @@
+// next with over "all"
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "over": "all"
+      }
+    }
+  ]
+}

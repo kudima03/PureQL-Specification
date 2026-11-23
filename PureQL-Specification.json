@@ -1736,6 +1736,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         }
       },
       "additionalProperties": false
@@ -1967,6 +1970,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         }
       },
       "additionalProperties": false
@@ -6446,6 +6452,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -6666,6 +6675,36 @@
           "$ref": "#/$defs/expr@total"
         }
       ]
+    },
+    "buckets": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.integer"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/literal"
+          },
+          {
+            "properties": {
+              "value": {
+                "minimum": 1
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
     },
     "ceiling.integer.nullable@group": {
       "properties": {
@@ -9312,6 +9351,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": {
           "$ref": "#/$defs/string.nullable@row"
         },
@@ -9726,6 +9768,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         }
       },
       "additionalProperties": false
@@ -9755,6 +9800,36 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "cumulativeDistribution@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "cumulativeDistribution"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
         }
       },
       "additionalProperties": false
@@ -15022,6 +15097,36 @@
         }
       }
     },
+    "denseRank@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "denseRank"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false
+    },
     "divide.decimal.nullable@group": {
       "required": [
         "values"
@@ -17806,6 +17911,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true,
         "orderBy": {
           "type": "array",
@@ -18372,6 +18480,57 @@
       "else": {
         "$ref": "#/$defs/param"
       }
+    },
+    "frame": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "preceding": {
+          "$ref": "#/$defs/frameRows"
+        },
+        "following": {
+          "$ref": "#/$defs/frameRows"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "not": {
+        "type": "object",
+        "required": [
+          "preceding",
+          "following"
+        ],
+        "properties": {
+          "preceding": {
+            "const": "all"
+          },
+          "following": {
+            "const": "all"
+          }
+        }
+      }
+    },
+    "frameRows": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854776000
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/param"
+            }
+          ]
+        }
+      ]
     },
     "from": {
       "type": "object",
@@ -27142,6 +27301,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true,
         "orderBy": {
           "type": "array",
@@ -34449,6 +34611,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -35198,6 +35363,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         },
         "selector": true
       },
@@ -36900,6 +37068,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         },
         "selector": true
       },
@@ -38703,6 +38874,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -40448,6 +40622,560 @@
         }
       ]
     },
+    "next.boolean.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.boolean@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "default": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      }
+    },
+    "next.date.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.date@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date@row"
+        },
+        "default": {
+          "$ref": "#/$defs/date@row"
+        }
+      }
+    },
+    "next.datetime.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.datetime@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime@row"
+        },
+        "default": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      }
+    },
+    "next.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.decimal@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "next.integer.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.integer@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "default": {
+          "$ref": "#/$defs/integer@row"
+        }
+      }
+    },
+    "next.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.string@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        },
+        "default": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "next.time.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.time@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time@row"
+        },
+        "default": {
+          "$ref": "#/$defs/time@row"
+        }
+      }
+    },
+    "next.uuid.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "next.uuid@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/uuid@row"
+        },
+        "default": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      }
+    },
+    "next@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "next"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "offset": {
+          "$ref": "#/$defs/offset"
+        },
+        "default": true,
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/next.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/next.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/next.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/next.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/next.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/next.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/next.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/next.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/next.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
     "not@group": {
       "type": "object",
       "required": [
@@ -41404,6 +42132,40 @@
         }
       ]
     },
+    "ntile@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "buckets",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "ntile"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "buckets": {
+          "$ref": "#/$defs/buckets"
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false
+    },
     "nullIfEqual.boolean.nullable@group": {
       "properties": {
         "left": {
@@ -42179,6 +42941,36 @@
           }
         }
       ]
+    },
+    "offset": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.integer"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/literal"
+          },
+          {
+            "properties": {
+              "value": {
+                "minimum": 2
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
     },
     "operator@group": {
       "properties": {
@@ -43845,7 +44637,15 @@
             "standardDeviationSample",
             "concatAll",
             "any",
-            "all"
+            "all",
+            "rowNumber",
+            "rank",
+            "denseRank",
+            "percentRank",
+            "cumulativeDistribution",
+            "ntile",
+            "previous",
+            "next"
           ]
         }
       },
@@ -45264,6 +46064,102 @@
           },
           "then": {
             "$ref": "#/$defs/all@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "rowNumber"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/rowNumber@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "rank"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/rank@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "denseRank"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/denseRank@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentRank"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentRank@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "cumulativeDistribution"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/cumulativeDistribution@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ntile"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ntile@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "previous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/previous@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "next"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/next@projection"
           }
         }
       ]
@@ -48309,6 +49205,29 @@
       },
       "additionalProperties": false
     },
+    "orderedWindow": {
+      "type": "object",
+      "required": [
+        "orderBy"
+      ],
+      "properties": {
+        "partitionBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expr@row"
+          },
+          "minItems": 1
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/orderItem@row"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "padEnd.string.nullable@group": {
       "properties": {
         "operand": {
@@ -48994,6 +49913,36 @@
       },
       "additionalProperties": false
     },
+    "percentRank@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentRank"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false
+    },
     "percentileContinuous.date.nullable@group": {
       "properties": {
         "selector": {
@@ -49507,6 +50456,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         },
         "selector": true,
         "fraction": {
@@ -50662,6 +51614,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true,
         "fraction": {
           "$ref": "#/$defs/fraction"
@@ -51580,6 +52535,560 @@
         }
       ]
     },
+    "previous.boolean.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.boolean@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "default": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      }
+    },
+    "previous.date.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.date@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/date@row"
+        },
+        "default": {
+          "$ref": "#/$defs/date@row"
+        }
+      }
+    },
+    "previous.datetime.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.datetime@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/datetime@row"
+        },
+        "default": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      }
+    },
+    "previous.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.decimal@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "default": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "previous.integer.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.integer@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "default": {
+          "$ref": "#/$defs/integer@row"
+        }
+      }
+    },
+    "previous.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.string@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        },
+        "default": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "previous.time.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.time@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/time@row"
+        },
+        "default": {
+          "$ref": "#/$defs/time@row"
+        }
+      }
+    },
+    "previous.uuid.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        },
+        "default": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "required": [
+                  "default"
+                ]
+              }
+            },
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "previous.uuid@projection": {
+      "required": [
+        "default"
+      ],
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/uuid@row"
+        },
+        "default": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      }
+    },
+    "previous@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "previous"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "offset": {
+          "$ref": "#/$defs/offset"
+        },
+        "default": true,
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/previous.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
     "quarter.date@group": {
       "properties": {
         "operand": {
@@ -52191,6 +53700,36 @@
           }
         }
       }
+    },
+    "rank@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "rank"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false
     },
     "regexGroup": {
       "type": "object",
@@ -54010,6 +55549,36 @@
       },
       "additionalProperties": false
     },
+    "rowNumber@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "over"
+      ],
+      "properties": {
+        "operator": {
+          "const": "rowNumber"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "over": {
+          "$ref": "#/$defs/orderedWindow"
+        }
+      },
+      "additionalProperties": false
+    },
     "second.datetime@group": {
       "properties": {
         "operand": {
@@ -55675,6 +57244,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -55810,6 +57382,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         },
         "selector": {
           "$ref": "#/$defs/decimal.nullable@row"
@@ -60557,6 +62132,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -64579,6 +66157,9 @@
         "predicate": {
           "$ref": "#/$defs/boolean@row"
         },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
         "selector": true
       },
       "additionalProperties": false,
@@ -64714,6 +66295,9 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
         },
         "selector": {
           "$ref": "#/$defs/decimal.nullable@row"
@@ -65876,6 +67460,39 @@
           }
         }
       ]
+    },
+    "window": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "partitionBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/expr@row"
+          },
+          "minItems": 1
+        },
+        "orderBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/orderItem@row"
+          },
+          "minItems": 1
+        },
+        "frame": {
+          "$ref": "#/$defs/frame"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "dependentRequired": {
+        "orderBy": [
+          "frame"
+        ],
+        "frame": [
+          "orderBy"
+        ]
+      }
     },
     "year.date@group": {
       "properties": {

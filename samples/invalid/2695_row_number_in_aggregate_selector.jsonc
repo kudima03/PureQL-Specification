@@ -1,0 +1,25 @@
+// rowNumber as the selector of an aggregate: an aggregate body is in row context, which has no window
+// functions
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "rowNumber",
+          "type": { "name": "integer" },
+          "over": {
+            "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+            "orderBy": [
+              { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+              { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

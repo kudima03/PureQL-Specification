@@ -1,0 +1,399 @@
+{
+  "subqueries": [
+    {
+      "name": "monthly",
+      "query": {
+        "from": {
+          "entity": "orders"
+        },
+        "groupBy": [
+          {
+            "alias": "month",
+            "expression": {
+              "operator": "startOfMonth",
+              "type": {
+                "name": "date"
+              },
+              "operand": {
+                "source": "orders",
+                "field": "order_date",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          }
+        ],
+        "select": [
+          {
+            "alias": "month",
+            "expression": {
+              "key": "month",
+              "type": {
+                "name": "date"
+              }
+            }
+          },
+          {
+            "alias": "revenue",
+            "expression": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          },
+          {
+            "alias": "orders",
+            "expression": {
+              "operator": "count",
+              "type": {
+                "name": "integer"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": {
+    "subquery": "monthly"
+  },
+  "select": [
+    {
+      "alias": "month",
+      "expression": {
+        "source": "monthly",
+        "field": "month",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "source": "monthly",
+        "field": "revenue",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "source": "monthly",
+        "field": "orders",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "cumulative_revenue",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "monthly",
+          "field": "revenue",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "frame": {
+            "preceding": "all"
+          }
+        }
+      }
+    },
+    {
+      "alias": "revenue_year_to_date",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "monthly",
+          "field": "revenue",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "year",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "frame": {
+            "preceding": "all"
+          }
+        }
+      }
+    },
+    {
+      "alias": "average_of_3_months",
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "monthly",
+          "field": "revenue",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "frame": {
+            "preceding": 2
+          }
+        }
+      }
+    },
+    {
+      "alias": "previous_month_revenue",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "source": "monthly",
+          "field": "revenue",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "change",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "monthly",
+            "field": "revenue",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "previous",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "operand": {
+              "source": "monthly",
+              "field": "revenue",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            "over": {
+              "orderBy": [
+                {
+                  "expression": {
+                    "source": "monthly",
+                    "field": "month",
+                    "type": {
+                      "name": "date"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "share_of_year",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "monthly",
+            "field": "revenue",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "left": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "monthly",
+                "field": "revenue",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "over": {
+                "partitionBy": [
+                  {
+                    "operator": "year",
+                    "type": {
+                      "name": "integer"
+                    },
+                    "operand": {
+                      "source": "monthly",
+                      "field": "month",
+                      "type": {
+                        "name": "date"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "rank_in_year",
+      "expression": {
+        "operator": "rank",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "year",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "monthly",
+                "field": "month",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "monthly",
+                "field": "revenue",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "monthly",
+        "field": "month",
+        "type": {
+          "name": "date"
+        }
+      }
+    }
+  ]
+}

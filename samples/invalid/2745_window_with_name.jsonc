@@ -1,0 +1,15 @@
+// A window referenced by name: a window is written on each function that reads it
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": { "name": "per_user" }
+      }
+    }
+  ]
+}

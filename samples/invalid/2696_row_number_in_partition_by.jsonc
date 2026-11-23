@@ -1,0 +1,35 @@
+// rowNumber as a partition key: the keys of a window are row expressions
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "rowNumber",
+              "type": { "name": "integer" },
+              "over": {
+                "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+                "orderBy": [
+                  {
+                    "expression": {
+                      "source": "orders",
+                      "field": "ordered_at",
+                      "type": { "name": "datetime" }
+                    }
+                  },
+                  { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

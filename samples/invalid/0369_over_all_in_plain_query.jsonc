@@ -1,4 +1,4 @@
-// over: "all" in a plain query: aggregates there always run over all rows, so over is not written
+// over: "all" in a plain query: aggregates there run over all rows without over, which is only ever a window
 {
   "from": { "entity": "orders" },
   "select": [

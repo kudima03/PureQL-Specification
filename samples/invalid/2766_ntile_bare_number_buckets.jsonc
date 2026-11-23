@@ -1,0 +1,21 @@
+// ntile whose buckets is a bare number: it is a typed literal or a parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": 4,
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}

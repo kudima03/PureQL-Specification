@@ -1,0 +1,19 @@
+// previous of an integer declared decimal: it keeps the type of its operand
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}

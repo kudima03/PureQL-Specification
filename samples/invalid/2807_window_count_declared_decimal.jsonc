@@ -1,0 +1,14 @@
+// count over a window declared decimal
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "decimal" },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}

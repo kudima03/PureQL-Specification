@@ -1,0 +1,29 @@
+// previous whose offset is computed
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "offset": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 1 },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    }
+  ]
+}

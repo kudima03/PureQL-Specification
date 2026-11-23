@@ -1,0 +1,20 @@
+// previous of an integer with a decimal default
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "default": { "type": { "name": "decimal" }, "value": "0.5" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}
