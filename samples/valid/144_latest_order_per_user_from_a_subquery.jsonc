@@ -1,0 +1,146 @@
+// Each user's latest order as columns of a grouped subquery, where last keeps the selector type and is
+// nullable only over a nullable field; left joined, every column of it becomes nullable.
+{
+  "subqueries": [
+    {
+      "name": "latest",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+          {
+            "alias": "last_order_id",
+            "expression": {
+              "operator": "last",
+              "type": { "name": "uuid" },
+              "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+              "orderBy": [
+                {
+                  "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+              ]
+            }
+          },
+          {
+            "alias": "last_total",
+            "expression": {
+              "operator": "last",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "orderBy": [
+                {
+                  "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+              ]
+            }
+          },
+          {
+            "alias": "last_status",
+            "expression": {
+              "operator": "last",
+              "type": { "name": "string" },
+              "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+              "orderBy": [
+                {
+                  "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+              ]
+            }
+          },
+          {
+            "alias": "last_shipped_date",
+            "expression": {
+              "operator": "last",
+              "type": { "name": "date", "nullable": true },
+              "selector": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "orderBy": [
+                {
+                  "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "latest",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "latest", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "email", "expression": { "source": "users", "field": "email", "type": { "name": "string" } } },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "latest", "field": "orders", "type": { "name": "integer", "nullable": true } },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    },
+    {
+      "alias": "last_order_id",
+      "expression": {
+        "source": "latest",
+        "field": "last_order_id",
+        "type": { "name": "uuid", "nullable": true }
+      }
+    },
+    {
+      "alias": "last_total",
+      "expression": {
+        "source": "latest",
+        "field": "last_total",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    },
+    {
+      "alias": "last_status",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "latest", "field": "last_status", "type": { "name": "string", "nullable": true } },
+          { "type": { "name": "string" }, "value": "no orders" }
+        ]
+      }
+    },
+    {
+      "alias": "last_shipped_date",
+      "expression": {
+        "source": "latest",
+        "field": "last_shipped_date",
+        "type": { "name": "date", "nullable": true }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } } ]
+}

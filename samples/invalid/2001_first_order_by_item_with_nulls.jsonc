@@ -1,0 +1,28 @@
+// first with a nulls property on a sort key: null sorts first in ascending order and last in descending
+// order, always
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          {
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "nulls": "last"
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}
