@@ -1,0 +1,13 @@
+// in over an empty list literal in where: it is false for every row, which is the literal false
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "list": { "type": { "name": "stringList" }, "value": [] }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

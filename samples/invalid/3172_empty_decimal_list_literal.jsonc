@@ -1,0 +1,16 @@
+// An empty decimalList literal: a list literal has at least one value; a set that may be empty is a list
+// parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "list": { "type": { "name": "decimalList" }, "value": [] }
+      }
+    }
+  ]
+}

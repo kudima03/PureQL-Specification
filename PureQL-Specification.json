@@ -31554,6 +31554,7 @@
               "items": {
                 "$ref": "#/$defs/value.boolean"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -31634,6 +31635,7 @@
               "items": {
                 "$ref": "#/$defs/value.date"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -31714,6 +31716,7 @@
               "items": {
                 "$ref": "#/$defs/value.datetime"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -31794,6 +31797,7 @@
               "items": {
                 "$ref": "#/$defs/value.decimal"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -31877,6 +31881,7 @@
               "items": {
                 "$ref": "#/$defs/value.integer"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -31957,6 +31962,7 @@
               "items": {
                 "$ref": "#/$defs/value.string"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -32037,6 +32043,7 @@
               "items": {
                 "$ref": "#/$defs/value.time"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },
@@ -32117,6 +32124,7 @@
               "items": {
                 "$ref": "#/$defs/value.uuid"
               },
+              "minItems": 1,
               "uniqueItems": true
             }
           },

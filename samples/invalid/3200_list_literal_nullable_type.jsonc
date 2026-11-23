@@ -1,0 +1,15 @@
+// A list literal whose type is nullable: a list type is never nullable, and no list is not null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList", "nullable": true }, "value": [ "paid", "new" ] }
+      }
+    }
+  ]
+}

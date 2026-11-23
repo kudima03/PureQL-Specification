@@ -1,0 +1,15 @@
+// A list parameter with a default list
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "param": "statuses", "type": { "name": "stringList" }, "default": [] }
+      }
+    }
+  ]
+}

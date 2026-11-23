@@ -1,0 +1,103 @@
+// List literals of one, two and three values in join.on, where, a group key, having, a predicate, select and
+// orderBy, next to list parameters.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "in",
+            "type": { "name": "boolean" },
+            "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+            "list": { "type": { "name": "stringList" }, "value": [ "gold", "silver" ] }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "list": { "type": { "name": "stringList" }, "value": [ "paid" ] }
+  },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    {
+      "alias": "is_open",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [ "new", "paid" ] }
+      }
+    }
+  ],
+  "having": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "operator": "count", "type": { "name": "integer" } },
+    "list": { "type": { "name": "integerList" }, "value": [ 1, 2, 3 ] }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    { "alias": "is_open", "expression": { "key": "is_open", "type": { "name": "boolean" } } },
+    {
+      "alias": "large",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "in",
+          "type": { "name": "boolean" },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "list": { "param": "round_totals", "type": { "name": "decimalList" } }
+        }
+      }
+    },
+    {
+      "alias": "count_is_listed",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "operator": "count", "type": { "name": "integer" } },
+        "list": { "param": "counts", "type": { "name": "integerList" } }
+      }
+    },
+    {
+      "alias": "country_is_listed",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "key": "country", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [ "DE" ] }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "key": "country", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [ "DE", "FR" ] }
+      }
+    },
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    { "expression": { "key": "is_open", "type": { "name": "boolean" } } }
+  ]
+}

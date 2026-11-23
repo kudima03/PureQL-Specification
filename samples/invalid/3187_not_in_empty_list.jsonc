@@ -1,0 +1,19 @@
+// not in over an empty list literal: it is true for every row, which is no condition at all
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "not",
+        "type": { "name": "boolean" },
+        "condition": {
+          "operator": "in",
+          "type": { "name": "boolean" },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "list": { "type": { "name": "stringList" }, "value": [] }
+        }
+      }
+    }
+  ]
+}

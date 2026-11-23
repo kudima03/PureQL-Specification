@@ -1,0 +1,15 @@
+// A list literal whose only value is an empty list
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [ [] ] }
+      }
+    }
+  ]
+}

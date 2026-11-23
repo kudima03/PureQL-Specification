@@ -1,0 +1,72 @@
+// in over a subquery column that returns no rows, and over one filtered by a list parameter: both may be
+// empty when the query runs, and in is then false.
+{
+  "subqueries": [
+    {
+      "name": "nobody",
+      "query": {
+        "from": { "entity": "users" },
+        "where": { "type": { "name": "boolean" }, "value": false },
+        "select": [
+          { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "name": "chosen",
+      "query": {
+        "from": { "entity": "users" },
+        "where": {
+          "operator": "in",
+          "type": { "name": "boolean" },
+          "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+          "list": { "param": "user_ids", "type": { "name": "uuidList" } }
+        },
+        "select": [
+          { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "or",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "list": { "subquery": "nobody", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "list": { "subquery": "chosen", "field": "id", "type": { "name": "uuid" } }
+      },
+      {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "param": "statuses", "type": { "name": "stringList" } }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "never",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "list": { "subquery": "nobody", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "always_false_written_plainly",
+      "expression": { "type": { "name": "boolean" }, "value": false }
+    }
+  ]
+}

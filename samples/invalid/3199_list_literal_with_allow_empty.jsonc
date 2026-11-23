@@ -1,0 +1,15 @@
+// An empty list literal with an allowEmpty flag
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [], "allowEmpty": true }
+      }
+    }
+  ]
+}

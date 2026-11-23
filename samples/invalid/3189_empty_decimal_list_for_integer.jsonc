@@ -1,0 +1,15 @@
+// An integer in an empty decimalList literal
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "list": { "type": { "name": "decimalList" }, "value": [] }
+      }
+    }
+  ]
+}
