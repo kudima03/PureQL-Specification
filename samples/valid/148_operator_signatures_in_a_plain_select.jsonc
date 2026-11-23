@@ -5570,6 +5570,1184 @@
         "type": { "name": "boolean" },
         "predicate": { "type": { "name": "boolean" }, "value": true }
       }
+    },
+    {
+      "alias": "rowNumber_integer",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "rowNumber_integer_partitioned",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank_integer",
+      "expression": {
+        "operator": "rank",
+        "type": { "name": "integer" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "denseRank_integer",
+      "expression": {
+        "operator": "denseRank",
+        "type": { "name": "integer" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "percentRank_decimal",
+      "expression": {
+        "operator": "percentRank",
+        "type": { "name": "decimal" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "cumulativeDistribution_decimal",
+      "expression": {
+        "operator": "cumulativeDistribution",
+        "type": { "name": "decimal" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "ntile_integer",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "type": { "name": "integer" }, "value": 4 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "ntile_integer_one_bucket",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "type": { "name": "integer" }, "value": 1 },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "ntile_integer_parameter_buckets",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "param": "buckets", "type": { "name": "integer" } },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_integer_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_integer_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_integer_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_integer_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_decimal_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "default": { "type": { "name": "decimal" }, "value": "0.1" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_decimal_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_decimal_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_decimal_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "default": { "type": { "name": "decimal" }, "value": "0.1" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_string_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "default": { "type": { "name": "string" }, "value": "b" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_string_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_string_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_string_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "default": { "type": { "name": "string" }, "value": "b" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_boolean_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "boolean" }, "value": true },
+        "default": { "type": { "name": "boolean" }, "value": false },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_boolean_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean" }, "value": true },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_boolean_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_boolean_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "default": { "type": { "name": "boolean" }, "value": false },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_date_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "default": { "type": { "name": "date" }, "value": "2024-03-01" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_date_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_date_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_date_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null },
+        "default": { "type": { "name": "date" }, "value": "2024-03-01" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_time_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "default": { "type": { "name": "time" }, "value": "17:45:30.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_time_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_time_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_time_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null },
+        "default": { "type": { "name": "time" }, "value": "17:45:30.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_datetime_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "default": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_datetime_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_datetime_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_datetime_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "default": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_uuid_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "uuid" },
+        "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "default": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_uuid_nullable",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_uuid_nullable_of_null",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_uuid_nullable_of_null_with_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "default": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_decimal_with_integer_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "default": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_decimal_nullable_with_integer_default",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "default": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_integer_nullable_offset",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "offset": { "type": { "name": "integer" }, "value": 2 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "previous_integer_parameter_offset",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "offset": { "param": "offset", "type": { "name": "integer" } },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_integer_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_integer_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_integer_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_integer_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_decimal_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "default": { "type": { "name": "decimal" }, "value": "0.1" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_decimal_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_decimal_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_decimal_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "default": { "type": { "name": "decimal" }, "value": "0.1" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_string_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "default": { "type": { "name": "string" }, "value": "b" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_string_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_string_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_string_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "default": { "type": { "name": "string" }, "value": "b" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_boolean_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "boolean" }, "value": true },
+        "default": { "type": { "name": "boolean" }, "value": false },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_boolean_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean" }, "value": true },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_boolean_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_boolean_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "default": { "type": { "name": "boolean" }, "value": false },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_date_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "default": { "type": { "name": "date" }, "value": "2024-03-01" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_date_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_date_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_date_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null },
+        "default": { "type": { "name": "date" }, "value": "2024-03-01" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_time_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "default": { "type": { "name": "time" }, "value": "17:45:30.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_time_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_time_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_time_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null },
+        "default": { "type": { "name": "time" }, "value": "17:45:30.5" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_datetime_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "default": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_datetime_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_datetime_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_datetime_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "default": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_uuid_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "uuid" },
+        "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "default": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_uuid_nullable",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_uuid_nullable_of_null",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_uuid_nullable_of_null_with_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "default": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_decimal_with_integer_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "default": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_decimal_nullable_with_integer_default",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "default": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_integer_nullable_offset",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "offset": { "type": { "name": "integer" }, "value": 2 },
+        "over": { "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ] }
+      }
+    },
+    {
+      "alias": "next_integer_parameter_offset",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "offset": { "param": "offset", "type": { "name": "integer" } },
+        "default": { "type": { "name": "integer" }, "value": -3 },
+        "over": {
+          "partitionBy": [
+            { "type": { "name": "string" }, "value": "a" },
+            { "type": { "name": "date", "nullable": true }, "value": null }
+          ],
+          "orderBy": [
+            { "expression": { "type": { "name": "integer" }, "value": 7 }, "direction": "desc" },
+            { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "count_integer_over_partition",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "count_integer_over_frame_where",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "sum_integer_over_partition",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "sum_decimal_of_null_over_frame",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "average_decimal_of_integer_over_frame",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "average_decimal_nullable_over_frame_where",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "min_date_over_partition",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "max_string_nullable_of_null_over_frame",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "first_uuid_over_frame",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid" },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "last_time_nullable_over_partition_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "median_decimal_over_frame",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": 2 }
+        }
+      }
+    },
+    {
+      "alias": "percentileContinuous_datetime_over_partition",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_integer_over_frame",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" },
+        "over": {
+          "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ],
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": 1, "following": 1 }
+        }
+      }
+    },
+    {
+      "alias": "mode_boolean_over_partition",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "boolean" },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_over_frame",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_over_partition",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "varianceSample_decimal_nullable_over_frame",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "standardDeviationSample_decimal_nullable_over_partition",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "concatAll_string_over_frame",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "any_boolean_over_partition",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "over": { "partitionBy": [ { "type": { "name": "string" }, "value": "a" } ] }
+      }
+    },
+    {
+      "alias": "all_boolean_over_frame",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "over": {
+          "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+          "frame": { "following": "all" }
+        }
+      }
     }
   ]
 }

@@ -1,0 +1,7 @@
+// rank with over "all"
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "rank", "type": { "name": "integer" }, "over": "all" } }
+  ]
+}

@@ -1,0 +1,15 @@
+// An empty over: a window that names nothing is all rows, which is the absence of over
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {}
+      }
+    }
+  ]
+}

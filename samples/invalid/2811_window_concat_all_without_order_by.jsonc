@@ -1,0 +1,23 @@
+// concatAll over an ordered window without its own orderBy
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,323 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "status",
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "user_total",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "share_of_user_total",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "left": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "over": {
+                "partitionBy": [
+                  {
+                    "source": "orders",
+                    "field": "user_id",
+                    "type": {
+                      "name": "uuid"
+                    }
+                  }
+                ]
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "user_orders",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "user_largest_total",
+      "expression": {
+        "operator": "max",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "is_user_largest",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "operator": "max",
+          "type": {
+            "name": "decimal"
+          },
+          "selector": {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "over": {
+            "partitionBy": [
+              {
+                "source": "orders",
+                "field": "user_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "user_orders_in_status",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            {
+              "source": "orders",
+              "field": "status",
+              "type": {
+                "name": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "user_paid_total",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "all_total",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

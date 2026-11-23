@@ -1,0 +1,23 @@
+// A window on an aggregate of a grouped query: there over is only "all". A window is written in a plain
+// query, over the rows of a grouped subquery
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}

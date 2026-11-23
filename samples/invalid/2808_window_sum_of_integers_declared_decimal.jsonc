@@ -1,0 +1,17 @@
+// sum of integers over a window declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } } ]
+        }
+      }
+    }
+  ]
+}

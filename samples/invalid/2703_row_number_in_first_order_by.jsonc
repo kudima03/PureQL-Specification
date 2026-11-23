@@ -1,0 +1,37 @@
+// rowNumber in the orderBy of first
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "rowNumber",
+              "type": { "name": "integer" },
+              "over": {
+                "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+                "orderBy": [
+                  {
+                    "expression": {
+                      "source": "orders",
+                      "field": "ordered_at",
+                      "type": { "name": "datetime" }
+                    }
+                  },
+                  { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                ]
+              }
+            }
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}

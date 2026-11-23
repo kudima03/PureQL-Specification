@@ -1,4 +1,4 @@
-// concatAll with "over": "all" in a plain query, where an aggregate always runs over all rows
+// concatAll with "over": "all" in a plain query, where an aggregate runs over all rows without over
 {
   "from": { "entity": "orders" },
   "select": [

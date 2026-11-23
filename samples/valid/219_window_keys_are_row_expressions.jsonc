@@ -1,0 +1,228 @@
+// Partition and sort keys of a window are any row expressions: a computed month, an if, a parameter, a
+// coalesce of a nullable field, several keys in both directions.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "size",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": { "param": "large", "type": { "name": "decimal" } }
+        },
+        "then": { "type": { "name": "string" }, "value": "large" },
+        "else": { "type": { "name": "string" }, "value": "small" }
+      }
+    },
+    {
+      "alias": "month_total",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "startOfMonth",
+              "type": { "name": "date" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "orders_of_size_in_year",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "year",
+              "type": { "name": "integer" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            },
+            {
+              "operator": "if",
+              "type": { "name": "string" },
+              "condition": {
+                "operator": "greaterThanOrEqual",
+                "type": { "name": "boolean" },
+                "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                "right": { "param": "large", "type": { "name": "decimal" } }
+              },
+              "then": { "type": { "name": "string" }, "value": "large" },
+              "else": { "type": { "name": "string" }, "value": "small" }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank_in_month",
+      "expression": {
+        "operator": "rank",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "startOfMonth",
+              "type": { "name": "date" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank_by_rounded_total",
+      "expression": {
+        "operator": "denseRank",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "round",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "position_by_weekday_then_time",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "dayOfWeek",
+              "type": { "name": "integer" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "asTime",
+                "type": { "name": "time" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              }
+            },
+            {
+              "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+              "direction": "desc"
+            },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "position_within_parameter",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "param": "tenant", "type": { "name": "string" } } ],
+          "orderBy": [ { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ]
+        }
+      }
+    },
+    {
+      "alias": "running_total_by_shipping",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "status", "type": { "name": "string" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "coalesce",
+                "type": { "name": "date" },
+                "values": [
+                  {
+                    "source": "orders",
+                    "field": "shipped_date",
+                    "type": { "name": "date", "nullable": true }
+                  },
+                  { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+                ]
+              }
+            },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "previous_in_coupon",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              }
+            },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "tenth_by_total",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "param": "buckets", "type": { "name": "integer" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

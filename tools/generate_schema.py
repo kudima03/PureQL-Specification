@@ -13,7 +13,8 @@ operator is nullable exactly when one of its operands is. So an expression has
 one valid declared type, and an interpreter reads the type of any node without
 computing it. Redundant spellings are rejected too: a non-null type has no
 `nullable` key, `and` / `or` take at least two conditions, and `over` is
-written only when it changes the rows of an aggregate.
+written only when it changes the rows of an aggregate: a window that names no
+partition, order or frame is the absence of `over`.
 
 Each node is validated in full once, by `expr@<context>`, which dispatches on
 `operator` (or on the kind of leaf) and then on the declared type. A position
@@ -25,8 +26,10 @@ Contexts:
   row         where, join.on, groupBy keys, aggregate selector/predicate/orderBy.
               Fields allowed, aggregates not.
   projection  select / orderBy of a plain query: one row per row.
-              Fields allowed, aggregates over all rows (broadcast), without
-              `over`.
+              Fields allowed, aggregates over all rows (broadcast) or, with
+              `over`, over a window: the rows of the current row's partition,
+              or a frame of them around the current row. The ranking
+              functions and previous / next exist only here.
   group       select / having / orderBy of a grouped query: one row per group.
               No fields; group keys and aggregates over the group, or over
               all rows with `"over": "all"`.
@@ -74,6 +77,18 @@ Null semantics:
     the string is null or is not a literal of the type;
   - every condition (where, having, on, and/or/not, if.condition, aggregate
     predicate) requires a non-null boolean.
+
+Windows:
+  A window is written on the function that reads it, in a plain query only:
+  {"partitionBy": [row expressions], "orderBy": [sort keys], "frame": {...}}.
+  A frame counts rows before and after the current row, which is always
+  inside, so a window is never empty and an aggregate over one is typed as an
+  aggregate over all rows is. An aggregate's window has an order exactly when
+  it has a frame; the ranking functions (rowNumber, rank, denseRank,
+  percentRank, cumulativeDistribution, ntile) and previous / next need an
+  order and take no frame. previous / next read another row of the partition:
+  where there is none they are null, or the `default`, so they are non-null
+  exactly with a default and a non-null operand.
 """
 import json
 from pathlib import Path
@@ -168,14 +183,14 @@ VALUE = {
     "uuid": pattern(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"),
 }
 
-# `aggregates`: whether aggregates may appear, and the `over` values that may
-# be written: none in projection (always all rows), "all" in group (the group
-# is the default).
+# `aggregates`: whether aggregates may appear, and `over`: what may be written
+# there. A window in projection (all rows is the default), "all" in group (the
+# group is the default), nothing in a total query, which has one row.
 CONTEXTS = {
-    "row": {"fields": True, "keys": False, "aggregates": False, "over": []},
-    "projection": {"fields": True, "keys": False, "aggregates": True, "over": []},
-    "group": {"fields": False, "keys": True, "aggregates": True, "over": ["all"]},
-    "total": {"fields": False, "keys": False, "aggregates": True, "over": []},
+    "row": {"fields": True, "keys": False, "aggregates": False, "over": None},
+    "projection": {"fields": True, "keys": False, "aggregates": True, "over": "window"},
+    "group": {"fields": False, "keys": True, "aggregates": True, "over": "all"},
+    "total": {"fields": False, "keys": False, "aggregates": True, "over": None},
 }
 
 # The regular expressions of matchesRegex, extractRegex and replaceRegex, as far as
@@ -377,6 +392,62 @@ defs["fraction"] = {
     "allOf": [declares("decimal", False)],
     "if": {"required": ["value"]},
     "then": {"allOf": [ref("literal"), {"properties": {"value": pattern(r"(0|1|0\.[0-9]*[1-9])")}}]},
+    "else": ref("param"),
+}
+
+# A count of rows is a number or a non-null integer parameter, so it can be
+# chosen at execution time. The schema checks a number's range; a parameter's
+# value is checked by the interpreter when it is bound.
+INTEGER_PARAM = {"allOf": [declares("integer", False), ref("param")]}
+
+# A window: the rows a function of a plain query reads for the current row.
+# `partitionBy` keeps the rows equal to it on every key (every row without it),
+# `orderBy` sorts them, and `frame` keeps those from `preceding` rows before the
+# current row to `following` rows after it. The current row is always inside,
+# so no window is empty. A side is a number of rows from 1, or "all" for every
+# row on that side; no rows on a side is the absence of the property.
+defs["frameRows"] = {"anyOf": [{"const": "all"}, {**INT64, "minimum": 1}, INTEGER_PARAM]}
+defs["frame"] = {
+    **obj([], {"preceding": ref("frameRows"), "following": ref("frameRows")}),
+    # a frame of the current row alone is no window
+    "minProperties": 1,
+    # every row on both sides is the whole partition: no order, no frame
+    "not": {
+        "type": "object",
+        "required": ["preceding", "following"],
+        "properties": {"preceding": {"const": "all"}, "following": {"const": "all"}},
+    },
+}
+WINDOW = {
+    "partitionBy": array_of(ref("expr@row"), 1),
+    "orderBy": array_of(ref("orderItem@row"), 1),
+}
+# The window of an aggregate. Without an order it is the whole partition; with
+# one the frame is always stated, so there is no default frame to remember. A
+# window that names nothing is all rows: the absence of `over`.
+defs["window"] = {
+    **obj([], {**WINDOW, "frame": ref("frame")}),
+    "minProperties": 1,
+    "dependentRequired": {"orderBy": ["frame"], "frame": ["orderBy"]},
+}
+# The window of a function that reads the position of a row (the ranking
+# functions, previous / next): an order is required, and there is no frame.
+defs["orderedWindow"] = obj(["orderBy"], WINDOW)
+# previous / next read the row `offset` rows away: an integer literal or an
+# integer parameter, never computed. One row away is the absence of `offset`.
+defs["offset"] = {
+    "type": "object",
+    "allOf": [declares("integer", False)],
+    "if": {"required": ["value"]},
+    "then": {"allOf": [ref("literal"), {"properties": {"value": {"minimum": 2}}}]},
+    "else": ref("param"),
+}
+# The number of buckets of ntile, from 1.
+defs["buckets"] = {
+    "type": "object",
+    "allOf": [declares("integer", False)],
+    "if": {"required": ["value"]},
+    "then": {"allOf": [ref("literal"), {"properties": {"value": {"minimum": 1}}}]},
     "else": ref("param"),
 }
 
@@ -660,13 +731,15 @@ for ctx, rules in CONTEXTS.items():
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the
     # selector are skipped. An aggregate runs over the group in a grouped query
     # and over all rows otherwise; `"over": "all"` is written only for a total
-    # over all rows inside a grouped query.
+    # over all rows inside a grouped query. In a plain query `over` is a window:
+    # the rows of the current row's partition, or a frame of them.
     if rules["aggregates"]:
         aggregate_props = {"predicate": expr("boolean", "row")}
         if rules["over"]:
-            aggregate_props["over"] = {"enum": rules["over"]}
+            aggregate_props["over"] = ref("window") if rules["over"] == "window" else {"enum": [rules["over"]]}
         # A row of a plain or grouped query comes from at least one row; a total
-        # query returns its one row even over no rows.
+        # query returns its one row even over no rows. A window holds the current
+        # row, so an aggregate over one sees a row as well.
         some_row = ctx != "total"
 
         def selector(t, nullable, exact):
@@ -752,6 +825,41 @@ for ctx, rules in CONTEXTS.items():
             shape(name, ["predicate"], aggregate_props)
             signature(name, "boolean", False)
 
+    # Functions of a row's position in its window: only where a window exists,
+    # and always over an ordered one. They are never null: every row has a
+    # position.
+    if rules["over"] == "window":
+        ordered = {"over": ref("orderedWindow")}
+        # rowNumber counts rows; rank and denseRank give tied rows one number
+        for name in ["rowNumber", "rank", "denseRank"]:
+            shape(name, ["over"], ordered)
+            signature(name, "integer", False)
+        # the share of the partition before a row, and up to it: exact decimals
+        for name in ["percentRank", "cumulativeDistribution"]:
+            shape(name, ["over"], ordered)
+            signature(name, "decimal", False)
+        # the bucket of a row when the partition is cut into `buckets` equal parts
+        shape("ntile", ["buckets", "over"], {"buckets": ref("buckets"), **ordered})
+        signature("ntile", "integer", False)
+        # previous / next: `operand` in the row `offset` rows before or after the
+        # current one. Where the partition has no such row the result is `default`,
+        # or null without one. So it is non-null exactly with a default and a
+        # non-null operand; the default is never null, and the type is the operand's.
+        for name in ["previous", "next"]:
+            shape(name, ["operand", "over"], {"operand": True, "offset": ref("offset"), "default": True, **ordered})
+            for t in TYPES:
+                exact = [{"properties": {"operand": declares_name(t)}}] if t in SUBTYPES else []
+                signature(name, t, False, {
+                    "required": ["default"],
+                    "properties": {"operand": expr(t, "row"), "default": expr(t, "row")},
+                }, *exact)
+                signature(name, t, True, {
+                    "properties": {"operand": expr(t, "row", True), "default": expr(t, "row")},
+                }, {"anyOf": [
+                    {"not": {"required": ["default"]}},
+                    {"required": ["operand"], "properties": {"operand": NULLABLE}},
+                ]}, *exact)
+
     for name, (required, props) in shapes.items():
         sigs = signatures[name]
         names = list(dict.fromkeys(t for t, _, _ in sigs))
@@ -834,9 +942,7 @@ defs["join"] = {
     **ONE_SOURCE,
 }
 # skip / take are a number or a non-null integer parameter, so a page can be
-# chosen at execution time. The schema checks a number's range; a parameter's
-# value is checked by the interpreter when it is bound.
-INTEGER_PARAM = {"allOf": [declares("integer", False), ref("param")]}
+# chosen at execution time.
 defs["pagination"] = obj(
     ["skip", "take"],
     {
@@ -855,7 +961,8 @@ for ctx in ["projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(
         ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
     )
-# `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last / concatAll).
+# `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last /
+# concatAll) and of a window.
 for ctx in ["row", "projection", "group"]:
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}

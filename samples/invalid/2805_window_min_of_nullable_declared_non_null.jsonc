@@ -1,0 +1,19 @@
+// min of a nullable selector over a window declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date" },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}

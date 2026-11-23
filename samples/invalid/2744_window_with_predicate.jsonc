@@ -1,0 +1,18 @@
+// A predicate inside a window: it belongs to the aggregate
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      }
+    }
+  ]
+}

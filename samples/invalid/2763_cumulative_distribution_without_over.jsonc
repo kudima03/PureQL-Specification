@@ -1,0 +1,7 @@
+// cumulativeDistribution without over
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "cumulativeDistribution", "type": { "name": "decimal" } } }
+  ]
+}

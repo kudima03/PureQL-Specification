@@ -1,0 +1,644 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "ordered_at",
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "previous_total",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "change",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "previous",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "operand": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            "over": {
+              "partitionBy": [
+                {
+                  "source": "orders",
+                  "field": "user_id",
+                  "type": {
+                    "name": "uuid"
+                  }
+                }
+              ],
+              "orderBy": [
+                {
+                  "expression": {
+                    "source": "orders",
+                    "field": "ordered_at",
+                    "type": {
+                      "name": "datetime"
+                    }
+                  }
+                },
+                {
+                  "expression": {
+                    "source": "orders",
+                    "field": "id",
+                    "type": {
+                      "name": "uuid"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "change_from_zero",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "previous",
+            "type": {
+              "name": "decimal"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            "default": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 0
+            },
+            "over": {
+              "partitionBy": [
+                {
+                  "source": "orders",
+                  "field": "user_id",
+                  "type": {
+                    "name": "uuid"
+                  }
+                }
+              ],
+              "orderBy": [
+                {
+                  "expression": {
+                    "source": "orders",
+                    "field": "ordered_at",
+                    "type": {
+                      "name": "datetime"
+                    }
+                  }
+                },
+                {
+                  "expression": {
+                    "source": "orders",
+                    "field": "id",
+                    "type": {
+                      "name": "uuid"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "days_since_previous",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "left": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "operator": "previous",
+          "type": {
+            "name": "date",
+            "nullable": true
+          },
+          "operand": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          },
+          "over": {
+            "partitionBy": [
+              {
+                "source": "orders",
+                "field": "user_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            ],
+            "orderBy": [
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                }
+              },
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "id",
+                  "type": {
+                    "name": "uuid"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "is_first_order",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "previous",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          },
+          "operand": {
+            "source": "orders",
+            "field": "id",
+            "type": {
+              "name": "uuid"
+            }
+          },
+          "over": {
+            "partitionBy": [
+              {
+                "source": "orders",
+                "field": "user_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            ],
+            "orderBy": [
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                }
+              },
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "id",
+                  "type": {
+                    "name": "uuid"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "right": {
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          },
+          "value": null
+        }
+      }
+    },
+    {
+      "alias": "total_two_orders_ago",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "offset": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "total_n_orders_ago",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "offset": {
+          "param": "orders_back",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_ordered_at",
+      "expression": {
+        "operator": "next",
+        "type": {
+          "name": "datetime",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_status",
+      "expression": {
+        "operator": "next",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "status",
+          "type": {
+            "name": "string"
+          }
+        },
+        "default": {
+          "type": {
+            "name": "string"
+          },
+          "value": "none"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_shipped_date",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "default": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// ntile over a window without orderBy
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "type": { "name": "integer" }, "value": 4 },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}

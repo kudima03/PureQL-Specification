@@ -1,0 +1,22 @@
+// next with a predicate: it reads one row and is not an aggregate
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

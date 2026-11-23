@@ -1,0 +1,5 @@
+// rowNumber without over: a position needs an ordered window
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "rowNumber", "type": { "name": "integer" } } } ]
+}

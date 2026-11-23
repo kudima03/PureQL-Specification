@@ -1,0 +1,15 @@
+// A partition key without a type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id" } ] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// A group key as a partition key: a plain query has no keys
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": { "partitionBy": [ { "key": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    }
+  ]
+}
