@@ -1,0 +1,14 @@
+// nullIfEqual without left
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "decimal", "nullable": true },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

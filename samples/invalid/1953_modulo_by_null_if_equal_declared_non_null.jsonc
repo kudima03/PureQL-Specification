@@ -1,0 +1,20 @@
+// modulo by a nullIfEqual declared integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": {
+          "operator": "nullIfEqual",
+          "type": { "name": "integer", "nullable": true },
+          "left": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    }
+  ]
+}

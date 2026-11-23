@@ -1,5 +1,5 @@
-// A total query returns its row even over no rows, where count is 0: dividing by nullIf(count, 0) gives null
-// rather than an execution error.
+// A total query returns its row even over no rows, where count is 0: dividing by nullIfEqual(count, 0) gives
+// null rather than an execution error.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -22,7 +22,7 @@
             "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "integer", "nullable": true },
             "left": { "operator": "count", "type": { "name": "integer" } },
             "right": { "type": { "name": "integer" }, "value": 0 }
@@ -42,7 +42,7 @@
             "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "integer", "nullable": true },
             "left": { "operator": "count", "type": { "name": "integer" } },
             "right": { "type": { "name": "integer" }, "value": 0 }
@@ -66,7 +66,7 @@
                 "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
               },
               {
-                "operator": "nullIf",
+                "operator": "nullIfEqual",
                 "type": { "name": "integer", "nullable": true },
                 "left": { "operator": "count", "type": { "name": "integer" } },
                 "right": { "type": { "name": "integer" }, "value": 0 }
@@ -80,7 +80,7 @@
     {
       "alias": "orders_or_null",
       "expression": {
-        "operator": "nullIf",
+        "operator": "nullIfEqual",
         "type": { "name": "integer", "nullable": true },
         "left": { "operator": "count", "type": { "name": "integer" } },
         "right": { "type": { "name": "integer" }, "value": 0 }
