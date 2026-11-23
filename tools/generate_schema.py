@@ -551,8 +551,12 @@ for ctx, rules in CONTEXTS.items():
         lifted(name, {"values": "integer"}, "integer")
         lifted(name, {"values": "decimal"}, "decimal", some(["values"], declares_name("decimal")))
     lifted("divide", {"values": "decimal"}, "decimal")
-    for name in ["integerDivide", "modulo"]:
-        lifted(name, {"left": "integer", "right": "integer"}, "integer")
+    # integerDivide is the exact quotient truncated toward zero: an integer, whatever
+    # its operands. modulo is what is left, left - right * integerDivide(left, right),
+    # and is typed as add: integer operands give integer, a decimal operand decimal.
+    lifted("integerDivide", {"left": "decimal", "right": "decimal"}, "integer")
+    lifted("modulo", {"left": "integer", "right": "integer"}, "integer")
+    lifted("modulo", {"left": "decimal", "right": "decimal"}, "decimal", some(["left", "right"], declares_name("decimal")))
     # Rounding to a whole number takes a decimal: an integer is one already, and an
     # operator that cannot change its operand is rejected, as asString of a string is.
     # With digits an integer is accepted: round(1250, -2) is 1300.

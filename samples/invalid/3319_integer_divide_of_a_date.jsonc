@@ -1,4 +1,4 @@
-// integerDivide over a decimal operand
+// integerDivide of a date
 {
   "from": { "entity": "orders" },
   "select": [
@@ -7,8 +7,8 @@
       "expression": {
         "operator": "integerDivide",
         "type": { "name": "integer" },
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
-        "right": { "type": { "name": "integer" }, "value": 2 }
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "integer" }, "value": 7 }
       }
     }
   ]

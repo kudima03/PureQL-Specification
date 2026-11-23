@@ -1,0 +1,198 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "fractional_part",
+      "expression": {
+        "operator": "modulo",
+        "type": {
+          "name": "decimal"
+        },
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "is_multiple_of_five_cents",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "modulo",
+          "type": {
+            "name": "decimal"
+          },
+          "left": {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "0.05"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "alias": "whole_fifties",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 50
+        }
+      }
+    },
+    {
+      "alias": "above_the_last_fifty",
+      "expression": {
+        "operator": "modulo",
+        "type": {
+          "name": "decimal"
+        },
+        "left": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 50
+        }
+      }
+    },
+    {
+      "alias": "hours_to_ship",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "datetimeDiffSeconds",
+          "type": {
+            "name": "decimal"
+          },
+          "left": {
+            "source": "orders",
+            "field": "shipped_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "right": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 3600
+        }
+      }
+    },
+    {
+      "alias": "seconds_past_the_hour",
+      "expression": {
+        "operator": "modulo",
+        "type": {
+          "name": "decimal"
+        },
+        "left": {
+          "operator": "datetimeDiffSeconds",
+          "type": {
+            "name": "decimal"
+          },
+          "left": {
+            "source": "orders",
+            "field": "shipped_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "right": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 3600
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

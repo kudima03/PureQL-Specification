@@ -1,0 +1,15 @@
+// integerDivide of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

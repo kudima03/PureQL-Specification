@@ -1,13 +1,13 @@
-// modulo over a decimal operand
+// integerDivide of a string
 {
-  "from": { "entity": "orders" },
+  "from": { "entity": "order_items" },
   "select": [
     {
       "alias": "c",
       "expression": {
-        "operator": "modulo",
+        "operator": "integerDivide",
         "type": { "name": "integer" },
-        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "left": { "type": { "name": "string" }, "value": "7.5" },
         "right": { "type": { "name": "integer" }, "value": 2 }
       }
     }

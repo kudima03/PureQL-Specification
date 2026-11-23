@@ -1,0 +1,93 @@
+// integerDivide and modulo of decimals in where and over aggregates of a total query, lifted over a nullable
+// average.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "modulo",
+      "type": { "name": "decimal" },
+      "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "right": { "type": { "name": "decimal" }, "value": "0.01" }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "aggregate": [
+    {
+      "alias": "fifties",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 50 }
+      }
+    },
+    {
+      "alias": "left_over",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 50 }
+      }
+    },
+    {
+      "alias": "average_cents",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": {
+          "operator": "modulo",
+          "type": { "name": "decimal" },
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "average_hours",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": {
+            "operator": "datetimeDiffSeconds",
+            "type": { "name": "decimal" },
+            "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+            "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          }
+        },
+        "right": { "type": { "name": "integer" }, "value": 3600 }
+      }
+    },
+    {
+      "alias": "orders_per_ten",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer" },
+        "left": { "operator": "count", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 10 }
+      }
+    },
+    {
+      "alias": "orders_per_two_and_a_half",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "operator": "count", "type": { "name": "integer" } },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

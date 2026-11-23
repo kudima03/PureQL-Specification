@@ -1,0 +1,207 @@
+// modulo and integerDivide over decimals: a fractional part, a negative on either side, a parameter, a
+// divisor guarded with nullIfEqual, integer operands that stay integer, mixed operands, and the identity left
+// = right * integerDivide + modulo.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "fractional_part",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "of_a_negative",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 0 },
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          ]
+        },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "by_a_negative",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "decimal" }, "value": "-2" }
+      }
+    },
+    {
+      "alias": "by_a_parameter",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "param": "step", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "guarded",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "nullIfEqual",
+          "type": { "name": "decimal", "nullable": true },
+          "left": { "param": "step", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "integers_stay_integer",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    },
+    {
+      "alias": "integer_by_decimal",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "decimal_by_integer_field",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "nullable",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "param": "amount", "type": { "name": "decimal", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "steps",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "param": "step", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "steps_of_an_integer",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "guarded_steps",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "nullIfEqual",
+          "type": { "name": "decimal", "nullable": true },
+          "left": { "param": "step", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "identity_holds",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "add",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                { "param": "step", "type": { "name": "decimal" } },
+                {
+                  "operator": "integerDivide",
+                  "type": { "name": "integer" },
+                  "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  "right": { "param": "step", "type": { "name": "decimal" } }
+                }
+              ]
+            },
+            {
+              "operator": "modulo",
+              "type": { "name": "decimal" },
+              "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              "right": { "param": "step", "type": { "name": "decimal" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "whole_part",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "same_as_truncate",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "integerDivide",
+          "type": { "name": "integer" },
+          "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "right": {
+          "operator": "truncate",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "nested",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "modulo",
+          "type": { "name": "decimal" },
+          "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 10 }
+        },
+        "right": { "type": { "name": "decimal" }, "value": "0.25" }
+      }
+    }
+  ]
+}
