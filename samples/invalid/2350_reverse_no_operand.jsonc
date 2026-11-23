@@ -1,0 +1,5 @@
+// reverse without an operand
+{
+  "from": { "entity": "users" },
+  "select": [ { "alias": "c", "expression": { "operator": "reverse", "type": { "name": "string" } } } ]
+}

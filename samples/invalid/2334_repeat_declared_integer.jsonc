@@ -1,0 +1,15 @@
+// repeat declared integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

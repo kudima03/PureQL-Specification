@@ -1,0 +1,16 @@
+// padStart with the integer 0 as fill: the fill is a string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

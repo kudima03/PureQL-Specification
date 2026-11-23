@@ -1,0 +1,15 @@
+// padEnd without a fill
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 }
+      }
+    }
+  ]
+}

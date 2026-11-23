@@ -1,0 +1,19 @@
+// join is not an operator: strings are joined with concatWith; a join of sources is a clause
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "join",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

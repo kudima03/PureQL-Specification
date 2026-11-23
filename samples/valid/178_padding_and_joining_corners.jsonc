@@ -1,0 +1,227 @@
+// Corners of padStart, padEnd, repeat, reverse and concatWith: a fill of several code points, an empty fill,
+// a length that is a parameter, computed or shorter than the string, a count of zero, nullable operands,
+// concatWith over only null values, with five values, with an empty separator and nested.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "fill_of_several_code_points",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": "-=" }
+      }
+    },
+    {
+      "alias": "empty_fill_adds_nothing",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": "" }
+      }
+    },
+    {
+      "alias": "length_from_a_parameter",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "param": "width", "type": { "name": "integer" } },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "computed_length",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "length",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            },
+            { "type": { "name": "integer" }, "value": 2 }
+          ]
+        },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "shorter_length_cuts_nothing",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": -1 },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "fill_from_a_field",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 12 },
+        "fill": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "length": { "type": { "name": "integer" }, "value": 8 },
+        "fill": { "type": { "name": "string" }, "value": "." }
+      }
+    },
+    {
+      "alias": "repeated_zero_times",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "type": { "name": "integer" }, "value": 0 }
+      }
+    },
+    {
+      "alias": "repeated_by_a_parameter",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "ab" },
+        "count": { "param": "times", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "repeated_nullable",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "count": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "reversed_nullable",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "reversed_twice",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "reverse",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "reversed_date_text",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "only_null_values",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "middle_name", "type": { "name": "string", "nullable": true } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "separator_from_a_parameter",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "param": "separator", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "five_values",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "middle_name", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "country", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "|" }
+      }
+    },
+    {
+      "alias": "empty_separator",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "" }
+      }
+    },
+    {
+      "alias": "nested",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "concatWith",
+            "type": { "name": "string" },
+            "values": [
+              { "source": "users", "field": "first_name", "type": { "name": "string" } },
+              { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            ],
+            "separator": { "type": { "name": "string" }, "value": " " }
+          },
+          {
+            "operator": "concatWith",
+            "type": { "name": "string" },
+            "values": [
+              { "source": "users", "field": "postal_code", "type": { "name": "string" } },
+              { "source": "users", "field": "country", "type": { "name": "string" } }
+            ],
+            "separator": { "type": { "name": "string" }, "value": " " }
+          }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "; " }
+      }
+    }
+  ]
+}

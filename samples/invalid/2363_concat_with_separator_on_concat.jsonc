@@ -1,0 +1,19 @@
+// concat with a separator: concat joins its operands unchanged and is lifted; the operator with a separator
+// is concatWith
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

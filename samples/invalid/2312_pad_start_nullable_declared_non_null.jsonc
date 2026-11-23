@@ -1,0 +1,16 @@
+// padStart of a nullable operand declared string: it is lifted, and null is not padded
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

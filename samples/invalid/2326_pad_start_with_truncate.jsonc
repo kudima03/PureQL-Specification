@@ -1,0 +1,17 @@
+// padStart with a truncate flag: it never cuts a string; a string is cut with substring
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": " " },
+        "truncate": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// concatWith with left and right
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "left": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "right": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

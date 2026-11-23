@@ -1,0 +1,16 @@
+// padLeft is not an operator: the start and the end of a string are named as in trimStart
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padLeft",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

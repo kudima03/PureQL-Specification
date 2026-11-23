@@ -54,13 +54,15 @@ schema is name resolution and is left to the interpreter.
 
 Null semantics:
   - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, replace, position,
-    splitPart, date/time math, parts and startOf, conversions, if,
+    splitPart, padStart/padEnd, repeat, reverse, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
   - contains / startsWith / endsWith accept nullable strings and return a
     non-null boolean, false when either operand is null;
+  - concatWith accepts nullable strings and returns a non-null string: null
+    operands are skipped;
   - nullIf accepts nullable operands and is always nullable: null when its
     operands are equal, as `equal` compares them, otherwise its left operand;
   - tryAs<Type> accepts a nullable string and is always nullable: null when
@@ -445,6 +447,19 @@ for ctx, rules in CONTEXTS.items():
     # the end when negative
     lifted("splitPart", {"operand": "string"}, "string",
            extra={"delimiter": expr("string", ctx), "index": expr("integer", ctx)})
+    # padStart / padEnd add repetitions of `fill` before or after the string until it
+    # has `length` code points; a longer string is never cut
+    for name in ["padStart", "padEnd"]:
+        lifted(name, {"operand": "string"}, "string",
+               extra={"length": expr("integer", ctx), "fill": expr("string", ctx)})
+    lifted("repeat", {"operand": "string"}, "string", extra={"count": expr("integer", ctx)})
+    # the code points in reverse order
+    lifted("reverse", {"operand": "string"}, "string")
+    # concatWith joins its operands with `separator` between them and skips the null
+    # ones, so it takes nullable operands and is never null
+    shape("concatWith", ["values", "separator"],
+          {"values": array_of(expr("string", ctx, True), 2), "separator": expr("string", ctx)})
+    signature("concatWith", "string", False)
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

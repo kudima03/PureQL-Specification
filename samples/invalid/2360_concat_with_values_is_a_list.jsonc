@@ -1,0 +1,15 @@
+// concatWith with a list literal as values: its operands are expressions
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": { "type": { "name": "stringList" }, "value": [ "a", "b" ] },
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

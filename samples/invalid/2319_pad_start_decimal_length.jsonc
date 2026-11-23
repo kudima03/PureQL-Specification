@@ -1,0 +1,16 @@
+// padStart with a decimal length
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "decimal" }, "value": "2.5" },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

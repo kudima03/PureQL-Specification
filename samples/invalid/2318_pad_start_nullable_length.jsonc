@@ -1,0 +1,16 @@
+// padStart with a nullable length: the length is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "param": "width", "type": { "name": "integer", "nullable": true } },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

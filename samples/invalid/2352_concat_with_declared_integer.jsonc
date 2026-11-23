@@ -1,0 +1,19 @@
+// concatWith declared integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}
