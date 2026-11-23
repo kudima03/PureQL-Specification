@@ -1,0 +1,16 @@
+// nullIf with a third operand: it compares left with one value; several values are nested nullIf
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 0 },
+        "other": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

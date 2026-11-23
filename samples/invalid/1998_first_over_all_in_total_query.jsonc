@@ -1,0 +1,19 @@
+// first with "over": "all" in a total query, where an aggregate always runs over all rows
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "over": "all"
+      }
+    }
+  ]
+}

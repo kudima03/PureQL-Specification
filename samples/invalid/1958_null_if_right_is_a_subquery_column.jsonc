@@ -1,0 +1,15 @@
+// nullIf with a subquery column as right: a column of a subquery is a list, accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "subquery": "limits", "field": "amount", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

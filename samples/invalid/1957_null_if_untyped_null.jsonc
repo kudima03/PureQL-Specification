@@ -1,0 +1,15 @@
+// nullIf with an untyped null as right: a null literal always carries its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "value": null }
+      }
+    }
+  ]
+}
