@@ -1,0 +1,14 @@
+// asInteger of a list of strings: a list is accepted only by in
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "stringList" }, "value": [ "1", "2" ] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// tryAsInteger of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

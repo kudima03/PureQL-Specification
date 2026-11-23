@@ -1,0 +1,15 @@
+// asInteger with a lenient flag: spaces are removed with trim before the text is read
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "lenient": true
+      }
+    }
+  ]
+}

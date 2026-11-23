@@ -1,0 +1,15 @@
+// tryAsDecimal declared decimal: it is null whenever the text is not a decimal literal, so it is always
+// nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

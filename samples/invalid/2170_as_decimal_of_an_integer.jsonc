@@ -1,4 +1,4 @@
-// asDecimal is not an operator: an integer stands wherever a decimal is expected
+// asDecimal of an integer: it reads a string; an integer stands wherever a decimal is expected
 {
   "from": { "entity": "order_items" },
   "select": [

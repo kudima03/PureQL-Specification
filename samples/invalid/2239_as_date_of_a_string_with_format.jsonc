@@ -1,0 +1,15 @@
+// asDate of a string with a format: the text is spelled as a date literal, YYYY-MM-DD
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "format": { "type": { "name": "string" }, "value": "dd.MM.yyyy" }
+      }
+    }
+  ]
+}

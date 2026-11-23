@@ -1,0 +1,14 @@
+// asUuid of a uuid
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asUuid",
+        "type": { "name": "uuid" },
+        "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

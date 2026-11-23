@@ -1,0 +1,14 @@
+// tryAsString is not an operator: asString cannot fail, and a string is already one
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsString",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

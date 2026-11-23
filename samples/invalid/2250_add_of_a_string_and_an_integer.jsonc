@@ -1,0 +1,17 @@
+// add of a string and an integer: nothing converts from string implicitly, the string goes through asInteger
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "users", "field": "tier", "type": { "name": "string" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// tryAsDate of a datetime: the day of a datetime is asDate, which cannot fail; the try forms read only
+// strings
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

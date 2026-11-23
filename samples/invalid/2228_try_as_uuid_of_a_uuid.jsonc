@@ -1,0 +1,14 @@
+// tryAsUuid of a uuid
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

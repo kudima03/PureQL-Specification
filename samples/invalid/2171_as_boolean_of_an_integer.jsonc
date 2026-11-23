@@ -1,4 +1,4 @@
-// asBoolean is not an operator: a number becomes a condition with a comparison
+// asBoolean of an integer: it reads a string; a number becomes a condition with a comparison
 {
   "from": { "entity": "order_items" },
   "select": [

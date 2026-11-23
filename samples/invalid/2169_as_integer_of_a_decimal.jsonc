@@ -1,5 +1,5 @@
-// asInteger is not an operator: a decimal becomes an integer with round, floor, ceiling or truncate, which
-// say how
+// asInteger of a decimal: it reads a string; a decimal becomes an integer with round, floor, ceiling or
+// truncate, which say how
 {
   "from": { "entity": "orders" },
   "select": [

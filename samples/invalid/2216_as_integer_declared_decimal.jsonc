@@ -1,0 +1,14 @@
+// asInteger declared decimal: each conversion yields the type in its name; a decimal is read with asDecimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "decimal" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+// A key stored as text joined to a typed key: tryAsUuid and tryAsDecimal in join.on, where text that is not a
+// literal of the type gives null and matches nothing, and asInteger of a parameter in where.
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+        "right": {
+          "operator": "tryAsUuid",
+          "type": { "name": "uuid", "nullable": true },
+          "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "tryAsDecimal",
+          "type": { "name": "decimal", "nullable": true },
+          "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+        },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+    "right": {
+      "operator": "asInteger",
+      "type": { "name": "integer" },
+      "operand": { "param": "largest_quantity", "type": { "name": "string" } }
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "sku", "expression": { "source": "products", "field": "sku", "type": { "name": "string" } } },
+    {
+      "alias": "sku_is_the_product_id",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "tryAsUuid",
+          "type": { "name": "uuid", "nullable": true },
+          "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
+        },
+        "right": { "source": "products", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "coupon_amount",
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

@@ -1,0 +1,14 @@
+// tryAsDatetime of a date: midnight of a date is asDatetime, which cannot fail
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

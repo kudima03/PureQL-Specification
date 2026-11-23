@@ -1,0 +1,15 @@
+// asDatetime of a string with a time zone: the text is in UTC with Z, as a datetime literal is
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "timeZone": "Europe/Berlin"
+      }
+    }
+  ]
+}
