@@ -1,5 +1,5 @@
-// Ratios per product that cannot fail on a zero divisor: divide, integerDivide and modulo by nullIf(…, 0) are
-// null instead, coalesce gives a default, and integer operands keep nullIf an integer.
+// Ratios per product that cannot fail on a zero divisor: divide, integerDivide and modulo by nullIfEqual(…,
+// 0) are null instead, coalesce gives a default, and integer operands keep nullIfEqual an integer.
 {
   "from": { "entity": "order_items" },
   "groupBy": [
@@ -26,7 +26,7 @@
             }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "integer", "nullable": true },
             "left": {
               "operator": "sum",
@@ -58,7 +58,7 @@
                 }
               },
               {
-                "operator": "nullIf",
+                "operator": "nullIfEqual",
                 "type": { "name": "integer", "nullable": true },
                 "left": {
                   "operator": "sum",
@@ -84,7 +84,7 @@
           "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
         },
         "right": {
-          "operator": "nullIf",
+          "operator": "nullIfEqual",
           "type": { "name": "integer", "nullable": true },
           "left": { "param": "box_size", "type": { "name": "integer" } },
           "right": { "type": { "name": "integer" }, "value": 0 }
@@ -102,7 +102,7 @@
           "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
         },
         "right": {
-          "operator": "nullIf",
+          "operator": "nullIfEqual",
           "type": { "name": "integer", "nullable": true },
           "left": { "param": "box_size", "type": { "name": "integer" } },
           "right": { "type": { "name": "integer" }, "value": 0 }
@@ -121,7 +121,7 @@
             "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "integer", "nullable": true },
             "left": {
               "operator": "sum",
@@ -155,7 +155,7 @@
                 }
               },
               {
-                "operator": "nullIf",
+                "operator": "nullIfEqual",
                 "type": { "name": "integer", "nullable": true },
                 "left": {
                   "operator": "sum",
