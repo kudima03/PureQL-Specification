@@ -50,9 +50,10 @@ total query returns its row even when there are none.
 
 A query is plain, grouped or total, or it combines the rows of other queries
 with a set operation (unionAll, union, intersect, except). A document is the
-main query plus optional `subqueries`: named queries, or named rows of literals, the
-main query and later subqueries can read from (`from` / `join` with
-`subquery`, or `in` over one of their columns). Every select column has an
+main query plus optional `subqueries`: named queries, named rows of literals, or
+recursive queries that read their own rows, which the main query and later
+subqueries can read from (`from` / `join` with `subquery`, or `in` over one of
+their columns). Every select column has an
 alias and the type its expression declares, which the validator has checked,
 so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
@@ -957,7 +958,9 @@ defs["pagination"] = obj(
 # `{ "key": <alias>, "type": … }` repeats that key's `expression.type` exactly.
 defs["groupKey"] = obj(["alias", "expression"], {"alias": NAME, "expression": ref("expr@row")})
 
-for ctx in ["projection", "group", "total"]:
+# `selectItem@row` is a column of the `next` query of a recursive subquery, which
+# has no aggregates and no windows.
+for ctx in ["row", "projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(
         ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
     )
@@ -1045,16 +1048,37 @@ def kind_of_query(prefix):
 
 
 defs["query"] = kind_of_query("")
-# A subquery is a named query, or named rows written in the document: a short
+# A subquery is a named query, a recursive one, or named rows written in the document: a short
 # reference list that no entity holds. Each row is a list of { alias, expression }
 # like a select, where an expression is a literal or a parameter, so every cell
 # carries its type. The rows have the same columns, matched by alias, which the
 # interpreter checks, as it does for the inputs of a set operation.
 defs["cell"] = {"type": "object", "if": {"required": ["value"]}, "then": ref("literal"), "else": ref("param")}
 defs["rowItem"] = obj(["alias", "expression"], {"alias": NAME, "expression": ref("cell")})
+# A recursive subquery reads its own rows, to follow a hierarchy of any depth.
+# `seed` is a query that gives the first rows. `next` is run on the rows of each
+# level in turn, reading them under the subquery's own name, and gives the rows
+# of the following level, until a level is empty. Every row of every level is
+# returned. `next` is a plain query without aggregates, windows, orderBy,
+# distinctBy or pagination: its columns are row expressions. `maxDepth` is the
+# last level that may hold rows, a number or a non-null integer parameter: rows
+# beyond it fail the query, so a cycle in the data never runs forever. That
+# `next` reads the subquery itself, once, and repeats the columns of `seed` is
+# checked by the interpreter, like every other reference to a subquery.
+defs["nextQuery"] = obj(["from", "select"], {**sources, "select": array_of(ref("selectItem@row"), 1)})
+defs["recursion"] = obj(["seed", "next", "maxDepth"], {
+    "seed": ref("query"),
+    "next": ref("nextQuery"),
+    "maxDepth": {"anyOf": [{**INT64, "minimum": 1}, INTEGER_PARAM]},
+})
 defs["subquery"] = {
-    **obj(["name"], {"name": NAME, "query": ref("query"), "rows": array_of(array_of(ref("rowItem"), 1), 1)}),
-    "oneOf": [{"required": ["query"]}, {"required": ["rows"]}],
+    **obj(["name"], {
+        "name": NAME,
+        "query": ref("query"),
+        "rows": array_of(array_of(ref("rowItem"), 1), 1),
+        "recursive": ref("recursion"),
+    }),
+    "oneOf": [{"required": ["query"]}, {"required": ["rows"]}, {"required": ["recursive"]}],
 }
 
 schema = {

@@ -41176,6 +41176,36 @@
         }
       ]
     },
+    "nextQuery": {
+      "type": "object",
+      "required": [
+        "from",
+        "select"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/from"
+        },
+        "joins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/join"
+          },
+          "minItems": 1
+        },
+        "where": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "select": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/selectItem@row"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "not@group": {
       "type": "object",
       "required": [
@@ -53731,6 +53761,42 @@
       },
       "additionalProperties": false
     },
+    "recursion": {
+      "type": "object",
+      "required": [
+        "seed",
+        "next",
+        "maxDepth"
+      ],
+      "properties": {
+        "seed": {
+          "$ref": "#/$defs/query"
+        },
+        "next": {
+          "$ref": "#/$defs/nextQuery"
+        },
+        "maxDepth": {
+          "anyOf": [
+            {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9223372036854776000
+            },
+            {
+              "allOf": [
+                {
+                  "$ref": "#/$defs/declares.integer"
+                },
+                {
+                  "$ref": "#/$defs/param"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "regexGroup": {
       "type": "object",
       "allOf": [
@@ -56177,6 +56243,27 @@
         },
         "expression": {
           "$ref": "#/$defs/expr@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "selectItem@row": {
+      "type": "object",
+      "required": [
+        "alias",
+        "expression"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "type": "string",
+            "pattern": "\\n"
+          }
+        },
+        "expression": {
+          "$ref": "#/$defs/expr@row"
         }
       },
       "additionalProperties": false
@@ -61083,6 +61170,9 @@
             "minItems": 1
           },
           "minItems": 1
+        },
+        "recursive": {
+          "$ref": "#/$defs/recursion"
         }
       },
       "additionalProperties": false,
@@ -61095,6 +61185,11 @@
         {
           "required": [
             "rows"
+          ]
+        },
+        {
+          "required": [
+            "recursive"
           ]
         }
       ]

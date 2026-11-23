@@ -1,0 +1,80 @@
+// Inline rows as a seed: a seed is a query, which can read rows declared before it
+{
+  "subqueries": [
+    {
+      "name": "referrals",
+      "recursive": {
+        "seed": {
+          "rows": [
+            [
+              { "alias": "id", "expression": { "param": "user_id", "type": { "name": "uuid" } } },
+              { "alias": "first_name", "expression": { "type": { "name": "string" }, "value": "" } },
+              { "alias": "depth", "expression": { "type": { "name": "integer" }, "value": 0 } }
+            ]
+          ]
+        },
+        "next": {
+          "from": { "entity": "users" },
+          "joins": [
+            {
+              "kind": "inner",
+              "subquery": "referrals",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": {
+                  "source": "users",
+                  "field": "referrer_id",
+                  "type": { "name": "uuid", "nullable": true }
+                },
+                "right": { "source": "referrals", "field": "id", "type": { "name": "uuid" } }
+              }
+            }
+          ],
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "first_name",
+              "expression": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+            },
+            {
+              "alias": "depth",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "referrals", "field": "depth", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            }
+          ]
+        },
+        "maxDepth": 50
+      }
+    }
+  ],
+  "from": { "subquery": "referrals" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "referrals", "field": "depth", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "first_name",
+      "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } }
+    },
+    {
+      "alias": "depth",
+      "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } } },
+    { "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } } },
+    { "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

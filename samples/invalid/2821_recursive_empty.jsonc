@@ -1,0 +1,27 @@
+// An empty recursive
+{
+  "subqueries": [ { "name": "referrals", "recursive": {} } ],
+  "from": { "subquery": "referrals" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "referrals", "field": "depth", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "first_name",
+      "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } }
+    },
+    {
+      "alias": "depth",
+      "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "referrals", "field": "depth", "type": { "name": "integer" } } },
+    { "expression": { "source": "referrals", "field": "first_name", "type": { "name": "string" } } },
+    { "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
