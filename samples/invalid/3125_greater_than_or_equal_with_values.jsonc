@@ -1,0 +1,17 @@
+// greaterThanOrEqual with a values array: it compares left with right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "values": [
+          { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+          { "param": "from", "type": { "name": "date", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

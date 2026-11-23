@@ -1,0 +1,14 @@
+// lessThanOrEqual without right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } }
+      }
+    }
+  ]
+}
