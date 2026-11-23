@@ -1,0 +1,125 @@
+// greaterThanOrEqual and lessThanOrEqual of nullable operands in join.on, having, a predicate and over a
+// nullable aggregate and a nullable key: a non-null boolean everywhere, true for two nulls.
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "greaterThanOrEqual",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": {
+              "source": "users",
+              "field": "trial_start",
+              "type": { "name": "date", "nullable": true }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "groupBy": [
+    { "alias": "user_id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "trial_start",
+      "expression": {
+        "source": "users",
+        "field": "trial_start",
+        "type": { "name": "date", "nullable": true }
+      }
+    }
+  ],
+  "having": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "max",
+      "type": { "name": "date", "nullable": true },
+      "selector": {
+        "source": "orders",
+        "field": "shipped_date",
+        "type": { "name": "date", "nullable": true }
+      }
+    },
+    "right": { "param": "shipped_by", "type": { "name": "date", "nullable": true } }
+  },
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "shipped_on_trial_start",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "and",
+          "type": { "name": "boolean" },
+          "conditions": [
+            {
+              "operator": "lessThanOrEqual",
+              "type": { "name": "boolean" },
+              "left": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "right": {
+                "source": "users",
+                "field": "trial_start",
+                "type": { "name": "date", "nullable": true }
+              }
+            },
+            {
+              "operator": "greaterThanOrEqual",
+              "type": { "name": "boolean" },
+              "left": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "right": {
+                "source": "users",
+                "field": "trial_start",
+                "type": { "name": "date", "nullable": true }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "last_shipment_at_or_after_trial",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "max",
+          "type": { "name": "date", "nullable": true },
+          "selector": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        },
+        "right": { "key": "trial_start", "type": { "name": "date", "nullable": true } }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "key": "user_id", "type": { "name": "uuid" } } } ]
+}

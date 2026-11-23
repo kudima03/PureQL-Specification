@@ -1,0 +1,15 @@
+// lessThan of a null date and a null datetime: two nulls are compared only within one type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "type": { "name": "date", "nullable": true }, "value": null },
+        "right": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

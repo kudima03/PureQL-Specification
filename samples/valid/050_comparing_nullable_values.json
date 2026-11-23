@@ -1,0 +1,284 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "source": "users",
+      "field": "trial_start",
+      "type": {
+        "name": "date",
+        "nullable": true
+      }
+    },
+    "right": {
+      "param": "trial_started_by",
+      "type": {
+        "name": "date",
+        "nullable": true
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "logged_in_since_verification",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "email_verified_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "logged_in_after_verification",
+      "expression": {
+        "operator": "greaterThan",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "email_verified_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "after_or_at_the_same_time",
+      "expression": {
+        "operator": "or",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "greaterThan",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "last_login_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "source": "users",
+              "field": "email_verified_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            }
+          },
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "last_login_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "source": "users",
+              "field": "email_verified_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "neither_happened",
+      "expression": {
+        "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "last_login_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              },
+              "value": null
+            }
+          },
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "email_verified_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              },
+              "value": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "verified_by_deadline",
+      "expression": {
+        "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "email_verified_at",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        },
+        "right": {
+          "param": "deadline",
+          "type": {
+            "name": "datetime",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "verified_exactly_at_deadline",
+      "expression": {
+        "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "lessThanOrEqual",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "email_verified_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "param": "deadline",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            }
+          },
+          {
+            "operator": "greaterThanOrEqual",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "users",
+              "field": "email_verified_at",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            },
+            "right": {
+              "param": "deadline",
+              "type": {
+                "name": "datetime",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}
