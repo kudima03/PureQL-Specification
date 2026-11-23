@@ -1,0 +1,15 @@
+// replace without a pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

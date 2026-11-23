@@ -1,0 +1,16 @@
+// splitPart with a nullable delimiter
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string", "nullable": true }, "value": null },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

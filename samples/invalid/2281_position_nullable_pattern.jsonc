@@ -1,0 +1,15 @@
+// position of a nullable pattern: the pattern is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

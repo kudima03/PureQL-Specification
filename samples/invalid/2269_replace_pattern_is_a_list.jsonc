@@ -1,0 +1,16 @@
+// replace with a list of patterns: it replaces one pattern; several are nested replace
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "stringList" }, "value": [ " ", "-" ] },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

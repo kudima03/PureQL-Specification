@@ -1,0 +1,17 @@
+// splitPart of a date: a date is written as text with asString first, and its parts are read with year, month
+// and day
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

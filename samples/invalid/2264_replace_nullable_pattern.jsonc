@@ -1,0 +1,17 @@
+// replace with a nullable pattern: the pattern is never null, so that the result is nullable exactly when the
+// operand is
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

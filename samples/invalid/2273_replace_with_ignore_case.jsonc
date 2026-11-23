@@ -1,0 +1,17 @@
+// replace with ignoreCase: the pattern is matched code point by code point, like equal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "_" },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

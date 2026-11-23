@@ -1,0 +1,16 @@
+// replace written as { operand, search, with }: its operands are pattern and replacement
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "search": { "type": { "name": "string" }, "value": " " },
+        "with": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

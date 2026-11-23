@@ -1,0 +1,18 @@
+// replace with a values array
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "name", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": " " },
+          { "type": { "name": "string" }, "value": "_" }
+        ]
+      }
+    }
+  ]
+}

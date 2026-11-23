@@ -1,0 +1,16 @@
+// position with a nullable start
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "start": { "param": "from", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

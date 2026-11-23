@@ -53,7 +53,8 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, conversions, if,
+  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, replace, position,
+    splitPart, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
@@ -433,6 +434,17 @@ for ctx, rules in CONTEXTS.items():
     # code points from `start`, counted from 1, to the end or for `length` of them
     lifted("substring", {"operand": "string"}, "string",
            extra={"start": expr("integer", ctx)}, optional={"length": expr("integer", ctx)})
+    # every occurrence of `pattern`, which is literal text, replaced by `replacement`
+    lifted("replace", {"operand": "string"}, "string",
+           extra={"pattern": expr("string", ctx), "replacement": expr("string", ctx)})
+    # the position, counted from 1, of the first occurrence of `pattern` at or after
+    # `start`; 0 when there is none
+    lifted("position", {"operand": "string"}, "integer",
+           extra={"pattern": expr("string", ctx)}, optional={"start": expr("integer", ctx)})
+    # part number `index` of the string split at `delimiter`, counted from 1, or from
+    # the end when negative
+    lifted("splitPart", {"operand": "string"}, "string",
+           extra={"delimiter": expr("string", ctx), "index": expr("integer", ctx)})
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

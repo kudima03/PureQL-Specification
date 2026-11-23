@@ -1,0 +1,16 @@
+// splitPart with separator instead of delimiter
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": " " },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// replace with a count: it replaces every occurrence
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "_" },
+        "count": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
