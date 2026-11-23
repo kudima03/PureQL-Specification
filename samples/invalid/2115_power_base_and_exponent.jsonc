@@ -1,0 +1,15 @@
+// power with base instead of operand: base is the base of log
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "base": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

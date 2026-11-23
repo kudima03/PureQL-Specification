@@ -1,0 +1,15 @@
+// power of a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

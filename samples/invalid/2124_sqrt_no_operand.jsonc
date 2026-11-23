@@ -1,0 +1,5 @@
+// sqrt without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "sqrt", "type": { "name": "decimal" } } } ]
+}

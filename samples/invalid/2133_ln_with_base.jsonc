@@ -1,0 +1,15 @@
+// ln with a base: its base is e; another base is log
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

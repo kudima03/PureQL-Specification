@@ -1,0 +1,15 @@
+// power with a string exponent
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "string" }, "value": "2" }
+      }
+    }
+  ]
+}

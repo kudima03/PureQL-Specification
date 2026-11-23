@@ -1,0 +1,15 @@
+// pow is not an operator: the operator is power
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "pow",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

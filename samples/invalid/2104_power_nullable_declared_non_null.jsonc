@@ -1,0 +1,19 @@
+// power of a nullable operand declared decimal: it is lifted, so it is decimal?
+{
+  "from": { "entity": "coupons" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": {
+          "source": "coupons",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

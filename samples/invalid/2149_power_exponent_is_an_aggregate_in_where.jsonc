@@ -1,0 +1,18 @@
+// power with an aggregate as exponent in where, a row context without aggregates
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "power",
+      "type": { "name": "decimal" },
+      "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "exponent": { "operator": "count", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 2 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

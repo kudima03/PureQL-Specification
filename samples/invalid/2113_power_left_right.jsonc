@@ -1,0 +1,15 @@
+// power with left and right: its operands are operand and exponent, named by their role
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

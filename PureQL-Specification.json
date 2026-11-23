@@ -11866,6 +11866,282 @@
         }
       ]
     },
+    "exp.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "exp.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "exp.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "exp.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "exp.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "exp.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "exp.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "exp.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "exp@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "exp"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "exp@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "exp"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "exp@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "exp"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "exp@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "exp"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/exp.decimal.nullable@total"
+          }
+        }
+      ]
+    },
     "expr@group": {
       "type": "object",
       "if": {
@@ -27071,6 +27347,850 @@
         }
       ]
     },
+    "ln.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "ln.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "ln.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "ln.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "ln.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "ln.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "ln.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "ln.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "ln@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "ln"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "ln@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "ln"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "ln@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "ln"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "ln@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "ln"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/ln.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "log.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "log.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "log.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "log.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "log10.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log10.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log10.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log10.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "log10.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "log10.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "log10.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "log10.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "log10@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log10"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "log10@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log10"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "log10@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log10"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "log10@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log10"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log10.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "log@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "base"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "base": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "log@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "base"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "base": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "log@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "base"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "base": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "log@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "base"
+      ],
+      "properties": {
+        "operator": {
+          "const": "log"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "base": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/log.decimal.nullable@total"
+          }
+        }
+      ]
+    },
     "lower.string.nullable@group": {
       "properties": {
         "operand": {
@@ -34381,6 +35501,12 @@
             "truncate",
             "abs",
             "sign",
+            "power",
+            "sqrt",
+            "exp",
+            "ln",
+            "log10",
+            "log",
             "concat",
             "length",
             "upper",
@@ -34592,6 +35718,78 @@
           },
           "then": {
             "$ref": "#/$defs/sign@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@group"
           }
         },
         {
@@ -35392,6 +36590,12 @@
             "truncate",
             "abs",
             "sign",
+            "power",
+            "sqrt",
+            "exp",
+            "ln",
+            "log10",
+            "log",
             "concat",
             "length",
             "upper",
@@ -35603,6 +36807,78 @@
           },
           "then": {
             "$ref": "#/$defs/sign@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@projection"
           }
         },
         {
@@ -36403,6 +37679,12 @@
             "truncate",
             "abs",
             "sign",
+            "power",
+            "sqrt",
+            "exp",
+            "ln",
+            "log10",
+            "log",
             "concat",
             "length",
             "upper",
@@ -36605,6 +37887,78 @@
           },
           "then": {
             "$ref": "#/$defs/sign@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@row"
           }
         },
         {
@@ -37297,6 +38651,12 @@
             "truncate",
             "abs",
             "sign",
+            "power",
+            "sqrt",
+            "exp",
+            "ln",
+            "log10",
+            "log",
             "concat",
             "length",
             "upper",
@@ -37508,6 +38868,78 @@
           },
           "then": {
             "$ref": "#/$defs/sign@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@total"
           }
         },
         {
@@ -38621,6 +40053,298 @@
           ]
         }
       }
+    },
+    "power.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "power.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "power.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "power.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "power.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "power.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "power.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "power.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "power@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "exponent"
+      ],
+      "properties": {
+        "operator": {
+          "const": "power"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "exponent": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "power@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "exponent"
+      ],
+      "properties": {
+        "operator": {
+          "const": "power"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "exponent": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "power@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "exponent"
+      ],
+      "properties": {
+        "operator": {
+          "const": "power"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "exponent": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "power@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "exponent"
+      ],
+      "properties": {
+        "operator": {
+          "const": "power"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "exponent": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/power.decimal.nullable@total"
+          }
+        }
+      ]
     },
     "quarter.date@group": {
       "properties": {
@@ -40648,6 +42372,282 @@
           },
           "then": {
             "$ref": "#/$defs/sign.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "sqrt.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sqrt.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sqrt.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sqrt.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sqrt.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "sqrt.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "sqrt.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "sqrt.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "sqrt@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sqrt"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "sqrt@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sqrt"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "sqrt@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sqrt"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "sqrt@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sqrt"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt.decimal.nullable@total"
           }
         }
       ]

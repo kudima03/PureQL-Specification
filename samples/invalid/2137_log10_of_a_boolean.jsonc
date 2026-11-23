@@ -1,0 +1,14 @@
+// log10 of a boolean
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

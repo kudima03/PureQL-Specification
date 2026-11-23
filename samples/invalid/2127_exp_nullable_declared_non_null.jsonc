@@ -1,0 +1,18 @@
+// exp of a nullable operand declared decimal
+{
+  "from": { "entity": "coupons" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": {
+          "source": "coupons",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        }
+      }
+    }
+  ]
+}

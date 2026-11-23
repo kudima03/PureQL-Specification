@@ -1,0 +1,182 @@
+// Corners of power, sqrt, exp, ln, log10 and log: integer operands still give a decimal, which round turns
+// into an integer; negative, fractional, computed and parameter exponents; a nullable operand; nested calls;
+// and bases that are a parameter, computed or below 1.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "integer_operands",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 2 },
+        "exponent": { "type": { "name": "integer" }, "value": 10 }
+      }
+    },
+    {
+      "alias": "as_an_integer",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "power",
+          "type": { "name": "decimal" },
+          "operand": { "type": { "name": "integer" }, "value": 2 },
+          "exponent": { "type": { "name": "integer" }, "value": 10 }
+        }
+      }
+    },
+    {
+      "alias": "negative_exponent",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "integer" }, "value": -2 }
+      }
+    },
+    {
+      "alias": "fractional_exponent",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "cube_root",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "exponent": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 1 },
+            { "type": { "name": "integer" }, "value": 3 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "parameter_exponent",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "exponent": { "param": "exponent", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "x", "type": { "name": "decimal", "nullable": true } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "power_of_a_power",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "power",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "exponent": { "type": { "name": "integer" }, "value": 2 }
+        },
+        "exponent": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "sqrt_of_integer",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "sqrt_nullable",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "x", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "exp_of_integer",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "exp_of_ln",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "ln",
+          "type": { "name": "decimal", "nullable": true },
+          "operand": { "param": "x", "type": { "name": "decimal", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "ln_of_integer_literal",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 10 }
+      }
+    },
+    {
+      "alias": "log10_of_decimal_literal",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.001" }
+      }
+    },
+    {
+      "alias": "log_to_a_parameter_base",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "base": { "param": "base", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "log_to_a_computed_base",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "x", "type": { "name": "decimal", "nullable": true } },
+        "base": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "log_to_a_fractional_base",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "base": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    }
+  ]
+}

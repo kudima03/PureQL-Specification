@@ -1,0 +1,15 @@
+// log with a nullable base: the base is never null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "base": { "param": "base", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

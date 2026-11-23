@@ -1,0 +1,140 @@
+// Powers and logarithms in join.on, where, groupBy keys, having, select and orderBy: orders bucketed by their
+// order of magnitude and by doublings, each bucket with its lower bound as a power of a key.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "power",
+              "type": { "name": "decimal" },
+              "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "exponent": { "type": { "name": "integer" }, "value": 2 }
+            },
+            "right": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "sqrt",
+      "type": { "name": "decimal" },
+      "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "param": "largest_root", "type": { "name": "decimal" } }
+  },
+  "groupBy": [
+    {
+      "alias": "magnitude",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "log10",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "greatest",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "doublings",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "log",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "greatest",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          },
+          "base": { "type": { "name": "integer" }, "value": 2 }
+        }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "exp",
+      "type": { "name": "decimal" },
+      "operand": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "ln",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "greatest",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 50 }
+  },
+  "select": [
+    { "alias": "magnitude", "expression": { "key": "magnitude", "type": { "name": "integer" } } },
+    { "alias": "doublings", "expression": { "key": "doublings", "type": { "name": "integer" } } },
+    {
+      "alias": "lower_bound",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 10 },
+        "exponent": { "key": "magnitude", "type": { "name": "integer" } }
+      }
+    },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "average_root",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "sqrt",
+          "type": { "name": "decimal" },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "magnitude", "type": { "name": "integer" } } },
+    { "expression": { "key": "doublings", "type": { "name": "integer" } } }
+  ]
+}

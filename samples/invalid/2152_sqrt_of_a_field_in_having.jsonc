@@ -1,0 +1,21 @@
+// sqrt of a field in having, which reads only group keys and aggregates
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "sqrt",
+      "type": { "name": "decimal" },
+      "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 2 }
+  },
+  "select": [ { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } } ]
+}

@@ -1,0 +1,19 @@
+// log of a nullable operand declared decimal
+{
+  "from": { "entity": "coupons" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": {
+          "source": "coupons",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}
