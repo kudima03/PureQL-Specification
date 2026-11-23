@@ -1,0 +1,108 @@
+// Conversions in a total query: toString of count, sum and any is non-null, toDate and toDatetime over max
+// and min are nullable there, and coalesce gives a label when there are no orders.
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "summary",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "toString",
+            "type": { "name": "string" },
+            "operand": { "operator": "count", "type": { "name": "integer" } }
+          },
+          { "type": { "name": "string" }, "value": " orders, " },
+          {
+            "operator": "toString",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          { "type": { "name": "string" }, "value": " in total" }
+        ]
+      }
+    },
+    {
+      "alias": "last_day",
+      "expression": {
+        "operator": "toDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "datetime", "nullable": true },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "last_day_label",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "toString",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "operator": "toDate",
+              "type": { "name": "date", "nullable": true },
+              "operand": {
+                "operator": "max",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              }
+            }
+          },
+          { "type": { "name": "string" }, "value": "no orders" }
+        ]
+      }
+    },
+    {
+      "alias": "first_day_start",
+      "expression": {
+        "operator": "toDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "date", "nullable": true },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "days_with_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "toTime",
+            "type": { "name": "time" },
+            "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          "right": { "type": { "name": "time" }, "value": "00:00:00" }
+        }
+      }
+    },
+    {
+      "alias": "any_paid",
+      "expression": {
+        "operator": "toString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "any",
+          "type": { "name": "boolean" },
+          "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+        }
+      }
+    }
+  ]
+}

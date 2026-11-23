@@ -1,0 +1,14 @@
+// toString of a list literal: a list is accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toString",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "integerList" }, "value": [ 1, 2 ] }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// toDate of a time, which has no calendar day
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

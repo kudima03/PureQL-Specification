@@ -1,0 +1,14 @@
+// toDate of a string: the conversions between temporal types never fail; text is not read by them
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDate",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

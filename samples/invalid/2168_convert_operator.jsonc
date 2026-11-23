@@ -1,0 +1,14 @@
+// convert is not an operator: the declared type is the result of an operator, never an instruction to it
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "convert",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

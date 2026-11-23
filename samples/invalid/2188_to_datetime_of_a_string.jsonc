@@ -1,0 +1,14 @@
+// toDatetime of a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// toTime of a nullable operand declared time
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toTime",
+        "type": { "name": "time" },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        }
+      }
+    }
+  ]
+}

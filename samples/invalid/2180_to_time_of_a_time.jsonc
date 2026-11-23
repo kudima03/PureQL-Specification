@@ -1,0 +1,14 @@
+// toTime of a time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toTime",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

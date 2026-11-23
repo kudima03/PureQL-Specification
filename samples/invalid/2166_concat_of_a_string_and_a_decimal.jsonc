@@ -1,0 +1,17 @@
+// concat of a string and a decimal: nothing converts to string implicitly, the decimal goes through toString
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string" }, "value": "Total: " },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// toInteger is not an operator: a decimal becomes an integer with round, floor, ceiling or truncate, which
+// say how
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

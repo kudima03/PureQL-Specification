@@ -1,0 +1,14 @@
+// toString of a string: it takes only the types it changes
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

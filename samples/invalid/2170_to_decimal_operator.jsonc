@@ -1,0 +1,14 @@
+// toDecimal is not an operator: an integer stands wherever a decimal is expected
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

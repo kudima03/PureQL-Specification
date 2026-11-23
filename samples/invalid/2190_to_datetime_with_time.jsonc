@@ -1,0 +1,15 @@
+// toDatetime with a time property: it yields midnight; a time of day is added with datetimeAddSeconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

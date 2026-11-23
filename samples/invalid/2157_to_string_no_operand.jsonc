@@ -1,0 +1,5 @@
+// toString without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "toString", "type": { "name": "string" } } } ]
+}

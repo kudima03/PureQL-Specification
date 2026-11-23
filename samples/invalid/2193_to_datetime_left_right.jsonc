@@ -1,0 +1,15 @@
+// toDatetime with left and right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toDatetime",
+        "type": { "name": "datetime" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

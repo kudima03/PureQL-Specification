@@ -1,0 +1,15 @@
+// toString with a locale: its text is the same in every interpreter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "locale": "en-US"
+      }
+    }
+  ]
+}
