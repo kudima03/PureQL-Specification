@@ -1,0 +1,16 @@
+// normalize with a locale: normalization is the same in every locale
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC",
+        "locale": "de"
+      }
+    }
+  ]
+}

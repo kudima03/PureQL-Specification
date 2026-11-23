@@ -1,0 +1,21 @@
+// normalize as where: it is a string, and a condition is a boolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    }
+  ],
+  "where": {
+    "operator": "normalize",
+    "type": { "name": "string" },
+    "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+    "form": "NFC"
+  }
+}

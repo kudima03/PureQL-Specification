@@ -1,0 +1,16 @@
+// normalize with a predicate
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC",
+        "predicate": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

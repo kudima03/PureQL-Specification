@@ -41482,6 +41482,318 @@
       },
       "additionalProperties": false
     },
+    "normalize.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "normalize.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "normalize.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "normalize.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "normalize.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "normalize.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "normalize.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "normalize.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "normalize@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "form"
+      ],
+      "properties": {
+        "operator": {
+          "const": "normalize"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "form": {
+          "enum": [
+            "NFC",
+            "NFD",
+            "NFKC",
+            "NFKD"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "normalize@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "form"
+      ],
+      "properties": {
+        "operator": {
+          "const": "normalize"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "form": {
+          "enum": [
+            "NFC",
+            "NFD",
+            "NFKC",
+            "NFKD"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "normalize@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "form"
+      ],
+      "properties": {
+        "operator": {
+          "const": "normalize"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "form": {
+          "enum": [
+            "NFC",
+            "NFD",
+            "NFKC",
+            "NFKD"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "normalize@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "form"
+      ],
+      "properties": {
+        "operator": {
+          "const": "normalize"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "form": {
+          "enum": [
+            "NFC",
+            "NFD",
+            "NFKC",
+            "NFKD"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/normalize.string.nullable@total"
+          }
+        }
+      ]
+    },
     "not@group": {
       "type": "object",
       "required": [
@@ -43305,6 +43617,7 @@
             "upper",
             "lower",
             "foldCase",
+            "normalize",
             "trim",
             "trimStart",
             "trimEnd",
@@ -43679,6 +43992,18 @@
           },
           "then": {
             "$ref": "#/$defs/foldCase@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "normalize"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/normalize@group"
           }
         },
         {
@@ -44862,6 +45187,7 @@
             "upper",
             "lower",
             "foldCase",
+            "normalize",
             "trim",
             "trimStart",
             "trimEnd",
@@ -45244,6 +45570,18 @@
           },
           "then": {
             "$ref": "#/$defs/foldCase@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "normalize"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/normalize@projection"
           }
         },
         {
@@ -46523,6 +46861,7 @@
             "upper",
             "lower",
             "foldCase",
+            "normalize",
             "trim",
             "trimStart",
             "trimEnd",
@@ -46879,6 +47218,18 @@
           },
           "then": {
             "$ref": "#/$defs/foldCase@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "normalize"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/normalize@row"
           }
         },
         {
@@ -47846,6 +48197,7 @@
             "upper",
             "lower",
             "foldCase",
+            "normalize",
             "trim",
             "trimStart",
             "trimEnd",
@@ -48220,6 +48572,18 @@
           },
           "then": {
             "$ref": "#/$defs/foldCase@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "normalize"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/normalize@total"
           }
         },
         {

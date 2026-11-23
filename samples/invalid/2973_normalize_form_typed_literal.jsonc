@@ -1,0 +1,15 @@
+// normalize whose form is a string literal: a form is a name, like the kind of a join
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": { "type": { "name": "string" }, "value": "NFC" }
+      }
+    }
+  ]
+}

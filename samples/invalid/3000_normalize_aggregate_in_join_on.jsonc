@@ -1,0 +1,34 @@
+// normalize of an aggregate in join.on, a row context without aggregates
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "alias": "other",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "min",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "email", "type": { "name": "string" } }
+          },
+          "form": "NFC"
+        },
+        "right": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "other", "field": "email", "type": { "name": "string" } },
+          "form": "NFC"
+        }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

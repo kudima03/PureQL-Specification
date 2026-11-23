@@ -1,0 +1,15 @@
+// isNormalized is not an operator: a string is normalized when it equals its normalized form
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "isNormalized",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    }
+  ]
+}

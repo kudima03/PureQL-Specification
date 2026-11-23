@@ -1,0 +1,16 @@
+// normalize with over: it is not an aggregate
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC",
+        "over": { "partitionBy": [ { "source": "users", "field": "country", "type": { "name": "string" } } ] }
+      }
+    }
+  ]
+}

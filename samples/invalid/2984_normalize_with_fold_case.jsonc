@@ -1,0 +1,16 @@
+// normalize with a foldCase flag: case is folded by its own operator
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC",
+        "foldCase": true
+      }
+    }
+  ]
+}

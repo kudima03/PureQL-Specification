@@ -1,0 +1,15 @@
+// normalize with a list of forms: one form at a time, and a normalized string is normalized again
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": [ "NFD", "NFC" ]
+      }
+    }
+  ]
+}

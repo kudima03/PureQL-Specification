@@ -1,0 +1,15 @@
+// normalize of an untyped null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "value": null },
+        "form": "NFC"
+      }
+    }
+  ]
+}
