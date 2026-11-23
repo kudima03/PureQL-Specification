@@ -1,0 +1,15 @@
+// average of a date with a round flag: a temporal mean is already a whole day or microsecond
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "round": true
+      }
+    }
+  ]
+}

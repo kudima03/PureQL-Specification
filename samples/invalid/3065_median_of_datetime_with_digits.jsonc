@@ -1,0 +1,15 @@
+// median of a datetime with digits: a temporal mean is rounded to the precision of its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "digits": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

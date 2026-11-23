@@ -1,0 +1,18 @@
+// floor of a median datetime: the start of a period is startOf
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "median",
+          "type": { "name": "datetime" },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    }
+  ]
+}

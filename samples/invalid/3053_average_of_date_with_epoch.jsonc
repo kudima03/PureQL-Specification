@@ -1,0 +1,15 @@
+// average of a date with an epoch
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "epoch": "1970-01-01"
+      }
+    }
+  ]
+}
