@@ -1,0 +1,222 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "fiscal_year_start",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": {
+          "name": "date"
+        },
+        "year": {
+          "operator": "year",
+          "type": {
+            "name": "integer"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        },
+        "month": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 4
+        },
+        "day": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "mid_month",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": {
+          "name": "date"
+        },
+        "year": {
+          "operator": "year",
+          "type": {
+            "name": "integer"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        },
+        "month": {
+          "operator": "month",
+          "type": {
+            "name": "integer"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        },
+        "day": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 15
+        }
+      }
+    },
+    {
+      "alias": "month_from_parameters",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": {
+          "name": "date"
+        },
+        "year": {
+          "param": "year",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "month": {
+          "param": "month",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "day": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "cut_off",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": {
+          "name": "time"
+        },
+        "hour": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 18
+        },
+        "minute": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 30
+        },
+        "second": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 0
+        }
+      }
+    },
+    {
+      "alias": "window_start_at",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": {
+          "name": "datetime"
+        },
+        "date": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "time": {
+          "source": "orders",
+          "field": "delivery_window_start",
+          "type": {
+            "name": "time"
+          }
+        }
+      }
+    },
+    {
+      "alias": "shipped_at_noon",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": {
+          "name": "datetime",
+          "nullable": true
+        },
+        "date": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "time": {
+          "operator": "timeFromParts",
+          "type": {
+            "name": "time"
+          },
+          "hour": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 12
+          },
+          "minute": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 0
+          },
+          "second": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 0
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

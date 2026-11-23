@@ -1,0 +1,211 @@
+// dateFromParts, timeFromParts and datetimeFromParts as the inverse of the parts: a date from its year, month
+// and day, a time from its hour, minute and seconds with the fraction, an instant from asDate and asTime, and
+// lifted over a nullable part.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "date_from_its_parts",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateFromParts",
+          "type": { "name": "date" },
+          "year": {
+            "operator": "year",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "month": {
+            "operator": "month",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "day": {
+            "operator": "day",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          }
+        },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "time_from_its_parts",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "timeFromParts",
+          "type": { "name": "time" },
+          "hour": {
+            "operator": "hour",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+          },
+          "minute": {
+            "operator": "minute",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+          },
+          "second": {
+            "operator": "add",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "second",
+                "type": { "name": "integer" },
+                "operand": {
+                  "source": "orders",
+                  "field": "delivery_window_start",
+                  "type": { "name": "time" }
+                }
+              },
+              {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "microsecond",
+                    "type": { "name": "integer" },
+                    "operand": {
+                      "source": "orders",
+                      "field": "delivery_window_start",
+                      "type": { "name": "time" }
+                    }
+                  },
+                  { "type": { "name": "integer" }, "value": 1000000 }
+                ]
+              }
+            ]
+          }
+        },
+        "right": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "instant_from_its_parts",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          "time": {
+            "operator": "asTime",
+            "type": { "name": "time" },
+            "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          }
+        },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "midnight",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "time": {
+            "operator": "timeFromParts",
+            "type": { "name": "time" },
+            "hour": { "type": { "name": "integer" }, "value": 0 },
+            "minute": { "type": { "name": "integer" }, "value": 0 },
+            "second": { "type": { "name": "integer" }, "value": 0 }
+          }
+        },
+        "right": {
+          "operator": "asDatetime",
+          "type": { "name": "datetime" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "first_of_month",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateFromParts",
+          "type": { "name": "date" },
+          "year": {
+            "operator": "year",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "month": {
+            "operator": "month",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "day": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "right": {
+          "operator": "startOfMonth",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "last_day_of_february",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 3 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "nullable_date",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer", "nullable": true },
+          "operand": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        },
+        "month": {
+          "operator": "month",
+          "type": { "name": "integer", "nullable": true },
+          "operand": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "fraction_of_a_second",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 23 },
+        "minute": { "type": { "name": "integer" }, "value": 59 },
+        "second": { "type": { "name": "decimal" }, "value": "59.999999" }
+      }
+    }
+  ]
+}

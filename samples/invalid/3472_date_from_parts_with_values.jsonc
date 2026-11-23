@@ -1,0 +1,18 @@
+// dateFromParts with a values array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 2024 },
+          { "type": { "name": "integer" }, "value": 4 },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

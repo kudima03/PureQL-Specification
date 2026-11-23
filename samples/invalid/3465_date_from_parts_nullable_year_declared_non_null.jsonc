@@ -1,0 +1,16 @@
+// dateFromParts with a nullable year declared date: it is lifted over every part
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": { "param": "year", "type": { "name": "integer", "nullable": true } },
+        "month": { "type": { "name": "integer" }, "value": 4 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// timeFromParts with a values array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 18 },
+          { "type": { "name": "integer" }, "value": 30 },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// makeTime is not an operator: it is timeFromParts
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "makeTime",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

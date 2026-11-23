@@ -662,6 +662,12 @@ for ctx, rules in CONTEXTS.items():
     # whole months from right to left: the inverse of adding months
     lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
     lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")
+    # A date and a time built from their parts, the inverse of year ... day and
+    # hour ... second, and an instant from a date and a time of day, in UTC. Lifted
+    # over every part. `second` is a decimal and carries the fraction.
+    lifted("dateFromParts", {"year": "integer", "month": "integer", "day": "integer"}, "date")
+    lifted("timeFromParts", {"hour": "integer", "minute": "integer", "second": "decimal"}, "time")
+    lifted("datetimeFromParts", {"date": "date", "time": "time"}, "datetime")
 
     section = "datePart"
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
