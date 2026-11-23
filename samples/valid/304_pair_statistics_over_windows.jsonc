@@ -1,0 +1,105 @@
+// The statistics of two columns over all rows, a partition and a frame of ten rows: the population covariance
+// is non-null there, the sample covariance and the correlation never are.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "of_all_rows",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "covariance_of_all_rows",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "in_the_product",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ]
+        }
+      }
+    },
+    {
+      "alias": "rolling",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 9 }
+        }
+      }
+    },
+    {
+      "alias": "rolling_covariance",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 9 }
+        }
+      }
+    },
+    {
+      "alias": "rolling_sample_covariance",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 9 }
+        }
+      }
+    },
+    {
+      "alias": "filtered_covariance",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ]
+        }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } } ]
+}

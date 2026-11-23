@@ -1,0 +1,23 @@
+// correlation of a window function
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": {
+          "operator": "rowNumber",
+          "type": { "name": "integer" },
+          "over": {
+            "orderBy": [
+              { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+            ]
+          }
+        },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

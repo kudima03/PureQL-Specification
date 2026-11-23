@@ -1,0 +1,15 @@
+// correlation with x and y: it is symmetric, and its operands are left and right
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

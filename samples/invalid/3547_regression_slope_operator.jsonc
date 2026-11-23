@@ -1,0 +1,15 @@
+// regressionSlope is not an operator: a slope is a covariance divided by a variance
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// covariancePopulation with a nullable left declared decimal: a row counts only when both values are non-null
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "param": "discount", "type": { "name": "decimal", "nullable": true } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

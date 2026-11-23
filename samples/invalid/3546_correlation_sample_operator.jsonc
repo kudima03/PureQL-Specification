@@ -1,0 +1,15 @@
+// correlationSample is not an operator: the correlation of a population and of a sample are the same number
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

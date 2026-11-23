@@ -1,0 +1,18 @@
+// correlation in where: an aggregate is not a row expression
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "correlation",
+      "type": { "name": "decimal", "nullable": true },
+      "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+      "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "decimal" }, "value": "0.5" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

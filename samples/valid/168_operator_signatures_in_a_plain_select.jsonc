@@ -7293,6 +7293,90 @@
       }
     },
     {
+      "alias": "covariancePopulation_decimal",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "decimal" }, "value": "0.1" }
+      }
+    },
+    {
+      "alias": "covariancePopulation_decimal_of_integers",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "type": { "name": "integer" }, "value": 7 },
+        "right": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "covariancePopulation_decimal_nullable_left",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "covariancePopulation_decimal_nullable_right",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "covariancePopulation_decimal_nullable_where",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "covarianceSample_decimal_nullable",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "covarianceSample_decimal_nullable_of_nulls_where",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "right": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "correlation_decimal_nullable",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "correlation_decimal_nullable_of_nulls_where",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "right": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
       "alias": "concatAll_string_over_frame",
       "expression": {
         "operator": "concatAll",

@@ -1,0 +1,15 @@
+// correlation of a date: a date is not a number
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

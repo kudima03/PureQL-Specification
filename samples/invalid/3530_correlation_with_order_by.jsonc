@@ -1,0 +1,18 @@
+// correlation with orderBy: it does not depend on an order
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "orderBy": [
+          { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}

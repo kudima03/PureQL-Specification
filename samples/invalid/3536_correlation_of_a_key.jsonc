@@ -1,0 +1,21 @@
+// correlation of a group key: its operands are row expressions
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "key": "k", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

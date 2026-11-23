@@ -1,0 +1,15 @@
+// covariancePopulation of integers declared integer: it is a decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

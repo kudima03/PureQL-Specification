@@ -1,0 +1,103 @@
+// The operands of the pair statistics: decimals, integers, a nullable left or right, a predicate, literals
+// and a parameter; the population covariance is nullable exactly when one of them is.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "of_decimals",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_an_integer_and_a_decimal",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_integers",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "of_a_nullable_left",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "param": "discount", "type": { "name": "decimal", "nullable": true } },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_nullable_right",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "param": "discount", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "with_a_predicate",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "of_literals",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal" },
+        "left": { "type": { "name": "decimal" }, "value": "2.5" },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "sample_of_non_null_operands",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "correlation_of_a_column_with_itself",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_parameter",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "param": "weight", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}
