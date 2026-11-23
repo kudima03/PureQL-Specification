@@ -1,0 +1,18 @@
+// round of a year
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    }
+  ]
+}

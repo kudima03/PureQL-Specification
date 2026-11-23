@@ -553,14 +553,18 @@ for ctx, rules in CONTEXTS.items():
     lifted("divide", {"values": "decimal"}, "decimal")
     for name in ["integerDivide", "modulo"]:
         lifted(name, {"left": "integer", "right": "integer"}, "integer")
+    # Rounding to a whole number takes a decimal: an integer is one already, and an
+    # operator that cannot change its operand is rejected, as asString of a string is.
+    # With digits an integer is accepted: round(1250, -2) is 1300.
+    whole = {"properties": {"operand": declares_name("decimal")}}
     for name in ["floor", "ceiling"]:
-        lifted(name, {"operand": "decimal"}, "integer")
+        lifted(name, {"operand": "decimal"}, "integer", whole)
     # round gives integer, or decimal with digits
     digits = {"digits": expr("integer", ctx)}
-    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
+    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=digits)
     lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
     # truncate drops digits, toward zero, and is typed as round is
-    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
+    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=digits)
     lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
     # abs keeps the type of its operand; sign is -1, 0 or 1, an integer whatever the operand
     lifted("abs", {"operand": "integer"}, "integer")

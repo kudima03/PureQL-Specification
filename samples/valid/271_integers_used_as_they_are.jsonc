@@ -1,0 +1,85 @@
+// Whole numbers that need no rounding: an integer field, a difference, integerDivide, modulo, count, a sum of
+// integers and an integer abs, next to a decimal compared with a rounded one.
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+    "right": {
+      "operator": "round",
+      "type": { "name": "integer" },
+      "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+    }
+  },
+  "select": [
+    {
+      "alias": "quantity",
+      "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "kept",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "dozens",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    },
+    {
+      "alias": "left_over",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    },
+    { "alias": "lines", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "magnitude",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "as_a_decimal",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "decimal" }, "value": "0" }
+        ]
+      }
+    }
+  ]
+}

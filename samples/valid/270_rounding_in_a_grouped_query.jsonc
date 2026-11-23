@@ -1,0 +1,130 @@
+// Rounding of decimals in a group key, having, select and orderBy of a grouped query: an average and a
+// quotient of integers are decimals, a sum of integers is rounded only with digits.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "price_band",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "type": { "name": "integer" }, "value": 10 }
+          ]
+        }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "round",
+      "type": { "name": "integer" },
+      "operand": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "order_id", "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+    { "alias": "price_band", "expression": { "key": "price_band", "type": { "name": "integer" } } },
+    {
+      "alias": "average_quantity",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "total_floor",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "units_per_line_rounded_up",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            { "operator": "count", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "units_in_tens",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    { "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+    { "expression": { "key": "price_band", "type": { "name": "integer" } } }
+  ]
+}

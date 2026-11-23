@@ -1,0 +1,19 @@
+// round of modulo
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "modulo",
+          "type": { "name": "integer" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 12 }
+        }
+      }
+    }
+  ]
+}

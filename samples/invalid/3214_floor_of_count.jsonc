@@ -1,0 +1,14 @@
+// floor of count: an integer is a whole number already, so floor cannot change it
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

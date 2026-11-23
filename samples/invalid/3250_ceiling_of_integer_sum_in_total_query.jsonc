@@ -1,0 +1,18 @@
+// ceiling of a sum of integers in a total query
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    }
+  ]
+}

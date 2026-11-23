@@ -1,0 +1,14 @@
+// ceiling of an integer parameter: an integer is a whole number already
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": { "param": "units", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

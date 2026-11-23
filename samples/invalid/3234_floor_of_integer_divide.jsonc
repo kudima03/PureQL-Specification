@@ -1,0 +1,19 @@
+// floor of integerDivide, which is an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "integerDivide",
+          "type": { "name": "integer" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 2 }
+        }
+      }
+    }
+  ]
+}

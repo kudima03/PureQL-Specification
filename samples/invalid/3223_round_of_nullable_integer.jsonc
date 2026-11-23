@@ -1,0 +1,14 @@
+// round of a nullable integer: without digits round cannot change an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "units", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// ceiling of a length
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "length",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        }
+      }
+    }
+  ]
+}

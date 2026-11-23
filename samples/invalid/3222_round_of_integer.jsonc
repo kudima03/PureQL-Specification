@@ -1,0 +1,14 @@
+// round of an integer field: without digits round cannot change an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

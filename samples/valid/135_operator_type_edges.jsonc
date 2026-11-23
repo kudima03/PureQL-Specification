@@ -1,4 +1,4 @@
-// Operator typing at its edges: floor of an integer, round with negative and computed digits, dateDiffDays of a nullable
+// Operator typing at its edges: floor of a decimal, round with negative and computed digits, dateDiffDays of a nullable
 // date, an integer number of seconds, three-operand add, equal as a column,
 // comparisons between typed nulls and across integer / decimal, if over uuid, coalesce with the non-null operand last,
 // coalesce(integer?, decimal) as decimal, a nullable integer field and a boolean expression as columns.
@@ -55,11 +55,11 @@
   },
   "select": [
     {
-      "alias": "floor_of_integer",
+      "alias": "floor_of_decimal",
       "expression": {
         "operator": "floor",
         "type": { "name": "integer" },
-        "operand": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
       }
     },
     {
