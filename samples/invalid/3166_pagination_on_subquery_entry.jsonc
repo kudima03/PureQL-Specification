@@ -1,0 +1,31 @@
+// pagination on a subquery entry: it belongs to the query
+{
+  "subqueries": [
+    {
+      "name": "latest",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "total",
+            "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        ],
+        "orderBy": [
+          {
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "direction": "desc"
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "pagination": { "skip": 10, "take": 100 }
+      },
+      "pagination": { "take": 5 }
+    }
+  ],
+  "from": { "subquery": "latest" },
+  "select": [
+    { "alias": "id", "expression": { "source": "latest", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

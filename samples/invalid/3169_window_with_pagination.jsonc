@@ -1,0 +1,20 @@
+// A window with pagination: the rows of a window are chosen by its frame
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "n",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "pagination": { "take": 3 }
+        }
+      }
+    }
+  ]
+}

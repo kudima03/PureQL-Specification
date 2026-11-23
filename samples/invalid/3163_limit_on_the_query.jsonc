@@ -1,0 +1,19 @@
+// limit written on the query
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "limit": 20
+}
