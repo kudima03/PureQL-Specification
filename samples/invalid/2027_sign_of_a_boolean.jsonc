@@ -1,0 +1,14 @@
+// sign of a boolean
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

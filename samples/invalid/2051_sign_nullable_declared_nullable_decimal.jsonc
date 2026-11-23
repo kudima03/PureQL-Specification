@@ -1,0 +1,14 @@
+// sign of a decimal? declared decimal?: it is integer? whatever its operand
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "rate", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

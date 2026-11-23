@@ -1,0 +1,18 @@
+// abs of a min in a total query declared decimal: min is nullable there, and abs is lifted
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ]
+}

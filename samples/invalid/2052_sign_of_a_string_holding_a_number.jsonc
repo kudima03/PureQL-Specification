@@ -1,0 +1,14 @@
+// sign of the string "-1": nothing converts from string implicitly
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "-1" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+// abs, sign and truncate over aggregates in a grouped query: the size of a deviation in having, select and
+// orderBy, abs inside a selector, abs and sign staying integer over integer sums, and truncate with and
+// without digits.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "abs",
+      "type": { "name": "decimal" },
+      "operand": {
+        "operator": "subtract",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "average",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          },
+          { "param": "list_price", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    "right": { "type": { "name": "decimal" }, "value": "0.5" }
+  },
+  "select": [
+    { "alias": "product_id", "expression": { "key": "product_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "average_gap",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "average",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            },
+            { "param": "list_price", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "largest_gap",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "abs",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "subtract",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              { "param": "list_price", "type": { "name": "decimal" } }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "net_units",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": {
+                "source": "order_items",
+                "field": "returned_quantity",
+                "type": { "name": "integer" }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "against_plan",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            { "param": "planned_units", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "average_price_to_cents",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "whole_average_price",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "average",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            },
+            { "param": "list_price", "type": { "name": "decimal" } }
+          ]
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "product_id", "type": { "name": "uuid" } } }
+  ]
+}

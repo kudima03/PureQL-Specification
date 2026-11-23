@@ -1,0 +1,5 @@
+// abs without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "abs", "type": { "name": "decimal" } } } ]
+}

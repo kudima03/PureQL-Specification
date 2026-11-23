@@ -1,0 +1,5 @@
+// sign without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "sign", "type": { "name": "integer" } } } ]
+}

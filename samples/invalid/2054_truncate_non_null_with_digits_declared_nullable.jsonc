@@ -1,0 +1,15 @@
+// truncate of a non-null operand with digits declared decimal?
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

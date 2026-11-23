@@ -53,7 +53,8 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if, round/floor/ceiling are lifted:
+  - arithmetic, abs, sign, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if,
+    round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -401,6 +402,13 @@ for ctx, rules in CONTEXTS.items():
     digits = {"digits": expr("integer", ctx)}
     lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
     lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
+    # truncate drops digits, toward zero, and is typed as round is
+    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, optional=digits)
+    lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
+    # abs keeps the type of its operand; sign is -1, 0 or 1, an integer whatever the operand
+    lifted("abs", {"operand": "integer"}, "integer")
+    lifted("abs", {"operand": "decimal"}, "decimal", some(["operand"], declares_name("decimal")))
+    lifted("sign", {"operand": "decimal"}, "integer")
 
     # strings
     lifted("concat", {"values": "string"}, "string")

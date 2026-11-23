@@ -1,0 +1,17 @@
+// sign of a group key in the orderBy of a plain query, which has no group keys
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": { "key": "total", "type": { "name": "decimal" } }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

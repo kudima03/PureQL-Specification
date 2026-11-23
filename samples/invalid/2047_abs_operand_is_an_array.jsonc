@@ -1,0 +1,17 @@
+// abs with an array of two expressions as operand: it takes one; their difference is subtract
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

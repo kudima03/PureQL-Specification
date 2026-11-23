@@ -1,0 +1,19 @@
+// truncate of a nullable operand declared decimal
+{
+  "from": { "entity": "coupons" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": {
+          "source": "coupons",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

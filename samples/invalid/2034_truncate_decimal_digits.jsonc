@@ -1,0 +1,15 @@
+// truncate with a decimal number of digits
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

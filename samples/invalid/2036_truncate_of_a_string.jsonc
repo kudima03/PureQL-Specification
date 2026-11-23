@@ -1,0 +1,14 @@
+// truncate of a string: shortening a string is substring
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    }
+  ]
+}
