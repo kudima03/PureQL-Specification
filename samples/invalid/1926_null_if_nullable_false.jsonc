@@ -1,0 +1,16 @@
+// nullIf declared with "nullable": false: a non-null type is not written that way, and nullIf is never non-
+// null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "string", "nullable": false },
+        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "unknown" }
+      }
+    }
+  ]
+}

@@ -27393,6 +27393,782 @@
         }
       ]
     },
+    "nullIf.boolean.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/boolean.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/boolean.nullable@group"
+        }
+      }
+    },
+    "nullIf.boolean.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/boolean.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/boolean.nullable@projection"
+        }
+      }
+    },
+    "nullIf.boolean.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      }
+    },
+    "nullIf.boolean.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/boolean.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/boolean.nullable@total"
+        }
+      }
+    },
+    "nullIf.date.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@group"
+        }
+      }
+    },
+    "nullIf.date.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@projection"
+        }
+      }
+    },
+    "nullIf.date.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "nullIf.date.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/date.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/date.nullable@total"
+        }
+      }
+    },
+    "nullIf.datetime.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@group"
+        }
+      }
+    },
+    "nullIf.datetime.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@projection"
+        }
+      }
+    },
+    "nullIf.datetime.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "nullIf.datetime.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/datetime.nullable@total"
+        }
+      }
+    },
+    "nullIf.decimal.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@group",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      }
+    },
+    "nullIf.decimal.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@projection",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      }
+    },
+    "nullIf.decimal.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      }
+    },
+    "nullIf.decimal.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@total",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      }
+    },
+    "nullIf.integer.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/integer.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      }
+    },
+    "nullIf.integer.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      }
+    },
+    "nullIf.integer.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      }
+    },
+    "nullIf.integer.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/integer.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      }
+    },
+    "nullIf.string.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      }
+    },
+    "nullIf.string.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      }
+    },
+    "nullIf.string.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      }
+    },
+    "nullIf.string.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      }
+    },
+    "nullIf.time.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/time.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      }
+    },
+    "nullIf.time.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/time.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      }
+    },
+    "nullIf.time.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/time.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "nullIf.time.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/time.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      }
+    },
+    "nullIf.uuid.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/uuid.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/uuid.nullable@group"
+        }
+      }
+    },
+    "nullIf.uuid.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/uuid.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/uuid.nullable@projection"
+        }
+      }
+    },
+    "nullIf.uuid.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      }
+    },
+    "nullIf.uuid.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/uuid.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/uuid.nullable@total"
+        }
+      }
+    },
+    "nullIf@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "nullIf"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "nullIf@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "nullIf"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "nullIf@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "nullIf"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.integer.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.decimal.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.string.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.boolean.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.date.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.time.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.datetime.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.uuid.nullable@row"
+          }
+        }
+      ]
+    },
+    "nullIf@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "nullIf"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf.uuid.nullable@total"
+          }
+        }
+      ]
+    },
     "operator@group": {
       "properties": {
         "operator": {
@@ -27459,6 +28235,7 @@
             "in",
             "if",
             "coalesce",
+            "nullIf",
             "count",
             "sum",
             "average",
@@ -28218,6 +28995,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "nullIf"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "count"
               }
             }
@@ -28366,6 +29155,7 @@
             "in",
             "if",
             "coalesce",
+            "nullIf",
             "count",
             "sum",
             "average",
@@ -29125,6 +29915,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "nullIf"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "count"
               }
             }
@@ -29272,7 +30074,8 @@
             "endsWith",
             "in",
             "if",
-            "coalesce"
+            "coalesce",
+            "nullIf"
           ]
         }
       },
@@ -30020,6 +30823,18 @@
           "then": {
             "$ref": "#/$defs/coalesce@row"
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "nullIf"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf@row"
+          }
         }
       ]
     },
@@ -30089,6 +30904,7 @@
             "in",
             "if",
             "coalesce",
+            "nullIf",
             "count",
             "sum",
             "average",
@@ -30842,6 +31658,18 @@
           },
           "then": {
             "$ref": "#/$defs/coalesce@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "nullIf"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/nullIf@total"
           }
         },
         {

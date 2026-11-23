@@ -1,0 +1,15 @@
+// nullIf of a date and a datetime: the two are not interchangeable
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "date", "nullable": true },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "datetime" }, "value": "2024-01-31T00:00:00Z" }
+      }
+    }
+  ]
+}

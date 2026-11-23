@@ -1,0 +1,15 @@
+// nullIf with the number 0 as right: an operand is an expression, here a literal with its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+        "right": 0
+      }
+    }
+  ]
+}

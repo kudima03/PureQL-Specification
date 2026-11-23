@@ -1,0 +1,16 @@
+// nullIf of an integer left operand declared decimal?: the result is the left operand, so it has its type
+// exactly
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

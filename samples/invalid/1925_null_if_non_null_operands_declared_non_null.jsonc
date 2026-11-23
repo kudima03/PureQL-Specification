@@ -1,0 +1,15 @@
+// nullIf of two non-null integers declared integer: the operands being non-null does not make the result so
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

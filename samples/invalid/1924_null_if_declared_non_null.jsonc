@@ -1,0 +1,15 @@
+// nullIf declared non-null: it is null whenever its operands are equal, so it is always nullable
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIf",
+        "type": { "name": "string" },
+        "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "unknown" }
+      }
+    }
+  ]
+}
