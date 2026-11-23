@@ -1,0 +1,25 @@
+// A column reference in where, which runs before select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "doubled",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ],
+  "orderBy": [ { "column": "doubled", "direction": "desc" }, { "column": "id" } ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "column": "doubled", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "integer" }, "value": 10 }
+  }
+}

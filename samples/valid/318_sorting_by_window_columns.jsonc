@@ -1,0 +1,126 @@
+// A plain query sorted by its own columns: a product, a running total, a rowNumber, a share and a label are
+// each written once, in select, and named in orderBy next to a field.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "line_total",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "running_total",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          ]
+        },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "position",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              },
+              "direction": "desc"
+            },
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "share",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            ]
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "label",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string" }, "value": "#" },
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    { "column": "order_id" },
+    { "column": "position" },
+    { "column": "running_total", "direction": "desc" },
+    { "column": "share" },
+    { "column": "label" },
+    { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

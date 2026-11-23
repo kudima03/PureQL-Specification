@@ -56878,29 +56878,18 @@
     },
     "orderItem@group": {
       "type": "object",
-      "required": [
-        "expression"
-      ],
+      "required": [],
       "properties": {
         "expression": {
           "$ref": "#/$defs/expr@group"
         },
-        "direction": {
-          "enum": [
-            "desc"
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "orderItem@projection": {
-      "type": "object",
-      "required": [
-        "expression"
-      ],
-      "properties": {
-        "expression": {
-          "$ref": "#/$defs/expr@projection"
+        "column": {
+          "type": "string",
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "type": "string",
+            "pattern": "\\n"
+          }
         },
         "direction": {
           "enum": [
@@ -56908,7 +56897,54 @@
           ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "expression"
+          ]
+        },
+        {
+          "required": [
+            "column"
+          ]
+        }
+      ]
+    },
+    "orderItem@projection": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "expression": {
+          "$ref": "#/$defs/expr@projection"
+        },
+        "column": {
+          "type": "string",
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "type": "string",
+            "pattern": "\\n"
+          }
+        },
+        "direction": {
+          "enum": [
+            "desc"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "expression"
+          ]
+        },
+        {
+          "required": [
+            "column"
+          ]
+        }
+      ]
     },
     "orderItem@row": {
       "type": "object",

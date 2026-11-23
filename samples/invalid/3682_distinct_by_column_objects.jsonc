@@ -1,0 +1,20 @@
+// distinctBy written as sort keys: it lists aliases
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "doubled",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ],
+  "orderBy": [ { "column": "doubled", "direction": "desc" }, { "column": "id" } ],
+  "distinctBy": [ { "column": "id" } ]
+}

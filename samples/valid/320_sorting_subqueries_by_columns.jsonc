@@ -1,0 +1,100 @@
+// Subqueries whose orderBy names columns, where it serves distinctBy and pagination, read by a main query
+// that does the same.
+{
+  "subqueries": [
+    {
+      "name": "latest",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          },
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "ordered_on",
+            "expression": {
+              "operator": "asDate",
+              "type": { "name": "date" },
+              "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+            }
+          },
+          {
+            "alias": "total",
+            "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        ],
+        "orderBy": [
+          { "column": "ordered_on", "direction": "desc" },
+          { "column": "total", "direction": "desc" },
+          { "column": "id" }
+        ],
+        "distinctBy": [ "user_id" ]
+      }
+    },
+    {
+      "name": "top",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          {
+            "alias": "revenue",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ],
+        "orderBy": [ { "column": "revenue", "direction": "desc" }, { "column": "user_id" } ],
+        "pagination": { "take": 100 }
+      }
+    }
+  ],
+  "from": { "subquery": "latest" },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "top",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "latest", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "top", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "latest", "field": "user_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "last_order",
+      "expression": { "source": "latest", "field": "id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "last_total",
+      "expression": { "source": "latest", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "revenue",
+      "expression": { "source": "top", "field": "revenue", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    { "column": "revenue", "direction": "desc" },
+    { "column": "last_total" },
+    { "column": "user_id" }
+  ],
+  "distinctBy": [ "user_id" ],
+  "pagination": { "take": 10 }
+}

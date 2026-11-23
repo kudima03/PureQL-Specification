@@ -1,0 +1,51 @@
+// The inputs of a set operation paged in the order of a column, and the combined rows sorted by a column
+// computed in the query that reads them.
+{
+  "subqueries": [
+    {
+      "name": "events",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "at",
+                "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              { "alias": "kind", "expression": { "type": { "name": "string" }, "value": "ordered" } }
+            ],
+            "orderBy": [ { "column": "at", "direction": "desc" } ],
+            "pagination": { "take": 5 }
+          },
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "at",
+                "expression": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+              },
+              { "alias": "kind", "expression": { "type": { "name": "string" }, "value": "shipped" } }
+            ],
+            "orderBy": [ { "column": "at", "direction": "desc" } ],
+            "pagination": { "take": 5 }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "events" },
+  "select": [
+    { "alias": "at", "expression": { "source": "events", "field": "at", "type": { "name": "datetime" } } },
+    { "alias": "kind", "expression": { "source": "events", "field": "kind", "type": { "name": "string" } } },
+    {
+      "alias": "minute",
+      "expression": {
+        "operator": "startOfMinute",
+        "type": { "name": "datetime" },
+        "operand": { "source": "events", "field": "at", "type": { "name": "datetime" } }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "minute", "direction": "desc" }, { "column": "kind" }, { "column": "at" } ]
+}
