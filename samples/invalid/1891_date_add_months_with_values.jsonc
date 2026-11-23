@@ -1,0 +1,17 @@
+// dateAddMonths with `values` instead of left / right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "values": [
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

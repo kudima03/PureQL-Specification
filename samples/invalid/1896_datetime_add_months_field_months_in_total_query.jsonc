@@ -1,0 +1,16 @@
+// datetimeAddMonths with a field as the number of months in a total query, which reads fields only inside
+// aggregates
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "left": { "type": { "name": "datetime" }, "value": "2024-01-31T18:30:00Z" },
+        "right": { "source": "orders", "field": "term_months", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

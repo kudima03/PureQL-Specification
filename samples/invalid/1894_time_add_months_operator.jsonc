@@ -1,0 +1,15 @@
+// timeAddMonths is not an operator: a time has no month
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddMonths",
+        "type": { "name": "time" },
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

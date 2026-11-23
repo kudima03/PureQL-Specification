@@ -423,6 +423,9 @@ for ctx, rules in CONTEXTS.items():
     lifted("timeDiffSeconds", {"left": "time", "right": "time"}, "decimal")
     lifted("datetimeAddSeconds", {"left": "datetime", "right": "decimal"}, "datetime")
     lifted("datetimeDiffSeconds", {"left": "datetime", "right": "datetime"}, "decimal")
+    # calendar months, the day clamped to the last day of the month; years are 12 months
+    lifted("dateAddMonths", {"left": "date", "right": "integer"}, "date")
+    lifted("datetimeAddMonths", {"left": "datetime", "right": "integer"}, "datetime")
 
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
     # time or a datetime (a datetime is read in UTC). The type the operand declares
