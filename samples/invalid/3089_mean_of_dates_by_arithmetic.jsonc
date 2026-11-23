@@ -1,0 +1,24 @@
+// The mean of two dates written as arithmetic: dates are not added; a mean is average
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "add",
+            "type": { "name": "integer" },
+            "values": [
+              { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+              { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            ]
+          },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

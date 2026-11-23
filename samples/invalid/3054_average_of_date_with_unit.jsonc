@@ -1,0 +1,15 @@
+// average of a date with a unit: a date is averaged in days, a time and a datetime in seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "unit": "days"
+      }
+    }
+  ]
+}

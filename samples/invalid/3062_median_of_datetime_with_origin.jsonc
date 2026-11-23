@@ -1,0 +1,15 @@
+// median of a datetime with an origin: the result does not depend on a day that time is counted from
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "origin": { "type": { "name": "date" }, "value": "1970-01-01" }
+      }
+    }
+  ]
+}

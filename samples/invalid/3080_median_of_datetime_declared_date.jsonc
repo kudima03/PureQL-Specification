@@ -1,0 +1,14 @@
+// median of a datetime declared date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

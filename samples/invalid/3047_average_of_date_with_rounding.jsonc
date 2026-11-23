@@ -1,0 +1,15 @@
+// average of a date with a rounding rule: a temporal mean has one rule, and a value halfway is the later one
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "rounding": "halfUp"
+      }
+    }
+  ]
+}
