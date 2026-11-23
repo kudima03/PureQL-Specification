@@ -1,0 +1,18 @@
+// tryDivide is not an operator: a division that yields null on a zero divisor is divide by
+// nullIfEqual(divisor, 0)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryDivide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

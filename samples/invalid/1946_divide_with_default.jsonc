@@ -1,0 +1,19 @@
+// divide with a default property for a zero divisor: write coalesce over a division by nullIfEqual(divisor,
+// 0)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        ],
+        "default": { "type": { "name": "decimal" }, "value": "0" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+// nullIfEqual for every type: blank strings, a zero age, a false flag, a placeholder date, midnight, a login
+// at sign-up and a nil or self-referencing uuid are read as null, and coalesce falls back to the next value.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "nullIfEqual",
+      "type": { "name": "string", "nullable": true },
+      "left": { "source": "users", "field": "email", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "" }
+    },
+    "right": { "type": { "name": "string", "nullable": true }, "value": null }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "display_name",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "string", "nullable": true },
+            "left": {
+              "operator": "trim",
+              "type": { "name": "string", "nullable": true },
+              "operand": {
+                "source": "users",
+                "field": "nickname",
+                "type": { "name": "string", "nullable": true }
+              },
+              "removables": [ { "type": { "name": "string" }, "value": " " } ]
+            },
+            "right": { "type": { "name": "string" }, "value": "" }
+          },
+          { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        ]
+      }
+    },
+    {
+      "alias": "phone",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "string", "nullable": true },
+            "left": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
+            "right": { "type": { "name": "string" }, "value": "" }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "string", "nullable": true },
+            "left": {
+              "source": "users",
+              "field": "landline",
+              "type": { "name": "string", "nullable": true }
+            },
+            "right": { "type": { "name": "string" }, "value": "" }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "age",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    },
+    {
+      "alias": "opted_in",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "boolean", "nullable": true },
+        "left": {
+          "source": "users",
+          "field": "accepts_marketing",
+          "type": { "name": "boolean", "nullable": true }
+        },
+        "right": { "type": { "name": "boolean" }, "value": false }
+      }
+    },
+    {
+      "alias": "trial_start",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "date", "nullable": true },
+        "left": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "right": { "type": { "name": "date" }, "value": "9999-12-31" }
+      }
+    },
+    {
+      "alias": "call_time",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "time", "nullable": true },
+        "left": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "right": { "type": { "name": "time" }, "value": "00:00:00" }
+      }
+    },
+    {
+      "alias": "returned_at",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "datetime", "nullable": true },
+        "left": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "referrer_id",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "uuid", "nullable": true },
+        "left": { "source": "users", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "type": { "name": "uuid" }, "value": "00000000-0000-0000-0000-000000000000" }
+      }
+    },
+    {
+      "alias": "other_referrer_id",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "uuid", "nullable": true },
+        "left": { "source": "users", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}
