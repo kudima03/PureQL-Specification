@@ -60,7 +60,7 @@ Null semantics:
     non-null boolean (null == null is true, any ordering against null is false);
   - contains / startsWith / endsWith accept nullable strings and return a
     non-null boolean, false when either operand is null;
-  - nullIf accepts nullable operands and is always nullable: null when its
+  - nullIfEqual accepts nullable operands and is always nullable: null when its
     operands are equal, as `equal` compares them, otherwise its left operand;
   - tryAs<Type> accepts a nullable string and is always nullable: null when
     the string is null or is not a literal of the type;
@@ -538,14 +538,14 @@ for ctx, rules in CONTEXTS.items():
     # non-null. (That it comes last is beyond a schema: it cannot address the
     # last item of an array.)
     shape("coalesce", ["values"], {"values": {**OPERANDS, "contains": NON_NULL, "minContains": 0, "maxContains": 1}})
-    # nullIf yields its left operand, or null when the right one equals it: always
+    # nullIfEqual yields its left operand, or null when the right one equals it: always
     # nullable, and of the type the left operand declares, whatever the right one
     # is in its family (an integer stays an integer next to a decimal).
-    shape("nullIf", ["left", "right"], {"left": True, "right": True})
+    shape("nullIfEqual", ["left", "right"], {"left": True, "right": True})
     for t in TYPES:
         family = next(f for f in EQUATABLE if t in members(f))
         exact = [{"properties": {"left": declares_name(t)}}] if t in SUBTYPES else []
-        signature("nullIf", t, True, operands({"left": t, "right": family}, True), *exact)
+        signature("nullIfEqual", t, True, operands({"left": t, "right": family}, True), *exact)
     # greatest / least: the largest or the smallest of the values of one row, by the
     # order of their type. Lifted, and typed as add is for numbers: integer operands
     # give integer, a decimal operand gives decimal.

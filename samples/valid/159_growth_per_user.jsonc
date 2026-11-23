@@ -1,6 +1,6 @@
-// A compound monthly growth rate per user: the last order over the first, guarded by nullIf, to the power of
-// one over the months between them. Powers and logarithms over aggregates in having, select and orderBy, over
-// all rows, and inside a selector and a predicate.
+// A compound monthly growth rate per user: the last order over the first, guarded by nullIfEqual, to the
+// power of one over the months between them. Powers and logarithms over aggregates in having, select and
+// orderBy, over all rows, and inside a selector and a predicate.
 {
   "from": { "entity": "orders" },
   "groupBy": [
@@ -61,7 +61,7 @@
                   ]
                 },
                 {
-                  "operator": "nullIf",
+                  "operator": "nullIfEqual",
                   "type": { "name": "decimal", "nullable": true },
                   "left": {
                     "operator": "first",

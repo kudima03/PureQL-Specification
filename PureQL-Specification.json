@@ -38716,7 +38716,7 @@
         }
       ]
     },
-    "nullIf.boolean.nullable@group": {
+    "nullIfEqual.boolean.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/boolean.nullable@group"
@@ -38726,7 +38726,7 @@
         }
       }
     },
-    "nullIf.boolean.nullable@projection": {
+    "nullIfEqual.boolean.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/boolean.nullable@projection"
@@ -38736,7 +38736,7 @@
         }
       }
     },
-    "nullIf.boolean.nullable@row": {
+    "nullIfEqual.boolean.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/boolean.nullable@row"
@@ -38746,7 +38746,7 @@
         }
       }
     },
-    "nullIf.boolean.nullable@total": {
+    "nullIfEqual.boolean.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/boolean.nullable@total"
@@ -38756,7 +38756,7 @@
         }
       }
     },
-    "nullIf.date.nullable@group": {
+    "nullIfEqual.date.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/date.nullable@group"
@@ -38766,7 +38766,7 @@
         }
       }
     },
-    "nullIf.date.nullable@projection": {
+    "nullIfEqual.date.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/date.nullable@projection"
@@ -38776,7 +38776,7 @@
         }
       }
     },
-    "nullIf.date.nullable@row": {
+    "nullIfEqual.date.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/date.nullable@row"
@@ -38786,7 +38786,7 @@
         }
       }
     },
-    "nullIf.date.nullable@total": {
+    "nullIfEqual.date.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/date.nullable@total"
@@ -38796,7 +38796,7 @@
         }
       }
     },
-    "nullIf.datetime.nullable@group": {
+    "nullIfEqual.datetime.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/datetime.nullable@group"
@@ -38806,7 +38806,7 @@
         }
       }
     },
-    "nullIf.datetime.nullable@projection": {
+    "nullIfEqual.datetime.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/datetime.nullable@projection"
@@ -38816,7 +38816,7 @@
         }
       }
     },
-    "nullIf.datetime.nullable@row": {
+    "nullIfEqual.datetime.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/datetime.nullable@row"
@@ -38826,7 +38826,7 @@
         }
       }
     },
-    "nullIf.datetime.nullable@total": {
+    "nullIfEqual.datetime.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/datetime.nullable@total"
@@ -38836,7 +38836,7 @@
         }
       }
     },
-    "nullIf.decimal.nullable@group": {
+    "nullIfEqual.decimal.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/decimal.nullable@group",
@@ -38854,7 +38854,7 @@
         }
       }
     },
-    "nullIf.decimal.nullable@projection": {
+    "nullIfEqual.decimal.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/decimal.nullable@projection",
@@ -38872,7 +38872,7 @@
         }
       }
     },
-    "nullIf.decimal.nullable@row": {
+    "nullIfEqual.decimal.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/decimal.nullable@row",
@@ -38890,7 +38890,7 @@
         }
       }
     },
-    "nullIf.decimal.nullable@total": {
+    "nullIfEqual.decimal.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/decimal.nullable@total",
@@ -38908,7 +38908,7 @@
         }
       }
     },
-    "nullIf.integer.nullable@group": {
+    "nullIfEqual.integer.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/integer.nullable@group"
@@ -38918,7 +38918,7 @@
         }
       }
     },
-    "nullIf.integer.nullable@projection": {
+    "nullIfEqual.integer.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/integer.nullable@projection"
@@ -38928,7 +38928,7 @@
         }
       }
     },
-    "nullIf.integer.nullable@row": {
+    "nullIfEqual.integer.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/integer.nullable@row"
@@ -38938,7 +38938,7 @@
         }
       }
     },
-    "nullIf.integer.nullable@total": {
+    "nullIfEqual.integer.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/integer.nullable@total"
@@ -38948,7 +38948,7 @@
         }
       }
     },
-    "nullIf.string.nullable@group": {
+    "nullIfEqual.string.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/string.nullable@group"
@@ -38958,7 +38958,7 @@
         }
       }
     },
-    "nullIf.string.nullable@projection": {
+    "nullIfEqual.string.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/string.nullable@projection"
@@ -38968,7 +38968,7 @@
         }
       }
     },
-    "nullIf.string.nullable@row": {
+    "nullIfEqual.string.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/string.nullable@row"
@@ -38978,7 +38978,7 @@
         }
       }
     },
-    "nullIf.string.nullable@total": {
+    "nullIfEqual.string.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/string.nullable@total"
@@ -38988,7 +38988,7 @@
         }
       }
     },
-    "nullIf.time.nullable@group": {
+    "nullIfEqual.time.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/time.nullable@group"
@@ -38998,7 +38998,7 @@
         }
       }
     },
-    "nullIf.time.nullable@projection": {
+    "nullIfEqual.time.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/time.nullable@projection"
@@ -39008,7 +39008,7 @@
         }
       }
     },
-    "nullIf.time.nullable@row": {
+    "nullIfEqual.time.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/time.nullable@row"
@@ -39018,7 +39018,7 @@
         }
       }
     },
-    "nullIf.time.nullable@total": {
+    "nullIfEqual.time.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/time.nullable@total"
@@ -39028,7 +39028,7 @@
         }
       }
     },
-    "nullIf.uuid.nullable@group": {
+    "nullIfEqual.uuid.nullable@group": {
       "properties": {
         "left": {
           "$ref": "#/$defs/uuid.nullable@group"
@@ -39038,7 +39038,7 @@
         }
       }
     },
-    "nullIf.uuid.nullable@projection": {
+    "nullIfEqual.uuid.nullable@projection": {
       "properties": {
         "left": {
           "$ref": "#/$defs/uuid.nullable@projection"
@@ -39048,7 +39048,7 @@
         }
       }
     },
-    "nullIf.uuid.nullable@row": {
+    "nullIfEqual.uuid.nullable@row": {
       "properties": {
         "left": {
           "$ref": "#/$defs/uuid.nullable@row"
@@ -39058,7 +39058,7 @@
         }
       }
     },
-    "nullIf.uuid.nullable@total": {
+    "nullIfEqual.uuid.nullable@total": {
       "properties": {
         "left": {
           "$ref": "#/$defs/uuid.nullable@total"
@@ -39068,7 +39068,7 @@
         }
       }
     },
-    "nullIf@group": {
+    "nullIfEqual@group": {
       "type": "object",
       "required": [
         "operator",
@@ -39078,7 +39078,7 @@
       ],
       "properties": {
         "operator": {
-          "const": "nullIf"
+          "const": "nullIfEqual"
         },
         "type": {
           "$ref": "#/$defs/type",
@@ -39113,7 +39113,7 @@
             "$ref": "#/$defs/declares.integer.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.integer.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.integer.nullable@group"
           }
         },
         {
@@ -39121,7 +39121,7 @@
             "$ref": "#/$defs/declares.decimal.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.decimal.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.decimal.nullable@group"
           }
         },
         {
@@ -39129,7 +39129,7 @@
             "$ref": "#/$defs/declares.string.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.string.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.string.nullable@group"
           }
         },
         {
@@ -39137,7 +39137,7 @@
             "$ref": "#/$defs/declares.boolean.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.boolean.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.boolean.nullable@group"
           }
         },
         {
@@ -39145,7 +39145,7 @@
             "$ref": "#/$defs/declares.date.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.date.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.date.nullable@group"
           }
         },
         {
@@ -39153,7 +39153,7 @@
             "$ref": "#/$defs/declares.time.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.time.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.time.nullable@group"
           }
         },
         {
@@ -39161,7 +39161,7 @@
             "$ref": "#/$defs/declares.datetime.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.datetime.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.datetime.nullable@group"
           }
         },
         {
@@ -39169,12 +39169,12 @@
             "$ref": "#/$defs/declares.uuid.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.uuid.nullable@group"
+            "$ref": "#/$defs/nullIfEqual.uuid.nullable@group"
           }
         }
       ]
     },
-    "nullIf@projection": {
+    "nullIfEqual@projection": {
       "type": "object",
       "required": [
         "operator",
@@ -39184,7 +39184,7 @@
       ],
       "properties": {
         "operator": {
-          "const": "nullIf"
+          "const": "nullIfEqual"
         },
         "type": {
           "$ref": "#/$defs/type",
@@ -39219,7 +39219,7 @@
             "$ref": "#/$defs/declares.integer.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.integer.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.integer.nullable@projection"
           }
         },
         {
@@ -39227,7 +39227,7 @@
             "$ref": "#/$defs/declares.decimal.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.decimal.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.decimal.nullable@projection"
           }
         },
         {
@@ -39235,7 +39235,7 @@
             "$ref": "#/$defs/declares.string.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.string.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.string.nullable@projection"
           }
         },
         {
@@ -39243,7 +39243,7 @@
             "$ref": "#/$defs/declares.boolean.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.boolean.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.boolean.nullable@projection"
           }
         },
         {
@@ -39251,7 +39251,7 @@
             "$ref": "#/$defs/declares.date.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.date.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.date.nullable@projection"
           }
         },
         {
@@ -39259,7 +39259,7 @@
             "$ref": "#/$defs/declares.time.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.time.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.time.nullable@projection"
           }
         },
         {
@@ -39267,7 +39267,7 @@
             "$ref": "#/$defs/declares.datetime.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.datetime.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.datetime.nullable@projection"
           }
         },
         {
@@ -39275,12 +39275,12 @@
             "$ref": "#/$defs/declares.uuid.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.uuid.nullable@projection"
+            "$ref": "#/$defs/nullIfEqual.uuid.nullable@projection"
           }
         }
       ]
     },
-    "nullIf@row": {
+    "nullIfEqual@row": {
       "type": "object",
       "required": [
         "operator",
@@ -39290,7 +39290,7 @@
       ],
       "properties": {
         "operator": {
-          "const": "nullIf"
+          "const": "nullIfEqual"
         },
         "type": {
           "$ref": "#/$defs/type",
@@ -39325,7 +39325,7 @@
             "$ref": "#/$defs/declares.integer.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.integer.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.integer.nullable@row"
           }
         },
         {
@@ -39333,7 +39333,7 @@
             "$ref": "#/$defs/declares.decimal.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.decimal.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.decimal.nullable@row"
           }
         },
         {
@@ -39341,7 +39341,7 @@
             "$ref": "#/$defs/declares.string.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.string.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.string.nullable@row"
           }
         },
         {
@@ -39349,7 +39349,7 @@
             "$ref": "#/$defs/declares.boolean.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.boolean.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.boolean.nullable@row"
           }
         },
         {
@@ -39357,7 +39357,7 @@
             "$ref": "#/$defs/declares.date.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.date.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.date.nullable@row"
           }
         },
         {
@@ -39365,7 +39365,7 @@
             "$ref": "#/$defs/declares.time.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.time.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.time.nullable@row"
           }
         },
         {
@@ -39373,7 +39373,7 @@
             "$ref": "#/$defs/declares.datetime.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.datetime.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.datetime.nullable@row"
           }
         },
         {
@@ -39381,12 +39381,12 @@
             "$ref": "#/$defs/declares.uuid.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.uuid.nullable@row"
+            "$ref": "#/$defs/nullIfEqual.uuid.nullable@row"
           }
         }
       ]
     },
-    "nullIf@total": {
+    "nullIfEqual@total": {
       "type": "object",
       "required": [
         "operator",
@@ -39396,7 +39396,7 @@
       ],
       "properties": {
         "operator": {
-          "const": "nullIf"
+          "const": "nullIfEqual"
         },
         "type": {
           "$ref": "#/$defs/type",
@@ -39431,7 +39431,7 @@
             "$ref": "#/$defs/declares.integer.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.integer.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.integer.nullable@total"
           }
         },
         {
@@ -39439,7 +39439,7 @@
             "$ref": "#/$defs/declares.decimal.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.decimal.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.decimal.nullable@total"
           }
         },
         {
@@ -39447,7 +39447,7 @@
             "$ref": "#/$defs/declares.string.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.string.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.string.nullable@total"
           }
         },
         {
@@ -39455,7 +39455,7 @@
             "$ref": "#/$defs/declares.boolean.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.boolean.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.boolean.nullable@total"
           }
         },
         {
@@ -39463,7 +39463,7 @@
             "$ref": "#/$defs/declares.date.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.date.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.date.nullable@total"
           }
         },
         {
@@ -39471,7 +39471,7 @@
             "$ref": "#/$defs/declares.time.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.time.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.time.nullable@total"
           }
         },
         {
@@ -39479,7 +39479,7 @@
             "$ref": "#/$defs/declares.datetime.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.datetime.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.datetime.nullable@total"
           }
         },
         {
@@ -39487,7 +39487,7 @@
             "$ref": "#/$defs/declares.uuid.nullable"
           },
           "then": {
-            "$ref": "#/$defs/nullIf.uuid.nullable@total"
+            "$ref": "#/$defs/nullIfEqual.uuid.nullable@total"
           }
         }
       ]
@@ -39582,7 +39582,7 @@
             "in",
             "if",
             "coalesce",
-            "nullIf",
+            "nullIfEqual",
             "greatest",
             "least",
             "count",
@@ -40634,12 +40634,12 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "nullIf"
+                "const": "nullIfEqual"
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/nullIf@group"
+            "$ref": "#/$defs/nullIfEqual@group"
           }
         },
         {
@@ -40866,7 +40866,7 @@
             "in",
             "if",
             "coalesce",
-            "nullIf",
+            "nullIfEqual",
             "greatest",
             "least",
             "count",
@@ -41918,12 +41918,12 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "nullIf"
+                "const": "nullIfEqual"
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/nullIf@projection"
+            "$ref": "#/$defs/nullIfEqual@projection"
           }
         },
         {
@@ -42150,7 +42150,7 @@
             "in",
             "if",
             "coalesce",
-            "nullIf",
+            "nullIfEqual",
             "greatest",
             "least"
           ]
@@ -43193,12 +43193,12 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "nullIf"
+                "const": "nullIfEqual"
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/nullIf@row"
+            "$ref": "#/$defs/nullIfEqual@row"
           }
         },
         {
@@ -43317,7 +43317,7 @@
             "in",
             "if",
             "coalesce",
-            "nullIf",
+            "nullIfEqual",
             "greatest",
             "least",
             "count",
@@ -44369,12 +44369,12 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "nullIf"
+                "const": "nullIfEqual"
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/nullIf@total"
+            "$ref": "#/$defs/nullIfEqual@total"
           }
         },
         {
