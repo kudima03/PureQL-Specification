@@ -1,0 +1,16 @@
+// replaceRegex with an integer replacement
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\s+" },
+        "replacement": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

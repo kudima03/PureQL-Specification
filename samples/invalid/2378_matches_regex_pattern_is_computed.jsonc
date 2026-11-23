@@ -1,0 +1,22 @@
+// matchesRegex with a computed pattern: a pattern is a literal or a parameter
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            { "type": { "name": "string" }, "value": "^" },
+            { "type": { "name": "string" }, "value": "a" }
+          ]
+        }
+      }
+    }
+  ]
+}

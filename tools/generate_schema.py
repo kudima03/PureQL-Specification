@@ -63,6 +63,9 @@ Null semantics:
     non-null boolean, false when either operand is null;
   - concatWith accepts nullable strings and returns a non-null string: null
     operands are skipped;
+  - matchesRegex accepts a nullable string and returns a non-null boolean, false
+    for null; extractRegex accepts one too and is always nullable: null when
+    nothing matches;
   - nullIfEqual accepts nullable operands and is always nullable: null when its
     operands are equal, as `equal` compares them, otherwise its left operand;
   - tryAs<Type> accepts a nullable string and is always nullable: null when
@@ -172,6 +175,26 @@ CONTEXTS = {
     "group": {"fields": False, "keys": True, "aggregates": True, "over": ["all"]},
     "total": {"fields": False, "keys": False, "aggregates": True, "over": []},
 }
+
+# The regular expressions of matchesRegex, extractRegex and replaceRegex, as far as
+# one pattern can tell a pattern of the dialect from another: every token is one
+# the dialect has, and a quantifier follows something it can repeat. An atom is
+# a literal code point, an escape, a class, `.` or the `)` that closes a group.
+# An escape is a class of characters (\d \w \s and their negations), a word
+# boundary, a control character, or a special character standing for
+# itself: so no backreference, property class or code point escape. `(` opens a
+# group, capturing or `(?:`: nothing else may follow `(?`, so no lookaround,
+# named group or flag. A quantifier takes one optional `?`, so none is
+# possessive. Whether parentheses balance, a range or a `{n,m}` is in order and a
+# group exists is checked by the interpreter, before it reads any row.
+REGEX_ATOM = (
+    r"[^\\()\[\]{}*+?|^$.]"
+    r"|\\([dDwWsSbBnrt]|[\\()\[\]{}*+?|^$./])"
+    r"|\[\^?([^\]\[\\^]|\\([dDwWsSnrt]|[\\()\[\]{}*+?|^$./-]))+\]"
+    r"|\.|\)"
+)
+REGEX_QUANTIFIER = r"([*+?]|\{[0-9]+(,[0-9]*)?\})\??"
+REGEX = rf"(({REGEX_ATOM})({REGEX_QUANTIFIER})?|\((\?:)?|[|^$])*"
 
 # An entity, field, alias, parameter or subquery name: not empty, no leading
 # or trailing space or tab, no line break. Inner spaces and any other
@@ -315,6 +338,26 @@ defs["field"] = obj(
 )
 # A group key is referenced by its alias.
 defs["key"] = obj(["key", "type"], {"key": NAME, "type": ref("type")})
+
+# The pattern of a regular expression is a string literal or a string parameter,
+# never a computed string: it is known before any row is read, so an invalid one
+# fails the query up front. A literal is held to the dialect here.
+defs["regexPattern"] = {
+    "type": "object",
+    "allOf": [declares("string", False)],
+    "if": {"required": ["value"]},
+    "then": {"allOf": [ref("literal"), {"properties": {"value": pattern(REGEX)}}]},
+    "else": ref("param"),
+}
+# A capture group is named by its number, from 1: the whole match is the
+# absence of `group`.
+defs["regexGroup"] = {
+    "type": "object",
+    "allOf": [declares("integer", False)],
+    "if": {"required": ["value"]},
+    "then": {"allOf": [ref("literal"), {"properties": {"value": {"minimum": 1}}}]},
+    "else": ref("param"),
+}
 
 for t in TYPES:
     defs[f"type.{t}List"] = obj(["name"], {"name": {"const": f"{t}List"}})
@@ -460,6 +503,17 @@ for ctx, rules in CONTEXTS.items():
     shape("concatWith", ["values", "separator"],
           {"values": array_of(expr("string", ctx, True), 2), "separator": expr("string", ctx)})
     signature("concatWith", "string", False)
+    # Regular expressions. matchesRegex is a condition as it is, false for a null
+    # string; extractRegex is null when nothing matches, so always nullable;
+    # replaceRegex is lifted, and its replacement is literal text.
+    shape("matchesRegex", ["operand", "pattern"],
+          {"operand": expr("string", ctx, True), "pattern": ref("regexPattern")})
+    signature("matchesRegex", "boolean", False)
+    shape("extractRegex", ["operand", "pattern"],
+          {"operand": expr("string", ctx, True), "pattern": ref("regexPattern"), "group": ref("regexGroup")})
+    signature("extractRegex", "string", True)
+    lifted("replaceRegex", {"operand": "string"}, "string",
+           extra={"pattern": ref("regexPattern"), "replacement": expr("string", ctx)})
 
     # date / time / datetime math
     lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")

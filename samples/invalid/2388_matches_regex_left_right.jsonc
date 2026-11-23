@@ -1,0 +1,15 @@
+// matchesRegex with left and right: its operands are operand and pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "@" }
+      }
+    }
+  ]
+}

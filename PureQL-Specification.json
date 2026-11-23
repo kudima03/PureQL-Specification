@@ -16357,6 +16357,166 @@
         "$ref": "#/$defs/leaf@total"
       }
     },
+    "extractRegex@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "extractRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "group": {
+          "$ref": "#/$defs/regexGroup"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extractRegex@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "extractRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "group": {
+          "$ref": "#/$defs/regexGroup"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extractRegex@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "extractRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "group": {
+          "$ref": "#/$defs/regexGroup"
+        }
+      },
+      "additionalProperties": false
+    },
+    "extractRegex@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "extractRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "group": {
+          "$ref": "#/$defs/regexGroup"
+        }
+      },
+      "additionalProperties": false
+    },
     "field": {
       "type": "object",
       "required": [
@@ -32804,6 +32964,142 @@
       },
       "additionalProperties": false
     },
+    "matchesRegex@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "matchesRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        }
+      },
+      "additionalProperties": false
+    },
+    "matchesRegex@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "matchesRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        }
+      },
+      "additionalProperties": false
+    },
+    "matchesRegex@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "matchesRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        }
+      },
+      "additionalProperties": false
+    },
+    "matchesRegex@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern"
+      ],
+      "properties": {
+        "operator": {
+          "const": "matchesRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        },
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        }
+      },
+      "additionalProperties": false
+    },
     "max.boolean.nullable@group": {
       "properties": {
         "selector": {
@@ -39682,6 +39978,9 @@
             "repeat",
             "reverse",
             "concatWith",
+            "matchesRegex",
+            "extractRegex",
+            "replaceRegex",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -40164,6 +40463,42 @@
           },
           "then": {
             "$ref": "#/$defs/concatWith@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "matchesRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/matchesRegex@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "extractRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/extractRegex@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "replaceRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex@group"
           }
         },
         {
@@ -41070,6 +41405,9 @@
             "repeat",
             "reverse",
             "concatWith",
+            "matchesRegex",
+            "extractRegex",
+            "replaceRegex",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -41552,6 +41890,42 @@
           },
           "then": {
             "$ref": "#/$defs/concatWith@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "matchesRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/matchesRegex@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "extractRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/extractRegex@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "replaceRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex@projection"
           }
         },
         {
@@ -42458,6 +42832,9 @@
             "repeat",
             "reverse",
             "concatWith",
+            "matchesRegex",
+            "extractRegex",
+            "replaceRegex",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -42931,6 +43308,42 @@
           },
           "then": {
             "$ref": "#/$defs/concatWith@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "matchesRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/matchesRegex@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "extractRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/extractRegex@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "replaceRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex@row"
           }
         },
         {
@@ -43729,6 +44142,9 @@
             "repeat",
             "reverse",
             "concatWith",
+            "matchesRegex",
+            "extractRegex",
+            "replaceRegex",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -44211,6 +44627,42 @@
           },
           "then": {
             "$ref": "#/$defs/concatWith@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "matchesRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/matchesRegex@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "extractRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/extractRegex@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "replaceRegex"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex@total"
           }
         },
         {
@@ -47204,6 +47656,71 @@
         }
       }
     },
+    "regexGroup": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.integer"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/literal"
+          },
+          {
+            "properties": {
+              "value": {
+                "minimum": 1
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
+    },
+    "regexPattern": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.string"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/literal"
+          },
+          {
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^(([^\\\\()\\[\\]{}*+?|^$.]|\\\\([dDwWsSbBnrt]|[\\\\()\\[\\]{}*+?|^$./])|\\[\\^?([^\\]\\[\\\\^]|\\\\([dDwWsSnrt]|[\\\\()\\[\\]{}*+?|^$./-]))+\\]|\\.|\\))(([*+?]|\\{[0-9]+(,[0-9]*)?\\})\\??)?|\\((\\?:)?|[|^$])*$",
+                "not": {
+                  "type": "string",
+                  "pattern": "\\n"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
+    },
     "repeat.string.nullable@group": {
       "properties": {
         "operand": {
@@ -47800,6 +48317,314 @@
           },
           "then": {
             "$ref": "#/$defs/replace.string.nullable@total"
+          }
+        }
+      ]
+    },
+    "replaceRegex.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "replaceRegex.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "replaceRegex.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "replaceRegex.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "replaceRegex.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "replaceRegex.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "replaceRegex.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "replaceRegex.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "replaceRegex@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern",
+        "replacement"
+      ],
+      "properties": {
+        "operator": {
+          "const": "replaceRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "replacement": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "replaceRegex@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern",
+        "replacement"
+      ],
+      "properties": {
+        "operator": {
+          "const": "replaceRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "replacement": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "replaceRegex@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern",
+        "replacement"
+      ],
+      "properties": {
+        "operator": {
+          "const": "replaceRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "replacement": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "replaceRegex@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "pattern",
+        "replacement"
+      ],
+      "properties": {
+        "operator": {
+          "const": "replaceRegex"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "pattern": {
+          "$ref": "#/$defs/regexPattern"
+        },
+        "replacement": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/replaceRegex.string.nullable@total"
           }
         }
       ]

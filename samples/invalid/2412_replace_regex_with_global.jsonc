@@ -1,0 +1,17 @@
+// replaceRegex with a global flag
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\s+" },
+        "replacement": { "type": { "name": "string" }, "value": " " },
+        "global": true
+      }
+    }
+  ]
+}

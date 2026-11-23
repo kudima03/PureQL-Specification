@@ -1,0 +1,155 @@
+// Regular expressions over joined sources: replaceRegex on both sides of join.on, a parameter pattern and a
+// negated match in where, capture groups by a literal number and by a parameter, an extracted number read
+// with tryAsInteger, coalesce over a missing match, and a replacement taken from a field.
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "replaceRegex",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+          },
+          "pattern": { "type": { "name": "string" }, "value": "-" },
+          "replacement": { "type": { "name": "string" }, "value": "" }
+        },
+        "right": {
+          "operator": "replaceRegex",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "lower",
+            "type": { "name": "string" },
+            "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
+          },
+          "pattern": { "type": { "name": "string" }, "value": "[^0-9a-f]" },
+          "replacement": { "type": { "name": "string" }, "value": "" }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "pattern": { "param": "sku_pattern", "type": { "name": "string" } }
+      },
+      {
+        "operator": "not",
+        "type": { "name": "boolean" },
+        "condition": {
+          "operator": "matchesRegex",
+          "type": { "name": "boolean" },
+          "operand": {
+            "source": "products",
+            "field": "description",
+            "type": { "name": "string", "nullable": true }
+          },
+          "pattern": { "type": { "name": "string" }, "value": "\\b(?:discontinued|recalled)\\b" }
+        }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "sku_series",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^([A-Z]+)-([0-9]+)" },
+        "group": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "sku_number",
+      "expression": {
+        "operator": "tryAsInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "extractRegex",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "^([A-Z]+)-([0-9]+)" },
+          "group": { "type": { "name": "integer" }, "value": 2 }
+        }
+      }
+    },
+    {
+      "alias": "chosen_group",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "pattern": { "param": "sku_pattern", "type": { "name": "string" } },
+        "group": { "param": "sku_group", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "first_word_of_description",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "source": "products",
+          "field": "description",
+          "type": { "name": "string", "nullable": true }
+        },
+        "pattern": { "type": { "name": "string" }, "value": "\\w+" }
+      }
+    },
+    {
+      "alias": "sku_or_placeholder",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "extractRegex",
+            "type": { "name": "string", "nullable": true },
+            "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+            "pattern": { "type": { "name": "string" }, "value": "[0-9]{4,}" }
+          },
+          { "type": { "name": "string" }, "value": "n/a" }
+        ]
+      }
+    },
+    {
+      "alias": "replacement_from_a_field",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[A-Z]+" },
+        "replacement": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]+" }
+      }
+    },
+    { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

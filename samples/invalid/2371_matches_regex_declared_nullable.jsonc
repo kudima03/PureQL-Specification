@@ -1,0 +1,15 @@
+// matchesRegex of a non-null string declared boolean?: it is a non-null boolean, false for a null string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@]+@[^@]+$" }
+      }
+    }
+  ]
+}

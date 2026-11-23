@@ -862,6 +862,101 @@
       }
     },
     {
+      "alias": "matchesRegex_boolean",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]" }
+      }
+    },
+    {
+      "alias": "matchesRegex_boolean_nullable_operand",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]" }
+      }
+    },
+    {
+      "alias": "matchesRegex_boolean_parameter_pattern",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "param": "pattern", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "extractRegex_string_nullable",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]+" }
+      }
+    },
+    {
+      "alias": "extractRegex_string_nullable_group",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "type": { "name": "string" }, "value": "(a)([0-9])" },
+        "group": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "extractRegex_string_nullable_nullable_operand",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]+" }
+      }
+    },
+    {
+      "alias": "extractRegex_string_nullable_parameters",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "param": "pattern", "type": { "name": "string" } },
+        "group": { "param": "group", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "replaceRegex_string",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]" },
+        "replacement": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "replaceRegex_string_nullable",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "[0-9]" },
+        "replacement": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "replaceRegex_string_parameter_pattern",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a1" },
+        "pattern": { "param": "pattern", "type": { "name": "string" } },
+        "replacement": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
       "alias": "contains_boolean",
       "expression": {
         "operator": "contains",

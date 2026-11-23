@@ -1,0 +1,15 @@
+// regexMatches is not an operator: the operator is matchesRegex
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regexMatches",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@]+@[^@]+$" }
+      }
+    }
+  ]
+}

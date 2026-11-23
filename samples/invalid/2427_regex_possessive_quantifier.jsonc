@@ -1,0 +1,15 @@
+// matchesRegex with a possessive quantifier: a quantifier is greedy, or lazy with one ?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "a*+b" }
+      }
+    }
+  ]
+}

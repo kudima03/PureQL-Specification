@@ -1,0 +1,15 @@
+// matchesRegex with an escaped letter that the dialect does not define
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\e" }
+      }
+    }
+  ]
+}

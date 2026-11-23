@@ -1,0 +1,16 @@
+// replaceRegex with a backreference in its pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "(\\s)\\1" },
+        "replacement": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// extractRegex of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+        "group": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+// Regular expressions in a total query: inside predicates and selectors, extractRegex over a nullable min,
+// and matchesRegex over the text of a count.
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "well_formed_emails",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "matchesRegex",
+          "type": { "name": "boolean" },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$" }
+        }
+      }
+    },
+    {
+      "alias": "all_emails_have_an_at",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "matchesRegex",
+          "type": { "name": "boolean" },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "@" }
+        }
+      }
+    },
+    {
+      "alias": "first_domain",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "extractRegex",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+          "group": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "first_domain_top_level",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": {
+            "operator": "extractRegex",
+            "type": { "name": "string", "nullable": true },
+            "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+            "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+            "group": { "type": { "name": "integer" }, "value": 1 }
+          }
+        },
+        "pattern": { "type": { "name": "string" }, "value": "[a-z]+$" }
+      }
+    },
+    {
+      "alias": "longest_name_without_spaces",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "length",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "replaceRegex",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+            "pattern": { "type": { "name": "string" }, "value": "\\s" },
+            "replacement": { "type": { "name": "string" }, "value": "" }
+          }
+        }
+      }
+    },
+    {
+      "alias": "count_has_three_digits",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "operator": "count", "type": { "name": "integer" } }
+        },
+        "pattern": { "type": { "name": "string" }, "value": "^[0-9]{3}$" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// extractRegex with a field as pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

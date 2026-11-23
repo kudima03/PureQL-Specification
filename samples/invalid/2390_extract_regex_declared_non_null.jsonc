@@ -1,0 +1,16 @@
+// extractRegex declared string: it is null when nothing matches, so it is always nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+        "group": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

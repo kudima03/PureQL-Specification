@@ -1,0 +1,16 @@
+// replaceRegex of a nullable operand declared string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "[^0-9]" },
+        "replacement": { "type": { "name": "string" }, "value": "" }
+      }
+    }
+  ]
+}
