@@ -1,0 +1,15 @@
+// repeat of a non-null operand declared string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// padStart without a fill: there is no default, a query says what it pads with
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 }
+      }
+    }
+  ]
+}

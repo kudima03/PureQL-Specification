@@ -1,0 +1,16 @@
+// pad is not an operator: the side is named, padStart or padEnd
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "pad",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

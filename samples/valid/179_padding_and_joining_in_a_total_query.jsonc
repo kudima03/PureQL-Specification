@@ -1,0 +1,100 @@
+// padStart, padEnd, repeat, reverse and concatWith in a total query: non-null over count, lifted over min and
+// max, which are nullable there, while concatWith over them stays non-null.
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "bar",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "=" },
+        "count": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "summary",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "operator": "count", "type": { "name": "integer" } }
+          },
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "count",
+              "type": { "name": "integer" },
+              "predicate": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+            }
+          }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " / " }
+      }
+    },
+    {
+      "alias": "first_and_last_name",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "min",
+            "type": { "name": "string", "nullable": true },
+            "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          },
+          {
+            "operator": "max",
+            "type": { "name": "string", "nullable": true },
+            "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " … " }
+      }
+    },
+    {
+      "alias": "first_name_backwards",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "count_in_five_digits",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "operator": "count", "type": { "name": "integer" } }
+        },
+        "length": { "type": { "name": "integer" }, "value": 5 },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "widest_name",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        },
+        "length": { "type": { "name": "integer" }, "value": 30 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

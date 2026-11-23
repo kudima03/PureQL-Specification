@@ -1,0 +1,16 @@
+// padStart with the number 10 as length
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": 10,
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

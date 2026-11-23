@@ -1,0 +1,132 @@
+// concatWith over a left join, where a null code is skipped instead of making the label null, next to padEnd,
+// which is lifted; a decimal written with two decimal places through truncate, round, splitPart and padEnd;
+// and padStart in where.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "startsWith",
+    "type": { "name": "boolean" },
+    "operand": {
+      "operator": "padStart",
+      "type": { "name": "string" },
+      "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } },
+      "length": { "type": { "name": "integer" }, "value": 5 },
+      "fill": { "type": { "name": "string" }, "value": "0" }
+    },
+    "pattern": { "param": "postal_prefix", "type": { "name": "string" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "customer",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": ", " }
+      }
+    },
+    {
+      "alias": "status_and_coupon",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "orders", "field": "status", "type": { "name": "string" } },
+          { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": ":" }
+      }
+    },
+    {
+      "alias": "coupon_label",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "fill": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "total_with_two_decimals",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "truncate",
+              "type": { "name": "integer" },
+              "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          { "type": { "name": "string" }, "value": "." },
+          {
+            "operator": "padEnd",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "splitPart",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "asString",
+                "type": { "name": "string" },
+                "operand": {
+                  "operator": "round",
+                  "type": { "name": "decimal" },
+                  "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  "digits": { "type": { "name": "integer" }, "value": 2 }
+                }
+              },
+              "delimiter": { "type": { "name": "string" }, "value": "." },
+              "index": { "type": { "name": "integer" }, "value": 2 }
+            },
+            "length": { "type": { "name": "integer" }, "value": 2 },
+            "fill": { "type": { "name": "string" }, "value": "0" }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": ", " }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

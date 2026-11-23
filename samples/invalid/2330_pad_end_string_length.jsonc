@@ -1,0 +1,16 @@
+// padEnd with a string length
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "string" }, "value": "10" },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

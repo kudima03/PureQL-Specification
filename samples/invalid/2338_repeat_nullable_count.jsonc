@@ -1,0 +1,15 @@
+// repeat with a nullable count: the count is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "param": "times", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

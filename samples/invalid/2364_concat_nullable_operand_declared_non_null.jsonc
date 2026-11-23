@@ -1,0 +1,17 @@
+// concat with a nullable operand declared string: unlike concatWith, concat is lifted
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

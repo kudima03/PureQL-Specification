@@ -1,0 +1,14 @@
+// reverse of an integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

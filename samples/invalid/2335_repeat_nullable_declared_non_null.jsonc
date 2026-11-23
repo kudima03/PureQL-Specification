@@ -1,0 +1,15 @@
+// repeat of a nullable operand declared string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "count": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

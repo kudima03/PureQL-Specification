@@ -1,0 +1,255 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "notEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "concatWith",
+      "type": {
+        "name": "string"
+      },
+      "values": [
+        {
+          "source": "users",
+          "field": "mobile",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        {
+          "source": "users",
+          "field": "landline",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      ],
+      "separator": {
+        "type": {
+          "name": "string"
+        },
+        "value": " / "
+      }
+    },
+    "right": {
+      "type": {
+        "name": "string"
+      },
+      "value": ""
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "full_name",
+      "expression": {
+        "operator": "concatWith",
+        "type": {
+          "name": "string"
+        },
+        "values": [
+          {
+            "source": "users",
+            "field": "first_name",
+            "type": {
+              "name": "string"
+            }
+          },
+          {
+            "source": "users",
+            "field": "middle_name",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        ],
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": " "
+        }
+      }
+    },
+    {
+      "alias": "phones",
+      "expression": {
+        "operator": "concatWith",
+        "type": {
+          "name": "string"
+        },
+        "values": [
+          {
+            "source": "users",
+            "field": "mobile",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          {
+            "source": "users",
+            "field": "landline",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "separator": {
+          "type": {
+            "name": "string"
+          },
+          "value": " / "
+        }
+      }
+    },
+    {
+      "alias": "age_in_three_digits",
+      "expression": {
+        "operator": "padStart",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "operator": "asString",
+          "type": {
+            "name": "string",
+            "nullable": true
+          },
+          "operand": {
+            "source": "users",
+            "field": "age",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          }
+        },
+        "length": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 3
+        },
+        "fill": {
+          "type": {
+            "name": "string"
+          },
+          "value": "0"
+        }
+      }
+    },
+    {
+      "alias": "name_column",
+      "expression": {
+        "operator": "padEnd",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "length": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 20
+        },
+        "fill": {
+          "type": {
+            "name": "string"
+          },
+          "value": "."
+        }
+      }
+    },
+    {
+      "alias": "tier_stars",
+      "expression": {
+        "operator": "repeat",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "type": {
+            "name": "string"
+          },
+          "value": "*"
+        },
+        "count": {
+          "operator": "coalesce",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "operator": "tryAsInteger",
+              "type": {
+                "name": "integer",
+                "nullable": true
+              },
+              "operand": {
+                "source": "users",
+                "field": "tier",
+                "type": {
+                  "name": "string"
+                }
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "reversed_postal_code",
+      "expression": {
+        "operator": "reverse",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "postal_code",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+// concatWith of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "notEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "concatWith",
+      "type": { "name": "string" },
+      "values": [
+        { "key": "mobile", "type": { "name": "string", "nullable": true } },
+        { "source": "users", "field": "landline", "type": { "name": "string", "nullable": true } }
+      ],
+      "separator": { "type": { "name": "string" }, "value": " / " }
+    },
+    "right": { "type": { "name": "string" }, "value": "" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

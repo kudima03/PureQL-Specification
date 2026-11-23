@@ -9130,6 +9130,158 @@
         }
       ]
     },
+    "concatWith@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values",
+        "separator"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string.nullable@group"
+          },
+          "minItems": 2
+        },
+        "separator": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatWith@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values",
+        "separator"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string.nullable@projection"
+          },
+          "minItems": 2
+        },
+        "separator": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatWith@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values",
+        "separator"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string.nullable@row"
+          },
+          "minItems": 2
+        },
+        "separator": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatWith@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values",
+        "separator"
+      ],
+      "properties": {
+        "operator": {
+          "const": "concatWith"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/string.nullable@total"
+          },
+          "minItems": 2
+        },
+        "separator": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false
+    },
     "contains@group": {
       "type": "object",
       "required": [
@@ -39525,6 +39677,11 @@
             "replace",
             "position",
             "splitPart",
+            "padStart",
+            "padEnd",
+            "repeat",
+            "reverse",
+            "concatWith",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -39947,6 +40104,66 @@
           },
           "then": {
             "$ref": "#/$defs/splitPart@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padStart@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "repeat"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/repeat@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "reverse"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/reverse@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatWith@group"
           }
         },
         {
@@ -40848,6 +41065,11 @@
             "replace",
             "position",
             "splitPart",
+            "padStart",
+            "padEnd",
+            "repeat",
+            "reverse",
+            "concatWith",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -41270,6 +41492,66 @@
           },
           "then": {
             "$ref": "#/$defs/splitPart@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padStart@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "repeat"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/repeat@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "reverse"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/reverse@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatWith@projection"
           }
         },
         {
@@ -42171,6 +42453,11 @@
             "replace",
             "position",
             "splitPart",
+            "padStart",
+            "padEnd",
+            "repeat",
+            "reverse",
+            "concatWith",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -42584,6 +42871,66 @@
           },
           "then": {
             "$ref": "#/$defs/splitPart@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padStart@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "repeat"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/repeat@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "reverse"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/reverse@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatWith@row"
           }
         },
         {
@@ -43377,6 +43724,11 @@
             "replace",
             "position",
             "splitPart",
+            "padStart",
+            "padEnd",
+            "repeat",
+            "reverse",
+            "concatWith",
             "dateAddDays",
             "dateDiffDays",
             "timeAddSeconds",
@@ -43799,6 +44151,66 @@
           },
           "then": {
             "$ref": "#/$defs/splitPart@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padStart"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padStart@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "padEnd"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "repeat"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/repeat@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "reverse"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/reverse@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "concatWith"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/concatWith@total"
           }
         },
         {
@@ -44853,6 +45265,622 @@
         }
       },
       "additionalProperties": false
+    },
+    "padEnd.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padEnd.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padEnd.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padEnd.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padEnd.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "padEnd.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "padEnd.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "padEnd.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "padEnd@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "padEnd@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "padEnd@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "padEnd@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padEnd"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padEnd.string.nullable@total"
+          }
+        }
+      ]
+    },
+    "padStart.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padStart.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padStart.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padStart.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "padStart.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "padStart.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "padStart.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "padStart.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "padStart@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "padStart@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "padStart@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "padStart@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "length",
+        "fill"
+      ],
+      "properties": {
+        "operator": {
+          "const": "padStart"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "length": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "fill": {
+          "$ref": "#/$defs/string@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/padStart.string.nullable@total"
+          }
+        }
+      ]
     },
     "pagination": {
       "type": "object",
@@ -46176,6 +47204,298 @@
         }
       }
     },
+    "repeat.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "repeat.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "repeat.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "repeat.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "repeat.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "repeat.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "repeat.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "repeat.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "repeat@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "count"
+      ],
+      "properties": {
+        "operator": {
+          "const": "repeat"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "count": {
+          "$ref": "#/$defs/integer@group"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "repeat@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "count"
+      ],
+      "properties": {
+        "operator": {
+          "const": "repeat"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "count": {
+          "$ref": "#/$defs/integer@projection"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "repeat@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "count"
+      ],
+      "properties": {
+        "operator": {
+          "const": "repeat"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "count": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "repeat@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand",
+        "count"
+      ],
+      "properties": {
+        "operator": {
+          "const": "repeat"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true,
+        "count": {
+          "$ref": "#/$defs/integer@total"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/repeat.string.nullable@total"
+          }
+        }
+      ]
+    },
     "replace.string.nullable@group": {
       "properties": {
         "operand": {
@@ -46480,6 +47800,282 @@
           },
           "then": {
             "$ref": "#/$defs/replace.string.nullable@total"
+          }
+        }
+      ]
+    },
+    "reverse.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "reverse.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "reverse.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "reverse.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "reverse.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "reverse.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "reverse.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "reverse.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "reverse@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "reverse"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "reverse@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "reverse"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "reverse@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "reverse"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "reverse@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "reverse"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/reverse.string.nullable@total"
           }
         }
       ]

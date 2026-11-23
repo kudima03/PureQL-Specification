@@ -1,0 +1,14 @@
+// reverse of a non-null operand declared string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

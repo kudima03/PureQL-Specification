@@ -1,0 +1,15 @@
+// repeat with the number 2 as count
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": 2
+      }
+    }
+  ]
+}

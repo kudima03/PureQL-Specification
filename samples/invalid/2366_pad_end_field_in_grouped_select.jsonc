@@ -1,0 +1,22 @@
+// padEnd of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 12 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

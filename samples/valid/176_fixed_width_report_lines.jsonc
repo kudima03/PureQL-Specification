@@ -1,0 +1,166 @@
+// padStart, padEnd, repeat, reverse and concatWith in a grouped query: a padded group key, report lines of
+// fixed width with a bar of repeated characters over count, concatWith over aggregates and inside a selector,
+// reverse in a predicate, and a padded count as a sort key.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    {
+      "alias": "tier",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 2 },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "length",
+      "type": { "name": "integer" },
+      "operand": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "#" },
+        "count": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    {
+      "alias": "line",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "padEnd",
+            "type": { "name": "string" },
+            "operand": { "key": "country", "type": { "name": "string" } },
+            "length": { "type": { "name": "integer" }, "value": 12 },
+            "fill": { "type": { "name": "string" }, "value": " " }
+          },
+          {
+            "operator": "padStart",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": { "operator": "count", "type": { "name": "integer" } }
+            },
+            "length": { "type": { "name": "integer" }, "value": 6 },
+            "fill": { "type": { "name": "string" }, "value": " " }
+          },
+          { "type": { "name": "string" }, "value": " " },
+          {
+            "operator": "repeat",
+            "type": { "name": "string" },
+            "operand": { "type": { "name": "string" }, "value": "#" },
+            "count": { "operator": "count", "type": { "name": "integer" } }
+          }
+        ]
+      }
+    },
+    { "alias": "tier", "expression": { "key": "tier", "type": { "name": "string" } } },
+    {
+      "alias": "name_range",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "min",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          },
+          {
+            "operator": "max",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " … " }
+      }
+    },
+    {
+      "alias": "longest_full_name",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "length",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "concatWith",
+            "type": { "name": "string" },
+            "values": [
+              { "source": "users", "field": "first_name", "type": { "name": "string" } },
+              { "source": "users", "field": "middle_name", "type": { "name": "string", "nullable": true } },
+              { "source": "users", "field": "last_name", "type": { "name": "string" } }
+            ],
+            "separator": { "type": { "name": "string" }, "value": " " }
+          }
+        }
+      }
+    },
+    {
+      "alias": "palindromes",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "reverse",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "lower",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+            }
+          },
+          "right": {
+            "operator": "lower",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          }
+        }
+      }
+    },
+    {
+      "alias": "country_backwards",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string" },
+        "operand": { "key": "country", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "operator": "count", "type": { "name": "integer" } }
+        },
+        "length": { "type": { "name": "integer" }, "value": 6 },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    { "expression": { "key": "tier", "type": { "name": "string" } } }
+  ]
+}

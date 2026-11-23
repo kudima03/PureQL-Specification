@@ -751,6 +751,117 @@
       }
     },
     {
+      "alias": "padStart_string",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "padStart_string_nullable",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "padEnd_string",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "padEnd_string_nullable",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "repeat_string",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "count": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "repeat_string_nullable",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "count": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "reverse_string",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "reverse_string_nullable",
+      "expression": {
+        "operator": "reverse",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "concatWith_string",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string" }, "value": "b" }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "concatWith_string_null_values",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string", "nullable": true }, "value": null }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "concatWith_string_only_null_values",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string", "nullable": true }, "value": null }
+        ],
+        "separator": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
       "alias": "contains_boolean",
       "expression": {
         "operator": "contains",

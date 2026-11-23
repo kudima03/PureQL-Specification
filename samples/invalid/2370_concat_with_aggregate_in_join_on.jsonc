@@ -1,0 +1,39 @@
+// concatWith of an aggregate in join.on, a row context without aggregates
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        },
+        "right": {
+          "operator": "concatWith",
+          "type": { "name": "string" },
+          "values": [
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+            },
+            {
+              "operator": "min",
+              "type": { "name": "string" },
+              "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+            }
+          ],
+          "separator": { "type": { "name": "string" }, "value": "" }
+        }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

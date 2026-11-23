@@ -1,0 +1,16 @@
+// repeat with a separator: repetitions are not separated; strings joined with a separator are concatWith
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "type": { "name": "integer" }, "value": 2 },
+        "separator": { "type": { "name": "string" }, "value": "," }
+      }
+    }
+  ]
+}

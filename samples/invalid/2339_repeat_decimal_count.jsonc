@@ -1,0 +1,15 @@
+// repeat with a decimal count
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "count": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

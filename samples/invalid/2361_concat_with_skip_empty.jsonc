@@ -1,0 +1,21 @@
+// concatWith with skipEmpty: only null operands are skipped; an empty string is turned into null with
+// nullIfEqual
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " },
+        "skipEmpty": true
+      }
+    }
+  ]
+}

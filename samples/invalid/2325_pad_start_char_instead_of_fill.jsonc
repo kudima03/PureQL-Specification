@@ -1,0 +1,16 @@
+// padStart with char instead of fill
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 10 },
+        "char": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}
