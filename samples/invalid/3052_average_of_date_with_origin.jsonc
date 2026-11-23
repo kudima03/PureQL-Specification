@@ -1,0 +1,15 @@
+// average of a date with an origin: the result does not depend on a day that time is counted from
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "origin": { "type": { "name": "date" }, "value": "1970-01-01" }
+      }
+    }
+  ]
+}

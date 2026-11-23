@@ -1,0 +1,15 @@
+// lessThan of two nullable operands declared boolean?: a comparison is never null, also of two nulls
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean", "nullable": true },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+      }
+    }
+  ]
+}

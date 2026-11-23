@@ -1,0 +1,15 @@
+// median of a datetime with a unit: a date is averaged in days, a time and a datetime in seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "unit": "days"
+      }
+    }
+  ]
+}

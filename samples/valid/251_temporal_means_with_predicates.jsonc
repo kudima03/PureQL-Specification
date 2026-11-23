@@ -1,0 +1,69 @@
+// Temporal means with a predicate, over all rows of a grouped query, in having and as a sort key.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "median",
+      "type": { "name": "date" },
+      "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+    },
+    "right": { "param": "before", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+    {
+      "alias": "average_paid_date",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "average_date_of_all",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "over": "all"
+      }
+    },
+    {
+      "alias": "median_shipped_at",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "first_decile_start",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.1" },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    { "expression": { "key": "status", "type": { "name": "string" } } }
+  ]
+}

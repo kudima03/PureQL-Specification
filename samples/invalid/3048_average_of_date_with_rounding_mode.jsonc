@@ -1,0 +1,15 @@
+// average of a date with a rounding mode
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "roundingMode": "later"
+      }
+    }
+  ]
+}

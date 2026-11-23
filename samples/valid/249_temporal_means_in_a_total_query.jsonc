@@ -1,0 +1,66 @@
+// average, median and percentileContinuous of a date, a datetime and a time in a total query, where each is
+// nullable; a mean exactly halfway between two days or microseconds is the later one.
+{
+  "from": { "entity": "orders" },
+  "where": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+  "aggregate": [
+    {
+      "alias": "average_order_date",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "median_ordered_at",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "quartile_window_start",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "median_shipped_date",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date", "nullable": true },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        }
+      }
+    },
+    {
+      "alias": "days_between_means",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "average",
+          "type": { "name": "date", "nullable": true },
+          "selector": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        },
+        "right": {
+          "operator": "average",
+          "type": { "name": "date", "nullable": true },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    }
+  ]
+}

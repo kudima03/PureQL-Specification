@@ -1,0 +1,15 @@
+// lessThanOrEqual with a list: a list is accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "type": { "name": "dateList" }, "value": [ "2024-01-01" ] }
+      }
+    }
+  ]
+}

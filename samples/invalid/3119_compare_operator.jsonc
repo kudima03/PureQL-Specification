@@ -1,0 +1,15 @@
+// compare is not an operator: there is no three-way comparison
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "compare",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+      }
+    }
+  ]
+}

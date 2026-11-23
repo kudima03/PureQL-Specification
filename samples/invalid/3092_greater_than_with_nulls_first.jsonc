@@ -1,0 +1,16 @@
+// greaterThan with "nulls": "first": a comparison does not follow the sort order, a null is a missing value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } },
+        "nulls": "first"
+      }
+    }
+  ]
+}

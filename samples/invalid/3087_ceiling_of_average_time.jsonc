@@ -1,0 +1,18 @@
+// ceiling of an average time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "time" },
+          "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+        }
+      }
+    }
+  ]
+}

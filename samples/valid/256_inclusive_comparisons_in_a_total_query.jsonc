@@ -1,0 +1,105 @@
+// Counts of rows at or after a nullable bound, after it and equal to it: the first is the sum of the other
+// two for every value of the bound, null included.
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "at_or_after_from",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "after_from",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "equal_to_from",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "all_at_or_before_from",
+      "expression": {
+        "operator": "all",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "lessThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "latest_is_at_or_after_from",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "max",
+          "type": { "name": "date", "nullable": true },
+          "selector": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+      }
+    },
+    {
+      "alias": "coupon_at_or_after_parameter",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "predicate": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "param": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+        }
+      }
+    }
+  ]
+}

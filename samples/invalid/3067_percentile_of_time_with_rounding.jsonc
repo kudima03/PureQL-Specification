@@ -1,0 +1,17 @@
+// percentileContinuous of a time with a rounding rule: a temporal mean has one rule, and a value halfway is
+// the later one
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time" },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" },
+        "rounding": "halfUp"
+      }
+    }
+  ]
+}

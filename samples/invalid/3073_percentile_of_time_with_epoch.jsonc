@@ -1,0 +1,16 @@
+// percentileContinuous of a time with an epoch
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time" },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" },
+        "epoch": "1970-01-01"
+      }
+    }
+  ]
+}

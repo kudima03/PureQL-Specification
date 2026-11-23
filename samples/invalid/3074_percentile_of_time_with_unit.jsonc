@@ -1,0 +1,16 @@
+// percentileContinuous of a time with a unit: a date is averaged in days, a time and a datetime in seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time" },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" },
+        "unit": "days"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// median of a datetime with a rounding rule: a temporal mean has one rule, and a value halfway is the later
+// one
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "rounding": "halfUp"
+      }
+    }
+  ]
+}

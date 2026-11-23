@@ -1,0 +1,15 @@
+// average of a date with digits: a temporal mean is rounded to the precision of its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "digits": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

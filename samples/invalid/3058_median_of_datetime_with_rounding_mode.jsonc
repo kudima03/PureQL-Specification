@@ -1,0 +1,15 @@
+// median of a datetime with a rounding mode
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "roundingMode": "later"
+      }
+    }
+  ]
+}
