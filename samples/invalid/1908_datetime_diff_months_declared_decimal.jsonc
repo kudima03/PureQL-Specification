@@ -1,0 +1,15 @@
+// datetimeDiffMonths declared decimal: it counts whole months, an integer, never wider
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

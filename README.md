@@ -185,11 +185,11 @@ A query runs in this order: `from` and `joins`, `where`, `groupBy`, `having`, `s
 - A source names exactly one of `entity` or `subquery`, plus an optional `alias`. Aliases allow joining the same source twice (self-join).
 - Join kinds (`kind`): `inner`, `left`, `right`, `full`.
 - `on` is a non-null boolean in row context.
-- **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`041_join_on_nullable_key.json`](samples/valid/041_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
+- **Nulls in `on`.** `on` has the same null semantics as every other clause, so `equal` on two nullable keys pairs the rows whose keys are both `null`. This differs from SQL `=`. To match only non-null keys, add `notEqual(key, null)`, as in [`042_join_on_nullable_key.json`](samples/valid/042_join_on_nullable_key.json). A join where either key is non-null, such as a foreign key to a primary key, is unaffected.
 - **Translating to SQL.** `equal` with at least one non-null operand is plain `=`. With two nullable operands it is `IS NOT DISTINCT FROM`, which some databases cannot use for hash joins or indexes, so a `notEqual(key, null)` guard also lets the interpreter emit `=`.
 - **Nullability after an outer join.** A field is nullable at a point of the query if it is stored nullable, or if its source is on the optional side of an outer join that precedes that point: the joined source for `left`, every earlier source for `right`, both for `full`.
   - A join's own `on` precedes the join itself, so it sees the joined source's real rows. In the example, `coupons.id` is non-null in its own `on` and nullable everywhere after it.
-  - The `on` of a later join, `where`, `groupBy`, `select` and every later clause come after the join. A field that is non-null in storage is therefore nullable in the next join's `on` if its source was joined with `left` before, as in [`045_outer_join_chain.json`](samples/valid/045_outer_join_chain.json).
+  - The `on` of a later join, `where`, `groupBy`, `select` and every later clause come after the join. A field that is non-null in storage is therefore nullable in the next join's `on` if its source was joined with `left` before, as in [`046_outer_join_chain.json`](samples/valid/046_outer_join_chain.json).
   - An `on` is never affected by joins that come after it: a `right` join makes the earlier sources nullable only from that join on.
   - References declare exactly this nullability, no more and no less: declaring a non-null field nullable is an error too.
 
@@ -325,18 +325,20 @@ The tables use `T` for any type and `T?` for its nullable form. Every operator n
 | `dateAddDays` | `{ left: date, right: integer }` | `date` |
 | `dateDiffDays` | `{ left: date, right: date }` | `integer` (`left − right`) |
 | `dateAddMonths` | `{ left: date, right: integer }` | `date` |
+| `dateDiffMonths` | `{ left: date, right: date }` | `integer` (whole months from `right` to `left`) |
 | `timeAddSeconds` | `{ left: time, right: decimal }` | `time` |
 | `timeDiffSeconds` | `{ left: time, right: time }` | `decimal` |
 | `datetimeAddSeconds` | `{ left: datetime, right: decimal }` | `datetime` |
 | `datetimeDiffSeconds` | `{ left: datetime, right: datetime }` | `decimal` |
 | `datetimeAddMonths` | `{ left: datetime, right: integer }` | `datetime` |
+| `datetimeDiffMonths` | `{ left: datetime, right: datetime }` | `integer` (whole months from `right` to `left`) |
 | `year`, `quarter`, `month`, `day`, `dayOfWeek`, `dayOfYear`, `week`, `weekYear` | `{ operand: date }` / `{ operand: datetime }` | `integer` |
 | `hour`, `minute`, `second`, `microsecond` | `{ operand: time }` / `{ operand: datetime }` | `integer` |
 | `startOfYear`, `startOfQuarter`, `startOfMonth`, `startOfWeek` | `{ operand: date }` / `{ operand: datetime }` | `date` / `datetime`, as the operand |
 | `startOfDay` | `{ operand: datetime }` | `datetime` |
 | `startOfHour`, `startOfMinute`, `startOfSecond` | `{ operand: time }` / `{ operand: datetime }` | `time` / `datetime`, as the operand |
 
-Every number operand above also accepts an `integer`. Larger units are composed, for example `datetimeAddSeconds(dt, multiply(hours, 3600))` for hours and `dateAddMonths(d, multiply(years, 12))` for years. A number of months is an `integer` only. `timeAddSeconds` wraps around midnight, and the parts and `startOf…` are defined under [Dates and times](#dates-and-times).
+Every number operand above also accepts an `integer`. Larger units are composed, for example `datetimeAddSeconds(dt, multiply(hours, 3600))` for hours and `dateAddMonths(d, multiply(years, 12))` for years, and whole years between two dates are `integerDivide(dateDiffMonths(a, b), 12)`. A number of months is an `integer` only. `timeAddSeconds` wraps around midnight, and the parts and `startOf…` are defined under [Dates and times](#dates-and-times).
 
 ### Conditional and null handling
 
@@ -463,6 +465,11 @@ Every type is ordered, and the same order serves comparisons, `min` / `max` and 
   - Adding months is therefore not reversible, and not additive: `2024-01-31` plus 1 month, then minus 1 month, is `2024-01-29`, and adding 1 month twice gives `2024-03-29` where adding 2 months gives `2024-03-31`. To step through the ends of months, add to the first month: `dateAddMonths(d, n)` for n = 1, 2, 3.
   - A year is 12 months: `2024-02-29` plus 12 months is `2025-02-28`.
   - A result outside the years 0001–9999 is an [execution error](#execution-errors), as for every date.
+- **Months between.** `dateDiffMonths` and `datetimeDiffMonths` count the whole months from `right` to `left`, as the inverse of adding months: when `left` is not earlier than `right`, the result is the largest `n` for which `right` plus `n` months, as `dateAddMonths` adds them, is not later than `left`. When `left` is earlier, it is the negative of the months from `left` to `right`, so swapping the operands only changes the sign.
+  - A month is complete on the same day of the next month: from `2024-01-15`, `2024-02-14` is 0 months and `2024-02-15` is 1.
+  - At the end of a month the clamping of `dateAddMonths` applies: from `2023-01-31`, `2023-02-28` is 1 month, since January 31 plus 1 month is February 28; in a leap year, `2024-02-28` is 0 months from `2024-01-31` and `2024-02-29` is 1.
+  - So `dateDiffMonths(dateAddMonths(d, n), d)` is `n` for every `n` that is not negative, and someone born on February 29 is a year older on February 28 of a common year.
+  - For a `datetime` the time of day counts, in UTC: from `2024-01-15T12:00:00Z`, `2024-02-15T11:59:59Z` is still 0 months.
 - **`datetime`** is an instant with microsecond precision; every day has 86400 seconds. `datetimeAddSeconds` and `datetimeDiffSeconds` work on the instant, and `datetime` results are returned in UTC, written with `Z`.
 - **Parts** are integers. A calendar part is read from a `date` or a `datetime`, a clock part from a `time` or a `datetime`; a `datetime` is read in UTC, as it is written. A `date` has no clock parts and a `time` no calendar parts, so the schema rejects `hour` of a `date`.
 
@@ -577,17 +584,17 @@ npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specifica
 npx --yes ajv-cli@5.0.0 test --spec=draft2020 --strict=false -s PureQL-Specification.json -d "samples/invalid/*.jsonc" --invalid
 ```
 
-The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and that every sample is formatted the same way, and fails with a diff otherwise. `jsonlint --in-place` with the same options formats a new sample. It runs the two ajv commands on every pull request and before every release: everything in `samples/valid/` must pass, everything in `samples/invalid/` must fail. `samples/valid/095_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time; `samples/valid/104_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` do the same for other operators and for a malformed node.
+The generator needs Python; validation needs only Node.js. The schema has a root `version` keyword, which JSON Schema does not define, so a validator in strict mode must allow it (`--strict=false` for ajv). On every pull request CI also checks that `PureQL-Specification.json` is formatted exactly as the generator writes it, with 2-space indent, a final newline and no duplicate keys, and that every sample is formatted the same way, and fails with a diff otherwise. `jsonlint --in-place` with the same options formats a new sample. It runs the two ajv commands on every pull request and before every release: everything in `samples/valid/` must pass, everything in `samples/invalid/` must fail. `samples/valid/096_deep_nesting.jsonc` nests `equal(if(…))` 30 levels deep and guards against exponential validation time; `samples/valid/105_deep_operand_chains.jsonc` and `samples/invalid/0330_deep_malformed_operand_type.jsonc` do the same for other operators and for a malformed node.
 
 **Reading the schema.** Every definition is short and named after what it checks. `expr@row` is any expression in row context (likewise `@projection` and `@group`); it sends an operator node to `operator@row`, which sends each operator to its own definition, and a leaf to `leaf@row`. An operator definition lists its signatures by declared type: in `add@row`, a node declaring `decimal?` is checked by `add.decimal.nullable@row`. A position that expects a type is `decimal.nullable@row`: an expression of row context whose declared type `accepts.decimal.nullable`. `declares.*` and `accepts.*` read only the `type` a node declares.
 
-Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number. `samples/valid/124`–`127` use every operator in every signature, and every aggregate, once in each context (a `groupBy` key, a plain select, a grouped select, a total query). The invalid tests after `0411` break one thing at a time in each context: an unknown property, a missing operand, an operand of the wrong type or with a malformed value, a field, group key or aggregate where the context has none, a declared type that is not the exact one, `in` lists of every kind, and the clauses of each kind of query. They were chosen by deleting or loosening each constraint of the schema in turn and keeping the tests that notice it.
+Each invalid test is a valid base query with exactly one thing broken, written as JSONC: a `//` comment describing what is broken, then the bare query. A new test takes the next free number. `samples/valid/125`–`128` use every operator in every signature, and every aggregate, once in each context (a `groupBy` key, a plain select, a grouped select, a total query). The invalid tests after `0411` break one thing at a time in each context: an unknown property, a missing operand, an operand of the wrong type or with a malformed value, a field, group key or aggregate where the context has none, a declared type that is not the exact one, `in` lists of every kind, and the clauses of each kind of query. They were chosen by deleting or loosening each constraint of the schema in turn and keeping the tests that notice it.
 
 ---
 
 ## Samples
 
-The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json`), valid queries ordered from simple to complex, in the e-commerce domain. Samples `066`–`094` are dashboard queries: each mirrors one PureQL query a dashboard backend stores, combining many features at once, and is written over the `schema_with_foreign_keys` and `audit` fixture schemas of [`Pure.RelationalSchema.Samples`](https://github.com/kudima03/Pure.RelationalSchema.Samples), as in [`PureQL.CSharp.Model.Samples`](https://github.com/kudima03/PureQL.CSharp.Model.Samples), so they can be executed over its fixture rows. Next to them are valid tests (`.jsonc`) for edge cases, and [`samples/invalid/`](samples/invalid/) holds the queries that must be rejected.
+The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json`), valid queries ordered from simple to complex, in the e-commerce domain. Samples `067`–`095` are dashboard queries: each mirrors one PureQL query a dashboard backend stores, combining many features at once, and is written over the `schema_with_foreign_keys` and `audit` fixture schemas of [`Pure.RelationalSchema.Samples`](https://github.com/kudima03/Pure.RelationalSchema.Samples), as in [`PureQL.CSharp.Model.Samples`](https://github.com/kudima03/PureQL.CSharp.Model.Samples), so they can be executed over its fixture rows. Next to them are valid tests (`.jsonc`) for edge cases, and [`samples/invalid/`](samples/invalid/) holds the queries that must be rejected.
 
 | File | Description |
 |------|-------------|
@@ -619,69 +626,70 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`026_order_by_computed.json`](samples/valid/026_order_by_computed.json) | `orderBy` on a computed per-row expression |
 | [`027_date_math.json`](samples/valid/027_date_math.json) | `dateAddDays` / `dateDiffDays` as columns and in `where` |
 | [`028_add_months.json`](samples/valid/028_add_months.json) | `dateAddMonths` / `datetimeAddMonths`: a due date, years as 12 months from a parameter, a nullable field, and the last three months in `where` |
-| [`029_time_datetime.json`](samples/valid/029_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
-| [`030_datetime_utc.json`](samples/valid/030_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
-| [`031_date_parts.json`](samples/valid/031_date_parts.json) | Parts of a `date`, a `datetime` and a `time` as `integer` columns, lifted over a nullable field, and weekend orders in `where` |
-| [`032_nullable_columns.json`](samples/valid/032_nullable_columns.json) | Nullable fields selected into nullable columns |
-| [`033_typed_null.json`](samples/valid/033_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
-| [`034_coalesce.json`](samples/valid/034_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
-| [`035_null_checks.json`](samples/valid/035_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
-| [`036_nullable_boolean_conditions.json`](samples/valid/036_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
-| [`037_lifted_operators.json`](samples/valid/037_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |
-| [`038_inner_join.json`](samples/valid/038_inner_join.json) | Inner join on a key |
-| [`039_left_join_nullable.json`](samples/valid/039_left_join_nullable.json) | Left join: nullable fields, typed null, lifted arithmetic, `coalesce` |
-| [`040_self_join.json`](samples/valid/040_self_join.json) | Self-join through an alias on the join |
-| [`041_join_on_nullable_key.json`](samples/valid/041_join_on_nullable_key.json) | Join on a key nullable on both sides: `notEqual(…, null)` keeps two nulls from matching |
-| [`042_right_join.json`](samples/valid/042_right_join.json) | Right join: the left side becomes nullable |
-| [`043_full_join.json`](samples/valid/043_full_join.json) | Full join: both sides nullable, coalesced into one key |
-| [`044_multiple_joins.json`](samples/valid/044_multiple_joins.json) | Several joins of different kinds |
-| [`045_outer_join_chain.json`](samples/valid/045_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
-| [`046_aggregates_over_all_rows.json`](samples/valid/046_aggregates_over_all_rows.json) | A total query (`aggregate`): one row; `count` / `sum` non-null, `min` / `max` / `average` nullable |
-| [`047_aggregate_with_predicate_broadcast.json`](samples/valid/047_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
-| [`048_share_of_total.json`](samples/valid/048_share_of_total.json) | A row value divided by an aggregate over all rows |
-| [`049_group_by_count.json`](samples/valid/049_group_by_count.json) | Group by one field and count |
-| [`050_group_by_multiple_keys.json`](samples/valid/050_group_by_multiple_keys.json) | Group by two fields |
-| [`051_computed_group_key.json`](samples/valid/051_computed_group_key.json) | Group by a computed key, select it and order groups by it |
-| [`052_group_by_month.json`](samples/valid/052_group_by_month.json) | Orders and revenue per month: `startOfMonth` as a `date` group key, ordered by it, with the latest order's hour from `startOfHour` |
-| [`053_having.json`](samples/valid/053_having.json) | `having` on an aggregate |
-| [`054_having_boolean_logic.json`](samples/valid/054_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
-| [`055_conditional_aggregates.json`](samples/valid/055_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
-| [`056_group_key_usage.json`](samples/valid/056_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
-| [`057_nullable_aggregates_and_keys.json`](samples/valid/057_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
-| [`058_date_math_everywhere.json`](samples/valid/058_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
-| [`059_integer_decimal.json`](samples/valid/059_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
-| [`060_grouped_revenue.json`](samples/valid/060_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
-| [`061_subquery_from.json`](samples/valid/061_subquery_from.json) | Main query reading from one subquery |
-| [`062_in_subquery.json`](samples/valid/062_in_subquery.json) | Semi-join: `in` over one column of a subquery |
-| [`063_subquery_chain.json`](samples/valid/063_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
-| [`064_left_join_subquery.json`](samples/valid/064_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
-| [`065_subquery_full_pipeline.json`](samples/valid/065_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |
-| [`066_recent_orders_per_active_user.json`](samples/valid/066_recent_orders_per_active_user.json) | Orders per active user since a `datetime`, with a coalesced nullable `average`, ordered by `count` then the key |
-| [`067_billed_with_fee_per_employee.json`](samples/valid/067_billed_with_fee_per_employee.json) | A join chain and a date range; `sum` of `add`, ordered by it |
-| [`068_revenue_per_user_name.json`](samples/valid/068_revenue_per_user_name.json) | Revenue per user name: a key from a joined entity, ordered by an aggregate descending |
-| [`069_item_value_share_of_order_total_per_product.json`](samples/valid/069_item_value_share_of_order_total_per_product.json) | Item value per product and its ratio of two `sum`s |
-| [`070_item_value_per_user_and_product.json`](samples/valid/070_item_value_per_user_and_product.json) | A `concat` group key and a `greaterThan` filter |
-| [`071_order_stage_excluding_user.json`](samples/valid/071_order_stage_excluding_user.json) | `and` of `in` and `notEqual`; a nested `if` group key over `equal` |
-| [`072_revenue_per_team_lead_per_period.json`](samples/valid/072_revenue_per_team_lead_per_period.json) | The same entity joined twice through aliases; revenue per team lead per computed period |
-| [`073_login_stats_per_tenant.json`](samples/valid/073_login_stats_per_tenant.json) | `average` of `datetimeDiffSeconds`, a coalesced nullable `average` and a guarded share per tenant |
-| [`074_user_funnel_stage.json`](samples/valid/074_user_funnel_stage.json) | A left joined subquery; a nested `if` group key over `not`, `coalesce` and `lessThan` |
-| [`075_daily_revenue_per_tenant.json`](samples/valid/075_daily_revenue_per_tenant.json) | Daily revenue: a `sum` with a predicate per tenant next to the total |
-| [`076_order_totals_per_status_and_tenant.json`](samples/valid/076_order_totals_per_status_and_tenant.json) | Filtered `sum`s per status, the total, `average` of `dateDiffDays` and `count` per tenant |
-| [`077_placed_versus_shipped_per_day.json`](samples/valid/077_placed_versus_shipped_per_day.json) | Reading from a subquery left joined to another; `coalesce` and `subtract` |
-| [`078_weekly_units_per_product.json`](samples/valid/078_weekly_units_per_product.json) | A computed week key, `dateAddDays` over the key and filtered `sum`s per product |
-| [`079_repeat_buyer_order_and_item_profile.json`](samples/valid/079_repeat_buyer_order_and_item_profile.json) | Two grouped subqueries inner joined, filtered on a subquery column |
-| [`080_score_by_product_per_order_day.json`](samples/valid/080_score_by_product_per_order_day.json) | An `integer` computed key; `average`s with `equal` / `notEqual` predicates |
-| [`081_direct_reports_per_manager.json`](samples/valid/081_direct_reports_per_manager.json) | A `from` alias self-joined; `notEqual` on a nullable field; `min` of `time` and `date` |
-| [`082_daily_in_stock_revenue_share.json`](samples/valid/082_daily_in_stock_revenue_share.json) | `subtract`, `divide` and `multiply` over aggregates |
-| [`083_line_flags_per_user_and_status.json`](samples/valid/083_line_flags_per_user_and_status.json) | Two `string` keys; `count`s with `and` / `not` / `lessThan` / boolean predicates |
-| [`084_item_revenue_to_order_total_per_employee.json`](samples/valid/084_item_revenue_to_order_total_per_employee.json) | An entity joined to two grouped subqueries, filtered by an `in` list |
-| [`085_revenue_per_employee_and_age.json`](samples/valid/085_revenue_per_employee_and_age.json) | Four group keys of different types; an aggregate divided by a `decimal` key |
-| [`086_in_stock_item_value_versus_ordered_per_user.json`](samples/valid/086_in_stock_item_value_versus_ordered_per_user.json) | A subquery filtered by `and(equal, in)`, left joined; a variance percentage |
-| [`087_orders_per_weekday.json`](samples/valid/087_orders_per_weekday.json) | A six-level `if` group key over `modulo` of `dateDiffDays`; a guarded share |
-| [`088_shipped_share_per_user_and_tenant.json`](samples/valid/088_shipped_share_per_user_and_tenant.json) | `if`-guarded ratios of filtered `count`s, one column per user |
-| [`089_unbilled_order_aging.json`](samples/valid/089_unbilled_order_aging.json) | `dateDiffDays` from a literal, `if` buckets over it, ordered by two expressions, paged |
-| [`090_product_sales_performance.json`](samples/valid/090_product_sales_performance.json) | A guarded percentage, `average` of `datetimeDiffSeconds` and `max` of `dateDiffDays` in a subquery; ratios of its columns |
-| [`091_user_sales_summary.json`](samples/valid/091_user_sales_summary.json) | One inner and two left joined subqueries; a guard comparing `coalesce` with `integer` 0 |
-| [`092_user_account_overview.json`](samples/valid/092_user_account_overview.json) | Five subqueries, one reading another; inner and left joins; `max`; paged |
-| [`093_employee_scorecard.json`](samples/valid/093_employee_scorecard.json) | A `from` alias self-joined through a join alias; three subqueries with nested `and` ranges |
-| [`094_line_restock_suggestion.json`](samples/valid/094_line_restock_suggestion.json) | A left join on two keys; arithmetic in `if` branches; paged |
+| [`029_months_between.json`](samples/valid/029_months_between.json) | `dateDiffMonths` / `datetimeDiffMonths`: an age in whole years, months of membership, a nullable field, and adults only in `where` |
+| [`030_time_datetime.json`](samples/valid/030_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
+| [`031_datetime_utc.json`](samples/valid/031_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
+| [`032_date_parts.json`](samples/valid/032_date_parts.json) | Parts of a `date`, a `datetime` and a `time` as `integer` columns, lifted over a nullable field, and weekend orders in `where` |
+| [`033_nullable_columns.json`](samples/valid/033_nullable_columns.json) | Nullable fields selected into nullable columns |
+| [`034_typed_null.json`](samples/valid/034_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
+| [`035_coalesce.json`](samples/valid/035_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
+| [`036_null_checks.json`](samples/valid/036_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
+| [`037_nullable_boolean_conditions.json`](samples/valid/037_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
+| [`038_lifted_operators.json`](samples/valid/038_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |
+| [`039_inner_join.json`](samples/valid/039_inner_join.json) | Inner join on a key |
+| [`040_left_join_nullable.json`](samples/valid/040_left_join_nullable.json) | Left join: nullable fields, typed null, lifted arithmetic, `coalesce` |
+| [`041_self_join.json`](samples/valid/041_self_join.json) | Self-join through an alias on the join |
+| [`042_join_on_nullable_key.json`](samples/valid/042_join_on_nullable_key.json) | Join on a key nullable on both sides: `notEqual(…, null)` keeps two nulls from matching |
+| [`043_right_join.json`](samples/valid/043_right_join.json) | Right join: the left side becomes nullable |
+| [`044_full_join.json`](samples/valid/044_full_join.json) | Full join: both sides nullable, coalesced into one key |
+| [`045_multiple_joins.json`](samples/valid/045_multiple_joins.json) | Several joins of different kinds |
+| [`046_outer_join_chain.json`](samples/valid/046_outer_join_chain.json) | Chained left joins: a non-null field of the first optional side is nullable in the next `on` |
+| [`047_aggregates_over_all_rows.json`](samples/valid/047_aggregates_over_all_rows.json) | A total query (`aggregate`): one row; `count` / `sum` non-null, `min` / `max` / `average` nullable |
+| [`048_aggregate_with_predicate_broadcast.json`](samples/valid/048_aggregate_with_predicate_broadcast.json) | Filtered aggregates over all rows next to row columns |
+| [`049_share_of_total.json`](samples/valid/049_share_of_total.json) | A row value divided by an aggregate over all rows |
+| [`050_group_by_count.json`](samples/valid/050_group_by_count.json) | Group by one field and count |
+| [`051_group_by_multiple_keys.json`](samples/valid/051_group_by_multiple_keys.json) | Group by two fields |
+| [`052_computed_group_key.json`](samples/valid/052_computed_group_key.json) | Group by a computed key, select it and order groups by it |
+| [`053_group_by_month.json`](samples/valid/053_group_by_month.json) | Orders and revenue per month: `startOfMonth` as a `date` group key, ordered by it, with the latest order's hour from `startOfHour` |
+| [`054_having.json`](samples/valid/054_having.json) | `having` on an aggregate |
+| [`055_having_boolean_logic.json`](samples/valid/055_having_boolean_logic.json) | `having` combining aggregates with `and` / `or` / `not` and a parameter |
+| [`056_conditional_aggregates.json`](samples/valid/056_conditional_aggregates.json) | `count` / `sum` with a predicate, `sum` over `if`, `any` / `all` |
+| [`057_group_key_usage.json`](samples/valid/057_group_key_usage.json) | Plain, nullable and computed group keys in `select`, `having` and `orderBy` |
+| [`058_nullable_aggregates_and_keys.json`](samples/valid/058_nullable_aggregates_and_keys.json) | Nullable group key; non-null and nullable aggregates |
+| [`059_date_math_everywhere.json`](samples/valid/059_date_math_everywhere.json) | Date math per row and over aggregates with the same operators |
+| [`060_integer_decimal.json`](samples/valid/060_integer_decimal.json) | `integer` / `decimal` rules inside a grouped query |
+| [`061_grouped_revenue.json`](samples/valid/061_grouped_revenue.json) | Revenue per user with a share of all rows, `having` and `orderBy` |
+| [`062_subquery_from.json`](samples/valid/062_subquery_from.json) | Main query reading from one subquery |
+| [`063_in_subquery.json`](samples/valid/063_in_subquery.json) | Semi-join: `in` over one column of a subquery |
+| [`064_subquery_chain.json`](samples/valid/064_subquery_chain.json) | A grouped subquery, a second one reading from it, the main query joining the second |
+| [`065_left_join_subquery.json`](samples/valid/065_left_join_subquery.json) | Left join to a subquery: its columns become nullable |
+| [`066_subquery_full_pipeline.json`](samples/valid/066_subquery_full_pipeline.json) | Three subqueries feeding a joined, filtered, ordered, paged main query |
+| [`067_recent_orders_per_active_user.json`](samples/valid/067_recent_orders_per_active_user.json) | Orders per active user since a `datetime`, with a coalesced nullable `average`, ordered by `count` then the key |
+| [`068_billed_with_fee_per_employee.json`](samples/valid/068_billed_with_fee_per_employee.json) | A join chain and a date range; `sum` of `add`, ordered by it |
+| [`069_revenue_per_user_name.json`](samples/valid/069_revenue_per_user_name.json) | Revenue per user name: a key from a joined entity, ordered by an aggregate descending |
+| [`070_item_value_share_of_order_total_per_product.json`](samples/valid/070_item_value_share_of_order_total_per_product.json) | Item value per product and its ratio of two `sum`s |
+| [`071_item_value_per_user_and_product.json`](samples/valid/071_item_value_per_user_and_product.json) | A `concat` group key and a `greaterThan` filter |
+| [`072_order_stage_excluding_user.json`](samples/valid/072_order_stage_excluding_user.json) | `and` of `in` and `notEqual`; a nested `if` group key over `equal` |
+| [`073_revenue_per_team_lead_per_period.json`](samples/valid/073_revenue_per_team_lead_per_period.json) | The same entity joined twice through aliases; revenue per team lead per computed period |
+| [`074_login_stats_per_tenant.json`](samples/valid/074_login_stats_per_tenant.json) | `average` of `datetimeDiffSeconds`, a coalesced nullable `average` and a guarded share per tenant |
+| [`075_user_funnel_stage.json`](samples/valid/075_user_funnel_stage.json) | A left joined subquery; a nested `if` group key over `not`, `coalesce` and `lessThan` |
+| [`076_daily_revenue_per_tenant.json`](samples/valid/076_daily_revenue_per_tenant.json) | Daily revenue: a `sum` with a predicate per tenant next to the total |
+| [`077_order_totals_per_status_and_tenant.json`](samples/valid/077_order_totals_per_status_and_tenant.json) | Filtered `sum`s per status, the total, `average` of `dateDiffDays` and `count` per tenant |
+| [`078_placed_versus_shipped_per_day.json`](samples/valid/078_placed_versus_shipped_per_day.json) | Reading from a subquery left joined to another; `coalesce` and `subtract` |
+| [`079_weekly_units_per_product.json`](samples/valid/079_weekly_units_per_product.json) | A computed week key, `dateAddDays` over the key and filtered `sum`s per product |
+| [`080_repeat_buyer_order_and_item_profile.json`](samples/valid/080_repeat_buyer_order_and_item_profile.json) | Two grouped subqueries inner joined, filtered on a subquery column |
+| [`081_score_by_product_per_order_day.json`](samples/valid/081_score_by_product_per_order_day.json) | An `integer` computed key; `average`s with `equal` / `notEqual` predicates |
+| [`082_direct_reports_per_manager.json`](samples/valid/082_direct_reports_per_manager.json) | A `from` alias self-joined; `notEqual` on a nullable field; `min` of `time` and `date` |
+| [`083_daily_in_stock_revenue_share.json`](samples/valid/083_daily_in_stock_revenue_share.json) | `subtract`, `divide` and `multiply` over aggregates |
+| [`084_line_flags_per_user_and_status.json`](samples/valid/084_line_flags_per_user_and_status.json) | Two `string` keys; `count`s with `and` / `not` / `lessThan` / boolean predicates |
+| [`085_item_revenue_to_order_total_per_employee.json`](samples/valid/085_item_revenue_to_order_total_per_employee.json) | An entity joined to two grouped subqueries, filtered by an `in` list |
+| [`086_revenue_per_employee_and_age.json`](samples/valid/086_revenue_per_employee_and_age.json) | Four group keys of different types; an aggregate divided by a `decimal` key |
+| [`087_in_stock_item_value_versus_ordered_per_user.json`](samples/valid/087_in_stock_item_value_versus_ordered_per_user.json) | A subquery filtered by `and(equal, in)`, left joined; a variance percentage |
+| [`088_orders_per_weekday.json`](samples/valid/088_orders_per_weekday.json) | A six-level `if` group key over `modulo` of `dateDiffDays`; a guarded share |
+| [`089_shipped_share_per_user_and_tenant.json`](samples/valid/089_shipped_share_per_user_and_tenant.json) | `if`-guarded ratios of filtered `count`s, one column per user |
+| [`090_unbilled_order_aging.json`](samples/valid/090_unbilled_order_aging.json) | `dateDiffDays` from a literal, `if` buckets over it, ordered by two expressions, paged |
+| [`091_product_sales_performance.json`](samples/valid/091_product_sales_performance.json) | A guarded percentage, `average` of `datetimeDiffSeconds` and `max` of `dateDiffDays` in a subquery; ratios of its columns |
+| [`092_user_sales_summary.json`](samples/valid/092_user_sales_summary.json) | One inner and two left joined subqueries; a guard comparing `coalesce` with `integer` 0 |
+| [`093_user_account_overview.json`](samples/valid/093_user_account_overview.json) | Five subqueries, one reading another; inner and left joins; `max`; paged |
+| [`094_employee_scorecard.json`](samples/valid/094_employee_scorecard.json) | A `from` alias self-joined through a join alias; three subqueries with nested `and` ranges |
+| [`095_line_restock_suggestion.json`](samples/valid/095_line_restock_suggestion.json) | A left join on two keys; arithmetic in `if` branches; paged |

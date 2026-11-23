@@ -426,6 +426,9 @@ for ctx, rules in CONTEXTS.items():
     # calendar months, the day clamped to the last day of the month; years are 12 months
     lifted("dateAddMonths", {"left": "date", "right": "integer"}, "date")
     lifted("datetimeAddMonths", {"left": "datetime", "right": "integer"}, "datetime")
+    # whole months from right to left: the inverse of adding months
+    lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
+    lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")
 
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
     # time or a datetime (a datetime is read in UTC). The type the operand declares

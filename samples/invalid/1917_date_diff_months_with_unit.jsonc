@@ -1,0 +1,16 @@
+// dateDiffMonths with a unit: the unit is in the operator name, and no other property is allowed
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param": "today", "type": { "name": "date" } },
+        "unit": "year"
+      }
+    }
+  ]
+}

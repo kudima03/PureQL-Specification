@@ -1,0 +1,16 @@
+// dateDiffMonths of non-null operands, declared nullable: a lifted operator is nullable exactly when an
+// operand is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

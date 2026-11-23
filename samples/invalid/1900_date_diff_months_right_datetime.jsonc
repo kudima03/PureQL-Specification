@@ -1,0 +1,15 @@
+// dateDiffMonths with a datetime on the right: both operands are dates
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

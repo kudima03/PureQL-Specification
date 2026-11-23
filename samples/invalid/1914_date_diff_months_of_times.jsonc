@@ -1,0 +1,15 @@
+// dateDiffMonths of two times: a time has no month
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "source": "orders", "field": "delivery_window_end", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

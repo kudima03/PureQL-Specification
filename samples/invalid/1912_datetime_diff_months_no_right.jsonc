@@ -1,0 +1,14 @@
+// datetimeDiffMonths without its right operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

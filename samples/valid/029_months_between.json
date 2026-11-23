@@ -1,0 +1,140 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "integerDivide",
+      "type": {
+        "name": "integer"
+      },
+      "left": {
+        "operator": "dateDiffMonths",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "param": "today",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "birth_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      },
+      "right": {
+        "type": {
+          "name": "integer"
+        },
+        "value": 12
+      }
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 18
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "age_years",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "dateDiffMonths",
+          "type": {
+            "name": "integer"
+          },
+          "left": {
+            "param": "today",
+            "type": {
+              "name": "date"
+            }
+          },
+          "right": {
+            "source": "users",
+            "field": "birth_date",
+            "type": {
+              "name": "date"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 12
+        }
+      }
+    },
+    {
+      "alias": "months_since_trial_start",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "left": {
+          "param": "today",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "trial_start",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "months_of_membership",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "param": "now",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    }
+  ]
+}

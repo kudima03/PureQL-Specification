@@ -1,0 +1,16 @@
+// dateDiff is not an operator: the unit is in the name (dateDiffDays, dateDiffMonths)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiff",
+        "type": { "name": "integer" },
+        "unit": "month",
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}
