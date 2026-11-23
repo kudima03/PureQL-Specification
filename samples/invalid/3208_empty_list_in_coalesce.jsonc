@@ -1,0 +1,22 @@
+// A coalesce of a list parameter and an empty list literal: a list is accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "param": "statuses", "type": { "name": "stringList" } },
+            { "type": { "name": "stringList" }, "value": [] }
+          ]
+        }
+      }
+    }
+  ]
+}

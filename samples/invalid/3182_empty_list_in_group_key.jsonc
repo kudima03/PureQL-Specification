@@ -1,0 +1,16 @@
+// in over an empty list literal as a group key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "open",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [] }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

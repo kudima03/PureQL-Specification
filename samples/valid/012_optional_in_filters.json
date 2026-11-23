@@ -1,0 +1,186 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "not",
+        "type": {
+          "name": "boolean"
+        },
+        "condition": {
+          "operator": "in",
+          "type": {
+            "name": "boolean"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "status",
+            "type": {
+              "name": "string"
+            }
+          },
+          "list": {
+            "type": {
+              "name": "stringList"
+            },
+            "value": [
+              "cancelled"
+            ]
+          }
+        }
+      },
+      {
+        "operator": "or",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "not",
+            "type": {
+              "name": "boolean"
+            },
+            "condition": {
+              "param": "filter_by_status",
+              "type": {
+                "name": "boolean"
+              }
+            }
+          },
+          {
+            "operator": "in",
+            "type": {
+              "name": "boolean"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "status",
+              "type": {
+                "name": "string"
+              }
+            },
+            "list": {
+              "param": "statuses",
+              "type": {
+                "name": "stringList"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "operator": "or",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "not",
+            "type": {
+              "name": "boolean"
+            },
+            "condition": {
+              "param": "filter_by_user",
+              "type": {
+                "name": "boolean"
+              }
+            }
+          },
+          {
+            "operator": "in",
+            "type": {
+              "name": "boolean"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "list": {
+              "param": "user_ids",
+              "type": {
+                "name": "uuidList"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "status",
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "is_open",
+      "expression": {
+        "operator": "in",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "status",
+          "type": {
+            "name": "string"
+          }
+        },
+        "list": {
+          "type": {
+            "name": "stringList"
+          },
+          "value": [
+            "new",
+            "paid"
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

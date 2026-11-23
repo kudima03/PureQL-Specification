@@ -1,0 +1,6 @@
+// Inline rows with a row of no cells
+{
+  "subqueries": [ { "name": "s", "rows": [ [] ] } ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "x", "expression": { "type": { "name": "integer" }, "value": 1 } } ]
+}

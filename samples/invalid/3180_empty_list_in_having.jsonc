@@ -1,0 +1,20 @@
+// in over an empty list literal in having
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "operator": "count", "type": { "name": "integer" } },
+    "list": { "type": { "name": "integerList" }, "value": [] }
+  },
+  "select": [
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+    { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } }
+  ]
+}

@@ -466,8 +466,11 @@ for t in TYPES:
         "anyOf": [
             obj(
                 ["type", "value"],
-                # a set: a repeated value adds nothing
-                {"type": ref(f"type.{t}List"), "value": {"type": "array", "items": ref(f"value.{t}"), "uniqueItems": True}},
+                # a set: a repeated value adds nothing. At least one value, as every array
+                # of the language: `in` over no values is the literal false, and a set that
+                # may be empty is a list parameter
+                {"type": ref(f"type.{t}List"),
+                 "value": {"type": "array", "items": ref(f"value.{t}"), "minItems": 1, "uniqueItems": True}},
             ),
             obj(["param", "type"], {"param": NAME, "type": ref(f"type.{t}List")}),
             # Every value of one column of a subquery's result.

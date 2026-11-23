@@ -1,0 +1,15 @@
+// in with a bare empty array as its list
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": []
+      }
+    }
+  ]
+}

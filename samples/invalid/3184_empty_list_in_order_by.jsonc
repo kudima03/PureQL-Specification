@@ -1,0 +1,18 @@
+// in over an empty list literal as a sort key
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "list": { "type": { "name": "stringList" }, "value": [] }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

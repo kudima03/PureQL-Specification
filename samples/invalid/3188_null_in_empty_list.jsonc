@@ -1,0 +1,15 @@
+// A null operand in an empty list literal
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "list": { "type": { "name": "stringList" }, "value": [] }
+      }
+    }
+  ]
+}

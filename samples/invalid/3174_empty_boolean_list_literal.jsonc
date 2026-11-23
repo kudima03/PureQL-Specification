@@ -1,0 +1,16 @@
+// An empty booleanList literal: a list literal has at least one value; a set that may be empty is a list
+// parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "boolean" }, "value": true },
+        "list": { "type": { "name": "booleanList" }, "value": [] }
+      }
+    }
+  ]
+}

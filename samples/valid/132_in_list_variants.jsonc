@@ -1,4 +1,4 @@
-// in over every kind of list: an empty literal, booleanList, integer operand against decimalList and decimal operand
+// in over every kind of list: a literal of one value, booleanList, integer operand against decimalList and decimal operand
 // against integerList (both through integer -> decimal), a typed null operand, and a nullable subquery column.
 {
   "subqueries": [
@@ -37,7 +37,7 @@
           "operator": "in",
           "type": { "name": "boolean" },
           "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
-          "list": { "type": { "name": "stringList" }, "value": [] }
+          "list": { "type": { "name": "stringList" }, "value": ["cancelled"] }
         }
       },
       {

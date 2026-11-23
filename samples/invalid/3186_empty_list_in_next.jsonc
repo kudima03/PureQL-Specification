@@ -1,0 +1,47 @@
+// in over an empty list literal in the next query of a recursive subquery
+{
+  "subqueries": [
+    {
+      "name": "r",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "next": {
+          "from": { "entity": "users" },
+          "joins": [
+            {
+              "kind": "inner",
+              "subquery": "r",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": {
+                  "source": "users",
+                  "field": "referrer_id",
+                  "type": { "name": "uuid", "nullable": true }
+                },
+                "right": { "source": "r", "field": "id", "type": { "name": "uuid" } }
+              }
+            }
+          ],
+          "where": {
+            "operator": "in",
+            "type": { "name": "boolean" },
+            "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+            "list": { "type": { "name": "stringList" }, "value": [] }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "maxDepth": 5
+      }
+    }
+  ],
+  "from": { "subquery": "r" },
+  "select": [ { "alias": "id", "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } } ]
+}
