@@ -1,0 +1,187 @@
+// greatest and least in a grouped query: over aggregates in having, select and orderBy, over all rows, inside
+// an aggregate's selector and predicate, and as a groupBy key.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "capped_hundreds",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "truncate",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "digits": { "type": { "name": "integer" }, "value": -2 }
+          },
+          { "type": { "name": "integer" }, "value": 1000 }
+        ]
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "least",
+      "type": { "name": "decimal" },
+      "values": [
+        {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        {
+          "operator": "max",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    { "alias": "capped_hundreds", "expression": { "key": "capped_hundreds", "type": { "name": "decimal" } } },
+    {
+      "alias": "last_seen",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime" },
+        "values": [
+          {
+            "operator": "max",
+            "type": { "name": "datetime" },
+            "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          {
+            "operator": "max",
+            "type": { "name": "datetime" },
+            "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "capped_revenue",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "param": "revenue_cap", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "share_of_all_at_most_half",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "divide",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              },
+              {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "over": "all",
+                "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+              }
+            ]
+          },
+          { "type": { "name": "decimal" }, "value": "0.5" }
+        ]
+      }
+    },
+    {
+      "alias": "covered",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "least",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "over_limit_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "greatest",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+            ]
+          },
+          "right": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "pages",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "integerDivide",
+            "type": { "name": "integer" },
+            "left": { "operator": "count", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 20 }
+          },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime" },
+        "values": [
+          {
+            "operator": "max",
+            "type": { "name": "datetime" },
+            "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          {
+            "operator": "max",
+            "type": { "name": "datetime" },
+            "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+          }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    { "expression": { "key": "capped_hundreds", "type": { "name": "decimal" } } }
+  ]
+}

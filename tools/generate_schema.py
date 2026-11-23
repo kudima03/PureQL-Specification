@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if,
+  - arithmetic, abs, sign, greatest, least, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
@@ -509,6 +509,13 @@ for ctx, rules in CONTEXTS.items():
         family = next(f for f in EQUATABLE if t in members(f))
         exact = [{"properties": {"left": declares_name(t)}}] if t in SUBTYPES else []
         signature("nullIf", t, True, operands({"left": t, "right": family}, True), *exact)
+    # greatest / least: the largest or the smallest of the values of one row, by the
+    # order of their type. Lifted, and typed as add is for numbers: integer operands
+    # give integer, a decimal operand gives decimal.
+    for name in ["greatest", "least"]:
+        for t in TYPES:
+            wide = [some(["values"], declares_name(t))] if t in SUBTYPES else []
+            lifted(name, {"values": t}, t, *wide)
 
     # Aggregates: the body (selector / predicate) is always `row` context,
     # which has no aggregates, so aggregates cannot nest. Nulls produced by the

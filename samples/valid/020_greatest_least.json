@@ -1,0 +1,246 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "lessThan",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "greatest",
+      "type": {
+        "name": "datetime"
+      },
+      "values": [
+        {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        {
+          "source": "orders",
+          "field": "shipped_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      ]
+    },
+    "right": {
+      "param": "inactive_since",
+      "type": {
+        "name": "datetime"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "billable",
+      "expression": {
+        "operator": "greatest",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "param": "minimum_charge",
+            "type": {
+              "name": "decimal"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "covered_by_credit",
+      "expression": {
+        "operator": "least",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "source": "orders",
+            "field": "credit_limit",
+            "type": {
+              "name": "decimal"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "clamped_total",
+      "expression": {
+        "operator": "least",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "greatest",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "type": {
+                  "name": "integer"
+                },
+                "value": 10
+              }
+            ]
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1000
+          }
+        ]
+      }
+    },
+    {
+      "alias": "last_activity",
+      "expression": {
+        "operator": "greatest",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          },
+          {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": {
+              "name": "date",
+              "nullable": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "last_activity_or_order",
+      "expression": {
+        "operator": "greatest",
+        "type": {
+          "name": "date"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "order_date",
+            "type": {
+              "name": "date"
+            }
+          },
+          {
+            "operator": "coalesce",
+            "type": {
+              "name": "date"
+            },
+            "values": [
+              {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": {
+                  "name": "date",
+                  "nullable": true
+                }
+              },
+              {
+                "source": "orders",
+                "field": "order_date",
+                "type": {
+                  "name": "date"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "days_to_ship_at_least_one",
+      "expression": {
+        "operator": "greatest",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "values": [
+          {
+            "operator": "dateDiffDays",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": {
+                "name": "date",
+                "nullable": true
+              }
+            },
+            "right": {
+              "source": "orders",
+              "field": "order_date",
+              "type": {
+                "name": "date"
+              }
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        ]
+      }
+    }
+  ]
+}

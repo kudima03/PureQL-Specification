@@ -1,0 +1,17 @@
+// greatest of a time and a datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime" },
+        "values": [
+          { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+        ]
+      }
+    }
+  ]
+}

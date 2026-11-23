@@ -1,0 +1,14 @@
+// greatest of one value, which would be the value itself
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [ { "source": "orders", "field": "total", "type": { "name": "decimal" } } ]
+      }
+    }
+  ]
+}

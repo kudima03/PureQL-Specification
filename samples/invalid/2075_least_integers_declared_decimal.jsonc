@@ -1,0 +1,17 @@
+// least of integers declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// max with a values array: max is an aggregate over rows; the largest of several expressions of one row is
+// greatest
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

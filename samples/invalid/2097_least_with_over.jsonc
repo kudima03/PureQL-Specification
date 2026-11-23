@@ -1,0 +1,18 @@
+// least with "over": "all": it is not an aggregate
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        ],
+        "over": "all"
+      }
+    }
+  ]
+}

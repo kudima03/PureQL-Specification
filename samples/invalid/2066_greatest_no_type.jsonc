@@ -1,0 +1,17 @@
+// greatest without a declared type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ]
+}

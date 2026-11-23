@@ -1,0 +1,18 @@
+// greatest with an untyped null among its values: a null literal always carries its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+          { "value": null }
+        ]
+      }
+    }
+  ]
+}

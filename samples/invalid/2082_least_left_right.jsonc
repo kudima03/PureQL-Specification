@@ -1,0 +1,15 @@
+// least with left and right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

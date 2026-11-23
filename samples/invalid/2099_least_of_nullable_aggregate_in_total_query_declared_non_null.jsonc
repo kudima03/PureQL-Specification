@@ -1,0 +1,21 @@
+// least of a max in a total query declared decimal: max is nullable there, and least is lifted
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "max",
+            "type": { "name": "decimal", "nullable": true },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "param": "cap", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

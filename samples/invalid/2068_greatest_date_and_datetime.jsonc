@@ -1,0 +1,17 @@
+// greatest of a date and a datetime: the two are not interchangeable
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime" },
+        "values": [
+          { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        ]
+      }
+    }
+  ]
+}

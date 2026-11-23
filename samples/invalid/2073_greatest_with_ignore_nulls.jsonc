@@ -1,0 +1,18 @@
+// greatest with an ignoreNulls property: to ignore a null operand, give it a default with coalesce
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date", "nullable": true },
+        "values": [
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } }
+        ],
+        "ignoreNulls": true
+      }
+    }
+  ]
+}

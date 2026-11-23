@@ -1,0 +1,16 @@
+// clamp is not an operator: a value is clamped with least(greatest(value, low), high)
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "clamp",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "low": { "type": { "name": "integer" }, "value": 10 },
+        "high": { "type": { "name": "integer" }, "value": 1000 }
+      }
+    }
+  ]
+}

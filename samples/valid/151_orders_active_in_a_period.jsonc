@@ -1,0 +1,196 @@
+// greatest and least clip a range to a period: the later of two starts, the earlier of two ends, and the
+// orders whose ranges overlap in where. A discount is capped by the total and the payable amount floored at
+// zero; with a nullable operand the result is null, so coalesce gives the operand a default first.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "coupons", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "greatest",
+      "type": { "name": "date" },
+      "values": [
+        { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        { "param": "period_start", "type": { "name": "date" } }
+      ]
+    },
+    "right": {
+      "operator": "least",
+      "type": { "name": "date" },
+      "values": [
+        {
+          "operator": "coalesce",
+          "type": { "name": "date" },
+          "values": [
+            { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+            { "param": "today", "type": { "name": "date" } }
+          ]
+        },
+        { "param": "period_end", "type": { "name": "date" } }
+      ]
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "active_from",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date" },
+        "values": [
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          { "param": "period_start", "type": { "name": "date" } }
+        ]
+      }
+    },
+    {
+      "alias": "active_to",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "date" },
+        "values": [
+          {
+            "operator": "coalesce",
+            "type": { "name": "date" },
+            "values": [
+              { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+              { "param": "today", "type": { "name": "date" } }
+            ]
+          },
+          { "param": "period_end", "type": { "name": "date" } }
+        ]
+      }
+    },
+    {
+      "alias": "days_in_period",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "dateDiffDays",
+            "type": { "name": "integer" },
+            "left": {
+              "operator": "least",
+              "type": { "name": "date" },
+              "values": [
+                {
+                  "operator": "coalesce",
+                  "type": { "name": "date" },
+                  "values": [
+                    {
+                      "source": "orders",
+                      "field": "shipped_date",
+                      "type": { "name": "date", "nullable": true }
+                    },
+                    { "param": "today", "type": { "name": "date" } }
+                  ]
+                },
+                { "param": "period_end", "type": { "name": "date" } }
+              ]
+            },
+            "right": {
+              "operator": "greatest",
+              "type": { "name": "date" },
+              "values": [
+                { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                { "param": "period_start", "type": { "name": "date" } }
+              ]
+            }
+          },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    {
+      "alias": "discount_applied",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "coalesce",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "coupons", "field": "discount", "type": { "name": "decimal", "nullable": true } },
+              { "type": { "name": "integer" }, "value": 0 }
+            ]
+          },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "payable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "subtract",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              {
+                "operator": "least",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "coalesce",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      {
+                        "source": "coupons",
+                        "field": "discount",
+                        "type": { "name": "decimal", "nullable": true }
+                      },
+                      { "type": { "name": "integer" }, "value": 0 }
+                    ]
+                  },
+                  { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                ]
+              }
+            ]
+          },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    },
+    {
+      "alias": "discount_or_null",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "coupons", "field": "discount", "type": { "name": "decimal", "nullable": true } },
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date" },
+        "values": [
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          { "param": "period_start", "type": { "name": "date" } }
+        ]
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
