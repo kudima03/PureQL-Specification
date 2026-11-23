@@ -1,0 +1,15 @@
+// exp with a base: its base is e; another base is power
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

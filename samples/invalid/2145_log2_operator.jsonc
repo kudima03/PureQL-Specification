@@ -1,0 +1,14 @@
+// log2 is not an operator: a logarithm to base 2 is log with base 2
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log2",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

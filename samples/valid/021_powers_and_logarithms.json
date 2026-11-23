@@ -1,0 +1,362 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "log10",
+      "type": {
+        "name": "decimal"
+      },
+      "operand": {
+        "operator": "greatest",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        ]
+      }
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 3
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "compounded_total",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "power",
+            "type": {
+              "name": "decimal"
+            },
+            "operand": {
+              "operator": "add",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 1
+                },
+                {
+                  "param": "yearly_rate",
+                  "type": {
+                    "name": "decimal"
+                  }
+                }
+              ]
+            },
+            "exponent": {
+              "param": "years",
+              "type": {
+                "name": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "continuously_compounded_total",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "exp",
+            "type": {
+              "name": "decimal"
+            },
+            "operand": {
+              "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "param": "yearly_rate",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "param": "years",
+                  "type": {
+                    "name": "integer"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "yearly_growth_from_limit",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "operator": "power",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "operand": {
+              "operator": "divide",
+              "type": {
+                "name": "decimal",
+                "nullable": true
+              },
+              "values": [
+                {
+                  "source": "orders",
+                  "field": "total",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "operator": "nullIf",
+                  "type": {
+                    "name": "decimal",
+                    "nullable": true
+                  },
+                  "left": {
+                    "source": "orders",
+                    "field": "credit_limit",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "integer"
+                    },
+                    "value": 0
+                  }
+                }
+              ]
+            },
+            "exponent": {
+              "operator": "divide",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 1
+                },
+                {
+                  "param": "years",
+                  "type": {
+                    "name": "integer"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "alias": "continuous_rate",
+      "expression": {
+        "operator": "ln",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "add",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            },
+            {
+              "param": "yearly_rate",
+              "type": {
+                "name": "decimal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "digits_before_the_point",
+      "expression": {
+        "operator": "add",
+        "type": {
+          "name": "integer"
+        },
+        "values": [
+          {
+            "operator": "floor",
+            "type": {
+              "name": "integer"
+            },
+            "operand": {
+              "operator": "log10",
+              "type": {
+                "name": "decimal"
+              },
+              "operand": {
+                "operator": "greatest",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "orders",
+                    "field": "total",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "type": {
+                      "name": "integer"
+                    },
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
+      "alias": "doublings_from_one",
+      "expression": {
+        "operator": "log",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "greatest",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          ]
+        },
+        "base": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "square_root_of_total",
+      "expression": {
+        "operator": "sqrt",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    }
+  ]
+}

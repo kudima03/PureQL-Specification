@@ -1,0 +1,15 @@
+// log declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

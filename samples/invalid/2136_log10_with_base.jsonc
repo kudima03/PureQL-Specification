@@ -1,0 +1,15 @@
+// log10 with a base: its base is 10; another base is log
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

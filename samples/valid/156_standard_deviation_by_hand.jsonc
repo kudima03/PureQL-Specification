@@ -1,0 +1,209 @@
+// The spread of order totals in a total query: variance as the mean of squares minus the square of the mean,
+// floored at zero against rounding, its square root, the geometric mean as exp of the average ln over
+// positive totals, and a logarithm to base 2 of a count. Everything over average is nullable there.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "paid" }
+  },
+  "aggregate": [
+    {
+      "alias": "mean",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "variance",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "subtract",
+            "type": { "name": "decimal", "nullable": true },
+            "values": [
+              {
+                "operator": "average",
+                "type": { "name": "decimal", "nullable": true },
+                "selector": {
+                  "operator": "power",
+                  "type": { "name": "decimal" },
+                  "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  "exponent": { "type": { "name": "integer" }, "value": 2 }
+                }
+              },
+              {
+                "operator": "power",
+                "type": { "name": "decimal", "nullable": true },
+                "operand": {
+                  "operator": "average",
+                  "type": { "name": "decimal", "nullable": true },
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                },
+                "exponent": { "type": { "name": "integer" }, "value": 2 }
+              }
+            ]
+          },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    },
+    {
+      "alias": "standard_deviation",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "greatest",
+          "type": { "name": "decimal", "nullable": true },
+          "values": [
+            {
+              "operator": "subtract",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                {
+                  "operator": "average",
+                  "type": { "name": "decimal", "nullable": true },
+                  "selector": {
+                    "operator": "power",
+                    "type": { "name": "decimal" },
+                    "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                    "exponent": { "type": { "name": "integer" }, "value": 2 }
+                  }
+                },
+                {
+                  "operator": "power",
+                  "type": { "name": "decimal", "nullable": true },
+                  "operand": {
+                    "operator": "average",
+                    "type": { "name": "decimal", "nullable": true },
+                    "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                  },
+                  "exponent": { "type": { "name": "integer" }, "value": 2 }
+                }
+              ]
+            },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "coefficient_of_variation",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "sqrt",
+            "type": { "name": "decimal", "nullable": true },
+            "operand": {
+              "operator": "greatest",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                {
+                  "operator": "subtract",
+                  "type": { "name": "decimal", "nullable": true },
+                  "values": [
+                    {
+                      "operator": "average",
+                      "type": { "name": "decimal", "nullable": true },
+                      "selector": {
+                        "operator": "power",
+                        "type": { "name": "decimal" },
+                        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                        "exponent": { "type": { "name": "integer" }, "value": 2 }
+                      }
+                    },
+                    {
+                      "operator": "power",
+                      "type": { "name": "decimal", "nullable": true },
+                      "operand": {
+                        "operator": "average",
+                        "type": { "name": "decimal", "nullable": true },
+                        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                      },
+                      "exponent": { "type": { "name": "integer" }, "value": 2 }
+                    }
+                  ]
+                },
+                { "type": { "name": "integer" }, "value": 0 }
+              ]
+            }
+          },
+          {
+            "operator": "nullIf",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "average",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "geometric_mean",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": {
+            "operator": "ln",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          "predicate": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        }
+      }
+    },
+    {
+      "alias": "root_mean_square",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          }
+        }
+      }
+    },
+    {
+      "alias": "orders_as_a_power_of_two",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "greatest",
+          "type": { "name": "integer" },
+          "values": [
+            { "operator": "count", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        },
+        "base": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

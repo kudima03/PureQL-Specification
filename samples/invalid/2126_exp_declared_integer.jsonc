@@ -1,0 +1,14 @@
+// exp declared integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

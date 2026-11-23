@@ -1,0 +1,17 @@
+// power with a values array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

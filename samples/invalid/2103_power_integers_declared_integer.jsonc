@@ -1,0 +1,15 @@
+// power of two integers declared integer: a power is always decimal, as divide is; round makes it an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

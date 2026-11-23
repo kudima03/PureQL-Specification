@@ -1,0 +1,14 @@
+// exp of a date
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

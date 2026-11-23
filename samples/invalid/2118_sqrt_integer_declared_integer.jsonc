@@ -1,0 +1,14 @@
+// sqrt of an integer declared integer: a root is always decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

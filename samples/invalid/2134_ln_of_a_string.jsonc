@@ -1,0 +1,14 @@
+// ln of a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

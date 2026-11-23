@@ -1,0 +1,14 @@
+// sqrt of a non-null operand declared decimal?: a negative operand is an execution error, not a null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

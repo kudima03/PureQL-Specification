@@ -1,0 +1,14 @@
+// exp with exponent instead of operand: its one operand is operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "exponent": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

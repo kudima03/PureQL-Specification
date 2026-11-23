@@ -1,0 +1,15 @@
+// power with the number 2 as exponent: the exponent is an expression, here a literal with its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "exponent": 2
+      }
+    }
+  ]
+}

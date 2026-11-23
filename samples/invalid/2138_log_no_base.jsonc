@@ -1,0 +1,14 @@
+// log without a base: there is no default base; the natural logarithm is ln and the decimal one is log10
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

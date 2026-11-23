@@ -1,0 +1,15 @@
+// ln of a non-null operand declared decimal?: an operand that is not positive is an execution error, not a
+// null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

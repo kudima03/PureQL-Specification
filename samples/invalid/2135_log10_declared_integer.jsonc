@@ -1,0 +1,14 @@
+// log10 declared integer: the order of magnitude as an integer is floor of it
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

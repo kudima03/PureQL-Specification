@@ -352,6 +352,156 @@
       }
     },
     {
+      "alias": "power_decimal",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "exponent": { "type": { "name": "decimal" }, "value": "0.1" }
+      }
+    },
+    {
+      "alias": "power_decimal_nullable",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "exponent": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "power_decimal_of_integers",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "exponent": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "sqrt_decimal",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "sqrt_decimal_nullable",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "sqrt_decimal_of_integer",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "exp_decimal",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "exp_decimal_nullable",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "exp_decimal_of_integer",
+      "expression": {
+        "operator": "exp",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "ln_decimal",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "ln_decimal_nullable",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "ln_decimal_of_integer",
+      "expression": {
+        "operator": "ln",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "log10_decimal",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "log10_decimal_nullable",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "log10_decimal_of_integer",
+      "expression": {
+        "operator": "log10",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "log_decimal",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "base": { "type": { "name": "decimal" }, "value": "0.1" }
+      }
+    },
+    {
+      "alias": "log_decimal_nullable",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "base": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "log_decimal_of_integers",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 7 },
+        "base": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
       "alias": "concat_string",
       "expression": {
         "operator": "concat",

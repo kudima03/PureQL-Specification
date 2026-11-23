@@ -1,0 +1,16 @@
+// log with left and right: its operands are operand and base, named by their role, since the order of the two
+// differs between databases
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

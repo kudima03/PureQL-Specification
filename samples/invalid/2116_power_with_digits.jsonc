@@ -1,0 +1,16 @@
+// power with digits: a result is rounded with round
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "exponent": { "type": { "name": "integer" }, "value": 2 },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

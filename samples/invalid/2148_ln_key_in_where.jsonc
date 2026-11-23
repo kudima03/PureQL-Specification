@@ -1,0 +1,17 @@
+// ln of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "ln",
+      "type": { "name": "decimal" },
+      "operand": { "key": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 2 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

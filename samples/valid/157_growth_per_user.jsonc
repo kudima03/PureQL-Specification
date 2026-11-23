@@ -1,0 +1,234 @@
+// A compound monthly growth rate per user: the last order over the first, guarded by nullIf, to the power of
+// one over the months between them. Powers and logarithms over aggregates in having, select and orderBy, over
+// all rows, and inside a selector and a predicate.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "log10",
+      "type": { "name": "decimal" },
+      "operand": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 3 }
+  },
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "monthly_growth",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "power",
+            "type": { "name": "decimal", "nullable": true },
+            "operand": {
+              "operator": "divide",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                {
+                  "operator": "last",
+                  "type": { "name": "decimal" },
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  "orderBy": [
+                    {
+                      "expression": {
+                        "source": "orders",
+                        "field": "ordered_at",
+                        "type": { "name": "datetime" }
+                      }
+                    },
+                    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                  ]
+                },
+                {
+                  "operator": "nullIf",
+                  "type": { "name": "decimal", "nullable": true },
+                  "left": {
+                    "operator": "first",
+                    "type": { "name": "decimal" },
+                    "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                    "orderBy": [
+                      {
+                        "expression": {
+                          "source": "orders",
+                          "field": "ordered_at",
+                          "type": { "name": "datetime" }
+                        }
+                      },
+                      { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                    ]
+                  },
+                  "right": { "type": { "name": "integer" }, "value": 0 }
+                }
+              ]
+            },
+            "exponent": {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                { "type": { "name": "integer" }, "value": 1 },
+                {
+                  "operator": "greatest",
+                  "type": { "name": "integer" },
+                  "values": [
+                    {
+                      "operator": "dateDiffMonths",
+                      "type": { "name": "integer" },
+                      "left": {
+                        "operator": "max",
+                        "type": { "name": "date" },
+                        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+                      },
+                      "right": {
+                        "operator": "min",
+                        "type": { "name": "date" },
+                        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+                      }
+                    },
+                    { "type": { "name": "integer" }, "value": 1 }
+                  ]
+                }
+              ]
+            }
+          },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    {
+      "alias": "norm_of_totals",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          }
+        }
+      }
+    },
+    {
+      "alias": "log_revenue_share",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "ln",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "greatest",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                },
+                { "type": { "name": "integer" }, "value": 2 }
+              ]
+            }
+          },
+          {
+            "operator": "ln",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "greatest",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "over": "all",
+                  "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                },
+                { "type": { "name": "integer" }, "value": 2 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "sum_of_logarithms",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "ln",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "greatest",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "large_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "sqrt",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          "right": { "type": { "name": "integer" }, "value": 10 }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          }
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "user_id", "type": { "name": "uuid" } } }
+  ]
+}
