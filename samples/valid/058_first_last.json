@@ -1,0 +1,304 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": {
+        "key": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "first_order_total",
+      "expression": {
+        "operator": "first",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "latest_order_id",
+      "expression": {
+        "operator": "last",
+        "type": {
+          "name": "uuid"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "largest_order_date",
+      "expression": {
+        "operator": "first",
+        "type": {
+          "name": "date"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            "direction": "desc"
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "latest_shipped_date",
+      "expression": {
+        "operator": "last",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "first_shipped_date",
+      "expression": {
+        "operator": "first",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "predicate": {
+          "operator": "notEqual",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": {
+              "name": "date",
+              "nullable": true
+            }
+          },
+          "right": {
+            "type": {
+              "name": "date",
+              "nullable": true
+            },
+            "value": null
+          }
+        }
+      }
+    },
+    {
+      "alias": "latest_paid_total",
+      "expression": {
+        "operator": "last",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "expression": {
+              "source": "orders",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ],
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "max",
+        "type": {
+          "name": "datetime"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "key": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

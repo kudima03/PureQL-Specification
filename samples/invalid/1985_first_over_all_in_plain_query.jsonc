@@ -1,0 +1,20 @@
+// first with "over": "all" in a plain query, where an aggregate always runs over all rows
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}

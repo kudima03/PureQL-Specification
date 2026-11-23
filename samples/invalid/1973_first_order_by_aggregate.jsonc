@@ -1,0 +1,30 @@
+// first sorted by an aggregate: the sort keys are row expressions, read per row of the group
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "max",
+              "type": { "name": "datetime" },
+              "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+            }
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}

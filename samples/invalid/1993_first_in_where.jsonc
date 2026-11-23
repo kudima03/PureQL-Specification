@@ -1,0 +1,21 @@
+// first in where, a row context without aggregates
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": {
+      "operator": "first",
+      "type": { "name": "decimal" },
+      "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "orderBy": [
+        { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+        { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

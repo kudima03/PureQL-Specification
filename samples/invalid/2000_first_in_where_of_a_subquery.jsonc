@@ -1,0 +1,32 @@
+// first in the where of a subquery: a subquery's where is a row context too
+{
+  "subqueries": [
+    {
+      "name": "big",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "first",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            "orderBy": [
+              { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+              { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+            ]
+          },
+          "right": { "type": { "name": "integer" }, "value": 100 }
+        },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "big" },
+  "select": [
+    { "alias": "id", "expression": { "source": "big", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

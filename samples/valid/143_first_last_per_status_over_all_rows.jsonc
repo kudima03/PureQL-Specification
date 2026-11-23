@@ -1,0 +1,140 @@
+// first and last over the group and, with over: "all", over every row; in having and orderBy; and with
+// computed sort keys: a nullable difference of dates in descending order, an if, then the id that makes the
+// order total.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "last",
+      "type": { "name": "decimal" },
+      "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "orderBy": [
+        { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+        { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    },
+    "right": { "param": "minimum_latest_total", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+    {
+      "alias": "first_ordered_at",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "alias": "has_the_first_order_of_all",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "first",
+          "type": { "name": "uuid" },
+          "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "right": {
+          "operator": "first",
+          "type": { "name": "uuid" },
+          "over": "all",
+          "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "latest_total",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "alias": "latest_total_of_all",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "decimal" },
+        "over": "all",
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "alias": "slowest_shipment_id",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid" },
+        "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "dateDiffDays",
+              "type": { "name": "integer", "nullable": true },
+              "left": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            },
+            "direction": "desc"
+          },
+          {
+            "expression": {
+              "operator": "if",
+              "type": { "name": "integer" },
+              "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+              "then": { "type": { "name": "integer" }, "value": 0 },
+              "else": { "type": { "name": "integer" }, "value": 1 }
+            }
+          },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "last",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "status", "type": { "name": "string" } } }
+  ]
+}

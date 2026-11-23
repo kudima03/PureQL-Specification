@@ -1,10 +1,10 @@
-// Every operator in every signature as columns of a plain select, over literals: the lifted operators with and without a
+// Every operator in every signature as columns of a total query, over literals: the lifted operators with and without a
 // nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
 // comparisons / in for every family, and every aggregate over a literal selector, with and without a predicate and with
-// a nullable selector. Each definition of the projection context is used at least once.
+// a nullable selector. Each definition of the total context is used at least once.
 {
   "from": { "entity": "orders" },
-  "select": [
+  "aggregate": [
     {
       "alias": "add_integer",
       "expression": {
@@ -2298,10 +2298,10 @@
       }
     },
     {
-      "alias": "average_decimal_of_integer",
+      "alias": "average_decimal_nullable_of_integer",
       "expression": {
         "operator": "average",
-        "type": { "name": "decimal" },
+        "type": { "name": "decimal", "nullable": true },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -2323,10 +2323,10 @@
       }
     },
     {
-      "alias": "average_decimal_of_decimal",
+      "alias": "average_decimal_nullable_of_decimal",
       "expression": {
         "operator": "average",
-        "type": { "name": "decimal" },
+        "type": { "name": "decimal", "nullable": true },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -2348,10 +2348,10 @@
       }
     },
     {
-      "alias": "average_date_of_date",
+      "alias": "average_date_nullable_of_date",
       "expression": {
         "operator": "average",
-        "type": { "name": "date" },
+        "type": { "name": "date", "nullable": true },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -2373,10 +2373,10 @@
       }
     },
     {
-      "alias": "average_time_of_time",
+      "alias": "average_time_nullable_of_time",
       "expression": {
         "operator": "average",
-        "type": { "name": "time" },
+        "type": { "name": "time", "nullable": true },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -2398,10 +2398,10 @@
       }
     },
     {
-      "alias": "average_datetime_of_datetime",
+      "alias": "average_datetime_nullable_of_datetime",
       "expression": {
         "operator": "average",
-        "type": { "name": "datetime" },
+        "type": { "name": "datetime", "nullable": true },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -2423,10 +2423,10 @@
       }
     },
     {
-      "alias": "min_integer_of_integer",
+      "alias": "min_integer_nullable_of_integer",
       "expression": {
         "operator": "min",
-        "type": { "name": "integer" },
+        "type": { "name": "integer", "nullable": true },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -2448,10 +2448,10 @@
       }
     },
     {
-      "alias": "min_decimal_of_decimal",
+      "alias": "min_decimal_nullable_of_decimal",
       "expression": {
         "operator": "min",
-        "type": { "name": "decimal" },
+        "type": { "name": "decimal", "nullable": true },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -2473,10 +2473,10 @@
       }
     },
     {
-      "alias": "min_string_of_string",
+      "alias": "min_string_nullable_of_string",
       "expression": {
         "operator": "min",
-        "type": { "name": "string" },
+        "type": { "name": "string", "nullable": true },
         "selector": { "type": { "name": "string" }, "value": "a" }
       }
     },
@@ -2498,10 +2498,10 @@
       }
     },
     {
-      "alias": "min_boolean_of_boolean",
+      "alias": "min_boolean_nullable_of_boolean",
       "expression": {
         "operator": "min",
-        "type": { "name": "boolean" },
+        "type": { "name": "boolean", "nullable": true },
         "selector": { "type": { "name": "boolean" }, "value": true }
       }
     },
@@ -2523,10 +2523,10 @@
       }
     },
     {
-      "alias": "min_date_of_date",
+      "alias": "min_date_nullable_of_date",
       "expression": {
         "operator": "min",
-        "type": { "name": "date" },
+        "type": { "name": "date", "nullable": true },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -2548,10 +2548,10 @@
       }
     },
     {
-      "alias": "min_time_of_time",
+      "alias": "min_time_nullable_of_time",
       "expression": {
         "operator": "min",
-        "type": { "name": "time" },
+        "type": { "name": "time", "nullable": true },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -2573,10 +2573,10 @@
       }
     },
     {
-      "alias": "min_datetime_of_datetime",
+      "alias": "min_datetime_nullable_of_datetime",
       "expression": {
         "operator": "min",
-        "type": { "name": "datetime" },
+        "type": { "name": "datetime", "nullable": true },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -2598,10 +2598,10 @@
       }
     },
     {
-      "alias": "min_uuid_of_uuid",
+      "alias": "min_uuid_nullable_of_uuid",
       "expression": {
         "operator": "min",
-        "type": { "name": "uuid" },
+        "type": { "name": "uuid", "nullable": true },
         "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
       }
     },
@@ -2623,10 +2623,10 @@
       }
     },
     {
-      "alias": "max_integer_of_integer",
+      "alias": "max_integer_nullable_of_integer",
       "expression": {
         "operator": "max",
-        "type": { "name": "integer" },
+        "type": { "name": "integer", "nullable": true },
         "selector": { "type": { "name": "integer" }, "value": 7 }
       }
     },
@@ -2648,10 +2648,10 @@
       }
     },
     {
-      "alias": "max_decimal_of_decimal",
+      "alias": "max_decimal_nullable_of_decimal",
       "expression": {
         "operator": "max",
-        "type": { "name": "decimal" },
+        "type": { "name": "decimal", "nullable": true },
         "selector": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
@@ -2673,10 +2673,10 @@
       }
     },
     {
-      "alias": "max_string_of_string",
+      "alias": "max_string_nullable_of_string",
       "expression": {
         "operator": "max",
-        "type": { "name": "string" },
+        "type": { "name": "string", "nullable": true },
         "selector": { "type": { "name": "string" }, "value": "a" }
       }
     },
@@ -2698,10 +2698,10 @@
       }
     },
     {
-      "alias": "max_boolean_of_boolean",
+      "alias": "max_boolean_nullable_of_boolean",
       "expression": {
         "operator": "max",
-        "type": { "name": "boolean" },
+        "type": { "name": "boolean", "nullable": true },
         "selector": { "type": { "name": "boolean" }, "value": true }
       }
     },
@@ -2723,10 +2723,10 @@
       }
     },
     {
-      "alias": "max_date_of_date",
+      "alias": "max_date_nullable_of_date",
       "expression": {
         "operator": "max",
-        "type": { "name": "date" },
+        "type": { "name": "date", "nullable": true },
         "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
@@ -2748,10 +2748,10 @@
       }
     },
     {
-      "alias": "max_time_of_time",
+      "alias": "max_time_nullable_of_time",
       "expression": {
         "operator": "max",
-        "type": { "name": "time" },
+        "type": { "name": "time", "nullable": true },
         "selector": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
@@ -2773,10 +2773,10 @@
       }
     },
     {
-      "alias": "max_datetime_of_datetime",
+      "alias": "max_datetime_nullable_of_datetime",
       "expression": {
         "operator": "max",
-        "type": { "name": "datetime" },
+        "type": { "name": "datetime", "nullable": true },
         "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
@@ -2798,10 +2798,10 @@
       }
     },
     {
-      "alias": "max_uuid_of_uuid",
+      "alias": "max_uuid_nullable_of_uuid",
       "expression": {
         "operator": "max",
-        "type": { "name": "uuid" },
+        "type": { "name": "uuid", "nullable": true },
         "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
       }
     },
@@ -2819,6 +2819,502 @@
         "operator": "max",
         "type": { "name": "uuid", "nullable": true },
         "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_integer_nullable_of_integer",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_integer_nullable_of_integer_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_integer_nullable_of_integer_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_decimal_nullable_of_decimal",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_string_nullable_of_string",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_string_nullable_of_string_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_string_nullable_of_string_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_boolean_nullable_of_boolean",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_boolean_nullable_of_boolean_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_boolean_nullable_of_boolean_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_date_nullable_of_date",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_date_nullable_of_date_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_date_nullable_of_date_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_time_nullable_of_time",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_time_nullable_of_time_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_time_nullable_of_time_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_datetime_nullable_of_datetime",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "first_uuid_nullable_of_uuid",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "first_uuid_nullable_of_uuid_null",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "first_uuid_nullable_of_uuid_where",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_integer_nullable_of_integer",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_integer_nullable_of_integer_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_integer_nullable_of_integer_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_decimal_nullable_of_decimal",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_string_nullable_of_string",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_string_nullable_of_string_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_string_nullable_of_string_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_boolean_nullable_of_boolean",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_boolean_nullable_of_boolean_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_boolean_nullable_of_boolean_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_date_nullable_of_date",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_date_nullable_of_date_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_date_nullable_of_date_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_time_nullable_of_time",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_time_nullable_of_time_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_time_nullable_of_time_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_datetime_nullable_of_datetime",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "last_uuid_nullable_of_uuid",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "last_uuid_nullable_of_uuid_null",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "last_uuid_nullable_of_uuid_where",
+      "expression": {
+        "operator": "last",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
         "predicate": { "type": { "name": "boolean" }, "value": true }
       }
     },
