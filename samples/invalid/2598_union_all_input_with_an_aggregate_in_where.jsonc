@@ -1,0 +1,26 @@
+// unionAll with an input that has an aggregate in where
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ],
+      "where": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ]
+}

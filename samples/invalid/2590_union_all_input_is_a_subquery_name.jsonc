@@ -1,0 +1,27 @@
+// unionAll with the name of a subquery as an input: an input is a query, which reads the subquery with from
+{
+  "subqueries": [
+    {
+      "name": "ids",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "id",
+                "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+              }
+            ]
+          },
+          "users"
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "ids" },
+  "select": [
+    { "alias": "id", "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [ { "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } } ]
+}

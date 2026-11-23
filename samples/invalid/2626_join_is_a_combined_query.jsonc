@@ -1,0 +1,30 @@
+// join with an inline combined query
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "unionAll": [
+        {
+          "from": { "entity": "orders" },
+          "select": [
+            {
+              "alias": "id",
+              "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+            }
+          ]
+        },
+        {
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      ],
+      "on": { "type": { "name": "boolean" }, "value": true }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

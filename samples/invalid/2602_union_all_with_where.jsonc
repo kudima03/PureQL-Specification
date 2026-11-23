@@ -1,0 +1,22 @@
+// unionAll with where: each input filters its own rows, or a query that reads the combined one filters them
+// all
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ],
+  "where": { "type": { "name": "boolean" }, "value": true }
+}

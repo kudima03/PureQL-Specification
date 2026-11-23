@@ -1,0 +1,15 @@
+// unionAll with a source as an input: an input is a query with its own select
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    { "entity": "users" }
+  ]
+}

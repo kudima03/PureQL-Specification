@@ -1,0 +1,14 @@
+// intersect of one query
+{
+  "intersect": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    }
+  ]
+}

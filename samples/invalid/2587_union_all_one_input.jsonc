@@ -1,0 +1,14 @@
+// unionAll of one query: there is nothing to combine it with
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    }
+  ]
+}

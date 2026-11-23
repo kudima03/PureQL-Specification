@@ -45,7 +45,9 @@ average / first / last and the statistics typed like them can be null: a row of 
 of its source does, so there every aggregate sees at least one row, while a
 total query returns its row even when there are none.
 
-A document is the main query plus optional `subqueries`: named queries the
+A query is plain, grouped or total, or it combines the rows of other queries
+with a set operation (unionAll, union, intersect, except). A document is the
+main query plus optional `subqueries`: named queries the
 main query and later subqueries can read from (`from` / `join` with
 `subquery`, or `in` over one of their columns). Every select column has an
 alias and the type its expression declares, which the validator has checked,
@@ -905,14 +907,33 @@ defs["mainGroupedQuery"] = {**obj(["from", "groupBy", "select"], {**main, **grou
 defs["mainTotalQuery"] = obj(["from", "aggregate"], {**main, **total})
 
 
+# A combined query puts the rows of two or more queries with the same columns
+# together: all of them (unionAll), each distinct row once (union), the rows
+# that every query returns (intersect), or the rows of the first that no other
+# returns (except). It names exactly one operation. Its result is unordered, and
+# it has no clause of its own to order, deduplicate or page it: that is done by
+# a query that reads it as a subquery. Its inputs are queries of any kind, a
+# combined one included, and like a subquery each is unordered.
+SET_OPERATIONS = ["unionAll", "union", "intersect", "except"]
+combined = {operation: array_of(ref("query"), 2) for operation in SET_OPERATIONS}
+ONE_OPERATION = {"oneOf": [{"required": [operation]} for operation in SET_OPERATIONS]}
+defs["combinedQuery"] = {**obj([], combined), **ONE_OPERATION}
+defs["mainCombinedQuery"] = {**obj([], {**main, **combined}), **ONE_OPERATION}
+
+
 def kind_of_query(prefix):
-    """A grouped query has `groupBy`, a total query `aggregate`, a plain query neither."""
+    """A combined query has a set operation, a grouped query `groupBy`, a total
+    query `aggregate`, a plain query none of them."""
     def name(kind):
         return f"{prefix}{kind}Query" if prefix else f"{kind.lower()}Query"
     return {
-        "if": {"required": ["groupBy"]},
-        "then": ref(name("Grouped")),
-        "else": {"if": {"required": ["aggregate"]}, "then": ref(name("Total")), "else": ref(name("Plain"))},
+        "if": {"anyOf": [{"required": [operation]} for operation in SET_OPERATIONS]},
+        "then": ref(name("Combined")),
+        "else": {
+            "if": {"required": ["groupBy"]},
+            "then": ref(name("Grouped")),
+            "else": {"if": {"required": ["aggregate"]}, "then": ref(name("Total")), "else": ref(name("Plain"))},
+        },
     }
 
 

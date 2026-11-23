@@ -1,0 +1,21 @@
+// unionAll with orderBy: a combined query is unordered; it is ordered by a query that reads it as a subquery
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "id",
+          "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      ]
+    },
+    {
+      "from": { "entity": "users" },
+      "select": [
+        { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+      ]
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } } ]
+}

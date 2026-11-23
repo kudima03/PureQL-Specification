@@ -1,0 +1,30 @@
+// a subquery entry with unionAll next to name: the combined query is the entry's query
+{
+  "subqueries": [
+    {
+      "name": "ids",
+      "unionAll": [
+        {
+          "from": { "entity": "orders" },
+          "select": [
+            {
+              "alias": "id",
+              "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+            }
+          ]
+        },
+        {
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      ]
+    }
+  ],
+  "from": { "subquery": "ids" },
+  "select": [
+    { "alias": "id", "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [ { "expression": { "source": "ids", "field": "id", "type": { "name": "uuid" } } } ]
+}

@@ -4,24 +4,53 @@
   "version": "0.1.0-preview.2.0.1",
   "title": "PureQL specification",
   "if": {
-    "required": [
-      "groupBy"
+    "anyOf": [
+      {
+        "required": [
+          "unionAll"
+        ]
+      },
+      {
+        "required": [
+          "union"
+        ]
+      },
+      {
+        "required": [
+          "intersect"
+        ]
+      },
+      {
+        "required": [
+          "except"
+        ]
+      }
     ]
   },
   "then": {
-    "$ref": "#/$defs/mainGroupedQuery"
+    "$ref": "#/$defs/mainCombinedQuery"
   },
   "else": {
     "if": {
       "required": [
-        "aggregate"
+        "groupBy"
       ]
     },
     "then": {
-      "$ref": "#/$defs/mainTotalQuery"
+      "$ref": "#/$defs/mainGroupedQuery"
     },
     "else": {
-      "$ref": "#/$defs/mainPlainQuery"
+      "if": {
+        "required": [
+          "aggregate"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/mainTotalQuery"
+      },
+      "else": {
+        "$ref": "#/$defs/mainPlainQuery"
+      }
     }
   },
   "$defs": {
@@ -8847,6 +8876,63 @@
           "then": {
             "$ref": "#/$defs/coalesce.uuid.nullable@total"
           }
+        }
+      ]
+    },
+    "combinedQuery": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "unionAll": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "union": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "intersect": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "except": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "unionAll"
+          ]
+        },
+        {
+          "required": [
+            "union"
+          ]
+        },
+        {
+          "required": [
+            "intersect"
+          ]
+        },
+        {
+          "required": [
+            "except"
+          ]
         }
       ]
     },
@@ -32970,6 +33056,70 @@
         }
       ]
     },
+    "mainCombinedQuery": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "subqueries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subquery"
+          },
+          "minItems": 1
+        },
+        "unionAll": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "union": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "intersect": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        },
+        "except": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/query"
+          },
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "unionAll"
+          ]
+        },
+        {
+          "required": [
+            "union"
+          ]
+        },
+        {
+          "required": [
+            "intersect"
+          ]
+        },
+        {
+          "required": [
+            "except"
+          ]
+        }
+      ]
+    },
     "mainGroupedQuery": {
       "type": "object",
       "required": [
@@ -51978,24 +52128,53 @@
     },
     "query": {
       "if": {
-        "required": [
-          "groupBy"
+        "anyOf": [
+          {
+            "required": [
+              "unionAll"
+            ]
+          },
+          {
+            "required": [
+              "union"
+            ]
+          },
+          {
+            "required": [
+              "intersect"
+            ]
+          },
+          {
+            "required": [
+              "except"
+            ]
+          }
         ]
       },
       "then": {
-        "$ref": "#/$defs/groupedQuery"
+        "$ref": "#/$defs/combinedQuery"
       },
       "else": {
         "if": {
           "required": [
-            "aggregate"
+            "groupBy"
           ]
         },
         "then": {
-          "$ref": "#/$defs/totalQuery"
+          "$ref": "#/$defs/groupedQuery"
         },
         "else": {
-          "$ref": "#/$defs/plainQuery"
+          "if": {
+            "required": [
+              "aggregate"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/totalQuery"
+          },
+          "else": {
+            "$ref": "#/$defs/plainQuery"
+          }
         }
       }
     },

@@ -1,0 +1,150 @@
+// unionAll, union, intersect and except over the same two inputs, each as a subquery, and their row counts
+// put together by a unionAll of four total queries.
+{
+  "subqueries": [
+    {
+      "name": "all_rows",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "users" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "users", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "distinct_rows",
+      "query": {
+        "union": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "users" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "users", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "shared_rows",
+      "query": {
+        "intersect": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "users" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "users", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "order_only_rows",
+      "query": {
+        "except": [
+          {
+            "from": { "entity": "orders" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          },
+          {
+            "from": { "entity": "users" },
+            "select": [
+              {
+                "alias": "status",
+                "expression": { "source": "users", "field": "status", "type": { "name": "string" } }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "counts",
+      "query": {
+        "unionAll": [
+          {
+            "from": { "subquery": "all_rows" },
+            "aggregate": [
+              { "alias": "operation", "expression": { "type": { "name": "string" }, "value": "unionAll" } },
+              { "alias": "rows", "expression": { "operator": "count", "type": { "name": "integer" } } }
+            ]
+          },
+          {
+            "from": { "subquery": "distinct_rows" },
+            "aggregate": [
+              { "alias": "operation", "expression": { "type": { "name": "string" }, "value": "union" } },
+              { "alias": "rows", "expression": { "operator": "count", "type": { "name": "integer" } } }
+            ]
+          },
+          {
+            "from": { "subquery": "shared_rows" },
+            "aggregate": [
+              { "alias": "operation", "expression": { "type": { "name": "string" }, "value": "intersect" } },
+              { "alias": "rows", "expression": { "operator": "count", "type": { "name": "integer" } } }
+            ]
+          },
+          {
+            "from": { "subquery": "order_only_rows" },
+            "aggregate": [
+              { "alias": "operation", "expression": { "type": { "name": "string" }, "value": "except" } },
+              { "alias": "rows", "expression": { "operator": "count", "type": { "name": "integer" } } }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "counts" },
+  "select": [
+    {
+      "alias": "operation",
+      "expression": { "source": "counts", "field": "operation", "type": { "name": "string" } }
+    },
+    { "alias": "rows", "expression": { "source": "counts", "field": "rows", "type": { "name": "integer" } } }
+  ],
+  "orderBy": [ { "expression": { "source": "counts", "field": "operation", "type": { "name": "string" } } } ]
+}
