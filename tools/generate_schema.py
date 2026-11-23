@@ -59,7 +59,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, trim, substring, replace, position,
+  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, normalize, trim, substring, replace, position,
     splitPart, padStart/padEnd, repeat, reverse, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
@@ -117,6 +117,9 @@ START_OF = {
     "startOfDay": ["datetime"],
     **{f"startOf{unit}": ["time", "datetime"] for unit in ["Hour", "Minute", "Second"]},
 }
+# The Unicode normalization forms: canonical (C, D) and compatibility (KC, KD),
+# composed (C) or decomposed (D).
+NORMALIZATION_FORMS = ["NFC", "NFD", "NFKC", "NFKD"]
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
@@ -567,6 +570,10 @@ for ctx, rules in CONTEXTS.items():
     # Unicode full case folding, no locale: strings that differ only in case fold to
     # the same string, so a match that ignores case compares folded strings
     lifted("foldCase", {"operand": "string"}, "string")
+    # Unicode normalization: the same text written with other code points (a letter
+    # with an accent as one code point or as two) becomes one string. `form` names
+    # the normalization form and is always written: there is no default form.
+    lifted("normalize", {"operand": "string"}, "string", extra={"form": {"enum": NORMALIZATION_FORMS}})
     # trim removes the strings of `removables` from the ends, the longest match first;
     # at least one is listed, and none is null
     removables = {"removables": array_of(expr("string", ctx), 1)}

@@ -1,0 +1,15 @@
+// normalize of a bare string instead of a literal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": "café",
+        "form": "NFC"
+      }
+    }
+  ]
+}

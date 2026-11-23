@@ -1,0 +1,15 @@
+// normalise is not an operator: it is normalize
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalise",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+// normalize as a group key, over foldCase and over a nullable field, so that text written with other code
+// points falls in one group; in a selector, a predicate and over a key.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "last_name",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "nickname",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "form": "NFC"
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "operator": "count", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "last_name", "expression": { "key": "last_name", "type": { "name": "string" } } },
+    {
+      "alias": "nickname",
+      "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } }
+    },
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "spellings",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFC"
+        },
+        "separator": { "type": { "name": "string" }, "value": " | " },
+        "orderBy": [
+          {
+            "expression": {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+              "form": "NFC"
+            }
+          }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "stored_decomposed",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "right": {
+            "operator": "normalize",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+            "form": "NFC"
+          }
+        }
+      }
+    },
+    {
+      "alias": "longest_decomposed",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "length",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "normalize",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+            "form": "NFD"
+          }
+        }
+      }
+    },
+    {
+      "alias": "key_decomposed",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "key": "last_name", "type": { "name": "string" } },
+        "form": "NFD"
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "operator": "count", "type": { "name": "integer" } }, "direction": "desc" },
+    { "expression": { "key": "last_name", "type": { "name": "string" } } },
+    { "expression": { "key": "nickname", "type": { "name": "string", "nullable": true } } }
+  ]
+}

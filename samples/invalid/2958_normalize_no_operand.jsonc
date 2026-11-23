@@ -1,0 +1,7 @@
+// normalize without an operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "normalize", "type": { "name": "string" }, "form": "NFC" } }
+  ]
+}

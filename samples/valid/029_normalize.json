@@ -1,0 +1,235 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "normalize",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      },
+      "form": "NFKC"
+    },
+    "right": {
+      "operator": "normalize",
+      "type": {
+        "name": "string"
+      },
+      "operand": {
+        "operator": "foldCase",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "param": "last_name",
+          "type": {
+            "name": "string"
+          }
+        }
+      },
+      "form": "NFKC"
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "last_name",
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "is_stored_composed",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "right": {
+          "operator": "normalize",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          },
+          "form": "NFC"
+        }
+      }
+    },
+    {
+      "alias": "code_points_when_decomposed",
+      "expression": {
+        "operator": "length",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "operator": "normalize",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "last_name",
+            "type": {
+              "name": "string"
+            }
+          },
+          "form": "NFD"
+        }
+      }
+    },
+    {
+      "alias": "nickname",
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "search_key",
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "operator": "foldCase",
+          "type": {
+            "name": "string"
+          },
+          "operand": {
+            "source": "users",
+            "field": "first_name",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "plain_postal_code",
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "postal_code",
+          "type": {
+            "name": "string"
+          }
+        },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "fully_decomposed",
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "form": "NFKD"
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "normalize",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

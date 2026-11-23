@@ -1,0 +1,23 @@
+// normalize of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "normalize",
+      "type": { "name": "string" },
+      "operand": { "key": "last_name", "type": { "name": "string" } },
+      "form": "NFC"
+    },
+    "right": {
+      "operator": "normalize",
+      "type": { "name": "string" },
+      "operand": { "param": "needle", "type": { "name": "string" } },
+      "form": "NFC"
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

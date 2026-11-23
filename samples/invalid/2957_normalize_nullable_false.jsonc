@@ -1,0 +1,15 @@
+// normalize whose type says "nullable": false
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": false },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    }
+  ]
+}

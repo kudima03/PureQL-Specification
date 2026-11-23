@@ -1,0 +1,15 @@
+// length with a form: it counts the code points of its operand as they are
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    }
+  ]
+}

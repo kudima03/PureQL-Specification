@@ -1,0 +1,15 @@
+// normalize of a date
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "form": "NFC"
+      }
+    }
+  ]
+}

@@ -587,6 +587,60 @@
       }
     },
     {
+      "alias": "normalize_string_nfc",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "normalize_string_nfd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "form": "NFD"
+      }
+    },
+    {
+      "alias": "normalize_string_nfkc",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "normalize_string_nfkd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "form": "NFKD"
+      }
+    },
+    {
+      "alias": "normalize_string_nullable",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "normalize_string_nullable_nfkd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "form": "NFKD"
+      }
+    },
+    {
       "alias": "trim_string",
       "expression": {
         "operator": "trim",

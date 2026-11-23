@@ -1,0 +1,15 @@
+// normalize with the form "FormC"
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "FormC"
+      }
+    }
+  ]
+}

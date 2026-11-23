@@ -1,0 +1,287 @@
+// Corners of normalize: each of the four forms, applied twice, composed after decomposing, over a literal, a
+// nullable parameter and a concat, with foldCase in both orders, and inside length, contains, substring,
+// matchesRegex and window keys.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "in_nfc",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "in_nfd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "form": "NFD"
+      }
+    },
+    {
+      "alias": "in_nfkc",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "in_nfkd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "form": "NFKD"
+      }
+    },
+    {
+      "alias": "normalized_twice",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFC"
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "composed_after_decomposing",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFD"
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "of_a_literal",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "ﬁancé" },
+        "form": "NFKC"
+      }
+    },
+    {
+      "alias": "of_a_nullable_parameter",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "param": "label", "type": { "name": "string", "nullable": true } },
+        "form": "NFD"
+      }
+    },
+    {
+      "alias": "of_a_concat",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            { "type": { "name": "string" }, "value": " " },
+            { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          ]
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "fold_then_normalize",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "canonical_caseless_key",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "normalize",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+            "form": "NFD"
+          }
+        },
+        "form": "NFD"
+      }
+    },
+    {
+      "alias": "accents_as_code_points",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+              "form": "NFD"
+            }
+          },
+          {
+            "operator": "length",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+              "form": "NFC"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "contains_needle",
+      "expression": {
+        "operator": "contains",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFC"
+        },
+        "pattern": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "param": "needle", "type": { "name": "string" } },
+          "form": "NFC"
+        }
+      }
+    },
+    {
+      "alias": "first_letter",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          "form": "NFC"
+        },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "has_combining_marks",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "normalize",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+          "form": "NFD"
+        },
+        "pattern": { "type": { "name": "string" }, "value": "[^a-zA-Z '-]" }
+      }
+    },
+    {
+      "alias": "name_or_nickname",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "normalize",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "nickname",
+              "type": { "name": "string", "nullable": true }
+            },
+            "form": "NFC"
+          },
+          {
+            "operator": "normalize",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            "form": "NFC"
+          }
+        ]
+      }
+    },
+    {
+      "alias": "position_among_namesakes",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "normalize",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "foldCase",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+              },
+              "form": "NFKC"
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "normalize",
+                "type": { "name": "string" },
+                "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+                "form": "NFC"
+              }
+            },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        },
+        "form": "NFKC"
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
