@@ -1,8 +1,7 @@
-// Every operator in every signature as columns of a plain select, over literals: the lifted operators with
-// and without a nullable operand, integer and decimal operands, if and coalesce for every type, equal /
-// notEqual / the four comparisons / in for every family, and every aggregate over a literal selector, with
-// and without a predicate and with a nullable selector. Each definition of the projection context is used at
-// least once.
+// Every operator in every signature as columns of a plain select, over literals: the lifted operators with and without a
+// nullable operand, integer and decimal operands, if and coalesce for every type, equal / notEqual / the four
+// comparisons / in for every family, and every aggregate over a literal selector, with and without a predicate and with
+// a nullable selector. Each definition of the projection context is used at least once.
 {
   "from": { "entity": "orders" },
   "select": [
