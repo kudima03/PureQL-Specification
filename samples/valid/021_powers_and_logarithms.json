@@ -176,7 +176,7 @@
                   }
                 },
                 {
-                  "operator": "nullIf",
+                  "operator": "nullIfEqual",
                   "type": {
                     "name": "decimal",
                     "nullable": true
