@@ -1,0 +1,15 @@
+// startOfDay of a non-null operand, declared nullable: a lifted operator is nullable exactly when an operand
+// is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

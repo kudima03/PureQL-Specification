@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, length, upper/lower, trim, substring, date/time math and parts, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -81,6 +81,13 @@ ORDERED = TYPES
 # the month; `week` and `weekYear` are the ISO 8601 week and its week-numbering year.
 DATE_PARTS = ["year", "quarter", "month", "day", "dayOfWeek", "dayOfYear", "week", "weekYear"]
 TIME_PARTS = ["hour", "minute", "second", "microsecond"]
+# The start of the period that contains a value, for the types it changes: a
+# date has no time of day to truncate, a time no calendar period.
+START_OF = {
+    **{f"startOf{unit}": ["date", "datetime"] for unit in ["Year", "Quarter", "Month", "Week"]},
+    "startOfDay": ["datetime"],
+    **{f"startOf{unit}": ["time", "datetime"] for unit in ["Hour", "Minute", "Second"]},
+}
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
@@ -426,6 +433,10 @@ for ctx, rules in CONTEXTS.items():
             operand = by_family(name, "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
             signature(name, "integer", False, {"properties": {"operand": NON_NULL}}, operand)
             signature(name, "integer", True, some(["operand"], NULLABLE), operand)
+    # Truncation keeps the type of its operand: the declared type picks the signature.
+    for name, types in START_OF.items():
+        for t in types:
+            lifted(name, {"operand": t}, t)
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:

@@ -1,0 +1,15 @@
+// startOfWeek with a first day: weeks start on Monday, and no other property is allowed
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "firstDay": "sunday"
+      }
+    }
+  ]
+}

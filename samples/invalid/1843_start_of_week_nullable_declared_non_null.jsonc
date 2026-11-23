@@ -1,0 +1,14 @@
+// startOfWeek of a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}
