@@ -5472,6 +5472,63 @@
       }
     },
     {
+      "alias": "concatAll_string_of_string",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ]
+      }
+    },
+    {
+      "alias": "concatAll_string_of_string_null",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [
+          { "expression": { "type": { "name": "string" }, "value": "a" }, "direction": "desc" },
+          { "expression": { "type": { "name": "date", "nullable": true }, "value": null } }
+        ]
+      }
+    },
+    {
+      "alias": "concatAll_string_of_string_where",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "concatAll_string_of_string_distinct",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "separator": { "type": { "name": "string" }, "value": "" },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "concatAll_string_parameter_separator",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "separator": { "param": "separator", "type": { "name": "string" } },
+        "orderBy": [ { "expression": { "type": { "name": "integer" }, "value": 7 } } ],
+        "distinct": true,
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
       "alias": "percentileContinuous_parameter_fraction",
       "expression": {
         "operator": "percentileContinuous",

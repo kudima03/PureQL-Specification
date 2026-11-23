@@ -1,0 +1,31 @@
+// concatAll as a groupBy key, a row expression
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+        "right": { "source": "products", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [
+          { "expression": { "source": "products", "field": "sku", "type": { "name": "string" } } }
+        ]
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

@@ -1,0 +1,20 @@
+// concatAll with "over": "all" in a plain query, where an aggregate always runs over all rows
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+        ],
+        "over": "all"
+      }
+    }
+  ]
+}

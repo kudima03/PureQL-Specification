@@ -1,0 +1,19 @@
+// concatWith with distinct
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatWith",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ],
+        "separator": { "type": { "name": "string" }, "value": " " },
+        "distinct": true
+      }
+    }
+  ]
+}

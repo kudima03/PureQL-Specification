@@ -1,0 +1,19 @@
+// concatAll with "over": "all" in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+        ],
+        "over": "all"
+      }
+    }
+  ]
+}

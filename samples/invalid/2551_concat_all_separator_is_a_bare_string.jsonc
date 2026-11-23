@@ -1,0 +1,37 @@
+// concatAll with the bare string ", " as separator: the separator is a literal with its type
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+        "right": { "source": "products", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "separator": ", ",
+        "orderBy": [
+          { "expression": { "source": "products", "field": "sku", "type": { "name": "string" } } },
+          { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}

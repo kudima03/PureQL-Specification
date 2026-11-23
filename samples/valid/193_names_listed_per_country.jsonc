@@ -1,0 +1,176 @@
+// concatAll in a grouped query: in having and orderBy, with a descending order, distinct values, a nullable
+// selector whose nulls are skipped, a computed selector joined with an empty separator, over all rows, with a
+// predicate, and inside concat.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "length",
+      "type": { "name": "integer" },
+      "operand": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } } },
+          { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    {
+      "alias": "first_names",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } } },
+          { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "alias": "tiers",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": "/" },
+        "orderBy": [
+          {
+            "expression": { "source": "users", "field": "tier", "type": { "name": "string" } },
+            "direction": "desc"
+          }
+        ],
+        "distinct": true
+      }
+    },
+    {
+      "alias": "nicknames",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "source": "users",
+          "field": "nickname",
+          "type": { "name": "string", "nullable": true }
+        },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          {
+            "expression": {
+              "source": "users",
+              "field": "nickname",
+              "type": { "name": "string", "nullable": true }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "initials",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "upper",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "substring",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            "start": { "type": { "name": "integer" }, "value": 1 },
+            "length": { "type": { "name": "integer" }, "value": 1 }
+          }
+        },
+        "separator": { "type": { "name": "string" }, "value": "" },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "first_name", "type": { "name": "string" } } },
+          { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    },
+    {
+      "alias": "countries_of_all",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "country", "type": { "name": "string" } } }
+        ],
+        "distinct": true,
+        "over": "all"
+      }
+    },
+    {
+      "alias": "active_emails",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": "; " },
+        "orderBy": [
+          { "expression": { "source": "users", "field": "email", "type": { "name": "string" } } }
+        ],
+        "predicate": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "label",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          { "key": "country", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": ": " },
+          {
+            "operator": "concatAll",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            "separator": { "type": { "name": "string" }, "value": ", " },
+            "orderBy": [
+              { "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } } },
+              { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "length",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "concatAll",
+          "type": { "name": "string" },
+          "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          "separator": { "type": { "name": "string" }, "value": ", " },
+          "orderBy": [
+            { "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } } },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "country", "type": { "name": "string" } } }
+  ]
+}
