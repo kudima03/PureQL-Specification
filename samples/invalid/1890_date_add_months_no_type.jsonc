@@ -6,8 +6,8 @@
       "alias": "c",
       "expression": {
         "operator": "dateAddMonths",
-        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
-        "right": { "type": { "name": "integer" }, "value": 1 }
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
       }
     }
   ]

@@ -1,4 +1,4 @@
-// dateAddDays with the days on the left and the date on the right
+// dateAddDays with the days as operand and the date as days
 {
   "from": { "entity": "orders" },
   "select": [
@@ -7,8 +7,8 @@
       "expression": {
         "operator": "dateAddDays",
         "type": { "name": "date" },
-        "left": { "type": { "name": "integer" }, "value": 1 },
-        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        "operand": { "type": { "name": "integer" }, "value": 1 },
+        "days": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
       }
     }
   ]

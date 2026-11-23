@@ -1,0 +1,16 @@
+// datetimeAddSeconds declared datetime? has its operand as a group key reference, which only a grouped
+// select, having and orderBy have, in a plain select
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "key": "k", "type": { "name": "datetime" } },
+        "seconds": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

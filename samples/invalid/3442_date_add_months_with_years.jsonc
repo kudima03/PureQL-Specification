@@ -1,0 +1,16 @@
+// dateAddMonths with years next to months: a year is 12 months
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 3 },
+        "years": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

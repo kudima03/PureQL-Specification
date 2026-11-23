@@ -1,0 +1,15 @@
+// nullIfEqual with operand and value: it compares left with right, as equal does
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "value": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

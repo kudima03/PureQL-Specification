@@ -1,4 +1,4 @@
-// datetimeAddMonths to a date: its left operand is a datetime
+// datetimeAddMonths to a date: its operand is a datetime
 {
   "from": { "entity": "orders" },
   "select": [
@@ -7,8 +7,8 @@
       "expression": {
         "operator": "datetimeAddMonths",
         "type": { "name": "datetime" },
-        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
-        "right": { "type": { "name": "integer" }, "value": 1 }
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
       }
     }
   ]

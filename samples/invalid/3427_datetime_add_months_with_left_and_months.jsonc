@@ -1,0 +1,15 @@
+// datetimeAddMonths with left instead of operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// dateDiffMonths with from and to
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "from": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "to": { "param": "today", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// dateAddDays with days and months: months are added with dateAddMonths
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 3 },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

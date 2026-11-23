@@ -7,8 +7,8 @@
       "expression": {
         "operator": "dateAddMonths",
         "type": { "name": "date" },
-        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
-        "right": { "type": { "name": "decimal" }, "value": "1.5" }
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "decimal" }, "value": "1.5" }
       }
     }
   ]

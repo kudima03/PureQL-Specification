@@ -1,0 +1,15 @@
+// timeDiffSeconds with operand instead of left
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeDiffSeconds",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

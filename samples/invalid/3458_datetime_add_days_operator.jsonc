@@ -1,0 +1,15 @@
+// datetimeAddDays is not an operator: a day is 86400 seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddDays",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "days": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

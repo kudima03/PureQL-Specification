@@ -1,0 +1,15 @@
+// timeAddSeconds with minutes instead of seconds: the amount is named by the unit the operator adds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "minutes": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

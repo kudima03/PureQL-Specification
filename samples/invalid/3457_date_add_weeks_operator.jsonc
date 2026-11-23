@@ -1,0 +1,15 @@
+// dateAddWeeks is not an operator: a week is 7 days
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddWeeks",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "weeks": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+// timeAddSeconds declared time? has its operand as a field, which this context has no rows to read from, in a
+// grouped select
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "orders", "field": "f", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

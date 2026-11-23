@@ -1,0 +1,15 @@
+// datetimeDiffMonths with start and end
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "start": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "end": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

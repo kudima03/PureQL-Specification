@@ -1,0 +1,15 @@
+// dateAddMonths with value instead of months: value only ever means a literal's value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "value": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

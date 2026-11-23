@@ -1,0 +1,15 @@
+// dateAddDays with left instead of operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

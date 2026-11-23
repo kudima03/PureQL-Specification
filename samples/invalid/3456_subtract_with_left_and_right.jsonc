@@ -1,0 +1,15 @@
+// subtract with left and right: it takes values, applied from left to right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "left": { "type": { "name": "integer" }, "value": 7 },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

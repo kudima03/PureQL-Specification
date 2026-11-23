@@ -1,0 +1,15 @@
+// dateAddDays with a decimal number of days
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

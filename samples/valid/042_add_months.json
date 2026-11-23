@@ -19,13 +19,13 @@
       "type": {
         "name": "date"
       },
-      "left": {
+      "operand": {
         "param": "today",
         "type": {
           "name": "date"
         }
       },
-      "right": {
+      "months": {
         "type": {
           "name": "integer"
         },
@@ -51,14 +51,14 @@
         "type": {
           "name": "date"
         },
-        "left": {
+        "operand": {
           "source": "orders",
           "field": "order_date",
           "type": {
             "name": "date"
           }
         },
-        "right": {
+        "months": {
           "type": {
             "name": "integer"
           },
@@ -73,14 +73,14 @@
         "type": {
           "name": "date"
         },
-        "left": {
+        "operand": {
           "source": "orders",
           "field": "order_date",
           "type": {
             "name": "date"
           }
         },
-        "right": {
+        "months": {
           "operator": "multiply",
           "type": {
             "name": "integer"
@@ -110,7 +110,7 @@
           "name": "date",
           "nullable": true
         },
-        "left": {
+        "operand": {
           "source": "orders",
           "field": "shipped_date",
           "type": {
@@ -118,7 +118,7 @@
             "nullable": true
           }
         },
-        "right": {
+        "months": {
           "type": {
             "name": "integer"
           },
@@ -133,14 +133,14 @@
         "type": {
           "name": "datetime"
         },
-        "left": {
+        "operand": {
           "source": "orders",
           "field": "ordered_at",
           "type": {
             "name": "datetime"
           }
         },
-        "right": {
+        "months": {
           "type": {
             "name": "integer"
           },

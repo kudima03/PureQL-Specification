@@ -1,4 +1,4 @@
-// dateAddMonths with `values` instead of left / right
+// dateAddMonths with `values` instead of operand and months
 {
   "from": { "entity": "orders" },
   "select": [

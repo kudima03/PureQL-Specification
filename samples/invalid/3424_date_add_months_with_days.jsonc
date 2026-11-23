@@ -1,0 +1,15 @@
+// dateAddMonths with days instead of months: the amount is named by the unit the operator adds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

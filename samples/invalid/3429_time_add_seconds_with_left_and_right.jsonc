@@ -1,0 +1,15 @@
+// timeAddSeconds with left and right: it takes the value as operand and the amount as seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

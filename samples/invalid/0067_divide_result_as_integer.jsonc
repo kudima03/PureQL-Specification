@@ -7,8 +7,8 @@
       "expression": {
         "operator": "dateAddDays",
         "type": { "name": "date" },
-        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
-        "right": {
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": {
           "operator": "divide",
           "type": { "name": "decimal" },
           "values": [

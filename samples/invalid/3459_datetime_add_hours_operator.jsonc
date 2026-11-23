@@ -1,0 +1,15 @@
+// datetimeAddHours is not an operator: an hour is 3600 seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddHours",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "hours": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

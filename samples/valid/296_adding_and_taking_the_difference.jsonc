@@ -1,0 +1,136 @@
+// Adding an amount and taking the difference gives the amount back: the operators that add name operand and a
+// unit, the differences keep left and right.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "days_come_back",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": {
+            "operator": "dateAddDays",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+            "days": { "type": { "name": "integer" }, "value": 30 }
+          },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 30 }
+      }
+    },
+    {
+      "alias": "months_come_back",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateDiffMonths",
+          "type": { "name": "integer" },
+          "left": {
+            "operator": "dateAddMonths",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+            "months": { "type": { "name": "integer" }, "value": 5 }
+          },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 5 }
+      }
+    },
+    {
+      "alias": "seconds_come_back",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeDiffSeconds",
+          "type": { "name": "decimal" },
+          "left": {
+            "operator": "datetimeAddSeconds",
+            "type": { "name": "datetime" },
+            "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "seconds": { "type": { "name": "decimal" }, "value": "1.5" }
+          },
+          "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        },
+        "right": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    },
+    {
+      "alias": "time_wraps",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "integer" }, "value": 86400 }
+      }
+    },
+    {
+      "alias": "shifted_twice",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "dateAddMonths",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "months": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "days": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "previous_due",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "operator": "dateAddDays",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "days": { "type": { "name": "integer" }, "value": 30 }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "days_until_shipped_plus_grace",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "dateAddDays",
+          "type": { "name": "date", "nullable": true },
+          "operand": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "days": { "param": "grace_days", "type": { "name": "integer", "nullable": true } }
+        },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 30 }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

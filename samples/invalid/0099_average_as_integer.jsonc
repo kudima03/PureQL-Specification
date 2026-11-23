@@ -13,12 +13,12 @@
       "expression": {
         "operator": "dateAddDays",
         "type": { "name": "date" },
-        "left": {
+        "operand": {
           "operator": "max",
           "type": { "name": "date" },
           "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
-        "right": {
+        "days": {
           "operator": "average",
           "type": { "name": "decimal" },
           "selector": { "source": "orders", "field": "quantity", "type": { "name": "integer" } }
