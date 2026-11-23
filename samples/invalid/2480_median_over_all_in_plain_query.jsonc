@@ -1,0 +1,16 @@
+// median with "over": "all" in a plain query, where an aggregate always runs over all rows
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": "all"
+      }
+    }
+  ]
+}

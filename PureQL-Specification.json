@@ -18089,6 +18089,41 @@
         }
       ]
     },
+    "fraction": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/$defs/declares.decimal"
+        }
+      ],
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "allOf": [
+          {
+            "$ref": "#/$defs/literal"
+          },
+          {
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^(0|1|0\\.[0-9]*[1-9])$",
+                "not": {
+                  "type": "string",
+                  "pattern": "\\n"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
+    },
     "from": {
       "type": "object",
       "required": [],
@@ -34342,6 +34377,656 @@
         }
       ]
     },
+    "median.date.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.date.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.date.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "median.date@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.date@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.datetime.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.datetime.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.datetime.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "median.datetime@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.datetime@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.decimal.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      }
+    },
+    "median.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.time.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.time.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "median.time.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "median.time@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median.time@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "median@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "median"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/median.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/median.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/median.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/median.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.datetime.nullable@group"
+          }
+        }
+      ]
+    },
+    "median@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "median"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/median.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/median.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/median.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/median.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.datetime.nullable@projection"
+          }
+        }
+      ]
+    },
+    "median@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "median"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/median.datetime.nullable@total"
+          }
+        }
+      ]
+    },
     "microsecond.datetime@group": {
       "properties": {
         "operand": {
@@ -36700,6 +37385,1248 @@
           },
           "then": {
             "$ref": "#/$defs/minute.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "mode.boolean.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.boolean.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.boolean.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      }
+    },
+    "mode.boolean@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.boolean@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.date.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.date.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.date.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "mode.date@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.date@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.datetime.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.datetime.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.datetime.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "mode.datetime@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.datetime@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.decimal.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      }
+    },
+    "mode.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.integer.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.integer.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.integer.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      }
+    },
+    "mode.integer@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.integer@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.string.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.string.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.string.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      }
+    },
+    "mode.string@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.string@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.time.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.time.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.time.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "mode.time@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.time@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.uuid.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.uuid.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "mode.uuid.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      }
+    },
+    "mode.uuid@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode.uuid@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "mode@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "mode"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.boolean@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.uuid@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "mode@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "mode"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "mode@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "mode"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/mode.uuid.nullable@total"
           }
         }
       ]
@@ -40051,6 +41978,14 @@
             "max",
             "first",
             "last",
+            "median",
+            "percentileContinuous",
+            "percentileDiscrete",
+            "mode",
+            "variancePopulation",
+            "standardDeviationPopulation",
+            "varianceSample",
+            "standardDeviationSample",
             "any",
             "all"
           ]
@@ -41345,6 +43280,102 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "any"
               }
             }
@@ -41478,6 +43509,14 @@
             "max",
             "first",
             "last",
+            "median",
+            "percentileContinuous",
+            "percentileDiscrete",
+            "mode",
+            "variancePopulation",
+            "standardDeviationPopulation",
+            "varianceSample",
+            "standardDeviationSample",
             "any",
             "all"
           ]
@@ -42766,6 +44805,102 @@
           },
           "then": {
             "$ref": "#/$defs/last@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@projection"
           }
         },
         {
@@ -44215,6 +46350,14 @@
             "max",
             "first",
             "last",
+            "median",
+            "percentileContinuous",
+            "percentileDiscrete",
+            "mode",
+            "variancePopulation",
+            "standardDeviationPopulation",
+            "varianceSample",
+            "standardDeviationSample",
             "any",
             "all"
           ]
@@ -45509,6 +47652,102 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "any"
               }
             }
@@ -46402,6 +48641,1922 @@
         }
       },
       "additionalProperties": false
+    },
+    "percentileContinuous.date.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.date.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.date.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "percentileContinuous.date@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.date@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.datetime.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.datetime.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.datetime.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "percentileContinuous.datetime@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.datetime@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.decimal.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      }
+    },
+    "percentileContinuous.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.time.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.time.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileContinuous.time.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "percentileContinuous.time@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous.time@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileContinuous@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileContinuous"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.datetime.nullable@group"
+          }
+        }
+      ]
+    },
+    "percentileContinuous@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileContinuous"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.datetime.nullable@projection"
+          }
+        }
+      ]
+    },
+    "percentileContinuous@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileContinuous"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal",
+                "date",
+                "time",
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous.datetime.nullable@total"
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.boolean.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.boolean.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.boolean.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.boolean@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.boolean@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.date.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.date.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.date.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.date@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.date@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/date@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.datetime.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.datetime.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.datetime.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.datetime@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.datetime@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/datetime@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.decimal.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      }
+    },
+    "percentileDiscrete.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row",
+          "anyOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/declares.decimal.nullable"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.integer.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.integer.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.integer.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.integer@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.integer@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/integer@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.string.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.string.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.string.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.string@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.string@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/string@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.time.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.time.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.time.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.time@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.time@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/time@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.uuid.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.uuid.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "percentileDiscrete.uuid.nullable@total": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid.nullable@row"
+        }
+      }
+    },
+    "percentileDiscrete.uuid@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete.uuid@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/uuid@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "percentileDiscrete@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileDiscrete"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.boolean@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.uuid@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "percentileDiscrete@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileDiscrete"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "percentileDiscrete@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector",
+        "fraction"
+      ],
+      "properties": {
+        "operator": {
+          "const": "percentileDiscrete"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true,
+        "fraction": {
+          "$ref": "#/$defs/fraction"
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete.uuid.nullable@total"
+          }
+        }
+      ]
     },
     "plainQuery": {
       "type": "object",
@@ -50935,6 +55090,347 @@
           }
         }
       ]
+    },
+    "standardDeviationPopulation.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "standardDeviationPopulation.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "standardDeviationPopulation.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "standardDeviationPopulation.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "standardDeviationPopulation@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationPopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "standardDeviationPopulation@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationPopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "standardDeviationPopulation@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationPopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "selector": {
+              "$ref": "#/$defs/decimal.nullable@row"
+            }
+          }
+        }
+      ]
+    },
+    "standardDeviationSample@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "standardDeviationSample@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "standardDeviationSample@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "standardDeviationSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
     },
     "startOfDay.datetime.nullable@group": {
       "properties": {
@@ -59476,6 +63972,347 @@
         "type": "string",
         "pattern": "\\n"
       }
+    },
+    "variancePopulation.decimal.nullable@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "variancePopulation.decimal.nullable@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "selector"
+              ],
+              "properties": {
+                "selector": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "variancePopulation.decimal@group": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "variancePopulation.decimal@projection": {
+      "properties": {
+        "selector": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "variancePopulation@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "variancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "variancePopulation@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "variancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "variancePopulation@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "variancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "selector": {
+              "$ref": "#/$defs/decimal.nullable@row"
+            }
+          }
+        }
+      ]
+    },
+    "varianceSample@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "varianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "varianceSample@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "varianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "varianceSample@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "varianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
     },
     "week.date@group": {
       "properties": {

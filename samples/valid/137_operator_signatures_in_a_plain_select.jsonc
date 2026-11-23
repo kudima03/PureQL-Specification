@@ -4617,6 +4617,888 @@
       }
     },
     {
+      "alias": "median_decimal_of_integer",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "median_decimal_nullable_of_integer_null",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "median_decimal_nullable_of_integer_where",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "median_decimal_of_decimal",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "median_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "median_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "median_date_of_date",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "median_date_nullable_of_date_null",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "median_date_nullable_of_date_where",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "median_time_of_time",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "time" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "median_time_nullable_of_time_null",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "median_time_nullable_of_time_where",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "median_datetime_of_datetime",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "median_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "median_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_of_integer",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_nullable_of_integer_null",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_nullable_of_integer_where",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_of_decimal",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_date_of_date",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_date_nullable_of_date_null",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_date_nullable_of_date_where",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_time_of_time",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_time_nullable_of_time_null",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_time_nullable_of_time_where",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_datetime_of_datetime",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileContinuous_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_integer_of_integer",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_integer_nullable_of_integer_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_integer_nullable_of_integer_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_decimal_of_decimal",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_string_of_string",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_string_nullable_of_string_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_string_nullable_of_string_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_boolean_of_boolean",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "boolean" },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_boolean_nullable_of_boolean_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_boolean_nullable_of_boolean_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_date_of_date",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_date_nullable_of_date_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_date_nullable_of_date_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_time_of_time",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "time" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_time_nullable_of_time_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_time_nullable_of_time_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_datetime_of_datetime",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_uuid_of_uuid",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "uuid" },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_uuid_nullable_of_uuid_null",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_uuid_nullable_of_uuid_where",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.9" }
+      }
+    },
+    {
+      "alias": "mode_integer_of_integer",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "mode_integer_nullable_of_integer_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_integer_nullable_of_integer_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_decimal_of_decimal",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "mode_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_string_of_string",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string" },
+        "selector": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "mode_string_nullable_of_string_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_string_nullable_of_string_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "type": { "name": "string" }, "value": "a" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_boolean_of_boolean",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "boolean" },
+        "selector": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_boolean_nullable_of_boolean_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_boolean_nullable_of_boolean_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "type": { "name": "boolean" }, "value": true },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_date_of_date",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "date" },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "mode_date_nullable_of_date_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_date_nullable_of_date_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_time_of_time",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "time" },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "mode_time_nullable_of_time_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_time_nullable_of_time_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "type": { "name": "time" }, "value": "08:30:00" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_datetime_of_datetime",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "datetime" },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "mode_datetime_nullable_of_datetime_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_datetime_nullable_of_datetime_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "mode_uuid_of_uuid",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "uuid" },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
+      "alias": "mode_uuid_nullable_of_uuid_null",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "mode_uuid_nullable_of_uuid_where",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_of_integer",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_nullable_of_integer_null",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_nullable_of_integer_where",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_of_decimal",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "variancePopulation_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_of_integer",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_nullable_of_integer_null",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_nullable_of_integer_where",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_of_decimal",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "standardDeviationPopulation_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "varianceSample_decimal_nullable_of_integer",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "varianceSample_decimal_nullable_of_decimal",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "varianceSample_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "varianceSample_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "standardDeviationSample_decimal_nullable_of_integer",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "standardDeviationSample_decimal_nullable_of_decimal",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "standardDeviationSample_decimal_nullable_of_decimal_null",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "standardDeviationSample_decimal_nullable_of_decimal_where",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "percentileContinuous_parameter_fraction",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "type": { "name": "decimal" }, "value": "2.5" },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_fraction_zero",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "fraction": { "type": { "name": "decimal" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "percentileDiscrete_fraction_one",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 7 },
+        "fraction": { "type": { "name": "decimal" }, "value": "1" }
+      }
+    },
+    {
       "alias": "any_boolean_where",
       "expression": {
         "operator": "any",

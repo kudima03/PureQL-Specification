@@ -1,0 +1,21 @@
+// percentileContinuous with the fraction 90: a fraction is from 0 to 1, not a percentage
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "integer" }, "value": 90 }
+      }
+    }
+  ]
+}

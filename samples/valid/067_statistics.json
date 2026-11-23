@@ -1,0 +1,219 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "expression": {
+        "key": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "median_total",
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "ninth_decile_total",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "fraction": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0.9"
+        }
+      }
+    },
+    {
+      "alias": "largest_total_of_the_lower_half",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "fraction": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0.5"
+        }
+      }
+    },
+    {
+      "alias": "usual_delivery_start",
+      "expression": {
+        "operator": "mode",
+        "type": {
+          "name": "time"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "delivery_window_start",
+          "type": {
+            "name": "time"
+          }
+        }
+      }
+    },
+    {
+      "alias": "median_order_date",
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "date"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "alias": "median_paid_total",
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    },
+    {
+      "alias": "spread",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "spread_estimate",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "variance",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "median",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      },
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "key": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+// median with a predicate declared decimal: the predicate may leave no row
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,291 @@
+// Every statistical aggregate in a total query, where all of them are nullable: median and
+// percentileContinuous over numbers, dates, times and datetimes, percentileDiscrete and mode over every type,
+// the fractions 0 and 1, a fraction from a parameter, and the four forms of variance and standard deviation.
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "median_decimal",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "median_date",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "median_time",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "median_datetime",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "percentile_continuous_decimal",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.25" }
+      }
+    },
+    {
+      "alias": "percentile_continuous_date",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.25" }
+      }
+    },
+    {
+      "alias": "percentile_continuous_time",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.25" }
+      }
+    },
+    {
+      "alias": "percentile_continuous_datetime",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.25" }
+      }
+    },
+    {
+      "alias": "percentile_discrete_decimal",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_string",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_boolean",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_date",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_time",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_datetime",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "percentile_discrete_uuid",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "mode_decimal",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "mode_string",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "mode_boolean",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "boolean", "nullable": true },
+        "selector": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "mode_date",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "date", "nullable": true },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "mode_time",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "time", "nullable": true },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "mode_datetime",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "datetime", "nullable": true },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "mode_uuid",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "uuid", "nullable": true },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "median_of_a_nullable_date",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date", "nullable": true },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        }
+      }
+    },
+    {
+      "alias": "median_days_to_ship",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer", "nullable": true },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "usual_days_to_ship",
+      "expression": {
+        "operator": "mode",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer", "nullable": true },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "smallest_total",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "largest_total",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "1" }
+      }
+    },
+    {
+      "alias": "variance_population",
+      "expression": {
+        "operator": "variancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "variance_sample",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "standard_deviation_population",
+      "expression": {
+        "operator": "standardDeviationPopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "standard_deviation_sample",
+      "expression": {
+        "operator": "standardDeviationSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

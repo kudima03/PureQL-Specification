@@ -1,0 +1,21 @@
+// median of an integer selector declared integer: the middle of two values is their mean, so a median of
+// numbers is decimal
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

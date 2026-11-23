@@ -1,0 +1,28 @@
+// percentileContinuous with a computed fraction
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 9 },
+            { "type": { "name": "integer" }, "value": 10 }
+          ]
+        }
+      }
+    }
+  ]
+}

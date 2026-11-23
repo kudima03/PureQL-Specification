@@ -1,0 +1,17 @@
+// median in where, a row context without aggregates
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": {
+      "operator": "median",
+      "type": { "name": "decimal" },
+      "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

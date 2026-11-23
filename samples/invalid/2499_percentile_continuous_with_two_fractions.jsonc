@@ -1,0 +1,24 @@
+// percentileContinuous with an array of fractions: it yields one value; each percentile is its own aggregate
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileContinuous",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "fraction": [
+          { "type": { "name": "decimal" }, "value": "0.25" },
+          { "type": { "name": "decimal" }, "value": "0.75" }
+        ]
+      }
+    }
+  ]
+}

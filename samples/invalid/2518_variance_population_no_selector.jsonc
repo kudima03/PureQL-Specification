@@ -1,0 +1,13 @@
+// variancePopulation without a selector
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    { "alias": "c", "expression": { "operator": "variancePopulation", "type": { "name": "decimal" } } }
+  ]
+}

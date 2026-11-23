@@ -1,0 +1,21 @@
+// percentileDiscrete of a string selector declared integer
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "fraction": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    }
+  ]
+}

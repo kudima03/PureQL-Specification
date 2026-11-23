@@ -41,7 +41,7 @@ There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
 every expression is determined by its subtree and its context, never inferred
 from surrounding expressions. The context only decides whether min / max /
-average / first / last can be null: a row of a plain or grouped query exists only if a row
+average / first / last and the statistics typed like them can be null: a row of a plain or grouped query exists only if a row
 of its source does, so there every aggregate sees at least one row, while a
 total query returns its row even when there are none.
 
@@ -356,6 +356,16 @@ defs["regexGroup"] = {
     "allOf": [declares("integer", False)],
     "if": {"required": ["value"]},
     "then": {"allOf": [ref("literal"), {"properties": {"value": {"minimum": 1}}}]},
+    "else": ref("param"),
+}
+
+# The fraction of a percentile is a decimal literal from 0 to 1 or a decimal
+# parameter, never computed per row: an aggregate has one fraction.
+defs["fraction"] = {
+    "type": "object",
+    "allOf": [declares("decimal", False)],
+    "if": {"required": ["value"]},
+    "then": {"allOf": [ref("literal"), {"properties": {"value": pattern(r"(0|1|0\.[0-9]*[1-9])")}}]},
     "else": ref("param"),
 }
 
@@ -694,6 +704,27 @@ for ctx, rules in CONTEXTS.items():
                   {**aggregate_props, "selector": True, "orderBy": array_of(ref("orderItem@row"), 1)})
             for t in ORDERED:
                 aggregate(name, t, t, exact=True)
+        # Statistics. median and the continuous percentile interpolate between two
+        # values, so they take the types average takes and are typed as it is.
+        fraction = {"fraction": ref("fraction")}
+        for name, extra in [("median", {}), ("percentileContinuous", fraction)]:
+            shape(name, ["selector", *extra], {**aggregate_props, "selector": True, **extra})
+            for selector_t, result_t in AVERAGEABLE.items():
+                aggregate(name, selector_t, result_t, exact=False)
+        # The discrete percentile and the mode yield one of the values: any type, kept.
+        for name, extra in [("percentileDiscrete", fraction), ("mode", {})]:
+            shape(name, ["selector", *extra], {**aggregate_props, "selector": True, **extra})
+            for t in ORDERED:
+                aggregate(name, t, t, exact=True)
+        # Variance and standard deviation of numbers are decimal. Over a population
+        # they are typed as average; over a sample one value gives null, so they are
+        # nullable wherever they are.
+        for name in ["variancePopulation", "standardDeviationPopulation"]:
+            shape(name, ["selector"], {**aggregate_props, "selector": True})
+            aggregate(name, "decimal", "decimal", exact=False)
+        for name in ["varianceSample", "standardDeviationSample"]:
+            shape(name, ["selector"], {**aggregate_props, "selector": expr("decimal", "row", True)})
+            signature(name, "decimal", True)
         for name in ["any", "all"]:
             shape(name, ["predicate"], aggregate_props)
             signature(name, "boolean", False)
@@ -715,8 +746,11 @@ for ctx, rules in CONTEXTS.items():
             **props,
         })
         if len(sigs) == 1:
-            # one result type (equal, in, comparisons): its checks apply as they are
-            defs[f"{name}@{ctx}"].update(merged([{"properties": {}}, *sigs[0][2]]) if sigs[0][2] else {})
+            # one result type (equal, in, comparisons): its checks apply as they are,
+            # next to the shape, never in place of its properties
+            checks = merged(list(sigs[0][2])) if sigs[0][2] else {}
+            if checks:
+                defs[f"{name}@{ctx}"]["allOf"] = checks["allOf"] if list(checks) == ["allOf"] else [checks]
             continue
         dispatch = []
         for t, n, checks in sigs:
