@@ -1,0 +1,167 @@
+// Corners of abs, sign and truncate: integer and decimal literals and parameters, a nullable operand, an
+// integer operand where a decimal is expected, digits that are negative, a parameter or computed, and round,
+// floor and truncate of the same value side by side.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "abs_integer_parameter",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "delta", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "abs_integer_literal",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "integer" }, "value": -9223372036854775807 }
+      }
+    },
+    {
+      "alias": "abs_decimal_literal",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "-0.5" }
+      }
+    },
+    {
+      "alias": "abs_of_mixed_sum",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "add",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "sign_of_integer",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "sign_of_nullable",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "param": "rate", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "truncate_of_integer",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "truncate_to_tens",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "truncate_to_parameter",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "param": "places", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "truncate_to_computed",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "rate", "type": { "name": "decimal", "nullable": true } },
+        "digits": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "param": "places", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "nested",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "truncate",
+          "type": { "name": "decimal" },
+          "digits": { "type": { "name": "integer" }, "value": 1 },
+          "operand": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              {
+                "operator": "sign",
+                "type": { "name": "integer" },
+                "operand": {
+                  "operator": "subtract",
+                  "type": { "name": "integer" },
+                  "values": [
+                    { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                    { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "rounded",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "floored",
+      "expression": {
+        "operator": "floor",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "truncated",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

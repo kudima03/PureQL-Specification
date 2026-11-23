@@ -1,0 +1,117 @@
+// abs, sign and truncate in a total query: non-null over sum and count, nullable over average and min, which
+// are always nullable there.
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "imbalance",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+            },
+            {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "predicate": {
+                "operator": "not",
+                "type": { "name": "boolean" },
+                "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "mostly",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+            },
+            {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "predicate": {
+                "operator": "not",
+                "type": { "name": "boolean" },
+                "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "average_to_cents",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "whole_average",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "smallest_size",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "orders_against_target",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "operator": "count", "type": { "name": "integer" } },
+            { "param": "target", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    }
+  ]
+}

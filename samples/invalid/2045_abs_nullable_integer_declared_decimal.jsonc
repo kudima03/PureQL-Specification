@@ -1,0 +1,14 @@
+// abs of an integer? declared decimal?: the nullability is right, but an integer operand gives an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "delta", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

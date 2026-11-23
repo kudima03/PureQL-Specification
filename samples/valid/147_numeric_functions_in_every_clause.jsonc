@@ -1,0 +1,143 @@
+// abs, sign and truncate in join.on, where, groupBy keys, having, an aggregate's selector and predicate, and
+// orderBy: orders over their credit limit, bucketed to hundreds by truncate with negative digits.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "sign",
+              "type": { "name": "integer" },
+              "operand": {
+                "operator": "subtract",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+                ]
+              }
+            },
+            "right": { "type": { "name": "integer" }, "value": 1 }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "abs",
+      "type": { "name": "integer", "nullable": true },
+      "operand": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 3 }
+  },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    {
+      "alias": "hundreds",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -2 }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "truncate",
+      "type": { "name": "integer" },
+      "operand": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "subtract",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+            { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    { "alias": "hundreds", "expression": { "key": "hundreds", "type": { "name": "decimal" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "over_limit_by",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "abs",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "subtract",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "whole_totals",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "truncate",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          "right": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    {
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": { "key": "hundreds", "type": { "name": "decimal" } }
+      },
+      "direction": "desc"
+    }
+  ]
+}

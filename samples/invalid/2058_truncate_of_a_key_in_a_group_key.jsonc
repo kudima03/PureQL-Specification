@@ -1,0 +1,16 @@
+// truncate of a group key as a groupBy key: a key is a row expression and cannot read another key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "hundreds",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "key": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -2 }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}
