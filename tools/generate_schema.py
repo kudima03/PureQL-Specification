@@ -67,7 +67,8 @@ Null semantics:
   - if is nullable when either branch is, and yields the branch taken, so
     if(true, 1, null) is 1;
   - equal / notEqual / comparisons / in accept nullable operands and return a
-    non-null boolean (null == null is true, any ordering against null is false);
+    non-null boolean (null == null is true, so >= and <= of two nulls are true
+    too; any ordering against one null is false);
   - contains / startsWith / endsWith accept nullable strings and return a
     non-null boolean, false when either operand is null;
   - concatWith accepts nullable strings and returns a non-null string: null

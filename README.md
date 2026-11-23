@@ -102,7 +102,7 @@ PureQL uses the following null semantics:
 
 - **Lifted operators:** arithmetic (`integerDivide` and `modulo` included), powers and logarithms, `concat`, `length`, `upper` / `lower`, `foldCase`, `normalize`, `removeDiacritics`, `trim` / `trimStart` / `trimEnd`, `substring`, `replace`, `position`, `splitPart`, `padStart` / `padEnd`, `repeat`, `reverse`, `replaceRegex`, date/time math, parts and `startOf…`, the conversions, `abs`, `sign`, `round`, `truncate`, `floor`, `ceiling`, `greatest` and `least`. A nullable operand makes the result nullable, and the result is `null` when any operand is `null`.
 - **`if`:** the result is nullable when either branch is nullable, and its value is the value of the branch taken, so `if(true, 1, null)` is `1`.
-- **Comparisons:** `equal`, `notEqual`, ordering comparisons and `in` accept nullable operands and return a non-null `boolean`. `null == null` is `true`, and any ordering comparison against `null` is `false`. A `null` value is `in` a list exactly when the list contains `null`, which only a nullable subquery column can. This holds in every clause, `join.on` included.
+- **Comparisons:** `equal`, `notEqual`, ordering comparisons and `in` accept nullable operands and return a non-null `boolean`. `null == null` is `true`. An ordering comparison with one `null` operand is `false`; with two, it holds exactly when it holds for two equal values, so `greaterThanOrEqual` and `lessThanOrEqual` are `true` and `greaterThan` and `lessThan` are `false`. `greaterThanOrEqual(a, b)` is therefore `or(greaterThan(a, b), equal(a, b))` for every operand; see [Ordering and equality](#ordering-and-equality). A `null` value is `in` a list exactly when the list contains `null`, which only a nullable subquery column can. This holds in every clause, `join.on` included.
 - **String matching:** `contains`, `startsWith` and `endsWith` accept nullable operands and return a non-null `boolean` too, so they are conditions as they are. The result is `false` when either operand is `null`, also when both are: unlike `equal`, a `null` string neither contains nor is contained in anything.
 - **Reading text:** `asInteger` … `asUuid` of a string are lifted like the other conversions. `tryAs…` accepts a nullable string and is always nullable: `null` when the string is `null` or is not written as a literal of the type.
 - **Regular expressions:** `matchesRegex` accepts a nullable operand and returns a non-null `boolean`, `false` for `null`, like `contains`. `extractRegex` accepts one too and is always nullable: `null` when the operand is `null` or when nothing matches. `replaceRegex` is lifted.
@@ -753,7 +753,18 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 | `datetime` | instant | chronological by instant |
 | `uuid` | value | lexicographic over the 32 hexadecimal digits in lower case, which is the order of the 16 bytes read as unsigned big-endian |
 
-`null` equals `null` and sorts first in ascending order (see [Null semantics](#null-semantics)). The `uuid` order is not the one SQL Server uses for `uniqueidentifier`; an interpreter on such a database must still sort by this rule.
+`null` equals `null` and sorts first in ascending order (see [Null semantics](#null-semantics)). A comparison treats `null` as a missing value rather than as the least one:
+
+| `left` | `right` | `greaterThan`, `lessThan` | `greaterThanOrEqual`, `lessThanOrEqual` | `equal` |
+|---|---|---|---|---|
+| value | value | by the order of the type | by the order of the type | by value |
+| `null` | value | `false` | `false` | `false` |
+| value | `null` | `false` | `false` | `false` |
+| `null` | `null` | `false` | `true` | `true` |
+
+- Two `null`s are equal, so they are also "at least" and "at most" each other: `greaterThanOrEqual(a, b)` is `or(greaterThan(a, b), equal(a, b))`, and `and(lessThanOrEqual(a, b), greaterThanOrEqual(a, b))` is `equal(a, b)`, whatever the operands. An inclusive bound that is itself `null` keeps the rows whose value is `null`.
+- One `null` makes every ordering comparison `false`, although `null` sorts first: `lessThan(price, 10)` does not match a row without a price. So `not(lessThan(a, b))` is not `greaterThanOrEqual(a, b)` when exactly one operand is `null`: both are `false`.
+- In SQL, with two nullable operands, `greaterThanOrEqual(a, b)` is `a >= b OR (a IS NULL AND b IS NULL)`. The `uuid` order is not the one SQL Server uses for `uniqueidentifier`; an interpreter on such a database must still sort by this rule.
 
 ### Dates and times
 

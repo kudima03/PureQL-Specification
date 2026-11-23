@@ -1,0 +1,191 @@
+// greaterThanOrEqual and lessThanOrEqual over a nullable field and nullable bounds: two nulls are equal, so
+// they are also at least and at most each other, and a >= b is a > b or a = b for every operand. With exactly
+// one null both the comparison and its opposite are false.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "to", "type": { "name": "date", "nullable": true } }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "shipped_date",
+      "expression": {
+        "source": "orders",
+        "field": "shipped_date",
+        "type": { "name": "date", "nullable": true }
+      }
+    },
+    {
+      "alias": "at_least_from",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+      }
+    },
+    {
+      "alias": "after_from_or_equal_to_it",
+      "expression": {
+        "operator": "or",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+          },
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "both_ways_is_equal",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "and",
+          "type": { "name": "boolean" },
+          "conditions": [
+            {
+              "operator": "lessThanOrEqual",
+              "type": { "name": "boolean" },
+              "left": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+            },
+            {
+              "operator": "greaterThanOrEqual",
+              "type": { "name": "boolean" },
+              "left": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              },
+              "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+            }
+          ]
+        },
+        "right": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "not_shipped_and_no_bound",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "type": { "name": "date", "nullable": true }, "value": null }
+          },
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "param": "from", "type": { "name": "date", "nullable": true } },
+            "right": { "type": { "name": "date", "nullable": true }, "value": null }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "not_before_is_not_at_least",
+      "expression": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "not",
+          "type": { "name": "boolean" },
+          "condition": {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+          }
+        },
+        "right": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": { "param": "from", "type": { "name": "date", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "coupon_at_most_parameter",
+      "expression": {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "param": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "shipped_date",
+        "type": { "name": "date", "nullable": true }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
