@@ -1564,161 +1564,161 @@
       }
     },
     {
-      "alias": "toString_string_of_integer",
+      "alias": "asString_string_of_integer",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "integer" }, "value": 7 }
       }
     },
     {
-      "alias": "toString_string_nullable_of_integer",
+      "alias": "asString_string_nullable_of_integer",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "integer", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_decimal",
+      "alias": "asString_string_of_decimal",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     },
     {
-      "alias": "toString_string_nullable_of_decimal",
+      "alias": "asString_string_nullable_of_decimal",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_boolean",
+      "alias": "asString_string_of_boolean",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "boolean" }, "value": true }
       }
     },
     {
-      "alias": "toString_string_nullable_of_boolean",
+      "alias": "asString_string_nullable_of_boolean",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "boolean", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_date",
+      "alias": "asString_string_of_date",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
     {
-      "alias": "toString_string_nullable_of_date",
+      "alias": "asString_string_nullable_of_date",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "date", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_time",
+      "alias": "asString_string_of_time",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "time" }, "value": "08:30:00" }
       }
     },
     {
-      "alias": "toString_string_nullable_of_time",
+      "alias": "asString_string_nullable_of_time",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "time", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_datetime",
+      "alias": "asString_string_of_datetime",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
     {
-      "alias": "toString_string_nullable_of_datetime",
+      "alias": "asString_string_nullable_of_datetime",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toString_string_of_uuid",
+      "alias": "asString_string_of_uuid",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
       }
     },
     {
-      "alias": "toString_string_nullable_of_uuid",
+      "alias": "asString_string_nullable_of_uuid",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string", "nullable": true },
         "operand": { "type": { "name": "uuid", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toDate_date",
+      "alias": "asDate_date",
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
     {
-      "alias": "toDate_date_nullable",
+      "alias": "asDate_date_nullable",
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": { "name": "date", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toTime_time",
+      "alias": "asTime_time",
       "expression": {
-        "operator": "toTime",
+        "operator": "asTime",
         "type": { "name": "time" },
         "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
       }
     },
     {
-      "alias": "toTime_time_nullable",
+      "alias": "asTime_time_nullable",
       "expression": {
-        "operator": "toTime",
+        "operator": "asTime",
         "type": { "name": "time", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
       }
     },
     {
-      "alias": "toDatetime_datetime",
+      "alias": "asDatetime_datetime",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": { "name": "datetime" },
         "operand": { "type": { "name": "date" }, "value": "2024-01-31" }
       }
     },
     {
-      "alias": "toDatetime_datetime_nullable",
+      "alias": "asDatetime_datetime_nullable",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": { "name": "datetime", "nullable": true },
         "operand": { "type": { "name": "date", "nullable": true }, "value": null }
       }

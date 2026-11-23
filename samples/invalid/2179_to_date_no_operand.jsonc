@@ -1,5 +1,0 @@
-// toDate without an operand
-{
-  "from": { "entity": "orders" },
-  "select": [ { "alias": "c", "expression": { "operator": "toDate", "type": { "name": "date" } } } ]
-}

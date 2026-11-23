@@ -1,4 +1,4 @@
-// Conversions in a total query: toString of count, sum and any is non-null, toDate and toDatetime over max
+// Conversions in a total query: asString of count, sum and any is non-null, asDate and asDatetime over max
 // and min are nullable there, and coalesce gives a label when there are no orders.
 {
   "from": { "entity": "orders" },
@@ -10,13 +10,13 @@
         "type": { "name": "string" },
         "values": [
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": { "operator": "count", "type": { "name": "integer" } }
           },
           { "type": { "name": "string" }, "value": " orders, " },
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string" },
             "operand": {
               "operator": "sum",
@@ -31,7 +31,7 @@
     {
       "alias": "last_day",
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": { "name": "date", "nullable": true },
         "operand": {
           "operator": "max",
@@ -47,10 +47,10 @@
         "type": { "name": "string" },
         "values": [
           {
-            "operator": "toString",
+            "operator": "asString",
             "type": { "name": "string", "nullable": true },
             "operand": {
-              "operator": "toDate",
+              "operator": "asDate",
               "type": { "name": "date", "nullable": true },
               "operand": {
                 "operator": "max",
@@ -66,7 +66,7 @@
     {
       "alias": "first_day_start",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": { "name": "datetime", "nullable": true },
         "operand": {
           "operator": "min",
@@ -84,7 +84,7 @@
           "operator": "notEqual",
           "type": { "name": "boolean" },
           "left": {
-            "operator": "toTime",
+            "operator": "asTime",
             "type": { "name": "time" },
             "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
           },
@@ -95,7 +95,7 @@
     {
       "alias": "any_paid",
       "expression": {
-        "operator": "toString",
+        "operator": "asString",
         "type": { "name": "string" },
         "operand": {
           "operator": "any",

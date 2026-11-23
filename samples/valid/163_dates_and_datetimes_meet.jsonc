@@ -1,4 +1,4 @@
-// A date compared and combined with a datetime through toDate and toDatetime: in join.on, where and orderBy,
+// A date compared and combined with a datetime through asDate and asDatetime: in join.on, where and orderBy,
 // a date and a time put together into an instant, and a datetime truncated to midnight through its date.
 {
   "from": { "entity": "orders" },
@@ -21,7 +21,7 @@
             "type": { "name": "boolean" },
             "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
             "right": {
-              "operator": "toDate",
+              "operator": "asDate",
               "type": { "name": "date" },
               "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
             }
@@ -35,7 +35,7 @@
     "type": { "name": "boolean" },
     "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
     "right": {
-      "operator": "toDatetime",
+      "operator": "asDatetime",
       "type": { "name": "datetime", "nullable": true },
       "operand": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } }
     }
@@ -48,7 +48,7 @@
         "operator": "datetimeAddSeconds",
         "type": { "name": "datetime" },
         "left": {
-          "operator": "toDatetime",
+          "operator": "asDatetime",
           "type": { "name": "datetime" },
           "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
         },
@@ -70,7 +70,7 @@
           "operator": "datetimeAddSeconds",
           "type": { "name": "datetime" },
           "left": {
-            "operator": "toDatetime",
+            "operator": "asDatetime",
             "type": { "name": "datetime" },
             "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
           },
@@ -90,7 +90,7 @@
         "type": { "name": "integer" },
         "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
         "right": {
-          "operator": "toDate",
+          "operator": "asDate",
           "type": { "name": "date" },
           "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
         }
@@ -102,7 +102,7 @@
         "operator": "lessThan",
         "type": { "name": "boolean" },
         "left": {
-          "operator": "toTime",
+          "operator": "asTime",
           "type": { "name": "time" },
           "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
         },
@@ -112,10 +112,10 @@
     {
       "alias": "midnight_before_last_login",
       "expression": {
-        "operator": "toDatetime",
+        "operator": "asDatetime",
         "type": { "name": "datetime", "nullable": true },
         "operand": {
-          "operator": "toDate",
+          "operator": "asDate",
           "type": { "name": "date", "nullable": true },
           "operand": {
             "source": "users",
@@ -129,14 +129,14 @@
   "orderBy": [
     {
       "expression": {
-        "operator": "toDate",
+        "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       }
     },
     {
       "expression": {
-        "operator": "toTime",
+        "operator": "asTime",
         "type": { "name": "time" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
       },

@@ -1,0 +1,15 @@
+// asString with digits: a number is rounded with round before it is converted
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

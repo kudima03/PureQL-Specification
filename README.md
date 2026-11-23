@@ -354,12 +354,12 @@ Every number operand above also accepts an `integer`. Larger units are composed,
 
 | Operator | Shape | Result |
 |---|---|---|
-| `toString` | `{ operand: T }`, `T` any type but `string` | `string`: the value as a literal of `T` is written |
-| `toDate` | `{ operand: datetime }` | `date`: its day, in UTC |
-| `toTime` | `{ operand: datetime }` | `time`: its time of day, in UTC |
-| `toDatetime` | `{ operand: date }` | `datetime`: midnight of that day, in UTC |
+| `asString` | `{ operand: T }`, `T` any type but `string` | `string`: the value as a literal of `T` is written |
+| `asDate` | `{ operand: datetime }` | `date`: its day, in UTC |
+| `asTime` | `{ operand: datetime }` | `time`: its time of day, in UTC |
+| `asDatetime` | `{ operand: date }` | `datetime`: midnight of that day, in UTC |
 
-These never fail, and each takes only the types it changes: there is no `toString` of a `string` and no `toDate` of a `date`. The other conversions need no operator of their own. An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. The text each type gives is defined under [Conversion results](#conversion-results).
+These never fail, and each takes only the types it changes: there is no `asString` of a `string` and no `asDate` of a `date`. The other conversions need no operator of their own. An `integer` stands wherever a `decimal` is expected; a `decimal` becomes an `integer` with `round`, `floor`, `ceiling` or `truncate`, which say how; a `boolean` becomes a number with `if`, and a number a `boolean` with a comparison. The text each type gives is defined under [Conversion results](#conversion-results).
 
 ### Conditional and null handling
 
@@ -548,7 +548,7 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 
 ### Conversion results
 
-`toString` writes a value the way a literal of its type is written, in the one spelling of [Types](#types). The text is therefore the same in every interpreter, whatever its locale, and reading it back as a literal gives the value again.
+`asString` writes a value the way a literal of its type is written, in the one spelling of [Types](#types). The text is therefore the same in every interpreter, whatever its locale, and reading it back as a literal gives the value again.
 
 | Type | Text | Example |
 |---|---|---|
@@ -560,11 +560,11 @@ Every type is ordered, and the same order serves comparisons, `min` / `max`, `gr
 | `datetime` | the date, `T`, the time, `Z` | `2024-01-31T18:30:00Z` |
 | `uuid` | 8-4-4-4-12 hexadecimal digits in lower case | `3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f` |
 
-- A `decimal` is written by its value, not by how it was computed: `toString(divide(1, 8))` is `0.125`, `toString` of `19.90` is `19.9`, and a `decimal` that is a whole number reads like an `integer`. `round` before the conversion limits the decimal places; nothing adds trailing zeros.
+- A `decimal` is written by its value, not by how it was computed: `asString(divide(1, 8))` is `0.125`, `asString` of `19.90` is `19.9`, and a `decimal` that is a whole number reads like an `integer`. `round` before the conversion limits the decimal places; nothing adds trailing zeros.
 - `null` stays `null`, never the text `null`: the result is nullable exactly when the operand is, and `coalesce` gives a text for it.
 - Display formats (thousands separators, month names, a local time zone) are left to the client.
 
-`toDate` and `toTime` read a `datetime` in UTC, as it is written: for `2024-01-31T23:30:00Z` they give `2024-01-31` and `23:30:00`. `toDatetime` gives midnight UTC of a `date`: `2024-01-31T00:00:00Z`. So `toDatetime(toDate(dt))` equals `startOfDay(dt)`, a `datetime` is grouped or joined by its day with `toDate`, and a `date` and a `time` are combined into an instant with `datetimeAddSeconds(toDatetime(d), timeDiffSeconds(t, 00:00:00))`.
+`asDate` and `asTime` read a `datetime` in UTC, as it is written: for `2024-01-31T23:30:00Z` they give `2024-01-31` and `23:30:00`. `asDatetime` gives midnight UTC of a `date`: `2024-01-31T00:00:00Z`. So `asDatetime(asDate(dt))` equals `startOfDay(dt)`, a `datetime` is grouped or joined by its day with `asDate`, and a `date` and a `time` are combined into an instant with `datetimeAddSeconds(asDatetime(d), timeDiffSeconds(t, 00:00:00))`.
 
 ### Aggregate evaluation
 
@@ -701,7 +701,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`033_time_datetime.json`](samples/valid/033_time_datetime.json) | `time` / `datetime` literals, math and comparisons |
 | [`034_datetime_utc.json`](samples/valid/034_datetime_utc.json) | `datetime` literals, always in UTC, with fractional seconds |
 | [`035_date_parts.json`](samples/valid/035_date_parts.json) | Parts of a `date`, a `datetime` and a `time` as `integer` columns, lifted over a nullable field, and weekend orders in `where` |
-| [`036_conversions.json`](samples/valid/036_conversions.json) | `toString` / `toDate` / `toTime` / `toDatetime`: a label built from a date and a decimal, a nullable date as text, the day and the time of a `datetime`, midnight of a `date`, and a `datetime` filtered by its day in `where` |
+| [`036_conversions.json`](samples/valid/036_conversions.json) | `asString` / `asDate` / `asTime` / `asDatetime`: a label built from a date and a decimal, a nullable date as text, the day and the time of a `datetime`, midnight of a `date`, and a `datetime` filtered by its day in `where` |
 | [`037_nullable_columns.json`](samples/valid/037_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`038_typed_null.json`](samples/valid/038_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
 | [`039_coalesce.json`](samples/valid/039_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
