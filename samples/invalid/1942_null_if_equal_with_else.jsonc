@@ -1,0 +1,16 @@
+// nullIfEqual with an else property: the default for a null result is written with coalesce
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 0 },
+        "else": { "type": { "name": "decimal" }, "value": "1" }
+      }
+    }
+  ]
+}
