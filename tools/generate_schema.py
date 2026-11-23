@@ -22,7 +22,7 @@ reads the `type` the node declares, which is a shallow check. So validation is
 linear in the size of the query, whatever its depth.
 
 Contexts:
-  row         where, join.on, groupBy keys, aggregate selector/predicate.
+  row         where, join.on, groupBy keys, aggregate selector/predicate/orderBy.
               Fields allowed, aggregates not.
   projection  select / orderBy of a plain query: one row per row.
               Fields allowed, aggregates over all rows (broadcast), without
@@ -41,7 +41,7 @@ There is no untyped null: a null literal is written with its type,
 {"type": {"name": "uuid", "nullable": true}, "value": null}. So the type of
 every expression is determined by its subtree and its context, never inferred
 from surrounding expressions. The context only decides whether min / max /
-average can be null: a row of a plain or grouped query exists only if a row
+average / first / last can be null: a row of a plain or grouped query exists only if a row
 of its source does, so there every aggregate sees at least one row, while a
 total query returns its row even when there are none.
 
@@ -552,6 +552,15 @@ for ctx, rules in CONTEXTS.items():
             shape(name, ["selector"], {**aggregate_props, "selector": True})
             for t in ORDERED:
                 aggregate(name, t, t, exact=True)
+        # first / last: the selector's value in the first or last of the aggregate's
+        # rows, sorted by its own orderBy of row expressions. The value of that row is
+        # returned even when it is null, so the result is typed as for min / max: null
+        # only with a nullable selector, or when a predicate may leave no row.
+        for name in ["first", "last"]:
+            shape(name, ["selector", "orderBy"],
+                  {**aggregate_props, "selector": True, "orderBy": array_of(ref("orderItem@row"), 1)})
+            for t in ORDERED:
+                aggregate(name, t, t, exact=True)
         for name in ["any", "all"]:
             shape(name, ["predicate"], aggregate_props)
             signature(name, "boolean", False)
@@ -656,7 +665,8 @@ for ctx in ["projection", "group", "total"]:
     defs[f"selectItem@{ctx}"] = obj(
         ["alias", "expression"], {"alias": NAME, "expression": ref(f"expr@{ctx}")}
     )
-for ctx in ["projection", "group"]:
+# `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last).
+for ctx in ["row", "projection", "group"]:
     defs[f"orderItem@{ctx}"] = obj(
         ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}
     )
