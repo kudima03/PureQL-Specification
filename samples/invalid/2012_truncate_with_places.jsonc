@@ -1,0 +1,15 @@
+// truncate with places instead of digits
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "places": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

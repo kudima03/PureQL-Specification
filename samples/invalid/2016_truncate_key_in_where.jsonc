@@ -1,0 +1,17 @@
+// truncate of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "truncate",
+      "type": { "name": "integer" },
+      "operand": { "key": "total", "type": { "name": "decimal" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 100 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

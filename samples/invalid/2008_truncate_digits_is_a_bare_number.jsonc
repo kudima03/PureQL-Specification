@@ -1,0 +1,15 @@
+// truncate with the number 2 as digits: digits is an expression, here a literal with its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": 2
+      }
+    }
+  ]
+}

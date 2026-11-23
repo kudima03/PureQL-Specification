@@ -1,0 +1,18 @@
+// sign of a nullable operand declared integer: it is lifted, so it is integer?
+{
+  "from": { "entity": "coupons" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "integer" },
+        "operand": {
+          "source": "coupons",
+          "field": "discount",
+          "type": { "name": "decimal", "nullable": true }
+        }
+      }
+    }
+  ]
+}

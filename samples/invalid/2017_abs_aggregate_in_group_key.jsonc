@@ -1,0 +1,19 @@
+// abs of an aggregate as a groupBy key, a row expression
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "size",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

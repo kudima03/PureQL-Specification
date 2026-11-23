@@ -1,0 +1,16 @@
+// truncate with nullable digits: digits is never null, so that the result is nullable exactly when the
+// operand is
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "param": "places", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

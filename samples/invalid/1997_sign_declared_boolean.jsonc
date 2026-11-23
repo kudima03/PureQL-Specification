@@ -1,0 +1,14 @@
+// sign declared boolean: it is an integer, compared with 0 for a condition
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sign",
+        "type": { "name": "boolean" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

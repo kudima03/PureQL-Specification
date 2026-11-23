@@ -1,0 +1,14 @@
+// truncate without an operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal" },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}
