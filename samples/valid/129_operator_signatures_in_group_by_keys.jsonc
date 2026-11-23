@@ -2326,6 +2326,396 @@
         "left": { "type": { "name": "string" }, "value": "a" },
         "right": { "type": { "name": "string", "nullable": true }, "value": null }
       }
+    },
+    {
+      "alias": "greatest_integer",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_integer_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer", "nullable": true }, "value": null },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_decimal",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "2.5" },
+          { "type": { "name": "decimal" }, "value": "0.1" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_decimal_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "2.5" },
+          { "type": { "name": "decimal", "nullable": true }, "value": null },
+          { "type": { "name": "decimal" }, "value": "0.1" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_string",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_string_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_boolean",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "boolean" },
+        "values": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_boolean_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "boolean", "nullable": true },
+        "values": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean", "nullable": true }, "value": null },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_date",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date" },
+        "values": [
+          { "type": { "name": "date" }, "value": "2024-01-31" },
+          { "type": { "name": "date" }, "value": "2024-03-01" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_date_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date", "nullable": true },
+        "values": [
+          { "type": { "name": "date" }, "value": "2024-01-31" },
+          { "type": { "name": "date", "nullable": true }, "value": null },
+          { "type": { "name": "date" }, "value": "2024-03-01" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_time",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "time" },
+        "values": [
+          { "type": { "name": "time" }, "value": "08:30:00" },
+          { "type": { "name": "time" }, "value": "17:45:30.5" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_time_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "time", "nullable": true },
+        "values": [
+          { "type": { "name": "time" }, "value": "08:30:00" },
+          { "type": { "name": "time", "nullable": true }, "value": null },
+          { "type": { "name": "time" }, "value": "17:45:30.5" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_datetime",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime" },
+        "values": [
+          { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+          { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_datetime_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "datetime", "nullable": true },
+        "values": [
+          { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+          { "type": { "name": "datetime", "nullable": true }, "value": null },
+          { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_uuid",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "uuid" },
+        "values": [
+          { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+          { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_uuid_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "uuid", "nullable": true },
+        "values": [
+          { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+          { "type": { "name": "uuid", "nullable": true }, "value": null },
+          { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+        ]
+      }
+    },
+    {
+      "alias": "greatest_decimal_of_integer_and_decimal",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
+    },
+    {
+      "alias": "least_integer",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "integer" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    },
+    {
+      "alias": "least_integer_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "integer", "nullable": true }, "value": null },
+          { "type": { "name": "integer" }, "value": -3 }
+        ]
+      }
+    },
+    {
+      "alias": "least_decimal",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "2.5" },
+          { "type": { "name": "decimal" }, "value": "0.1" }
+        ]
+      }
+    },
+    {
+      "alias": "least_decimal_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "2.5" },
+          { "type": { "name": "decimal", "nullable": true }, "value": null },
+          { "type": { "name": "decimal" }, "value": "0.1" }
+        ]
+      }
+    },
+    {
+      "alias": "least_string",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "string" },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    },
+    {
+      "alias": "least_string_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "type": { "name": "string" }, "value": "a" },
+          { "type": { "name": "string", "nullable": true }, "value": null },
+          { "type": { "name": "string" }, "value": "b" }
+        ]
+      }
+    },
+    {
+      "alias": "least_boolean",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "boolean" },
+        "values": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    },
+    {
+      "alias": "least_boolean_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "boolean", "nullable": true },
+        "values": [
+          { "type": { "name": "boolean" }, "value": true },
+          { "type": { "name": "boolean", "nullable": true }, "value": null },
+          { "type": { "name": "boolean" }, "value": false }
+        ]
+      }
+    },
+    {
+      "alias": "least_date",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "date" },
+        "values": [
+          { "type": { "name": "date" }, "value": "2024-01-31" },
+          { "type": { "name": "date" }, "value": "2024-03-01" }
+        ]
+      }
+    },
+    {
+      "alias": "least_date_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "date", "nullable": true },
+        "values": [
+          { "type": { "name": "date" }, "value": "2024-01-31" },
+          { "type": { "name": "date", "nullable": true }, "value": null },
+          { "type": { "name": "date" }, "value": "2024-03-01" }
+        ]
+      }
+    },
+    {
+      "alias": "least_time",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "time" },
+        "values": [
+          { "type": { "name": "time" }, "value": "08:30:00" },
+          { "type": { "name": "time" }, "value": "17:45:30.5" }
+        ]
+      }
+    },
+    {
+      "alias": "least_time_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "time", "nullable": true },
+        "values": [
+          { "type": { "name": "time" }, "value": "08:30:00" },
+          { "type": { "name": "time", "nullable": true }, "value": null },
+          { "type": { "name": "time" }, "value": "17:45:30.5" }
+        ]
+      }
+    },
+    {
+      "alias": "least_datetime",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "datetime" },
+        "values": [
+          { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+          { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+        ]
+      }
+    },
+    {
+      "alias": "least_datetime_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "datetime", "nullable": true },
+        "values": [
+          { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+          { "type": { "name": "datetime", "nullable": true }, "value": null },
+          { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+        ]
+      }
+    },
+    {
+      "alias": "least_uuid",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "uuid" },
+        "values": [
+          { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+          { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+        ]
+      }
+    },
+    {
+      "alias": "least_uuid_nullable",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "uuid", "nullable": true },
+        "values": [
+          { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" },
+          { "type": { "name": "uuid", "nullable": true }, "value": null },
+          { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+        ]
+      }
+    },
+    {
+      "alias": "least_decimal_of_integer_and_decimal",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 7 },
+          { "type": { "name": "decimal" }, "value": "2.5" }
+        ]
+      }
     }
   ],
   "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]

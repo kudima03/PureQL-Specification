@@ -1,0 +1,14 @@
+// greatest with a list literal as values: its operands are expressions, and a list is accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": { "type": { "name": "decimalList" }, "value": [ "1.5", "2.5" ] }
+      }
+    }
+  ]
+}

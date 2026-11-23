@@ -1,0 +1,18 @@
+// greatest of an integer and a decimal declared integer: a decimal operand makes the result decimal,
+// whichever value is the largest
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ]
+}

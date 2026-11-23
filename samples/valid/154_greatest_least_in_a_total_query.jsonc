@@ -1,0 +1,85 @@
+// greatest and least in a total query: non-null over count and sum, nullable over min and max, which are
+// always nullable there, until coalesce gives a default.
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "orders_at_least_one",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer" },
+        "values": [
+          { "operator": "count", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    {
+      "alias": "largest_capped",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "max",
+            "type": { "name": "decimal", "nullable": true },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "param": "cap", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "first_day_in_period",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date", "nullable": true },
+        "values": [
+          {
+            "operator": "min",
+            "type": { "name": "date", "nullable": true },
+            "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          { "param": "period_start", "type": { "name": "date" } }
+        ]
+      }
+    },
+    {
+      "alias": "first_day_or_start",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "date" },
+        "values": [
+          {
+            "operator": "greatest",
+            "type": { "name": "date", "nullable": true },
+            "values": [
+              {
+                "operator": "min",
+                "type": { "name": "date", "nullable": true },
+                "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+              },
+              { "param": "period_start", "type": { "name": "date" } }
+            ]
+          },
+          { "param": "period_start", "type": { "name": "date" } }
+        ]
+      }
+    },
+    {
+      "alias": "revenue_floor",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ]
+}

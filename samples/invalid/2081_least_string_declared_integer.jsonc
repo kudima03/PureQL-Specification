@@ -1,0 +1,17 @@
+// least of strings declared integer: it is the smallest string, not its position
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "orders", "field": "status", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": "pending" }
+        ]
+      }
+    }
+  ]
+}

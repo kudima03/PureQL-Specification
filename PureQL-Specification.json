@@ -15209,6 +15209,1570 @@
         }
       ]
     },
+    "greatest.boolean.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.boolean.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.boolean.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.boolean.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.boolean@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@group"
+          }
+        }
+      }
+    },
+    "greatest.boolean@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@projection"
+          }
+        }
+      }
+    },
+    "greatest.boolean@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@row"
+          }
+        }
+      }
+    },
+    "greatest.boolean@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@total"
+          }
+        }
+      }
+    },
+    "greatest.date.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.date.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.date.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.date.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.date@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@group"
+          }
+        }
+      }
+    },
+    "greatest.date@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@projection"
+          }
+        }
+      }
+    },
+    "greatest.date@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@row"
+          }
+        }
+      }
+    },
+    "greatest.date@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@total"
+          }
+        }
+      }
+    },
+    "greatest.datetime.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.datetime.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.datetime.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.datetime.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.datetime@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@group"
+          }
+        }
+      }
+    },
+    "greatest.datetime@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@projection"
+          }
+        }
+      }
+    },
+    "greatest.datetime@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@row"
+          }
+        }
+      }
+    },
+    "greatest.datetime@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@total"
+          }
+        }
+      }
+    },
+    "greatest.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "greatest.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "greatest.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "greatest.decimal.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "greatest.decimal@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@group"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "greatest.decimal@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@projection"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "greatest.decimal@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@row"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "greatest.decimal@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@total"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "greatest.integer.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.integer.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.integer.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.integer.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.integer@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@group"
+          }
+        }
+      }
+    },
+    "greatest.integer@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@projection"
+          }
+        }
+      }
+    },
+    "greatest.integer@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@row"
+          }
+        }
+      }
+    },
+    "greatest.integer@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@total"
+          }
+        }
+      }
+    },
+    "greatest.string.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.string.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.string.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.string.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.string@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@group"
+          }
+        }
+      }
+    },
+    "greatest.string@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@projection"
+          }
+        }
+      }
+    },
+    "greatest.string@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@row"
+          }
+        }
+      }
+    },
+    "greatest.string@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@total"
+          }
+        }
+      }
+    },
+    "greatest.time.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.time.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.time.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.time.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.time@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@group"
+          }
+        }
+      }
+    },
+    "greatest.time@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@projection"
+          }
+        }
+      }
+    },
+    "greatest.time@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@row"
+          }
+        }
+      }
+    },
+    "greatest.time@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@total"
+          }
+        }
+      }
+    },
+    "greatest.uuid.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.uuid.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.uuid.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.uuid.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "greatest.uuid@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@group"
+          }
+        }
+      }
+    },
+    "greatest.uuid@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@projection"
+          }
+        }
+      }
+    },
+    "greatest.uuid@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@row"
+          }
+        }
+      }
+    },
+    "greatest.uuid@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@total"
+          }
+        }
+      }
+    },
+    "greatest@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "greatest"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "greatest@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "greatest"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "greatest@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "greatest"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid.nullable@row"
+          }
+        }
+      ]
+    },
+    "greatest@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "greatest"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/greatest.uuid.nullable@total"
+          }
+        }
+      ]
+    },
     "groupKey": {
       "type": "object",
       "required": [
@@ -21140,6 +22704,1570 @@
           },
           "then": {
             "$ref": "#/$defs/param"
+          }
+        }
+      ]
+    },
+    "least.boolean.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.boolean.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.boolean.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.boolean.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.boolean@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@group"
+          }
+        }
+      }
+    },
+    "least.boolean@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@projection"
+          }
+        }
+      }
+    },
+    "least.boolean@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@row"
+          }
+        }
+      }
+    },
+    "least.boolean@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/boolean@total"
+          }
+        }
+      }
+    },
+    "least.date.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.date.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.date.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.date.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.date@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@group"
+          }
+        }
+      }
+    },
+    "least.date@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@projection"
+          }
+        }
+      }
+    },
+    "least.date@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@row"
+          }
+        }
+      }
+    },
+    "least.date@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/date@total"
+          }
+        }
+      }
+    },
+    "least.datetime.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.datetime.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.datetime.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.datetime.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.datetime@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@group"
+          }
+        }
+      }
+    },
+    "least.datetime@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@projection"
+          }
+        }
+      }
+    },
+    "least.datetime@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@row"
+          }
+        }
+      }
+    },
+    "least.datetime@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/datetime@total"
+          }
+        }
+      }
+    },
+    "least.decimal.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "least.decimal.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "least.decimal.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "least.decimal.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "values"
+          ],
+          "properties": {
+            "values": {
+              "contains": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/declares.decimal"
+                  },
+                  {
+                    "$ref": "#/$defs/declares.decimal.nullable"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "least.decimal@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@group"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "least.decimal@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@projection"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "least.decimal@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@row"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "least.decimal@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/decimal@total"
+          },
+          "contains": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/declares.decimal"
+              },
+              {
+                "$ref": "#/$defs/declares.decimal.nullable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "least.integer.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.integer.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.integer.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.integer.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.integer@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@group"
+          }
+        }
+      }
+    },
+    "least.integer@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@projection"
+          }
+        }
+      }
+    },
+    "least.integer@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@row"
+          }
+        }
+      }
+    },
+    "least.integer@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/integer@total"
+          }
+        }
+      }
+    },
+    "least.string.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.string.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.string.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.string.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.string@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@group"
+          }
+        }
+      }
+    },
+    "least.string@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@projection"
+          }
+        }
+      }
+    },
+    "least.string@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@row"
+          }
+        }
+      }
+    },
+    "least.string@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/string@total"
+          }
+        }
+      }
+    },
+    "least.time.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.time.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.time.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.time.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.time@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@group"
+          }
+        }
+      }
+    },
+    "least.time@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@projection"
+          }
+        }
+      }
+    },
+    "least.time@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@row"
+          }
+        }
+      }
+    },
+    "least.time@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/time@total"
+          }
+        }
+      }
+    },
+    "least.uuid.nullable@group": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@group"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.uuid.nullable@projection": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@projection"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.uuid.nullable@row": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@row"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.uuid.nullable@total": {
+      "required": [
+        "values"
+      ],
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid.nullable@total"
+          },
+          "contains": {
+            "$ref": "#/$defs/declares.nullable"
+          }
+        }
+      }
+    },
+    "least.uuid@group": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@group"
+          }
+        }
+      }
+    },
+    "least.uuid@projection": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@projection"
+          }
+        }
+      }
+    },
+    "least.uuid@row": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@row"
+          }
+        }
+      }
+    },
+    "least.uuid@total": {
+      "properties": {
+        "values": {
+          "items": {
+            "$ref": "#/$defs/uuid@total"
+          }
+        }
+      }
+    },
+    "least@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "least"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "least@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "least"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "least@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "least"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid.nullable@row"
+          }
+        }
+      ]
+    },
+    "least@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "values"
+      ],
+      "properties": {
+        "operator": {
+          "const": "least"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            }
+          }
+        },
+        "values": {
+          "type": "array",
+          "minItems": 2
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/least.uuid.nullable@total"
           }
         }
       ]
@@ -31307,6 +34435,8 @@
             "if",
             "coalesce",
             "nullIfEqual",
+            "greatest",
+            "least",
             "count",
             "sum",
             "average",
@@ -32116,6 +35246,30 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "greatest"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/greatest@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "least"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/least@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "count"
               }
             }
@@ -32292,6 +35446,8 @@
             "if",
             "coalesce",
             "nullIfEqual",
+            "greatest",
+            "least",
             "count",
             "sum",
             "average",
@@ -33101,6 +36257,30 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "greatest"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/greatest@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "least"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/least@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "count"
               }
             }
@@ -33276,7 +36456,9 @@
             "in",
             "if",
             "coalesce",
-            "nullIfEqual"
+            "nullIfEqual",
+            "greatest",
+            "least"
           ]
         }
       },
@@ -34072,6 +37254,30 @@
           "then": {
             "$ref": "#/$defs/nullIfEqual@row"
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "greatest"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/greatest@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "least"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/least@row"
+          }
         }
       ]
     },
@@ -34145,6 +37351,8 @@
             "if",
             "coalesce",
             "nullIfEqual",
+            "greatest",
+            "least",
             "count",
             "sum",
             "average",
@@ -34948,6 +38156,30 @@
           },
           "then": {
             "$ref": "#/$defs/nullIfEqual@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "greatest"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/greatest@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "least"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/least@total"
           }
         },
         {

@@ -1,0 +1,18 @@
+// least with a default property for null operands: give the operand a default with coalesce
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+        ],
+        "default": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

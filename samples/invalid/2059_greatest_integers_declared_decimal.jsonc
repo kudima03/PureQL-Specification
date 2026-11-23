@@ -1,0 +1,17 @@
+// greatest of integers declared decimal: integer operands give integer, as for add
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+// greatest with an empty values array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "greatest", "type": { "name": "decimal" }, "values": [] } }
+  ]
+}

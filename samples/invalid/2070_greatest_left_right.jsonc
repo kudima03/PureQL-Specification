@@ -1,0 +1,15 @@
+// greatest with left and right: its operands are a values array of two or more
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

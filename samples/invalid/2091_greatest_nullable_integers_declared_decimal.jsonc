@@ -1,0 +1,27 @@
+// greatest of an integer? and an integer declared decimal?: the nullability is right, but integer operands
+// give an integer
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "dateDiffDays",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// greatest of a string and an integer: the operands are of one type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "orders", "field": "status", "type": { "name": "string" } },
+          { "type": { "name": "integer" }, "value": 7 }
+        ]
+      }
+    }
+  ]
+}

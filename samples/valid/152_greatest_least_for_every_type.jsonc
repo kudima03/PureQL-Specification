@@ -1,0 +1,182 @@
+// greatest and least for every type, by the order of the type: numbers by value, strings by code point, false
+// before true, dates and times chronologically, uuids by their digits; integer operands stay integer, and
+// three operands or nested calls give the middle of three values.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "decimal",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+          { "param": "floor", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "integer",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "integer" },
+        "values": [
+          { "param": "page_size", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 100 }
+        ]
+      }
+    },
+    {
+      "alias": "integer_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          {
+            "operator": "dateDiffDays",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          { "type": { "name": "integer" }, "value": 0 }
+        ]
+      }
+    },
+    {
+      "alias": "decimal_of_integer_and_decimal",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 1000 }
+        ]
+      }
+    },
+    {
+      "alias": "string",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "string" },
+        "values": [
+          { "source": "orders", "field": "status", "type": { "name": "string" } },
+          { "param": "last_status", "type": { "name": "string" } }
+        ]
+      }
+    },
+    {
+      "alias": "either_flag",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "boolean" },
+        "values": [
+          { "source": "orders", "field": "is_priority", "type": { "name": "boolean" } },
+          { "source": "orders", "field": "is_vip", "type": { "name": "boolean" } }
+        ]
+      }
+    },
+    {
+      "alias": "both_flags",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "boolean" },
+        "values": [
+          { "source": "orders", "field": "is_priority", "type": { "name": "boolean" } },
+          { "source": "orders", "field": "is_vip", "type": { "name": "boolean" } }
+        ]
+      }
+    },
+    {
+      "alias": "date",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "date" },
+        "values": [
+          { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          { "type": { "name": "date" }, "value": "2024-01-01" }
+        ]
+      }
+    },
+    {
+      "alias": "time",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "time" },
+        "values": [
+          { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+          { "param": "opens_at", "type": { "name": "time" } }
+        ]
+      }
+    },
+    {
+      "alias": "datetime",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "datetime" },
+        "values": [
+          { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+        ]
+      }
+    },
+    {
+      "alias": "uuid",
+      "expression": {
+        "operator": "least",
+        "type": { "name": "uuid" },
+        "values": [
+          { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+          { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        ]
+      }
+    },
+    {
+      "alias": "uuid_nullable",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "uuid", "nullable": true },
+        "values": [
+          { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+          { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+        ]
+      }
+    },
+    {
+      "alias": "middle_of_three",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "least",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+            ]
+          },
+          {
+            "operator": "least",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "greatest",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+                ]
+              },
+              { "param": "floor", "type": { "name": "decimal" } }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

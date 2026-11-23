@@ -1,0 +1,20 @@
+// least of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "least",
+      "type": { "name": "decimal" },
+      "values": [
+        { "key": "total", "type": { "name": "decimal" } },
+        { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
