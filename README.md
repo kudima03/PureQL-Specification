@@ -839,7 +839,7 @@ An aggregate sees the rows of its group, every row left by `where` (in a plain o
 |---|---|---|
 | `count` | number of rows | `0` |
 | `sum` | exact sum of the non-`null` values; an `integer` overflow is an error | `0` |
-| `average` | mean of the non-`null` values. Numbers: `sum` divided as by `divide`. `date`: mean day, rounded half away from zero to a whole day. `time`: mean of the times as seconds since midnight, without wrapping. `datetime`: mean instant, returned in UTC. `time` and `datetime` round to microseconds | `null` |
+| `average` | mean of the non-`null` values. Numbers: `sum` divided as by `divide`. `date`: mean day, rounded to the nearest whole day. `time`: mean of the times as seconds since midnight, without wrapping. `datetime`: mean instant, returned in UTC. `time` and `datetime` round to the nearest microsecond. A mean exactly halfway between two days, or two microseconds, is the later one | `null` |
 | `min`, `max` | least and greatest non-`null` value by [the order of its type](#ordering-and-equality) | `null` |
 | `first`, `last` | the selector's value in the first, or the last, of the rows sorted by the aggregate's `orderBy` | `null` |
 | `median` | the middle of the non-`null` values in [their order](#ordering-and-equality): the middle one when their number is odd, otherwise the mean of the two middle ones, computed as `average` computes it | `null` |
@@ -856,7 +856,8 @@ An aggregate sees the rows of its group, every row left by `where` (in a plain o
 The statistical aggregates are computed from exact values and rounded once, as `divide` and `sqrt` are, so every interpreter returns the same digits.
 
 - Over the values `1`, `2`, `3`, `4`: `median` is `2.5`; `percentileContinuous` is `3.7` for the fraction `0.9`, `1` for `0` and `4` for `1`; `percentileDiscrete` is `2` for `0.5` and `4` for `0.9`; `variancePopulation` is `1.25` and `varianceSample` is `1.666666666666666666666666667`; `standardDeviationPopulation` is `1.118033988749894848204586834` and `standardDeviationSample` is `1.290994448735805628393088467`.
-- `median` and `percentileContinuous` over a `date`, a `time` or a `datetime` interpolate as `average` averages: in days, rounded half away from zero to a whole day, and in seconds, rounded to microseconds. The median of `2024-01-01` and `2024-01-04` is `2024-01-03`.
+- A date and an instant have no zero, so a temporal mean is never rounded "away from zero", which would depend on the day an interpreter counts from: a value exactly halfway between two days, or two microseconds, is the later one. The mean of `1969-12-30` and `1969-12-31` is `1969-12-31`, as the mean of `2024-01-01` and `2024-01-02` is `2024-01-02`. A number of seconds is still rounded half away from zero, as every number is.
+- `median` and `percentileContinuous` over a `date`, a `time` or a `datetime` interpolate as `average` averages: in days, rounded to the nearest whole day, and in seconds, rounded to the nearest microsecond, with a value exactly halfway going to the later one. The median of `2024-01-01` and `2024-01-04` is `2024-01-03`.
 - `percentileDiscrete` and `mode` return a value that occurs in the rows, so they exist for every type. The `fraction` is one value for the whole aggregate; bound to a parameter outside 0 to 1 it is an [execution error](#execution-errors).
 - A standard deviation is the square root of the exact variance, not of its rounded value.
 
