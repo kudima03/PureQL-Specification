@@ -1,0 +1,28 @@
+// skip and take as integer parameters: a skip bound to 0 is a first page chosen at execution time.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": {
+    "skip": { "param": "offset", "type": { "name": "integer" } },
+    "take": { "param": "page_size", "type": { "name": "integer" } }
+  },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  }
+}

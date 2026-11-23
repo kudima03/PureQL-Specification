@@ -6,5 +6,5 @@
   ],
   "select": [ { "alias": "id", "expression": { "key": "id", "type": { "name": "uuid" } } } ],
   "orderBy": [],
-  "pagination": { "skip": 0, "take": 1 }
+  "pagination": { "take": 1 }
 }

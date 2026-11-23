@@ -51706,16 +51706,13 @@
     },
     "pagination": {
       "type": "object",
-      "required": [
-        "skip",
-        "take"
-      ],
+      "required": [],
       "properties": {
         "skip": {
           "anyOf": [
             {
               "type": "integer",
-              "minimum": 0,
+              "minimum": 1,
               "maximum": 9223372036854776000
             },
             {
@@ -51750,7 +51747,8 @@
           ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "minProperties": 1
     },
     "param": {
       "type": "object",

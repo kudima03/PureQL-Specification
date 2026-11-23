@@ -10,7 +10,7 @@
         ],
         "select": [ { "alias": "id", "expression": { "key": "id", "type": { "name": "uuid" } } } ],
         "orderBy": [ { "expression": { "key": "id", "type": { "name": "uuid" } }, "direction": "asc" } ],
-        "pagination": { "skip": 0, "take": 1 }
+        "pagination": { "take": 1 }
       }
     }
   ],

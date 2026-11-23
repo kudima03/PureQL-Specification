@@ -17,5 +17,5 @@
       ]
     }
   ],
-  "pagination": { "skip": 0, "take": 10 }
+  "pagination": { "take": 10 }
 }

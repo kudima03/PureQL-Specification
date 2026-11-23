@@ -8,7 +8,7 @@
         "select": [
           { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
         ],
-        "pagination": { "skip": 0, "take": 10 }
+        "pagination": { "take": 10 }
       }
     }
   ],

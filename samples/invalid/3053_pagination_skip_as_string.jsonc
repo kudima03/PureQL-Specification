@@ -1,0 +1,19 @@
+// pagination with skip as a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "direction": "desc"
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": { "skip": "10", "take": 20 }
+}

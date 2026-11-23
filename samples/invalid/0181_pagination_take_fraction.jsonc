@@ -8,5 +8,5 @@
     }
   ],
   "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
-  "pagination": { "skip": 0, "take": 1.5 }
+  "pagination": { "take": 1.5 }
 }

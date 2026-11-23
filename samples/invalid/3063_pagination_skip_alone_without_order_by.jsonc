@@ -1,0 +1,12 @@
+// pagination that only skips, without orderBy: which rows are skipped needs an order
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    }
+  ],
+  "pagination": { "skip": 10 }
+}

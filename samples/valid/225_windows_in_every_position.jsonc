@@ -78,7 +78,7 @@
           },
           { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
         ],
-        "pagination": { "skip": 0, "take": 1000 }
+        "pagination": { "take": 1000 }
       }
     },
     {
@@ -365,5 +365,5 @@
     { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
   ],
   "distinctBy": [ "user_id", "half" ],
-  "pagination": { "skip": 0, "take": 50 }
+  "pagination": { "take": 50 }
 }

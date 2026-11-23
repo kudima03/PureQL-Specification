@@ -90,5 +90,5 @@
     },
     { "expression": { "key": "email", "type": { "name": "string" } } }
   ],
-  "pagination": { "skip": 0, "take": 10 }
+  "pagination": { "take": 10 }
 }

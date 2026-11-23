@@ -5,5 +5,5 @@
     { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
   ],
   "orderBy": [{ "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }],
-  "pagination": { "skip": 0, "take": 10000000000000000000 }
+  "pagination": { "take": 10000000000000000000 }
 }

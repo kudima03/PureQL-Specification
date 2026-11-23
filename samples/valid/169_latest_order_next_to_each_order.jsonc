@@ -85,5 +85,5 @@
     },
     { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
   ],
-  "pagination": { "skip": 0, "take": 20 }
+  "pagination": { "take": 20 }
 }

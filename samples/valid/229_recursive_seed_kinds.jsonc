@@ -140,7 +140,7 @@
             { "expression": { "source": "users", "field": "created_at", "type": { "name": "datetime" } } },
             { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
           ],
-          "pagination": { "skip": 0, "take": 10 }
+          "pagination": { "take": 10 }
         },
         "next": {
           "from": { "entity": "users" },

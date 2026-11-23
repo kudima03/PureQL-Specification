@@ -169,5 +169,5 @@
     { "expression": { "source": "referrals", "field": "id", "type": { "name": "uuid" } } }
   ],
   "distinctBy": [ "id" ],
-  "pagination": { "skip": 0, "take": 100 }
+  "pagination": { "take": 100 }
 }

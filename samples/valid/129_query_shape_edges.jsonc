@@ -38,5 +38,5 @@
     { "expression": { "type": { "name": "date", "nullable": true }, "value": null } },
     { "expression": { "operator": "count", "type": { "name": "integer" } } }
   ],
-  "pagination": { "skip": 0, "take": 1 }
+  "pagination": { "take": 1 }
 }

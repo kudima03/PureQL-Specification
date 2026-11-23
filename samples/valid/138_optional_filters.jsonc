@@ -61,5 +61,5 @@
       "direction": "desc"
     }
   ],
-  "pagination": { "skip": 0, "take": 50 }
+  "pagination": { "take": 50 }
 }

@@ -988,14 +988,11 @@ defs["join"] = {
     **ONE_SOURCE,
 }
 # skip / take are a number or a non-null integer parameter, so a page can be
-# chosen at execution time.
-defs["pagination"] = obj(
-    ["skip", "take"],
-    {
-        "skip": {"anyOf": [{**INT64, "minimum": 0}, INTEGER_PARAM]},
-        "take": {"anyOf": [{**INT64, "minimum": 1}, INTEGER_PARAM]},
-    },
-)
+# chosen at execution time. Each is optional and its absence is its default:
+# no rows skipped, every row after them returned. So a first page has no
+# `skip`, `"skip": 0` is never written, and a pagination names at least one.
+PAGE_ROWS = {"anyOf": [{**INT64, "minimum": 1}, INTEGER_PARAM]}
+defs["pagination"] = {**obj([], {"skip": PAGE_ROWS, "take": PAGE_ROWS}), "minProperties": 1}
 
 
 # A column or a group key has the type its expression declares: a subquery
