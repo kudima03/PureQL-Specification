@@ -1,0 +1,54 @@
+// inline rows declared inside a subquery's query: only the main query declares subqueries
+{
+  "subqueries": [
+    {
+      "name": "statuses",
+      "query": {
+        "subqueries": [
+          {
+            "name": "statuses",
+            "rows": [
+              [
+                { "alias": "status", "expression": { "type": { "name": "string" }, "value": "new" } },
+                { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 1 } },
+                { "alias": "label", "expression": { "type": { "name": "string" }, "value": "New" } }
+              ],
+              [
+                { "alias": "status", "expression": { "type": { "name": "string" }, "value": "paid" } },
+                { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 2 } },
+                { "alias": "label", "expression": { "type": { "name": "string" }, "value": "Paid" } }
+              ],
+              [
+                { "alias": "status", "expression": { "type": { "name": "string" }, "value": "shipped" } },
+                { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 3 } },
+                { "alias": "label", "expression": { "type": { "name": "string" }, "value": "Shipped" } }
+              ],
+              [
+                { "alias": "status", "expression": { "type": { "name": "string" }, "value": "cancelled" } },
+                { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 4 } },
+                {
+                  "alias": "label",
+                  "expression": { "type": { "name": "string", "nullable": true }, "value": null }
+                }
+              ]
+            ]
+          }
+        ],
+        "from": { "subquery": "statuses" },
+        "select": [
+          {
+            "alias": "status",
+            "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "statuses" },
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}

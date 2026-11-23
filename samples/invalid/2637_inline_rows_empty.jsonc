@@ -1,0 +1,11 @@
+// inline rows with no rows: an absent source is omitted, never empty
+{
+  "subqueries": [ { "name": "statuses", "rows": [] } ],
+  "from": { "subquery": "statuses" },
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}

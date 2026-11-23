@@ -1,0 +1,82 @@
+// Cells of every type, as literals, typed nulls and parameters. Rows list their columns in any order; a
+// column takes the least type that accepts every row, so an integer and a decimal give a decimal, and a null
+// or a nullable parameter makes it nullable.
+{
+  "subqueries": [
+    {
+      "name": "values",
+      "rows": [
+        [
+          { "alias": "amount", "expression": { "type": { "name": "integer" }, "value": 1 } },
+          { "alias": "label", "expression": { "type": { "name": "string" }, "value": "one" } },
+          { "alias": "flag", "expression": { "type": { "name": "boolean" }, "value": true } },
+          { "alias": "day", "expression": { "type": { "name": "date" }, "value": "2024-01-31" } },
+          {
+            "alias": "at",
+            "expression": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" }
+          },
+          { "alias": "time", "expression": { "type": { "name": "time" }, "value": "08:30:00" } },
+          {
+            "alias": "id",
+            "expression": { "type": { "name": "uuid" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+          }
+        ],
+        [
+          {
+            "alias": "label",
+            "expression": { "type": { "name": "string", "nullable": true }, "value": null }
+          },
+          { "alias": "amount", "expression": { "type": { "name": "decimal" }, "value": "2.5" } },
+          {
+            "alias": "id",
+            "expression": { "type": { "name": "uuid" }, "value": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d" }
+          },
+          { "alias": "time", "expression": { "type": { "name": "time" }, "value": "17:45:30.5" } },
+          {
+            "alias": "at",
+            "expression": { "type": { "name": "datetime" }, "value": "2024-03-01T17:45:30.5Z" }
+          },
+          { "alias": "day", "expression": { "type": { "name": "date", "nullable": true }, "value": null } },
+          { "alias": "flag", "expression": { "type": { "name": "boolean" }, "value": false } }
+        ],
+        [
+          {
+            "alias": "amount",
+            "expression": { "param": "amount", "type": { "name": "integer", "nullable": true } }
+          },
+          { "alias": "label", "expression": { "param": "label", "type": { "name": "string" } } },
+          { "alias": "flag", "expression": { "param": "flag", "type": { "name": "boolean" } } },
+          { "alias": "day", "expression": { "param": "day", "type": { "name": "date" } } },
+          { "alias": "at", "expression": { "param": "at", "type": { "name": "datetime" } } },
+          { "alias": "time", "expression": { "param": "time", "type": { "name": "time" } } },
+          { "alias": "id", "expression": { "param": "id", "type": { "name": "uuid" } } }
+        ]
+      ]
+    }
+  ],
+  "from": { "subquery": "values" },
+  "select": [
+    {
+      "alias": "amount",
+      "expression": { "source": "values", "field": "amount", "type": { "name": "decimal", "nullable": true } }
+    },
+    {
+      "alias": "label",
+      "expression": { "source": "values", "field": "label", "type": { "name": "string", "nullable": true } }
+    },
+    { "alias": "flag", "expression": { "source": "values", "field": "flag", "type": { "name": "boolean" } } },
+    {
+      "alias": "day",
+      "expression": { "source": "values", "field": "day", "type": { "name": "date", "nullable": true } }
+    },
+    { "alias": "at", "expression": { "source": "values", "field": "at", "type": { "name": "datetime" } } },
+    { "alias": "time", "expression": { "source": "values", "field": "time", "type": { "name": "time" } } },
+    { "alias": "id", "expression": { "source": "values", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "values", "field": "amount", "type": { "name": "decimal", "nullable": true } }
+    },
+    { "expression": { "source": "values", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

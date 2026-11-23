@@ -1,0 +1,11 @@
+// a subquery entry with neither a query nor rows
+{
+  "subqueries": [ { "name": "statuses" } ],
+  "from": { "subquery": "statuses" },
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}
