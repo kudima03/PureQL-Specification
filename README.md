@@ -109,7 +109,7 @@ PureQL uses the following null semantics:
 - **`concatWith`:** accepts nullable operands and returns a non-null `string`: `null` operands are skipped, where `concat` is lifted and gives `null`.
 - **Conditions:** `where`, `having`, `join.on`, `and` / `or` / `not`, `if.condition` and aggregate `predicate` require a non-null `boolean`. To use a nullable boolean as a condition, write `equal(x, true)` or `coalesce(x, false)`.
 - **`coalesce`:** non-null as soon as one operand is non-null.
-- **`nullIf`:** accepts nullable operands and is always nullable, even over two non-null ones: `null` when its operands are equal, as `equal` compares them, and its left operand otherwise.
+- **`nullIfEqual`:** accepts nullable operands and is always nullable, even over two non-null ones: `null` when its operands are equal, as `equal` compares them, and its left operand otherwise.
 - **Sorting:** `null` sorts before every value in ascending order and after every value in descending order.
 
 ### Numbers
@@ -419,11 +419,11 @@ The text each type gives, and reads, is defined under [Conversion results](#conv
 | `if` | `{ condition: boolean, then: T, else: T }` | `T` (`T?` if either branch is nullable; `decimal` if either branch is) |
 | `coalesce` | `{ values: [T?, …] }` (at least 2) | `T` if any operand is non-null, otherwise `T?`; `decimal` if any operand is |
 | `greatest`, `least` | `{ values: [T, …] }` (at least 2), `T` any type | `T`: the largest or the smallest operand by [the order of `T`](#ordering-and-equality); `decimal` if any operand is |
-| `nullIf` | `{ left: T?, right: T? }`, `T` any type | `T?`, always nullable, with the type of `left`: an `integer` `left` stays `integer?` next to a `decimal` `right` |
+| `nullIfEqual` | `{ left: T?, right: T? }`, `T` any type | `T?`, always nullable, with the type of `left`: an `integer` `left` stays `integer?` next to a `decimal` `right` |
 
 `greatest` and `least` compare the expressions of one row, where the aggregates `max` and `min` compare the rows of a group: the later of two dates, the larger of plan and actual, and a value clamped to a range with `least(greatest(x, low), high)` ([`020_greatest_least.json`](samples/valid/020_greatest_least.json)). They are lifted, so the result is `null` when any operand is `null`; unlike `max` and `min` they do not skip it. To leave an operand out when it is `null`, give it a default with `coalesce`.
 
-`nullIf` is `null` when `left` equals `right` and `left` otherwise, so it reads a value that stands for "missing" as `null`: an empty string, a sentinel, a zero divisor. It is how a division avoids [failing on zero](#execution-errors): `divide` is lifted, so `divide(total, nullIf(limit, 0))` is `null` where `limit` is zero, and `coalesce` over it gives a default. The same guard serves `integerDivide` and `modulo`, and there is no separate division operator for it ([`044_null_if.json`](samples/valid/044_null_if.json)).
+`nullIfEqual` is `null` when `left` equals `right` and `left` otherwise, so it reads a value that stands for "missing" as `null`: an empty string, a sentinel, a zero divisor. It is how a division avoids [failing on zero](#execution-errors): `divide` is lifted, so `divide(total, nullIfEqual(limit, 0))` is `null` where `limit` is zero, and `coalesce` over it gives a default. The same guard serves `integerDivide` and `modulo`, and there is no separate division operator for it ([`044_null_if_equal.json`](samples/valid/044_null_if_equal.json)). Null on any other condition is `if` with a `null` branch.
 
 ### Aggregates
 
@@ -475,14 +475,14 @@ This section fixes what an interpreter computes, so that two conforming interpre
 - **Set operations** compare rows column by column with `equal`, so two `null`s are the same value, and `1` and `1.0` are. `unionAll` returns every row of every input: a row that one input returns twice and another three times is returned five times. `union` returns each distinct row of those once. `intersect` returns each distinct row that occurs in every input, and `except` each distinct row of the first input that occurs in no other. The result is unordered. Each input behaves as if it ran once, on its own.
 - **Laziness.** An operation raises an error only if it is evaluated, and evaluation is lazy where it matters: `if` evaluates only the branch it takes, `coalesce` stops at its first non-`null` operand, `and` stops at the first `false` condition and `or` at the first `true`. So `if(equal(n, 0), 0, divide(x, n))` never divides by zero.
 - **`greatest`** and **`least`** evaluate every operand and yield the largest or the smallest by [the order of their type](#ordering-and-equality), or `null` when any operand is `null`. Numbers compare by value, and with a `decimal` operand the result is a `decimal` whichever operand it comes from. Operands that are equal are the same value, so it does not matter which one is returned.
-- **`nullIf`** evaluates both operands and compares them with `equal`. It is `null` when they are equal and the value of `left` otherwise. Numbers compare by value, so `nullIf(x, 0)` is `null` for every zero, `integer` or `decimal`; strings compare code point by code point. A `null` `left` gives `null`, and a `null` `right` leaves `left` as it is.
+- **`nullIfEqual`** evaluates both operands and compares them with `equal`. It is `null` when they are equal and the value of `left` otherwise. Numbers compare by value, so `nullIfEqual(x, 0)` is `null` for every zero, `integer` or `decimal`; strings compare code point by code point. A `null` `left` gives `null`, and a `null` `right` leaves `left` as it is.
 
 ### Execution errors
 
 A query fails at execution with an error when it:
 
 - produces an `integer` outside the 64-bit range, or a `decimal` of magnitude 10²⁸ or more;
-- divides by zero in `divide`, `integerDivide` or `modulo` (for `null` instead, divide by `nullIf(divisor, 0)`);
+- divides by zero in `divide`, `integerDivide` or `modulo` (for `null` instead, divide by `nullIfEqual(divisor, 0)`);
 - takes the `sqrt` of a negative number; the `ln`, `log10` or `log` of a number that is not positive; a `log` to a `base` that is not positive or is `1`; a `power` of zero to a negative `exponent`, or of a negative number to an `exponent` that is not a whole number;
 - takes a `substring` with a `start` below 1 or a negative `length`, a `position` with a `start` below 1, a `splitPart` with an `index` of 0, or a `repeat` with a negative `count`;
 - reads, with an `as…` operator, a string that is not written as a literal of the type;
@@ -507,7 +507,7 @@ A query fails at execution with an error when it:
   - **Not floating point.** Binary floating point gives 15 to 17 of these digits, so an interpreter computes them in decimal arithmetic of higher precision, and not with the `double` functions of its database or runtime.
   - **`power`.** Any number to the `exponent` `0` is `1`, zero included. A negative `operand` takes only a whole `exponent`: `power(-2, 3)` is `-8`. `sqrt(x)` equals `power(x, 0.5)`, and other roots are fractional exponents too: `power(x, divide(1, 3))` is a cube root, up to the rounding of its exponent.
   - **Range.** A result of magnitude 10²⁸ or more is an error, as for every `decimal`: `exp(64)` fits and `exp(65)` does not. A result too small for 28 decimal places rounds to `0`: `exp(-100)` is `0`.
-  - **Domain.** A square root of a negative number, a logarithm of a number that is not positive or to a `base` that is not positive or is `1`, zero to a negative `exponent`, and a negative number to an `exponent` that is not whole are [execution errors](#execution-errors), like division by zero. Guard the operand with `if`, `greatest` or `nullIf`.
+  - **Domain.** A square root of a negative number, a logarithm of a number that is not positive or to a `base` that is not positive or is `1`, zero to a negative `exponent`, and a negative number to an `exponent` that is not whole are [execution errors](#execution-errors), like division by zero. Guard the operand with `if`, `greatest` or `nullIfEqual`.
 
 ### Strings
 
@@ -574,7 +574,7 @@ So `substring(s, 1, n)` is the first `n` code points of `s`, or all of `s` when 
 `concatWith` joins its operands with `separator` between them and leaves out the operands that are `null`: `concatWith(["Ann", null, "Lee"], " ")` is `"Ann Lee"`.
 
 - It is never `null`: when every operand is `null` it is the empty string. `concat`, by contrast, is lifted and gives `null`.
-- Only `null` is skipped. An empty string is an operand like any other, so `concatWith(["a", "", "b"], "-")` is `"a--b"`; `nullIf(x, "")` leaves it out.
+- Only `null` is skipped. An empty string is an operand like any other, so `concatWith(["a", "", "b"], "-")` is `"a--b"`; `nullIfEqual(x, "")` leaves it out.
 - `separator` is never null and may be the empty string.
 
 `contains`, `startsWith` and `endsWith` test whether the code points of `pattern` occur in `operand` as one consecutive run: anywhere, at its start, or at its end.
@@ -874,7 +874,7 @@ The [`samples/valid/`](samples/valid/) directory holds the samples below (`.json
 | [`041_nullable_columns.json`](samples/valid/041_nullable_columns.json) | Nullable fields selected into nullable columns |
 | [`042_typed_null.json`](samples/valid/042_typed_null.json) | Typed null literals, and `integer?` widened to `decimal?` |
 | [`043_coalesce.json`](samples/valid/043_coalesce.json) | `coalesce`: non-null once one operand is non-null, nullable otherwise |
-| [`044_null_if.json`](samples/valid/044_null_if.json) | `nullIf`: a sentinel read as `null`, a division that is `null` instead of failing on a zero divisor, its default through `coalesce`, and the same guard in `where` |
+| [`044_null_if_equal.json`](samples/valid/044_null_if_equal.json) | `nullIfEqual`: a sentinel read as `null`, a division that is `null` instead of failing on a zero divisor, its default through `coalesce`, and the same guard in `where` |
 | [`045_null_checks.json`](samples/valid/045_null_checks.json) | Testing for null with `equal` / `notEqual` and a typed null |
 | [`046_nullable_boolean_conditions.json`](samples/valid/046_nullable_boolean_conditions.json) | A nullable boolean becomes a condition via `equal(…, true)` or `coalesce(…, false)` |
 | [`047_lifted_operators.json`](samples/valid/047_lifted_operators.json) | Lifted operators: a nullable operand makes the column nullable |

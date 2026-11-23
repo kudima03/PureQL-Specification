@@ -138,7 +138,7 @@
             }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "decimal", "nullable": true },
             "left": {
               "operator": "average",

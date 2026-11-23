@@ -1,5 +1,5 @@
-// Statistics over all rows of a plain query, repeated on every row: a z-score guarded by nullIf against a
-// zero spread, each order compared with the median and the ninth decile, a control limit, the most frequent
+// Statistics over all rows of a plain query, repeated on every row: a z-score guarded by nullIfEqual against
+// a zero spread, each order compared with the median and the ninth decile, a control limit, the most frequent
 // order date, and a median with a predicate, which is nullable.
 {
   "from": { "entity": "orders" },
@@ -28,7 +28,7 @@
             ]
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "decimal", "nullable": true },
             "left": {
               "operator": "standardDeviationPopulation",
