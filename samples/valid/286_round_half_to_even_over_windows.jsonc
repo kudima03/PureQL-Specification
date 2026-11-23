@@ -1,0 +1,115 @@
+// round with mode halfEven over a running total and a share, as the operand of previous and as a sort key of
+// a window and of the query.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "running_total_to_cents",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "over": {
+            "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+            "orderBy": [
+              { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+              { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+            ],
+            "frame": { "preceding": "all" }
+          }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "share_in_percent",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "multiply",
+          "type": { "name": "decimal", "nullable": true },
+          "values": [
+            {
+              "operator": "divide",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                {
+                  "operator": "nullIfEqual",
+                  "type": { "name": "decimal", "nullable": true },
+                  "left": {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+                  },
+                  "right": { "type": { "name": "integer" }, "value": 0 }
+                }
+              ]
+            },
+            { "type": { "name": "integer" }, "value": 100 }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 1 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "previous_rounded",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "mode": "halfEven"
+        },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank_by_rounded_total",
+      "expression": {
+        "operator": "rank",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "round",
+                "type": { "name": "decimal" },
+                "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 },
+                "mode": "halfEven"
+              },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

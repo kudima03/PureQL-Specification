@@ -1,0 +1,331 @@
+{
+  "from": {
+    "entity": "order_items"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "tax",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "source": "order_items",
+                "field": "unit_price",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "source": "order_items",
+                "field": "quantity",
+                "type": {
+                  "name": "integer"
+                }
+              }
+            ]
+          },
+          {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "0.19"
+          }
+        ]
+      }
+    },
+    {
+      "alias": "tax_rounded_half_to_even",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "order_items",
+                  "field": "unit_price",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "source": "order_items",
+                  "field": "quantity",
+                  "type": {
+                    "name": "integer"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "name": "decimal"
+              },
+              "value": "0.19"
+            }
+          ]
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "tax_rounded_half_away_from_zero",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "source": "order_items",
+                  "field": "unit_price",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "source": "order_items",
+                  "field": "quantity",
+                  "type": {
+                    "name": "integer"
+                  }
+                }
+              ]
+            },
+            {
+              "type": {
+                "name": "decimal"
+              },
+              "value": "0.19"
+            }
+          ]
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 2
+        }
+      }
+    },
+    {
+      "alias": "whole_price_half_to_even",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "line_total_in_hundreds",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "source": "order_items",
+              "field": "unit_price",
+              "type": {
+                "name": "decimal"
+              }
+            },
+            {
+              "source": "order_items",
+              "field": "quantity",
+              "type": {
+                "name": "integer"
+              }
+            }
+          ]
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -2
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "rules_differ",
+      "expression": {
+        "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "round",
+          "type": {
+            "name": "decimal"
+          },
+          "operand": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "source": "order_items",
+                    "field": "quantity",
+                    "type": {
+                      "name": "integer"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "0.19"
+              }
+            ]
+          },
+          "digits": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 2
+          },
+          "mode": "halfEven"
+        },
+        "right": {
+          "operator": "round",
+          "type": {
+            "name": "decimal"
+          },
+          "operand": {
+            "operator": "multiply",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": {
+                      "name": "decimal"
+                    }
+                  },
+                  {
+                    "source": "order_items",
+                    "field": "quantity",
+                    "type": {
+                      "name": "integer"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": {
+                  "name": "decimal"
+                },
+                "value": "0.19"
+              }
+            ]
+          },
+          "digits": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 2
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

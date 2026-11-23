@@ -1,0 +1,15 @@
+// round with mode halfEven of an integer without digits: an integer is whole already
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

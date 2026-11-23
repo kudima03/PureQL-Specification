@@ -1,0 +1,86 @@
+// round with mode halfEven in where and over the aggregates of a total query, lifted over those that are
+// nullable there.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+    "right": {
+      "operator": "round",
+      "type": { "name": "decimal" },
+      "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+      "digits": { "type": { "name": "integer" }, "value": 2 },
+      "mode": "halfEven"
+    }
+  },
+  "aggregate": [
+    {
+      "alias": "revenue_to_thousands",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -3 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "average_to_cents",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "median_whole",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "median",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "sum_of_rounded",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "mode": "halfEven"
+        }
+      }
+    },
+    {
+      "alias": "largest_rounded",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "mode": "halfEven"
+        }
+      }
+    }
+  ]
+}

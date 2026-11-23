@@ -1,0 +1,23 @@
+// round with mode halfEven of an aggregate in where
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "round",
+      "type": { "name": "decimal" },
+      "operand": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      },
+      "digits": { "type": { "name": "integer" }, "value": 2 },
+      "mode": "halfEven"
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
