@@ -1,0 +1,16 @@
+// replaceRegex with a field as pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "replacement": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

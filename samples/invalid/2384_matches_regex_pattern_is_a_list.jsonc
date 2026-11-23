@@ -1,0 +1,15 @@
+// matchesRegex with a list of patterns: alternatives are written with | in one pattern
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "stringList" }, "value": [ "a", "b" ] }
+      }
+    }
+  ]
+}

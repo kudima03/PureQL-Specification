@@ -1,0 +1,15 @@
+// matchesRegex with a backslash before a character that needs none: only the special characters are escaped
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\#" }
+      }
+    }
+  ]
+}

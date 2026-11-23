@@ -1,0 +1,221 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "matchesRegex",
+    "type": {
+      "name": "boolean"
+    },
+    "operand": {
+      "source": "users",
+      "field": "email",
+      "type": {
+        "name": "string"
+      }
+    },
+    "pattern": {
+      "type": {
+        "name": "string"
+      },
+      "value": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$"
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "email_domain",
+      "expression": {
+        "operator": "extractRegex",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "@(.+)$"
+        },
+        "group": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "mobile_digits",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "mobile",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "[^0-9]"
+        },
+        "replacement": {
+          "type": {
+            "name": "string"
+          },
+          "value": ""
+        }
+      }
+    },
+    {
+      "alias": "country_code",
+      "expression": {
+        "operator": "extractRegex",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "mobile",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "^\\+([0-9]{1,3})"
+        },
+        "group": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "first_number_in_postal_code",
+      "expression": {
+        "operator": "extractRegex",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "postal_code",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "[0-9]+"
+        }
+      }
+    },
+    {
+      "alias": "name_with_single_spaces",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "\\s+"
+        },
+        "replacement": {
+          "type": {
+            "name": "string"
+          },
+          "value": " "
+        }
+      }
+    },
+    {
+      "alias": "nickname_has_a_digit",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "\\d"
+        }
+      }
+    },
+    {
+      "alias": "name_matches_the_search",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": {
+          "name": "boolean"
+        },
+        "operand": {
+          "source": "users",
+          "field": "name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "param": "name_pattern",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ]
+}

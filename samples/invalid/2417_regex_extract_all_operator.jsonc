@@ -1,0 +1,15 @@
+// extractAllRegex is not an operator
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractAllRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@.+$" }
+      }
+    }
+  ]
+}

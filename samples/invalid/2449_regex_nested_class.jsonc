@@ -1,0 +1,15 @@
+// matchesRegex with a class inside a class: [ is escaped inside a class
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "[a[bc]]" }
+      }
+    }
+  ]
+}

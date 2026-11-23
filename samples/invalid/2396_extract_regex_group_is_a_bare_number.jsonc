@@ -1,0 +1,16 @@
+// extractRegex with the number 1 as group
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+        "group": 1
+      }
+    }
+  ]
+}

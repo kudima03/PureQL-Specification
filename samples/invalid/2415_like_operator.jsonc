@@ -1,0 +1,16 @@
+// like is not an operator: literal text is matched with contains, startsWith and endsWith, a pattern with
+// matchesRegex
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "like",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@]+@[^@]+$" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// replaceRegex with a count: it replaces every match
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\s+" },
+        "replacement": { "type": { "name": "string" }, "value": " " },
+        "count": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

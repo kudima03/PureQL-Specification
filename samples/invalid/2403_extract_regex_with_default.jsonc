@@ -1,0 +1,16 @@
+// extractRegex with a default: the value for no match is given with coalesce
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@.+$" },
+        "default": { "type": { "name": "string" }, "value": "" }
+      }
+    }
+  ]
+}

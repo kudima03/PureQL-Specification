@@ -1,0 +1,15 @@
+// matchesRegex with a pattern literal that has no type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "value": "@" }
+      }
+    }
+  ]
+}

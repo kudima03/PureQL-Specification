@@ -1,0 +1,15 @@
+// matchesRegex of an integer: a number is written as text with asString first
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@]+@[^@]+$" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// matchesRegex with a counted quantifier with a space in it
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "a{2, 3}" }
+      }
+    }
+  ]
+}

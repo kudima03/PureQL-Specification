@@ -1,0 +1,150 @@
+// Regular expressions in a grouped query: extractRegex and matchesRegex as group keys, in where, having,
+// predicates and selectors, over group keys in select with a pattern from a parameter, and replaceRegex
+// lifted over a nullable key.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "matchesRegex",
+    "type": { "name": "boolean" },
+    "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+    "pattern": { "type": { "name": "string" }, "value": "@" }
+  },
+  "groupBy": [
+    {
+      "alias": "domain",
+      "expression": {
+        "operator": "lower",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "extractRegex",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+          "group": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "has_digits",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "\\d" }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "count",
+      "type": { "name": "integer" },
+      "predicate": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$" }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "domain", "expression": { "key": "domain", "type": { "name": "string", "nullable": true } } },
+    { "alias": "has_digits", "expression": { "key": "has_digits", "type": { "name": "boolean" } } },
+    {
+      "alias": "well_formed",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "matchesRegex",
+          "type": { "name": "boolean" },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$" }
+        }
+      }
+    },
+    {
+      "alias": "shortest_user_part",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "string", "nullable": true },
+        "selector": {
+          "operator": "extractRegex",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "^[^@]+" }
+        }
+      }
+    },
+    {
+      "alias": "longest_digits",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "length",
+          "type": { "name": "integer", "nullable": true },
+          "operand": {
+            "operator": "replaceRegex",
+            "type": { "name": "string", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "mobile",
+              "type": { "name": "string", "nullable": true }
+            },
+            "pattern": { "type": { "name": "string" }, "value": "\\D" },
+            "replacement": { "type": { "name": "string" }, "value": "" }
+          }
+        }
+      }
+    },
+    {
+      "alias": "top_level",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "key": "domain", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "\\.([a-z]+)$" },
+        "group": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "is_company_domain",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "key": "domain", "type": { "name": "string", "nullable": true } },
+        "pattern": { "param": "company_domains", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "masked_domain",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "key": "domain", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "[a-z]" },
+        "replacement": { "type": { "name": "string" }, "value": "*" }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "matchesRegex",
+          "type": { "name": "boolean" },
+          "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "^[^@\\s]+@[^@\\s]+\\.[a-z]{2,}$" }
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "domain", "type": { "name": "string", "nullable": true } } },
+    { "expression": { "key": "has_digits", "type": { "name": "boolean" } } }
+  ]
+}

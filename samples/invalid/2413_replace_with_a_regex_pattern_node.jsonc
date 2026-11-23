@@ -1,0 +1,18 @@
+// replace with regex: true: its pattern is literal text; matches of a regular expression are replaced with
+// replaceRegex
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " +" },
+        "replacement": { "type": { "name": "string" }, "value": " " },
+        "regex": true
+      }
+    }
+  ]
+}

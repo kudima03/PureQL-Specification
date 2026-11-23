@@ -1,0 +1,16 @@
+// extractRegex with all: it yields the first match; there is no list of matches as a value
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@.+$" },
+        "all": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// matchesRegex with a field as pattern: a pattern is a literal or a parameter, known before any row is read
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "source": "users", "field": "country", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

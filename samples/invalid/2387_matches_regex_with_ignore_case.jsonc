@@ -1,0 +1,17 @@
+// matchesRegex with ignoreCase: matching is case-sensitive; both cases are written in a class, or the operand
+// goes through lower
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "^[^@]+@[^@]+$" },
+        "ignoreCase": true
+      }
+    }
+  ]
+}

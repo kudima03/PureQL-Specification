@@ -1,0 +1,24 @@
+// extractRegex with a computed group: a group is a literal or a parameter, checked against the pattern before
+// any row is read
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+        "group": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 1 },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    }
+  ]
+}

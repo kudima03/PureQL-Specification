@@ -1,0 +1,15 @@
+// matchesRegex with a nullable parameter as pattern: the pattern is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "param": "pattern", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

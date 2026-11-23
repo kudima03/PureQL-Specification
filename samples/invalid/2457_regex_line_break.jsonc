@@ -1,0 +1,15 @@
+// matchesRegex with a line break in a pattern: it is written with a backslash and n
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "a\nb" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// matchesRegex with the \z anchor: the end of the string is $
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "abc\\z" }
+      }
+    }
+  ]
+}
