@@ -68,7 +68,7 @@
         "values": [
           { "source": "report", "field": "revenue", "type": { "name": "decimal" } },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "integer", "nullable": true },
             "left": { "source": "report", "field": "orders", "type": { "name": "integer" } },
             "right": { "type": { "name": "integer" }, "value": 0 }
