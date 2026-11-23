@@ -1,0 +1,20 @@
+// A sort key with an ignoreAccents flag: sorting without accents sorts by removeDiacritics
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+      "ignoreAccents": true
+    }
+  ]
+}

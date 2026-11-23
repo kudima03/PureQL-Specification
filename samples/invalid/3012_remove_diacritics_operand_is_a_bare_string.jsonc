@@ -1,0 +1,10 @@
+// removeDiacritics of a bare string instead of a literal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "removeDiacritics", "type": { "name": "string" }, "operand": "café" }
+    }
+  ]
+}

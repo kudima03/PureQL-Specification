@@ -1,0 +1,19 @@
+// removeDiacritics as where: it is a string, and a condition is a boolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "removeDiacritics",
+    "type": { "name": "string" },
+    "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+  }
+}

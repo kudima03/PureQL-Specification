@@ -1,0 +1,7 @@
+// removeDiacritics without an operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "removeDiacritics", "type": { "name": "string" } } }
+  ]
+}

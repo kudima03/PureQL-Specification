@@ -59,7 +59,8 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, normalize, trim, substring, replace, position,
+  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, normalize, removeDiacritics, trim,
+    substring, replace, position,
     splitPart, padStart/padEnd, repeat, reverse, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
@@ -581,6 +582,8 @@ for ctx, rules in CONTEXTS.items():
     # with an accent as one code point or as two) becomes one string. `form` names
     # the normalization form and is always written: there is no default form.
     lifted("normalize", {"operand": "string"}, "string", extra={"form": {"enum": NORMALIZATION_FORMS}})
+    # a string without its accents: decomposed, its nonspacing marks dropped, composed again
+    lifted("removeDiacritics", {"operand": "string"}, "string")
     # trim removes the strings of `removables` from the ends, the longest match first;
     # at least one is listed, and none is null
     removables = {"removables": array_of(expr("string", ctx), 1)}

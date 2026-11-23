@@ -1,0 +1,12 @@
+// A group key with an ignoreAccents flag
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } },
+      "ignoreAccents": true
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

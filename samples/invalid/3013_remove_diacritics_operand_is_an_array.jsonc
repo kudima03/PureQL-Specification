@@ -1,0 +1,17 @@
+// removeDiacritics whose operand is an array of expressions
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": [
+          { "source": "users", "field": "first_name", "type": { "name": "string" } },
+          { "source": "users", "field": "last_name", "type": { "name": "string" } }
+        ]
+      }
+    }
+  ]
+}

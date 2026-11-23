@@ -1,0 +1,14 @@
+// removeDiacritics of an integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

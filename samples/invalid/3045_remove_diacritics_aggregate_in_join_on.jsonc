@@ -1,0 +1,32 @@
+// removeDiacritics of an aggregate in join.on, a row context without aggregates
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "alias": "other",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "min",
+            "type": { "name": "string" },
+            "selector": { "source": "users", "field": "email", "type": { "name": "string" } }
+          }
+        },
+        "right": {
+          "operator": "removeDiacritics",
+          "type": { "name": "string" },
+          "operand": { "source": "other", "field": "email", "type": { "name": "string" } }
+        }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

@@ -1,0 +1,15 @@
+// removeDiacritics with a list of marks to remove: it removes every nonspacing mark
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "removeDiacritics",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "marks": [ "́" ]
+      }
+    }
+  ]
+}

@@ -48328,6 +48328,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "removeDiacritics"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "trim"
               }
             }
@@ -48578,6 +48590,18 @@
           },
           "then": {
             "$ref": "#/$defs/normalize@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "removeDiacritics"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics@projection"
           }
         },
         {
@@ -48840,6 +48864,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "removeDiacritics"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "trim"
               }
             }
@@ -49090,6 +49126,18 @@
           },
           "then": {
             "$ref": "#/$defs/normalize@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "removeDiacritics"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics@total"
           }
         },
         {
@@ -49402,6 +49450,7 @@
             "lower",
             "foldCase",
             "normalize",
+            "removeDiacritics",
             "trim",
             "trimStart",
             "trimEnd",
@@ -49544,6 +49593,7 @@
                   "lower",
                   "foldCase",
                   "normalize",
+                  "removeDiacritics",
                   "trim",
                   "trimStart",
                   "trimEnd",
@@ -49769,6 +49819,7 @@
             "lower",
             "foldCase",
             "normalize",
+            "removeDiacritics",
             "trim",
             "trimStart",
             "trimEnd",
@@ -49919,6 +49970,7 @@
                   "lower",
                   "foldCase",
                   "normalize",
+                  "removeDiacritics",
                   "trim",
                   "trimStart",
                   "trimEnd",
@@ -50165,6 +50217,7 @@
             "lower",
             "foldCase",
             "normalize",
+            "removeDiacritics",
             "trim",
             "trimStart",
             "trimEnd",
@@ -50289,6 +50342,7 @@
                   "lower",
                   "foldCase",
                   "normalize",
+                  "removeDiacritics",
                   "trim",
                   "trimStart",
                   "trimEnd",
@@ -50483,6 +50537,7 @@
             "lower",
             "foldCase",
             "normalize",
+            "removeDiacritics",
             "trim",
             "trimStart",
             "trimEnd",
@@ -50625,6 +50680,7 @@
                   "lower",
                   "foldCase",
                   "normalize",
+                  "removeDiacritics",
                   "trim",
                   "trimStart",
                   "trimEnd",
@@ -55635,6 +55691,282 @@
       "else": {
         "$ref": "#/$defs/param"
       }
+    },
+    "removeDiacritics.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "removeDiacritics.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "removeDiacritics.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "removeDiacritics.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "removeDiacritics.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "removeDiacritics.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "removeDiacritics.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "removeDiacritics.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "removeDiacritics@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "removeDiacritics"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string.nullable@group"
+          }
+        }
+      ]
+    },
+    "removeDiacritics@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "removeDiacritics"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string.nullable@projection"
+          }
+        }
+      ]
+    },
+    "removeDiacritics@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "removeDiacritics"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string.nullable@row"
+          }
+        }
+      ]
+    },
+    "removeDiacritics@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "removeDiacritics"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "string"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/removeDiacritics.string.nullable@total"
+          }
+        }
+      ]
     },
     "repeat.string.nullable@group": {
       "properties": {
