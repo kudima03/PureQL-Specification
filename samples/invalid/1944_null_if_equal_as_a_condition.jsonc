@@ -1,0 +1,13 @@
+// nullIfEqual of booleans as where: it is boolean?, and a condition is a non-null boolean
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "nullIfEqual",
+    "type": { "name": "boolean", "nullable": true },
+    "left": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+    "right": { "type": { "name": "boolean" }, "value": false }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

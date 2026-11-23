@@ -1,6 +1,7 @@
 // Statistics in a grouped query: over the group and over all rows, in having and orderBy, over integer and
 // computed selectors, with a predicate, an interquartile range from two percentiles, and a relative spread
-// guarded by nullIf. The sample forms are nullable even in a group, since one row has no sample variance.
+// guarded by nullIfEqual. The sample forms are nullable even in a group, since one row has no sample
+// variance.
 {
   "from": { "entity": "order_items" },
   "groupBy": [
@@ -141,7 +142,7 @@
             "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
           },
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "decimal", "nullable": true },
             "left": {
               "operator": "average",

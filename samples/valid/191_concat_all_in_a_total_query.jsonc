@@ -1,6 +1,6 @@
 // concatAll in a total query is non-null, unlike the other aggregates with a selector: over no rows it is the
-// empty string, which nullIf and coalesce turn into a placeholder. A separator from a parameter, distinct
-// values, an order by another expression, and a predicate.
+// empty string, which nullIfEqual and coalesce turn into a placeholder. A separator from a parameter,
+// distinct values, an order by another expression, and a predicate.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -86,7 +86,7 @@
         "type": { "name": "string" },
         "values": [
           {
-            "operator": "nullIf",
+            "operator": "nullIfEqual",
             "type": { "name": "string", "nullable": true },
             "left": {
               "operator": "concatAll",

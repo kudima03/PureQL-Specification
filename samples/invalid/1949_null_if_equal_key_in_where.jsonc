@@ -1,0 +1,18 @@
+// nullIfEqual of a group key in where, which is evaluated per row before grouping
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "nullIfEqual",
+      "type": { "name": "string", "nullable": true },
+      "left": { "key": "status", "type": { "name": "string" } },
+      "right": { "type": { "name": "string" }, "value": "unknown" }
+    },
+    "right": { "type": { "name": "string", "nullable": true }, "value": null }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

@@ -1,4 +1,5 @@
-// concatWith with skipEmpty: only null operands are skipped; an empty string is turned into null with nullIf
+// concatWith with skipEmpty: only null operands are skipped; an empty string is turned into null with
+// nullIfEqual
 {
   "from": { "entity": "users" },
   "select": [
