@@ -1,4 +1,5 @@
-// tryDivide is not an operator: a division that yields null on a zero divisor is divide by nullIf(divisor, 0)
+// tryDivide is not an operator: a division that yields null on a zero divisor is divide by
+// nullIfEqual(divisor, 0)
 {
   "from": { "entity": "orders" },
   "select": [
