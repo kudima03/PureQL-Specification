@@ -1,0 +1,14 @@
+// cast is not an operator: each conversion has its own operator, with the type it yields
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "cast",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

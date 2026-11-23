@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, if,
+  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, trim, substring, date/time math, parts and startOf, conversions, if,
     round/truncate/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
@@ -459,6 +459,19 @@ for ctx, rules in CONTEXTS.items():
     for name, types in START_OF.items():
         for t in types:
             lifted(name, {"operand": t}, t)
+
+    # Conversions. asString writes a value of any other type as its literal is
+    # spelled; the type its operand declares picks the position, as for the parts.
+    families = [f for f in EQUATABLE if f != "string"]
+    shape("asString", ["operand"], {"operand": check("accepts.nonString", [m for f in families for m in members(f)])})
+    operand = by_family("asString", "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
+    signature("asString", "string", False, {"properties": {"operand": NON_NULL}}, operand)
+    signature("asString", "string", True, some(["operand"], NULLABLE), operand)
+    # Between the temporal types, in UTC: the day or the time of day of a datetime,
+    # and midnight of a date.
+    lifted("asDate", {"operand": "datetime"}, "date")
+    lifted("asTime", {"operand": "datetime"}, "time")
+    lifted("asDatetime", {"operand": "date"}, "datetime")
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:

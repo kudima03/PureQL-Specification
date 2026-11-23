@@ -1,0 +1,7 @@
+// asString of the number 5: an operand is an expression, here a literal with its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "operator": "asString", "type": { "name": "string" }, "operand": 5 } }
+  ]
+}

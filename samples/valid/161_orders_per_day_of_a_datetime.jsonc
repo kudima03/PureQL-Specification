@@ -1,0 +1,130 @@
+// A datetime grouped by its date: asDate and asString as groupBy keys, asTime and asDatetime over aggregates
+// and keys in having and select, a title built with concat over asString of a date, an integer and a decimal,
+// and conversions inside a predicate and a selector.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "day",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "paid",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "asTime",
+      "type": { "name": "time" },
+      "operand": {
+        "operator": "max",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    "right": { "type": { "name": "time" }, "value": "18:00:00" }
+  },
+  "select": [
+    { "alias": "day", "expression": { "key": "day", "type": { "name": "date" } } },
+    { "alias": "paid", "expression": { "key": "paid", "type": { "name": "string" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "title",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "key": "day", "type": { "name": "date" } }
+          },
+          { "type": { "name": "string" }, "value": ": " },
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "operator": "count", "type": { "name": "integer" } }
+          },
+          { "type": { "name": "string" }, "value": " orders, " },
+          {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "first_order_time",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "datetime" },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "day_start",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "key": "day", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "shipped_days",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+          },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "longest_total",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "length",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "day", "type": { "name": "date" } }, "direction": "desc" },
+    { "expression": { "key": "paid", "type": { "name": "string" } } }
+  ]
+}

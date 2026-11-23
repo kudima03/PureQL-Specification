@@ -1,0 +1,202 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "equal",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "asDate",
+      "type": {
+        "name": "date"
+      },
+      "operand": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    "right": {
+      "param": "day",
+      "type": {
+        "name": "date"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "label",
+      "expression": {
+        "operator": "concat",
+        "type": {
+          "name": "string"
+        },
+        "values": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "Order of "
+          },
+          {
+            "operator": "asString",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "order_date",
+              "type": {
+                "name": "date"
+              }
+            }
+          },
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": ": "
+          },
+          {
+            "operator": "asString",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "total",
+              "type": {
+                "name": "decimal"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "paid",
+      "expression": {
+        "operator": "asString",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    },
+    {
+      "alias": "shipped_label",
+      "expression": {
+        "operator": "asString",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "ordered_on",
+      "expression": {
+        "operator": "asDate",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "ordered_time",
+      "expression": {
+        "operator": "asTime",
+        "type": {
+          "name": "time"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "order_day_start",
+      "expression": {
+        "operator": "asDatetime",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "alias": "shipped_on_the_order_day",
+      "expression": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "asDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "shipped_at",
+            "type": {
+              "name": "datetime"
+            }
+          }
+        },
+        "right": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    }
+  ]
+}

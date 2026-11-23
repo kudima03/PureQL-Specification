@@ -1,0 +1,15 @@
+// asString with a format: it writes the one spelling a literal has; display formatting is left to the client
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "format": { "type": { "name": "string" }, "value": "0.00" }
+      }
+    }
+  ]
+}
