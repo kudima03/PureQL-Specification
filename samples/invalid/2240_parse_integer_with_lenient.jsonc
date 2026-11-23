@@ -1,0 +1,15 @@
+// parseInteger with a lenient flag: spaces are removed with trim before parsing
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "lenient": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// tryParseInteger declared integer: it is null whenever the text is not a integer literal, so it is always
+// nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

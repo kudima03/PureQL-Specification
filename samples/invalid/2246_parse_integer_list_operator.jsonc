@@ -1,0 +1,14 @@
+// parseIntegerList is not an operator: list types are not parsed
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseIntegerList",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

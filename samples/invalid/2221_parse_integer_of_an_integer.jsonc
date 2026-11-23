@@ -1,0 +1,14 @@
+// parseInteger of an integer: it reads a string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

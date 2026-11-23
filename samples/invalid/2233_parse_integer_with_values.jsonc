@@ -1,0 +1,17 @@
+// parseInteger with a values array
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "users", "field": "tier", "type": { "name": "string" } },
+          { "type": { "name": "string" }, "value": "0" }
+        ]
+      }
+    }
+  ]
+}

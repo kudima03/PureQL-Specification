@@ -1,0 +1,14 @@
+// parseDate of a date
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

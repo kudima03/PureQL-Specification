@@ -35576,6 +35576,20 @@
             "toDate",
             "toTime",
             "toDatetime",
+            "parseInteger",
+            "tryParseInteger",
+            "parseDecimal",
+            "tryParseDecimal",
+            "parseBoolean",
+            "tryParseBoolean",
+            "parseDate",
+            "tryParseDate",
+            "parseTime",
+            "tryParseTime",
+            "parseDatetime",
+            "tryParseDatetime",
+            "parseUuid",
+            "tryParseUuid",
             "and",
             "or",
             "not",
@@ -36331,6 +36345,174 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "parseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseInteger@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDecimal@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseBoolean@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDate@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseTime@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDatetime@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseUuid@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -36717,6 +36899,20 @@
             "toDate",
             "toTime",
             "toDatetime",
+            "parseInteger",
+            "tryParseInteger",
+            "parseDecimal",
+            "tryParseDecimal",
+            "parseBoolean",
+            "tryParseBoolean",
+            "parseDate",
+            "tryParseDate",
+            "parseTime",
+            "tryParseTime",
+            "parseDatetime",
+            "tryParseDatetime",
+            "parseUuid",
+            "tryParseUuid",
             "and",
             "or",
             "not",
@@ -37472,6 +37668,174 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "parseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseInteger@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDecimal@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseBoolean@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDate@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseTime@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDatetime@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseUuid@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -37858,6 +38222,20 @@
             "toDate",
             "toTime",
             "toDatetime",
+            "parseInteger",
+            "tryParseInteger",
+            "parseDecimal",
+            "tryParseDecimal",
+            "parseBoolean",
+            "tryParseBoolean",
+            "parseDate",
+            "tryParseDate",
+            "parseTime",
+            "tryParseTime",
+            "parseDatetime",
+            "tryParseDatetime",
+            "parseUuid",
+            "tryParseUuid",
             "and",
             "or",
             "not",
@@ -38604,6 +38982,174 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "parseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseInteger@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDecimal@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseBoolean@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDate@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseTime@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDatetime@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseUuid@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -38882,6 +39428,20 @@
             "toDate",
             "toTime",
             "toDatetime",
+            "parseInteger",
+            "tryParseInteger",
+            "parseDecimal",
+            "tryParseDecimal",
+            "parseBoolean",
+            "tryParseBoolean",
+            "parseDate",
+            "tryParseDate",
+            "parseTime",
+            "tryParseTime",
+            "parseDatetime",
+            "tryParseDatetime",
+            "parseUuid",
+            "tryParseUuid",
             "and",
             "or",
             "not",
@@ -39637,6 +40197,174 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "parseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseInteger"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseInteger@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDecimal@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseBoolean"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseBoolean@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDate"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDate@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseTime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseTime@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseDatetime"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseDatetime@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "parseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tryParseUuid"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tryParseUuid@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "and"
               }
             }
@@ -40214,6 +40942,1938 @@
         }
       },
       "additionalProperties": false
+    },
+    "parseBoolean.boolean.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseBoolean.boolean.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseBoolean.boolean.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseBoolean.boolean.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseBoolean.boolean@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseBoolean.boolean@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseBoolean.boolean@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseBoolean.boolean@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseBoolean@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseBoolean@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseBoolean@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseBoolean@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseBoolean.boolean.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseDate.date.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDate.date.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDate.date.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDate.date.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDate.date@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseDate.date@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseDate.date@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseDate.date@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseDate@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseDate@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseDate@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseDate@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDate.date.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseDatetime.datetime.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDatetime.datetime.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDatetime.datetime.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDatetime.datetime.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDatetime.datetime@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseDatetime.datetime@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseDatetime.datetime@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseDatetime.datetime@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseDatetime@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseDatetime@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseDatetime@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseDatetime@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDatetime.datetime.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseDecimal.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDecimal.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDecimal.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDecimal.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseDecimal.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseDecimal.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseDecimal.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseDecimal.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseDecimal@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseDecimal@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseDecimal@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseDecimal@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseDecimal.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseInteger.integer.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseInteger.integer.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseInteger.integer.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseInteger.integer.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseInteger.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseInteger.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseInteger.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseInteger.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseInteger@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseInteger@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseInteger@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseInteger@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseInteger.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseTime.time.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseTime.time.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseTime.time.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseTime.time.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseTime.time@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseTime.time@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseTime.time@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseTime.time@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseTime@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseTime@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseTime@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseTime@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseTime.time.nullable@total"
+          }
+        }
+      ]
+    },
+    "parseUuid.uuid.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseUuid.uuid.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseUuid.uuid.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseUuid.uuid.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "parseUuid.uuid@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@group"
+        }
+      }
+    },
+    "parseUuid.uuid@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@projection"
+        }
+      }
+    },
+    "parseUuid.uuid@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@row"
+        }
+      }
+    },
+    "parseUuid.uuid@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string@total"
+        }
+      }
+    },
+    "parseUuid@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "parseUuid@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "parseUuid@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid.nullable@row"
+          }
+        }
+      ]
+    },
+    "parseUuid@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "parseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/parseUuid.uuid.nullable@total"
+          }
+        }
+      ]
     },
     "plainQuery": {
       "type": "object",
@@ -51930,6 +54590,930 @@
           }
         }
       ]
+    },
+    "tryParseBoolean@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseBoolean@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseBoolean@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseBoolean@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseBoolean"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "boolean"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDate@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDate@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDate@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDate@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDate"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDatetime@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDatetime@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDatetime@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDatetime@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDatetime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDecimal@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDecimal@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDecimal@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseDecimal@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseDecimal"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseInteger@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseInteger@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseInteger@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseInteger@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseInteger"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseTime@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseTime@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseTime@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseTime@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseTime"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseUuid@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseUuid@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseUuid@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tryParseUuid@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tryParseUuid"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
+        }
+      },
+      "additionalProperties": false
     },
     "type": {
       "type": "object",

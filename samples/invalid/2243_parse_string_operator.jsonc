@@ -1,0 +1,14 @@
+// parseString is not an operator: a string is already one
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseString",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

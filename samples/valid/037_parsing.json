@@ -1,0 +1,190 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "birth_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "operator": "parseDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "param": "born_after",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      },
+      {
+        "operator": "notEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "tryParseInteger",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          },
+          "operand": {
+            "source": "users",
+            "field": "postal_code",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer",
+            "nullable": true
+          },
+          "value": null
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "tier_number",
+      "expression": {
+        "operator": "parseInteger",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "tier",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "postal_number",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "postal_code",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "postal_number_or_zero",
+      "expression": {
+        "operator": "coalesce",
+        "type": {
+          "name": "integer"
+        },
+        "values": [
+          {
+            "operator": "tryParseInteger",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            },
+            "operand": {
+              "operator": "trim",
+              "type": {
+                "name": "string"
+              },
+              "operand": {
+                "source": "users",
+                "field": "postal_code",
+                "type": {
+                  "name": "string"
+                }
+              },
+              "removables": [
+                {
+                  "type": {
+                    "name": "string"
+                  },
+                  "value": " "
+                }
+              ]
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 0
+          }
+        ]
+      }
+    },
+    {
+      "alias": "mobile_number",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "mobile",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "discount",
+      "expression": {
+        "operator": "parseDecimal",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "param": "discount_text",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  ]
+}

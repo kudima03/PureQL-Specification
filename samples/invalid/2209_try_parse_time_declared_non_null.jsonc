@@ -1,0 +1,14 @@
+// tryParseTime declared time: it is null whenever the text is not a time literal, so it is always nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseTime",
+        "type": { "name": "time" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// tryParseBoolean declared with "nullable": false
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseBoolean",
+        "type": { "name": "boolean", "nullable": false },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

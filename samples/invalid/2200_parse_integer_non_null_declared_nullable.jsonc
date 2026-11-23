@@ -1,0 +1,15 @@
+// parseInteger of a non-null string declared integer?: text that does not parse fails the query, it does not
+// give null; that is tryParseInteger
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// tryParseDate with a list of formats
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } },
+        "formats": [ { "type": { "name": "string" }, "value": "dd.MM.yyyy" } ]
+      }
+    }
+  ]
+}

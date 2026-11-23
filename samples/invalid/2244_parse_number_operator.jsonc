@@ -1,0 +1,14 @@
+// parseNumber is not an operator: a number is read as an integer or as a decimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseNumber",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

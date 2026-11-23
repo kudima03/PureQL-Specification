@@ -1717,6 +1717,230 @@
       }
     },
     {
+      "alias": "parseInteger_integer",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "7" }
+      }
+    },
+    {
+      "alias": "parseInteger_integer_nullable",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseInteger_integer_nullable",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "7" }
+      }
+    },
+    {
+      "alias": "tryParseInteger_integer_nullable_of_null",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseDecimal_decimal",
+      "expression": {
+        "operator": "parseDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "string" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "parseDecimal_decimal_nullable",
+      "expression": {
+        "operator": "parseDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseDecimal_decimal_nullable",
+      "expression": {
+        "operator": "tryParseDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "tryParseDecimal_decimal_nullable_of_null",
+      "expression": {
+        "operator": "tryParseDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseBoolean_boolean",
+      "expression": {
+        "operator": "parseBoolean",
+        "type": { "name": "boolean" },
+        "operand": { "type": { "name": "string" }, "value": "true" }
+      }
+    },
+    {
+      "alias": "parseBoolean_boolean_nullable",
+      "expression": {
+        "operator": "parseBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseBoolean_boolean_nullable",
+      "expression": {
+        "operator": "tryParseBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "true" }
+      }
+    },
+    {
+      "alias": "tryParseBoolean_boolean_nullable_of_null",
+      "expression": {
+        "operator": "tryParseBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseDate_date",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "parseDate_date_nullable",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseDate_date_nullable",
+      "expression": {
+        "operator": "tryParseDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" }
+      }
+    },
+    {
+      "alias": "tryParseDate_date_nullable_of_null",
+      "expression": {
+        "operator": "tryParseDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseTime_time",
+      "expression": {
+        "operator": "parseTime",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "string" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "parseTime_time_nullable",
+      "expression": {
+        "operator": "parseTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseTime_time_nullable",
+      "expression": {
+        "operator": "tryParseTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "tryParseTime_time_nullable_of_null",
+      "expression": {
+        "operator": "tryParseTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseDatetime_datetime",
+      "expression": {
+        "operator": "parseDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "parseDatetime_datetime_nullable",
+      "expression": {
+        "operator": "parseDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseDatetime_datetime_nullable",
+      "expression": {
+        "operator": "tryParseDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31T08:30:00Z" }
+      }
+    },
+    {
+      "alias": "tryParseDatetime_datetime_nullable_of_null",
+      "expression": {
+        "operator": "tryParseDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "parseUuid_uuid",
+      "expression": {
+        "operator": "parseUuid",
+        "type": { "name": "uuid" },
+        "operand": { "type": { "name": "string" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
+      "alias": "parseUuid_uuid_nullable",
+      "expression": {
+        "operator": "parseUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tryParseUuid_uuid_nullable",
+      "expression": {
+        "operator": "tryParseUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "3f2a6c1e-8b4d-4e2a-9c1f-1a2b3c4d5e6f" }
+      }
+    },
+    {
+      "alias": "tryParseUuid_uuid_nullable_of_null",
+      "expression": {
+        "operator": "tryParseUuid",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "and_boolean",
       "expression": {
         "operator": "and",

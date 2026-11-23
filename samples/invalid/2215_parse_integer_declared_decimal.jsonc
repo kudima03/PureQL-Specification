@@ -1,0 +1,15 @@
+// parseInteger declared decimal: each parse operator yields the type in its name; a decimal is read with
+// parseDecimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "decimal" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// tryParseTime declared datetime?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseTime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

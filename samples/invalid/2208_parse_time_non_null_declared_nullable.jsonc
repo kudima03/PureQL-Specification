@@ -1,0 +1,15 @@
+// parseTime of a non-null string declared time?: text that does not parse fails the query, it does not give
+// null; that is tryParseTime
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

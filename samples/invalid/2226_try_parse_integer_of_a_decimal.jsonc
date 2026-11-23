@@ -1,0 +1,14 @@
+// tryParseInteger of a decimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    }
+  ]
+}

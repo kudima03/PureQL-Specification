@@ -1,0 +1,14 @@
+// parseDate of a datetime: the day of a datetime is toDate
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

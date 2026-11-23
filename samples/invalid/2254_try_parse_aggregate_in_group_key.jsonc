@@ -1,0 +1,19 @@
+// tryParseInteger of an aggregate as a groupBy key, a row expression
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "tier",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "string" },
+          "selector": { "source": "users", "field": "tier", "type": { "name": "string" } }
+        }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

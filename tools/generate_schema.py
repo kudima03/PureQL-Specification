@@ -62,6 +62,8 @@ Null semantics:
     non-null boolean, false when either operand is null;
   - nullIf accepts nullable operands and is always nullable: null when its
     operands are equal, as `equal` compares them, otherwise its left operand;
+  - tryParse<Type> accepts a nullable string and is always nullable: null when
+    the string is null or is not a literal of the type;
   - every condition (where, having, on, and/or/not, if.condition, aggregate
     predicate) requires a non-null boolean.
 """
@@ -472,6 +474,15 @@ for ctx, rules in CONTEXTS.items():
     lifted("toDate", {"operand": "datetime"}, "date")
     lifted("toTime", {"operand": "datetime"}, "time")
     lifted("toDatetime", {"operand": "date"}, "datetime")
+    # Parsing reads a string written as toString writes a value of the type.
+    # parse<Type> is lifted and fails the query on any other text; tryParse<Type>
+    # takes a nullable string and yields null instead, so it is always nullable.
+    for t in families:
+        for sub in reversed(members(t)):
+            name = sub[0].upper() + sub[1:]
+            lifted(f"parse{name}", {"operand": "string"}, sub)
+            shape(f"tryParse{name}", ["operand"], {"operand": expr("string", ctx, True)})
+            signature(f"tryParse{name}", sub, True)
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:

@@ -1,0 +1,15 @@
+// tryParseDatetime declared datetime: it is null whenever the text is not a datetime literal, so it is always
+// nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryParseDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

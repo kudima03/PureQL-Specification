@@ -1,0 +1,144 @@
+// tryParse in a grouped query: as a nullable group key, in predicates that count the text that is not a
+// number, as a nullable selector of min, max and sum, in having and orderBy; arithmetic over the parsed key
+// is lifted.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    {
+      "alias": "tier",
+      "expression": {
+        "operator": "tryParseInteger",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "count",
+      "type": { "name": "integer" },
+      "predicate": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "tryParseInteger",
+          "type": { "name": "integer", "nullable": true },
+          "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+        },
+        "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    { "alias": "tier", "expression": { "key": "tier", "type": { "name": "integer", "nullable": true } } },
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "unparsed_postal_codes",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "tryParseInteger",
+            "type": { "name": "integer", "nullable": true },
+            "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+        }
+      }
+    },
+    {
+      "alias": "lowest_postal_number",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "tryParseInteger",
+          "type": { "name": "integer", "nullable": true },
+          "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "highest_postal_number",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer", "nullable": true },
+        "selector": {
+          "operator": "tryParseInteger",
+          "type": { "name": "integer", "nullable": true },
+          "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "sum_of_parsed",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "coalesce",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "tryParseInteger",
+              "type": { "name": "integer", "nullable": true },
+              "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+            },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "next_tier",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          { "key": "tier", "type": { "name": "integer", "nullable": true } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    {
+      "alias": "as_of",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date" },
+        "operand": { "param": "as_of_text", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "tryParseInteger",
+            "type": { "name": "integer", "nullable": true },
+            "operand": { "source": "users", "field": "postal_code", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+        }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    { "expression": { "key": "tier", "type": { "name": "integer", "nullable": true } } }
+  ]
+}

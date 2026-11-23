@@ -1,0 +1,15 @@
+// parseBoolean of a non-null string declared boolean?: text that does not parse fails the query, it does not
+// give null; that is tryParseBoolean
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseBoolean",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

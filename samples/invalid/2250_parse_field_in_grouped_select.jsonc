@@ -1,0 +1,17 @@
+// parseInteger of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    { "alias": "tier", "expression": { "source": "users", "field": "tier", "type": { "name": "string" } } }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

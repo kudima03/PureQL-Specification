@@ -1,0 +1,15 @@
+// parseDate of a non-null string declared date?: text that does not parse fails the query, it does not give
+// null; that is tryParseDate
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "parseDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "tier", "type": { "name": "string" } }
+      }
+    }
+  ]
+}
