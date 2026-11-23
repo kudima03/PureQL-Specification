@@ -1,0 +1,17 @@
+// replace with a null replacement declared string: it is lifted over replacement, so a null replacement gives
+// null and the result is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string" }, "value": "b" },
+        "replacement": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

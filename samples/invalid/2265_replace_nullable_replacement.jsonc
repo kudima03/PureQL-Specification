@@ -1,4 +1,5 @@
-// replace with a nullable replacement
+// replace with a nullable replacement declared string: it is lifted over replacement as over operand, so the
+// result is string?
 {
   "from": { "entity": "users" },
   "select": [

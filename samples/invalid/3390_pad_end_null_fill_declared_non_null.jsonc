@@ -1,0 +1,17 @@
+// padEnd with a null fill declared string: it is lifted over fill, so a null fill gives null and the result
+// is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

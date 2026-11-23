@@ -1,4 +1,5 @@
-// position with a nullable start
+// position with a nullable start declared integer: it is lifted over start as over operand, so the result is
+// integer?
 {
   "from": { "entity": "users" },
   "select": [

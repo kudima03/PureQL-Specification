@@ -1,4 +1,5 @@
-// repeat with a nullable count: the count is never null
+// repeat with a nullable count declared string: it is lifted over count as over operand, so the result is
+// string?
 {
   "from": { "entity": "users" },
   "select": [

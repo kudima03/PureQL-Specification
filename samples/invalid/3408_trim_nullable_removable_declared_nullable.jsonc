@@ -1,0 +1,18 @@
+// trim of a nullable operand with a nullable removable: trim is lifted over operand only, a removable is
+// never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trim",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "removables": [
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+// Nullable role operands in a group key, having and select of a grouped query, where they are aggregates over
+// a nullable field; non-null ones leave the result non-null.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    },
+    {
+      "alias": "initials",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "power",
+      "type": { "name": "decimal", "nullable": true },
+      "operand": { "operator": "count", "type": { "name": "integer" } },
+      "exponent": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "country", "expression": { "key": "country", "type": { "name": "string" } } },
+    {
+      "alias": "initials",
+      "expression": { "key": "initials", "type": { "name": "string", "nullable": true } }
+    },
+    {
+      "alias": "bar",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "#" },
+        "count": {
+          "operator": "max",
+          "type": { "name": "integer", "nullable": true },
+          "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "rounded_average",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal", "nullable": true },
+          "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "growth",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "1.05" },
+        "exponent": {
+          "operator": "min",
+          "type": { "name": "integer", "nullable": true },
+          "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "padded_key",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "key": "country", "type": { "name": "string" } },
+        "length": { "type": { "name": "integer" }, "value": 6 },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "padded_to_count",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "key": "country", "type": { "name": "string" } },
+        "length": { "operator": "count", "type": { "name": "integer" } },
+        "fill": { "type": { "name": "string" }, "value": "." }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "country", "type": { "name": "string" } } },
+    { "expression": { "key": "initials", "type": { "name": "string", "nullable": true } } }
+  ]
+}

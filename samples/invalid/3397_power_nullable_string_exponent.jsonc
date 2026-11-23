@@ -1,0 +1,15 @@
+// power with a nullable string exponent
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "exponent": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

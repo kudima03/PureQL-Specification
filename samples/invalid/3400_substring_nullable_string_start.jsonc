@@ -1,0 +1,16 @@
+// substring with a nullable string start
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "start": { "type": { "name": "string", "nullable": true }, "value": null },
+        "length": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// replace with a null pattern and a null replacement declared string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null },
+        "replacement": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

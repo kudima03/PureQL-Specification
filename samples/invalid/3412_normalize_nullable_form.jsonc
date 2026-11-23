@@ -1,0 +1,15 @@
+// normalize of a nullable operand with a nullable expression as form: a form is a name
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "form": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

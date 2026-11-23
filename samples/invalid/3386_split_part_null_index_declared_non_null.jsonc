@@ -1,0 +1,17 @@
+// splitPart with a null index declared string: it is lifted over index, so a null index gives null and the
+// result is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

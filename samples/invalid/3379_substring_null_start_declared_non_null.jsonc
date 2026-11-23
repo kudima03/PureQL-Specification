@@ -1,0 +1,17 @@
+// substring with a null start declared string: it is lifted over start, so a null start gives null and the
+// result is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "start": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "length": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

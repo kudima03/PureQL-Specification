@@ -1,0 +1,21 @@
+// if with a nullable condition and a nullable branch: a condition is a non-null boolean, and if is lifted
+// over its branches only
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string", "nullable": true },
+        "condition": {
+          "source": "users",
+          "field": "is_verified",
+          "type": { "name": "boolean", "nullable": true }
+        },
+        "then": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "else": { "source": "users", "field": "last_name", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+// Role operands that are aggregates of a total query, which are nullable there, next to count, which is not.
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "log_of_count",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "operator": "count", "type": { "name": "integer" } },
+        "base": {
+          "operator": "max",
+          "type": { "name": "integer", "nullable": true },
+          "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "oldest_as_stars",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "*" },
+        "count": {
+          "operator": "max",
+          "type": { "name": "integer", "nullable": true },
+          "selector": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } }
+        }
+      }
+    },
+    {
+      "alias": "first_name_cut",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "without_first_nickname",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        },
+        "pattern": {
+          "operator": "min",
+          "type": { "name": "string", "nullable": true },
+          "selector": {
+            "source": "users",
+            "field": "nickname",
+            "type": { "name": "string", "nullable": true }
+          }
+        },
+        "replacement": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "part_of_the_longest",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "string", "nullable": true },
+          "selector": { "source": "users", "field": "email", "type": { "name": "string" } }
+        },
+        "delimiter": { "type": { "name": "string" }, "value": "@" },
+        "index": { "param": "part", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "still_non_null",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "count", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

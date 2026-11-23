@@ -1,4 +1,5 @@
-// log with a nullable base: the base is never null
+// log with a nullable base declared decimal: it is lifted over base as over operand, so the result is
+// decimal?
 {
   "from": { "entity": "orders" },
   "select": [

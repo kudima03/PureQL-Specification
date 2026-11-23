@@ -1,0 +1,109 @@
+// digits, length and the start of position, absent, written and nullable: an absent operand does not make the
+// result nullable, a nullable one that is written does.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "round_without_digits",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "round_with_nullable_digits",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "round_nullable_half_even",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "truncate_without_digits",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "substring_to_the_end",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_nullable_length",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "start": { "type": { "name": "integer" }, "value": 2 },
+        "length": { "param": "letters", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "substring_nullable_start",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "start": { "param": "letters", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "position_from_the_start",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "a" }
+      }
+    },
+    {
+      "alias": "position_nullable_start",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "last_name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "a" },
+        "start": { "param": "letters", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "everything_nullable",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "start": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "length": { "param": "letters", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "only_operand_nullable",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

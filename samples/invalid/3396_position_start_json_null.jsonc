@@ -1,0 +1,16 @@
+// position with start written as null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string" }, "value": "b" },
+        "start": null
+      }
+    }
+  ]
+}

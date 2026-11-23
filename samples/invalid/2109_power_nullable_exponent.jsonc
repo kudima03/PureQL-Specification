@@ -1,5 +1,5 @@
-// power with a nullable exponent: the exponent is never null, so that the result is nullable exactly when the
-// operand is
+// power with a nullable exponent declared decimal: it is lifted over exponent as over operand, so the result
+// is decimal?
 {
   "from": { "entity": "orders" },
   "select": [

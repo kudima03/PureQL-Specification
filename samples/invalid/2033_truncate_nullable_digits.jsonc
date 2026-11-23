@@ -1,5 +1,5 @@
-// truncate with nullable digits: digits is never null, so that the result is nullable exactly when the
-// operand is
+// truncate with a nullable digits declared decimal: it is lifted over digits as over operand, so the result
+// is decimal?
 {
   "from": { "entity": "orders" },
   "select": [

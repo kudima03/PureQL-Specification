@@ -1,0 +1,17 @@
+// replaceRegex of a nullable operand with a nullable pattern: a pattern is a literal or a non-null parameter,
+// known before a row is read
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "pattern": { "param": "pattern", "type": { "name": "string", "nullable": true } },
+        "replacement": { "type": { "name": "string" }, "value": "x" }
+      }
+    }
+  ]
+}

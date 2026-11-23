@@ -1,0 +1,17 @@
+// position with a null pattern declared integer: it is lifted over pattern, so a null pattern gives null and
+// the result is integer?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string", "nullable": true }, "value": null },
+        "start": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

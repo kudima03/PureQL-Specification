@@ -1,0 +1,16 @@
+// round with a null digits declared decimal: it is lifted over digits, so a null digits gives null and the
+// result is decimal?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}
