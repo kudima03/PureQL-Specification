@@ -1,0 +1,15 @@
+// position declared decimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "decimal" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

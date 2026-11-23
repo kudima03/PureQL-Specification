@@ -1,0 +1,15 @@
+// splitPart without an index: it yields one part, not a list of them
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

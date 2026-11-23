@@ -1,0 +1,15 @@
+// split is not an operator: there is no list of parts as a value; one part is splitPart
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "split",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

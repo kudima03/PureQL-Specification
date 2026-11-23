@@ -1,0 +1,19 @@
+// position with an aggregate as start in where, a row context without aggregates
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "position",
+      "type": { "name": "integer" },
+      "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
+      "pattern": { "type": { "name": "string" }, "value": "@" },
+      "start": { "operator": "count", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

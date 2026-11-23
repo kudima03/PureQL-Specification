@@ -1,0 +1,214 @@
+// Corners of replace, position and splitPart: an empty pattern and an empty delimiter, a pattern from a field
+// and a replacement from a parameter, a start that is a parameter or computed, a negative index, nullable
+// operands, and parts of a date written as text.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "empty_pattern_changes_nothing",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "" },
+        "replacement": { "type": { "name": "string" }, "value": "x" }
+      }
+    },
+    {
+      "alias": "removed",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "" }
+      }
+    },
+    {
+      "alias": "pattern_from_a_field",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "replacement": { "type": { "name": "string" }, "value": "?" }
+      }
+    },
+    {
+      "alias": "replacement_from_a_parameter",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "Mr. " },
+        "replacement": { "param": "title", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "_" },
+        "replacement": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "replace_in_a_literal",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" },
+        "pattern": { "type": { "name": "string" }, "value": "-" },
+        "replacement": { "type": { "name": "string" }, "value": "/" }
+      }
+    },
+    {
+      "alias": "position_of_the_empty_pattern",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "" }
+      }
+    },
+    {
+      "alias": "position_from_a_parameter",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "start": { "param": "from", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "position_from_a_computed_start",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "start": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "position",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+              "pattern": { "type": { "name": "string" }, "value": " " }
+            },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "position_in_nullable",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "pattern": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "last_part",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " },
+        "index": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "part_by_parameter",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " },
+        "index": { "param": "part", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "part_of_nullable",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "middle_name",
+          "type": { "name": "string", "nullable": true }
+        },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "empty_delimiter_gives_one_part",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": "" },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "long_delimiter",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": ", " },
+        "index": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "birth_year",
+      "expression": {
+        "operator": "asInteger",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "splitPart",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "asString",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+          },
+          "delimiter": { "type": { "name": "string" }, "value": "-" },
+          "index": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "initial_and_last_name",
+      "expression": {
+        "operator": "concat",
+        "type": { "name": "string" },
+        "values": [
+          {
+            "operator": "substring",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            "start": { "type": { "name": "integer" }, "value": 1 },
+            "length": { "type": { "name": "integer" }, "value": 1 }
+          },
+          { "type": { "name": "string" }, "value": ". " },
+          {
+            "operator": "splitPart",
+            "type": { "name": "string" },
+            "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+            "delimiter": { "type": { "name": "string" }, "value": " " },
+            "index": { "type": { "name": "integer" }, "value": -1 }
+          }
+        ]
+      }
+    }
+  ]
+}

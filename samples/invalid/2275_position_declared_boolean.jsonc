@@ -1,0 +1,15 @@
+// position declared boolean: it is the position, an integer; whether the pattern occurs is contains
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

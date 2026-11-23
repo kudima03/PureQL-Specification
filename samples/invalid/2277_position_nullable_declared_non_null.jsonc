@@ -1,0 +1,15 @@
+// position in a nullable operand declared integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

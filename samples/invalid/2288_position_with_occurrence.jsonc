@@ -1,0 +1,17 @@
+// position with an occurrence: it finds the first one; a later one is searched from a start after the
+// previous
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "occurrence": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

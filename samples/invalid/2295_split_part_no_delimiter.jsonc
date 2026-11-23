@@ -1,0 +1,15 @@
+// splitPart without a delimiter: there is no default delimiter
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

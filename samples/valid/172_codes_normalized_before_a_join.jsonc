@@ -1,0 +1,91 @@
+// Codes normalized before joining two sources: replace in join.on, position in where, and splitPart in select
+// and orderBy, also over a uuid written as text.
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "products",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+        },
+        "right": {
+          "operator": "replace",
+          "type": { "name": "string" },
+          "operand": {
+            "operator": "lower",
+            "type": { "name": "string" },
+            "operand": { "source": "products", "field": "sku", "type": { "name": "string" } }
+          },
+          "pattern": { "type": { "name": "string" }, "value": "sku:" },
+          "replacement": { "type": { "name": "string" }, "value": "" }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "position",
+      "type": { "name": "integer" },
+      "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+      "pattern": { "type": { "name": "string" }, "value": "SKU:" }
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "sku_prefix",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": ":" },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "sku_code",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": ":" },
+        "index": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "product_id_group",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+        },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "products", "field": "sku", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": ":" },
+        "index": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

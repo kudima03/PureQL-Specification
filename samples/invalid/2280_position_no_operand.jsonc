@@ -1,0 +1,14 @@
+// position without an operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "pattern": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

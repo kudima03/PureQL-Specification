@@ -1,0 +1,15 @@
+// splitPart without an operand
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "delimiter": { "type": { "name": "string" }, "value": " " },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

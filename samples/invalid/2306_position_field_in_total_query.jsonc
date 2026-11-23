@@ -1,0 +1,15 @@
+// position in a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "@" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+// replace of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "country",
+      "expression": { "source": "users", "field": "country", "type": { "name": "string" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "country", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// replaceAll is not an operator: replace already replaces every occurrence
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replaceAll",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

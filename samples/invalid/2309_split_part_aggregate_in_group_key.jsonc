@@ -1,0 +1,21 @@
+// splitPart of an aggregate as a groupBy key, a row expression
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "domain",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "string" },
+          "selector": { "source": "users", "field": "email", "type": { "name": "string" } }
+        },
+        "delimiter": { "type": { "name": "string" }, "value": "@" },
+        "index": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

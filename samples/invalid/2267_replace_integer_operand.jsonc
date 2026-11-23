@@ -1,0 +1,16 @@
+// replace of an integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "_" }
+      }
+    }
+  ]
+}

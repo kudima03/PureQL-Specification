@@ -1,0 +1,15 @@
+// indexOf is not an operator: the operator is position, counted from 1
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "indexOf",
+        "type": { "name": "integer" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": " " }
+      }
+    }
+  ]
+}

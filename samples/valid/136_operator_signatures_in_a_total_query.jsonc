@@ -673,6 +673,84 @@
       }
     },
     {
+      "alias": "replace_string",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "pattern": { "type": { "name": "string" }, "value": "-" },
+        "replacement": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "replace_string_nullable",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "-" },
+        "replacement": { "type": { "name": "string" }, "value": "b" }
+      }
+    },
+    {
+      "alias": "position_integer",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "pattern": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "position_integer_nullable",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "-" }
+      }
+    },
+    {
+      "alias": "position_integer_start",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "pattern": { "type": { "name": "string" }, "value": "-" },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "position_integer_nullable_start",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "pattern": { "type": { "name": "string" }, "value": "-" },
+        "start": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "splitPart_string",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "splitPart_string_nullable",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string", "nullable": true }, "value": null },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
       "alias": "contains_boolean",
       "expression": {
         "operator": "contains",

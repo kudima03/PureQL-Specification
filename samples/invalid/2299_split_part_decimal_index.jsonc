@@ -1,0 +1,16 @@
+// splitPart with a decimal index
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "name", "type": { "name": "string" } },
+        "delimiter": { "type": { "name": "string" }, "value": " " },
+        "index": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    }
+  ]
+}

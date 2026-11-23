@@ -1,0 +1,304 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "position",
+      "type": {
+        "name": "integer"
+      },
+      "operand": {
+        "source": "users",
+        "field": "email",
+        "type": {
+          "name": "string"
+        }
+      },
+      "pattern": {
+        "type": {
+          "name": "string"
+        },
+        "value": "@"
+      }
+    },
+    "right": {
+      "type": {
+        "name": "integer"
+      },
+      "value": 1
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "email_user",
+      "expression": {
+        "operator": "splitPart",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "delimiter": {
+          "type": {
+            "name": "string"
+          },
+          "value": "@"
+        },
+        "index": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        }
+      }
+    },
+    {
+      "alias": "email_domain",
+      "expression": {
+        "operator": "splitPart",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "delimiter": {
+          "type": {
+            "name": "string"
+          },
+          "value": "@"
+        },
+        "index": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -1
+        }
+      }
+    },
+    {
+      "alias": "at_position",
+      "expression": {
+        "operator": "position",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "@"
+        }
+      }
+    },
+    {
+      "alias": "first_dot_after_at",
+      "expression": {
+        "operator": "position",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "email",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "."
+        },
+        "start": {
+          "operator": "add",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "operator": "position",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "users",
+                "field": "email",
+                "type": {
+                  "name": "string"
+                }
+              },
+              "pattern": {
+                "type": {
+                  "name": "string"
+                },
+                "value": "@"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "masked_email",
+      "expression": {
+        "operator": "concat",
+        "type": {
+          "name": "string"
+        },
+        "values": [
+          {
+            "operator": "substring",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "users",
+              "field": "email",
+              "type": {
+                "name": "string"
+              }
+            },
+            "start": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            },
+            "length": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          },
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "***"
+          },
+          {
+            "operator": "substring",
+            "type": {
+              "name": "string"
+            },
+            "operand": {
+              "source": "users",
+              "field": "email",
+              "type": {
+                "name": "string"
+              }
+            },
+            "start": {
+              "operator": "position",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "users",
+                "field": "email",
+                "type": {
+                  "name": "string"
+                }
+              },
+              "pattern": {
+                "type": {
+                  "name": "string"
+                },
+                "value": "@"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "mobile_digits",
+      "expression": {
+        "operator": "replace",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "operator": "replace",
+          "type": {
+            "name": "string",
+            "nullable": true
+          },
+          "operand": {
+            "source": "users",
+            "field": "mobile",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          "pattern": {
+            "type": {
+              "name": "string"
+            },
+            "value": " "
+          },
+          "replacement": {
+            "type": {
+              "name": "string"
+            },
+            "value": ""
+          }
+        },
+        "pattern": {
+          "type": {
+            "name": "string"
+          },
+          "value": "-"
+        },
+        "replacement": {
+          "type": {
+            "name": "string"
+          },
+          "value": ""
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// replace of a nullable operand declared string: it is lifted, so it is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "mobile", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": " " },
+        "replacement": { "type": { "name": "string" }, "value": "" }
+      }
+    }
+  ]
+}
