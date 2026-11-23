@@ -1,0 +1,11 @@
+// rows given as a list parameter: each row is written out; a set of keys from a parameter is tested with in
+{
+  "subqueries": [ { "name": "statuses", "rows": { "param": "statuses", "type": { "name": "stringList" } } } ],
+  "from": { "subquery": "statuses" },
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}

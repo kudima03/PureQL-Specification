@@ -1,0 +1,15 @@
+// rows as an input of a unionAll: an input is a query; the rows are declared as a subquery and read with from
+{
+  "unionAll": [
+    {
+      "from": { "entity": "orders" },
+      "select": [
+        {
+          "alias": "status",
+          "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+        }
+      ]
+    },
+    { "rows": [ [ { "alias": "status", "expression": { "type": { "name": "string" }, "value": "new" } } ] ] }
+  ]
+}

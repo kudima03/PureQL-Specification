@@ -1,0 +1,51 @@
+// Two inline sources joined on true give every combination of their rows, here counted and listed in a total
+// query.
+{
+  "subqueries": [
+    {
+      "name": "urgency",
+      "rows": [
+        [ { "alias": "level", "expression": { "type": { "name": "string" }, "value": "urgent" } } ],
+        [ { "alias": "level", "expression": { "type": { "name": "string" }, "value": "not urgent" } } ]
+      ]
+    },
+    {
+      "name": "importance",
+      "rows": [
+        [ { "alias": "level", "expression": { "type": { "name": "string" }, "value": "important" } } ],
+        [ { "alias": "level", "expression": { "type": { "name": "string" }, "value": "not important" } } ]
+      ]
+    }
+  ],
+  "from": { "subquery": "urgency" },
+  "joins": [
+    { "kind": "inner", "subquery": "importance", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "aggregate": [
+    { "alias": "quadrants", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "names",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "concatWith",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "urgency", "field": "level", "type": { "name": "string" } },
+            { "source": "importance", "field": "level", "type": { "name": "string" } }
+          ],
+          "separator": { "type": { "name": "string" }, "value": " and " }
+        },
+        "separator": { "type": { "name": "string" }, "value": "; " },
+        "orderBy": [
+          {
+            "expression": { "source": "urgency", "field": "level", "type": { "name": "string" } },
+            "direction": "desc"
+          },
+          { "expression": { "source": "importance", "field": "level", "type": { "name": "string" } } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "subqueries": [
+    {
+      "name": "statuses",
+      "rows": [
+        [
+          {
+            "alias": "status",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "new"
+            }
+          },
+          {
+            "alias": "rank",
+            "expression": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          },
+          {
+            "alias": "label",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "New"
+            }
+          }
+        ],
+        [
+          {
+            "alias": "status",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "paid"
+            }
+          },
+          {
+            "alias": "rank",
+            "expression": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 2
+            }
+          },
+          {
+            "alias": "label",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Paid"
+            }
+          }
+        ],
+        [
+          {
+            "alias": "status",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "shipped"
+            }
+          },
+          {
+            "alias": "rank",
+            "expression": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 3
+            }
+          },
+          {
+            "alias": "label",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Shipped"
+            }
+          }
+        ],
+        [
+          {
+            "alias": "status",
+            "expression": {
+              "type": {
+                "name": "string"
+              },
+              "value": "cancelled"
+            }
+          },
+          {
+            "alias": "rank",
+            "expression": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 4
+            }
+          },
+          {
+            "alias": "label",
+            "expression": {
+              "type": {
+                "name": "string",
+                "nullable": true
+              },
+              "value": null
+            }
+          }
+        ]
+      ]
+    }
+  ],
+  "from": {
+    "entity": "orders"
+  },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "statuses",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "status",
+          "type": {
+            "name": "string"
+          }
+        },
+        "right": {
+          "source": "statuses",
+          "field": "status",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "status",
+      "expression": {
+        "operator": "coalesce",
+        "type": {
+          "name": "string"
+        },
+        "values": [
+          {
+            "source": "statuses",
+            "field": "label",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          },
+          {
+            "source": "orders",
+            "field": "status",
+            "type": {
+              "name": "string"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "rank",
+      "expression": {
+        "source": "statuses",
+        "field": "rank",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "statuses",
+        "field": "rank",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

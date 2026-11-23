@@ -47,7 +47,7 @@ total query returns its row even when there are none.
 
 A query is plain, grouped or total, or it combines the rows of other queries
 with a set operation (unionAll, union, intersect, except). A document is the
-main query plus optional `subqueries`: named queries the
+main query plus optional `subqueries`: named queries, or named rows of literals, the
 main query and later subqueries can read from (`from` / `join` with
 `subquery`, or `in` over one of their columns). Every select column has an
 alias and the type its expression declares, which the validator has checked,
@@ -938,7 +938,17 @@ def kind_of_query(prefix):
 
 
 defs["query"] = kind_of_query("")
-defs["subquery"] = obj(["name", "query"], {"name": NAME, "query": ref("query")})
+# A subquery is a named query, or named rows written in the document: a short
+# reference list that no entity holds. Each row is a list of { alias, expression }
+# like a select, where an expression is a literal or a parameter, so every cell
+# carries its type. The rows have the same columns, matched by alias, which the
+# interpreter checks, as it does for the inputs of a set operation.
+defs["cell"] = {"type": "object", "if": {"required": ["value"]}, "then": ref("literal"), "else": ref("param")}
+defs["rowItem"] = obj(["alias", "expression"], {"alias": NAME, "expression": ref("cell")})
+defs["subquery"] = {
+    **obj(["name"], {"name": NAME, "query": ref("query"), "rows": array_of(array_of(ref("rowItem"), 1), 1)}),
+    "oneOf": [{"required": ["query"]}, {"required": ["rows"]}],
+}
 
 schema = {
     "$schema": "https://json-schema.org/draft/2020-12/schema",

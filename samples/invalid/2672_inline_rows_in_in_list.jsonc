@@ -1,0 +1,15 @@
+// rows as the list of in: a list of literals is a list literal
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "in",
+    "type": { "name": "boolean" },
+    "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "list": {
+      "rows": [ [ { "alias": "status", "expression": { "type": { "name": "string" }, "value": "new" } } ] ]
+    }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

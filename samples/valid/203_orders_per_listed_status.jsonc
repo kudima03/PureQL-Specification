@@ -1,0 +1,96 @@
+// Inline rows as the from source of a grouped query: a reference list of statuses left joined to orders, so a
+// status without orders still has a row. A column with a null in one row is nullable.
+{
+  "subqueries": [
+    {
+      "name": "statuses",
+      "rows": [
+        [
+          { "alias": "status", "expression": { "type": { "name": "string" }, "value": "new" } },
+          { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 1 } },
+          { "alias": "label", "expression": { "type": { "name": "string" }, "value": "New" } }
+        ],
+        [
+          { "alias": "status", "expression": { "type": { "name": "string" }, "value": "paid" } },
+          { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 2 } },
+          { "alias": "label", "expression": { "type": { "name": "string" }, "value": "Paid" } }
+        ],
+        [
+          { "alias": "status", "expression": { "type": { "name": "string" }, "value": "shipped" } },
+          { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 3 } },
+          { "alias": "label", "expression": { "type": { "name": "string" }, "value": "Shipped" } }
+        ],
+        [
+          { "alias": "status", "expression": { "type": { "name": "string" }, "value": "cancelled" } },
+          { "alias": "rank", "expression": { "type": { "name": "integer" }, "value": 4 } },
+          {
+            "alias": "label",
+            "expression": { "type": { "name": "string", "nullable": true }, "value": null }
+          }
+        ]
+      ]
+    }
+  ],
+  "from": { "subquery": "statuses" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "statuses", "field": "status", "type": { "name": "string" } },
+        "right": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "groupBy": [
+    {
+      "alias": "rank",
+      "expression": { "source": "statuses", "field": "rank", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    },
+    {
+      "alias": "label",
+      "expression": { "source": "statuses", "field": "label", "type": { "name": "string", "nullable": true } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string" },
+        "values": [
+          { "key": "label", "type": { "name": "string", "nullable": true } },
+          { "key": "status", "type": { "name": "string" } }
+        ]
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "key": "rank", "type": { "name": "integer" } } } ]
+}

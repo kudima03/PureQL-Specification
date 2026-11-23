@@ -1,0 +1,18 @@
+// rows as an object instead of an array of rows
+{
+  "subqueries": [
+    {
+      "name": "statuses",
+      "rows": {
+        "first": [ { "alias": "status", "expression": { "type": { "name": "string" }, "value": "new" } } ]
+      }
+    }
+  ],
+  "from": { "subquery": "statuses" },
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "statuses", "field": "status", "type": { "name": "string" } }
+    }
+  ]
+}

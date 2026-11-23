@@ -1,0 +1,59 @@
+// A single inline row whose cells are parameters and a literal, joined on true next to every row: its columns
+// are read like fields, and a nullable parameter gives a nullable column.
+{
+  "subqueries": [
+    {
+      "name": "settings",
+      "rows": [
+        [
+          { "alias": "rate", "expression": { "param": "tax_rate", "type": { "name": "decimal" } } },
+          { "alias": "as_of", "expression": { "param": "as_of", "type": { "name": "date" } } },
+          {
+            "alias": "note",
+            "expression": { "param": "note", "type": { "name": "string", "nullable": true } }
+          },
+          { "alias": "currency", "expression": { "type": { "name": "string" }, "value": "EUR" } }
+        ]
+      ]
+    }
+  ],
+  "from": { "entity": "orders" },
+  "joins": [
+    { "kind": "inner", "subquery": "settings", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "right": { "source": "settings", "field": "as_of", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "total_with_tax",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          {
+            "operator": "add",
+            "type": { "name": "decimal" },
+            "values": [
+              { "type": { "name": "integer" }, "value": 1 },
+              { "source": "settings", "field": "rate", "type": { "name": "decimal" } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "currency",
+      "expression": { "source": "settings", "field": "currency", "type": { "name": "string" } }
+    },
+    {
+      "alias": "note",
+      "expression": { "source": "settings", "field": "note", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

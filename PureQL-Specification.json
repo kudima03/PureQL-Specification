@@ -6943,6 +6943,20 @@
         }
       ]
     },
+    "cell": {
+      "type": "object",
+      "if": {
+        "required": [
+          "value"
+        ]
+      },
+      "then": {
+        "$ref": "#/$defs/literal"
+      },
+      "else": {
+        "$ref": "#/$defs/param"
+      }
+    },
     "coalesce.boolean.nullable@group": {
       "properties": {
         "values": {
@@ -53975,6 +53989,27 @@
         }
       ]
     },
+    "rowItem": {
+      "type": "object",
+      "required": [
+        "alias",
+        "expression"
+      ],
+      "properties": {
+        "alias": {
+          "type": "string",
+          "pattern": "^[^ \\t\\n\\r]([^\\n\\r]*[^ \\t\\n\\r])?$",
+          "not": {
+            "type": "string",
+            "pattern": "\\n"
+          }
+        },
+        "expression": {
+          "$ref": "#/$defs/cell"
+        }
+      },
+      "additionalProperties": false
+    },
     "second.datetime@group": {
       "properties": {
         "operand": {
@@ -59449,8 +59484,7 @@
     "subquery": {
       "type": "object",
       "required": [
-        "name",
-        "query"
+        "name"
       ],
       "properties": {
         "name": {
@@ -59463,9 +59497,32 @@
         },
         "query": {
           "$ref": "#/$defs/query"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/rowItem"
+            },
+            "minItems": 1
+          },
+          "minItems": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "query"
+          ]
+        },
+        {
+          "required": [
+            "rows"
+          ]
+        }
+      ]
     },
     "substring.string.nullable@group": {
       "properties": {
