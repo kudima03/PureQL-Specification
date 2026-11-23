@@ -1,0 +1,29 @@
+// coalesce of a division by nullIf and a non-null default declared decimal?: the default makes it non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "divide",
+            "type": { "name": "decimal", "nullable": true },
+            "values": [
+              { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              {
+                "operator": "nullIf",
+                "type": { "name": "decimal", "nullable": true },
+                "left": { "source": "orders", "field": "credit_limit", "type": { "name": "decimal" } },
+                "right": { "type": { "name": "integer" }, "value": 0 }
+              }
+            ]
+          },
+          { "type": { "name": "decimal" }, "value": "0" }
+        ]
+      }
+    }
+  ]
+}
