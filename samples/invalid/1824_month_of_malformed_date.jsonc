@@ -1,0 +1,14 @@
+// month of a date literal that is not a calendar date: the operand is validated in full
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-02-30" }
+      }
+    }
+  ]
+}

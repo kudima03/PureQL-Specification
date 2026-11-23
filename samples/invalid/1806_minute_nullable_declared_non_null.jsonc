@@ -1,0 +1,14 @@
+// minute of a nullable operand, declared non-null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

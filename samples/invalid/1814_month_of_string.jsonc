@@ -1,0 +1,14 @@
+// month of a string: a date written as a string is not a date, and there is no implicit conversion
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "string" }, "value": "2024-03-01" }
+      }
+    }
+  ]
+}

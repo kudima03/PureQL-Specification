@@ -1,0 +1,15 @@
+// month with a part property: each part is its own operator, and no other property is allowed
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "part": "month"
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// month of a group key reference in where, which has no group keys
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "month",
+      "type": { "name": "integer" },
+      "operand": { "key": "d", "type": { "name": "date" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": 3 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

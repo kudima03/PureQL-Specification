@@ -1,0 +1,14 @@
+// second declared decimal: it is the whole second, an integer; the fraction is microsecond
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

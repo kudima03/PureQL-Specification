@@ -1,0 +1,14 @@
+// dayOfMonth is not an operator: the day of the month is day
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dayOfMonth",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

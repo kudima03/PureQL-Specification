@@ -53,7 +53,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, concat, length, upper/lower, trim, substring, date/time math, if, round/floor/ceiling are lifted:
+  - arithmetic, concat, length, upper/lower, trim, substring, date/time math and parts, if, round/floor/ceiling are lifted:
     nullable operands give a nullable result (null if any operand is null);
   - equal / notEqual / comparisons / in accept nullable operands and return a
     non-null boolean (null == null is true, any ordering against null is false);
@@ -77,6 +77,10 @@ EQUATABLE = ["decimal", "string", "boolean", "date", "time", "datetime", "uuid"]
 COMPARABLE = EQUATABLE
 # min / max keep the selector type, so integer is listed separately.
 ORDERED = TYPES
+# Parts of a date or a datetime, and of a time or a datetime. `day` is the day of
+# the month; `week` and `weekYear` are the ISO 8601 week and its week-numbering year.
+DATE_PARTS = ["year", "quarter", "month", "day", "dayOfWeek", "dayOfYear", "week", "weekYear"]
+TIME_PARTS = ["hour", "minute", "second", "microsecond"]
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
@@ -412,6 +416,16 @@ for ctx, rules in CONTEXTS.items():
     lifted("timeDiffSeconds", {"left": "time", "right": "time"}, "decimal")
     lifted("datetimeAddSeconds", {"left": "datetime", "right": "decimal"}, "datetime")
     lifted("datetimeDiffSeconds", {"left": "datetime", "right": "datetime"}, "decimal")
+
+    # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
+    # time or a datetime (a datetime is read in UTC). The type the operand declares
+    # picks the position it is validated against; the result is lifted.
+    for names, families in [(DATE_PARTS, ["date", "datetime"]), (TIME_PARTS, ["time", "datetime"])]:
+        for name in names:
+            shape(name, ["operand"], {"operand": check(f"accepts.{families[0]}OrDatetime", families)})
+            operand = by_family(name, "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
+            signature(name, "integer", False, {"properties": {"operand": NON_NULL}}, operand)
+            signature(name, "integer", True, some(["operand"], NULLABLE), operand)
 
     # booleans: conditions are always non-null
     for name in ["and", "or"]:

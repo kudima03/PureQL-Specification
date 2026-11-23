@@ -621,6 +621,390 @@
       }
     },
     {
+      "alias": "year_date",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "year_date_nullable",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "year_datetime",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "year_datetime_nullable",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "quarter_date",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "quarter_date_nullable",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "quarter_datetime",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "quarter_datetime_nullable",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "month_date",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "month_date_nullable",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "month_datetime",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "month_datetime_nullable",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "day_date",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "day_date_nullable",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "day_datetime",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "day_datetime_nullable",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "dayOfWeek_date",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "dayOfWeek_date_nullable",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "dayOfWeek_datetime",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "dayOfWeek_datetime_nullable",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "dayOfYear_date",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "dayOfYear_date_nullable",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "dayOfYear_datetime",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "dayOfYear_datetime_nullable",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "week_date",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "week_date_nullable",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "week_datetime",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "week_datetime_nullable",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "weekYear_date",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "date" }, "value": "2024-12-30" }
+      }
+    },
+    {
+      "alias": "weekYear_date_nullable",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "date", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "weekYear_datetime",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "weekYear_datetime_nullable",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "hour_time",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "time" }, "value": "18:30:15.25" }
+      }
+    },
+    {
+      "alias": "hour_time_nullable",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "hour_datetime",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "hour_datetime_nullable",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "minute_time",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "time" }, "value": "18:30:15.25" }
+      }
+    },
+    {
+      "alias": "minute_time_nullable",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "minute_datetime",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "minute_datetime_nullable",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "second_time",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "time" }, "value": "18:30:15.25" }
+      }
+    },
+    {
+      "alias": "second_time_nullable",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "second_datetime",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "second_datetime_nullable",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "microsecond_time",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "time" }, "value": "18:30:15.25" }
+      }
+    },
+    {
+      "alias": "microsecond_time_nullable",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "microsecond_datetime",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-12-30T18:30:15.25Z" }
+      }
+    },
+    {
+      "alias": "microsecond_datetime_nullable",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "and_boolean",
       "expression": {
         "operator": "and",
