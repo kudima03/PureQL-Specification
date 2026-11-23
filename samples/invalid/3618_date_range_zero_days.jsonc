@@ -1,0 +1,21 @@
+// A range of 0 days: no distance on a side is the absence of the side
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 }, "following": { "days": 0 } }
+        }
+      }
+    }
+  ]
+}

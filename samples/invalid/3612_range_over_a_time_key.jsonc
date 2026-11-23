@@ -1,0 +1,27 @@
+// A range over a time sort key: a time of day wraps around midnight, so it has no range
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "delivery_window_start",
+                "type": { "name": "time" }
+              }
+            }
+          ],
+          "range": { "preceding": { "seconds": 3600 } }
+        }
+      }
+    }
+  ]
+}

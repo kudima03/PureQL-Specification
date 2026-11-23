@@ -960,6 +960,30 @@
         }
       }
     },
+    "accepts.rangeKey": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "date",
+                "datetime"
+              ]
+            }
+          }
+        }
+      }
+    },
     "accepts.string": {
       "type": "object",
       "required": [
@@ -19156,6 +19180,240 @@
         }
       },
       "additionalProperties": false
+    },
+    "distance.date": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "type": "object",
+          "required": [
+            "days"
+          ],
+          "properties": {
+            "days": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9223372036854776000
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.integer"
+                    },
+                    {
+                      "$ref": "#/$defs/param"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "months"
+          ],
+          "properties": {
+            "months": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9223372036854776000
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.integer"
+                    },
+                    {
+                      "$ref": "#/$defs/param"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "distance.datetime": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "type": "object",
+          "required": [
+            "seconds"
+          ],
+          "properties": {
+            "seconds": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9223372036854776000
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.integer"
+                    },
+                    {
+                      "$ref": "#/$defs/param"
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/literal"
+                    },
+                    {
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "pattern": "^([1-9][0-9]*(\\.[0-9]*[1-9])?|0\\.[0-9]*[1-9])$",
+                          "not": {
+                            "type": "string",
+                            "pattern": "\\n"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/param"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "months"
+          ],
+          "properties": {
+            "months": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9223372036854776000
+                },
+                {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/declares.integer"
+                    },
+                    {
+                      "$ref": "#/$defs/param"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "distance.decimal": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854776000
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/param"
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/literal"
+            },
+            {
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "pattern": "^([1-9][0-9]*(\\.[0-9]*[1-9])?|0\\.[0-9]*[1-9])$",
+                  "not": {
+                    "type": "string",
+                    "pattern": "\\n"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/param"
+            }
+          ]
+        }
+      ]
+    },
+    "distance.integer": {
+      "anyOf": [
+        {
+          "const": "all"
+        },
+        {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9223372036854776000
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/param"
+            }
+          ]
+        }
+      ]
     },
     "divide.decimal.nullable@group": {
       "required": [
@@ -61723,6 +61981,266 @@
         }
       }
     },
+    "range.date": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "preceding": {
+          "$ref": "#/$defs/distance.date"
+        },
+        "following": {
+          "$ref": "#/$defs/distance.date"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "not": {
+        "type": "object",
+        "required": [
+          "preceding",
+          "following"
+        ],
+        "properties": {
+          "preceding": {
+            "const": "all"
+          },
+          "following": {
+            "const": "all"
+          }
+        }
+      }
+    },
+    "range.datetime": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "preceding": {
+          "$ref": "#/$defs/distance.datetime"
+        },
+        "following": {
+          "$ref": "#/$defs/distance.datetime"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "not": {
+        "type": "object",
+        "required": [
+          "preceding",
+          "following"
+        ],
+        "properties": {
+          "preceding": {
+            "const": "all"
+          },
+          "following": {
+            "const": "all"
+          }
+        }
+      }
+    },
+    "range.decimal": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "preceding": {
+          "$ref": "#/$defs/distance.decimal"
+        },
+        "following": {
+          "$ref": "#/$defs/distance.decimal"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "not": {
+        "type": "object",
+        "required": [
+          "preceding",
+          "following"
+        ],
+        "properties": {
+          "preceding": {
+            "const": "all"
+          },
+          "following": {
+            "const": "all"
+          }
+        }
+      }
+    },
+    "range.integer": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "preceding": {
+          "$ref": "#/$defs/distance.integer"
+        },
+        "following": {
+          "$ref": "#/$defs/distance.integer"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1,
+      "not": {
+        "type": "object",
+        "required": [
+          "preceding",
+          "following"
+        ],
+        "properties": {
+          "preceding": {
+            "const": "all"
+          },
+          "following": {
+            "const": "all"
+          }
+        }
+      }
+    },
+    "rangeWindow": {
+      "properties": {
+        "orderBy": {
+          "maxItems": 1,
+          "items": {
+            "properties": {
+              "expression": {
+                "$ref": "#/$defs/accepts.rangeKey"
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "orderBy"
+            ],
+            "properties": {
+              "orderBy": {
+                "items": {
+                  "properties": {
+                    "expression": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/declares.integer"
+                        },
+                        {
+                          "$ref": "#/$defs/declares.integer.nullable"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range": {
+                "$ref": "#/$defs/range.integer"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "orderBy"
+            ],
+            "properties": {
+              "orderBy": {
+                "items": {
+                  "properties": {
+                    "expression": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/declares.decimal"
+                        },
+                        {
+                          "$ref": "#/$defs/declares.decimal.nullable"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range": {
+                "$ref": "#/$defs/range.decimal"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "orderBy"
+            ],
+            "properties": {
+              "orderBy": {
+                "items": {
+                  "properties": {
+                    "expression": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/declares.date"
+                        },
+                        {
+                          "$ref": "#/$defs/declares.date.nullable"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range": {
+                "$ref": "#/$defs/range.date"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "orderBy"
+            ],
+            "properties": {
+              "orderBy": {
+                "items": {
+                  "properties": {
+                    "expression": {
+                      "anyOf": [
+                        {
+                          "$ref": "#/$defs/declares.datetime"
+                        },
+                        {
+                          "$ref": "#/$defs/declares.datetime.nullable"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "range": {
+                "$ref": "#/$defs/range.datetime"
+              }
+            }
+          }
+        }
+      ]
+    },
     "rank@projection": {
       "type": "object",
       "required": [
@@ -77812,18 +78330,47 @@
         },
         "frame": {
           "$ref": "#/$defs/frame"
-        }
+        },
+        "range": true
       },
       "additionalProperties": false,
       "minProperties": 1,
       "dependentRequired": {
-        "orderBy": [
-          "frame"
-        ],
         "frame": [
           "orderBy"
+        ],
+        "range": [
+          "orderBy"
         ]
-      }
+      },
+      "dependentSchemas": {
+        "orderBy": {
+          "oneOf": [
+            {
+              "required": [
+                "frame"
+              ]
+            },
+            {
+              "required": [
+                "range"
+              ]
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "range"
+            ]
+          },
+          "then": {
+            "$ref": "#/$defs/rangeWindow"
+          }
+        }
+      ]
     },
     "year.date@group": {
       "properties": {

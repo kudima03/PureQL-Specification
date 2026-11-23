@@ -1,0 +1,21 @@
+// A range over a decimal key of the decimal 0
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": { "preceding": { "type": { "name": "decimal" }, "value": "0" } }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+// Revenue of the last twelve months per user: monthly sums in a subquery, and a range of 11 months over the
+// month, which counts months without rows as it should, where 11 rows back would not.
+{
+  "subqueries": [
+    {
+      "name": "monthly",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "month",
+            "expression": {
+              "operator": "startOfMonth",
+              "type": { "name": "date" },
+              "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+            }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "month", "expression": { "key": "month", "type": { "name": "date" } } },
+          {
+            "alias": "revenue",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "monthly" },
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "monthly", "field": "user_id", "type": { "name": "uuid" } }
+    },
+    { "alias": "month", "expression": { "source": "monthly", "field": "month", "type": { "name": "date" } } },
+    {
+      "alias": "revenue",
+      "expression": { "source": "monthly", "field": "revenue", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "last_twelve_months",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "monthly", "field": "revenue", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "monthly", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "monthly", "field": "month", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "months": 11 } }
+        }
+      }
+    },
+    {
+      "alias": "months_with_orders_in_window",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "monthly", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "monthly", "field": "month", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "months": 11 } }
+        }
+      }
+    },
+    {
+      "alias": "year_to_date",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "monthly", "field": "revenue", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            { "source": "monthly", "field": "user_id", "type": { "name": "uuid" } },
+            {
+              "operator": "year",
+              "type": { "name": "integer" },
+              "operand": { "source": "monthly", "field": "month", "type": { "name": "date" } }
+            }
+          ],
+          "orderBy": [
+            { "expression": { "source": "monthly", "field": "month", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": "all" }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "monthly", "field": "user_id", "type": { "name": "uuid" } } },
+    { "expression": { "source": "monthly", "field": "month", "type": { "name": "date" } } }
+  ]
+}

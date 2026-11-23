@@ -1,0 +1,254 @@
+// Every kind of aggregate over a range of 30 days: each is typed as it is over all rows, since the current
+// row and its peers are always in their range.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "count",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "sum",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "average",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "min",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "max_of_nullable",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "date", "nullable": true },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "median",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "first",
+      "expression": {
+        "operator": "first",
+        "type": { "name": "uuid" },
+        "selector": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "statuses",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ],
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "paid_average",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "any_paid",
+      "expression": {
+        "operator": "any",
+        "type": { "name": "boolean" },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "following": { "days": 7 } }
+        }
+      }
+    },
+    {
+      "alias": "variance_sample",
+      "expression": {
+        "operator": "varianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    },
+    {
+      "alias": "correlation",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "day",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "months": 2 } }
+        }
+      }
+    },
+    {
+      "alias": "share_of_last_30_days",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "over": {
+                "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+                "orderBy": [
+                  { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+                ],
+                "range": { "preceding": { "days": 29 } }
+              }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "rows_frame_beside_it",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 29 }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } },
+    { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

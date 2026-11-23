@@ -1,0 +1,21 @@
+// A range over a decimal key by a bare fraction: a decimal is written as a typed literal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": { "preceding": 0.5 }
+        }
+      }
+    }
+  ]
+}
