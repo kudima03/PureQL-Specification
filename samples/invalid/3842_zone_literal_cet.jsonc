@@ -1,0 +1,15 @@
+// CET as a zone: the list names places, such as Europe/Paris
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "CET" }
+      }
+    }
+  ]
+}

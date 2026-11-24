@@ -1,0 +1,15 @@
+// A zone that is a decimal number of hours: an offset is not a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "decimal" }, "value": "3" }
+      }
+    }
+  ]
+}

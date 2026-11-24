@@ -223,6 +223,16 @@ REGEX_ATOM = (
 REGEX_QUANTIFIER = r"([*+?]|\{[0-9]+(,[0-9]*)?\})\??"
 REGEX = rf"(({REGEX_ATOM})({REGEX_QUANTIFIER})?|\((\?:)?|[|^$])*"
 
+# The names of the time zones, as the IANA time zone database spells them
+# (Europe/Moscow, America/Argentina/Buenos_Aires, Etc/GMT+3): the current name of
+# every zone and the fixed offsets, listed in time_zones.txt next to this file.
+# The list has no name for UTC, no older name of a zone and no abbreviation, and
+# an offset (+03:00) is not a name.
+ZONES = [
+    line for line in (Path(__file__).resolve().parent / "time_zones.txt").read_text(encoding="utf-8").split("\n")
+    if line and not line.startswith("#")
+]
+
 # An entity, field, alias, parameter or subquery name: not empty, no leading
 # or trailing space or tab, no line break. Inner spaces and any other
 # characters are allowed, so stored names that need quoting stay expressible.
@@ -384,6 +394,18 @@ defs["regexGroup"] = {
     "if": {"required": ["value"]},
     "then": {"allOf": [ref("literal"), {"properties": {"value": {"minimum": 1}}}]},
     "else": ref("param"),
+}
+
+# `zone` names the time zone an operator reads a datetime in. It is a string
+# expression like any operand, typed and lifted by the operator's signature: a
+# literal, a parameter, or a value of the row, such as a column that holds the
+# zone of a user. This check is shallow: it reads only the value of a literal,
+# which is one of the listed names, so a literal zone is checked in full here. A
+# parameter and a computed zone are checked by the interpreter. UTC is the
+# absence of `zone`, and a default is never written: the list has no name for it.
+defs["zoneName"] = {
+    "if": {"required": ["value"], "properties": {"value": {"type": "string"}}},
+    "then": {"properties": {"value": {"enum": ZONES}}},
 }
 
 # The separator of concatAll is a string literal or a string parameter: an
@@ -760,13 +782,21 @@ for ctx, rules in CONTEXTS.items():
     # asDate, asTime and asDatetime convert between the temporal types, in UTC (the
     # day or the time of day of a datetime, midnight of a date), and read a string
     # written as asString writes a value of the type. The type the operand declares
-    # picks the position.
+    # picks the position. asDate and asTime of a datetime take a `zone`: the day and
+    # the time of day in that time zone. It is an operand, so the result is nullable
+    # exactly when the datetime or the zone is; a string spells a date or a time
+    # that has no zone, so with a string operand `zone` is rejected.
     for name, source in [("asDate", "datetime"), ("asTime", "datetime"), ("asDatetime", "date")]:
         sources = [source, "string"]
-        shape(name, ["operand"], {"operand": check(f"accepts.{source}OrString", sources)})
-        operand = by_family(name, "operand", sources, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
-        signature(name, name[2:].lower(), False, {"properties": {"operand": NON_NULL}}, operand)
-        signature(name, name[2:].lower(), True, some(["operand"], NULLABLE), operand)
+        zoned = source == "datetime"
+        shape(name, ["operand"], {"operand": check(f"accepts.{source}OrString", sources),
+                                  **({"zone": ref("zoneName")} if zoned else {})})
+        operand = by_family(name, "operand", sources, lambda f: {"properties": {
+            "operand": expr(f, ctx, True), **({"zone": False} if zoned and f == "string" else {})}})
+        zone = lambda nullable: {"properties": {"zone": expr("string", ctx, nullable)}} if zoned else {}
+        signature(name, name[2:].lower(), False, {"properties": {"operand": NON_NULL}}, zone(False), operand)
+        signature(name, name[2:].lower(), True, some(["operand", "zone"] if zoned else ["operand"], NULLABLE),
+                  zone(True), operand)
     # The other types are read from a string only: an integer is already a decimal,
     # and a decimal becomes an integer by rounding. as<Type> of a string is lifted and
     # fails the query on text that is not a literal of the type.

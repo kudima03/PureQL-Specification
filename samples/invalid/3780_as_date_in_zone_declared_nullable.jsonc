@@ -1,0 +1,15 @@
+// asDate of a non-null datetime in a non-null zone declared date?
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

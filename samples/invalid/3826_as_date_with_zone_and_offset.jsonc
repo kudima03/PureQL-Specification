@@ -1,0 +1,16 @@
+// asDate with zone and offset: a zone is a name, and its offset follows from the instant
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "offset": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

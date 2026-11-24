@@ -1,0 +1,7 @@
+// localDatetime is not a type: a datetime is an instant, and a local date and time are a date and a time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "c", "expression": { "type": { "name": "localDatetime" }, "value": "2024-01-31T18:30:00" } }
+  ]
+}

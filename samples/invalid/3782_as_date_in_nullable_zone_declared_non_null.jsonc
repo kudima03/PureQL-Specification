@@ -1,0 +1,15 @@
+// asDate in a nullable zone declared date: the operator is lifted over its zone, and a null zone gives null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

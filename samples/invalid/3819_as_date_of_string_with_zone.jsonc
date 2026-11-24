@@ -1,0 +1,15 @@
+// asDate of a string with a zone: a string spells a date, which has no zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

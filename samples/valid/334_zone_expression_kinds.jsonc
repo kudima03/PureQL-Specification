@@ -1,0 +1,160 @@
+// The zone of asDate and asTime as a literal, a parameter, a column, a coalesce and an if; a nullable or null
+// zone, or a nullable datetime, makes the result nullable.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "literal_zone",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "parameter_zone",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "column_zone",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "computed_zone",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "conditional_zone",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": {
+          "operator": "if",
+          "type": { "name": "string" },
+          "condition": { "source": "users", "field": "is_active", "type": { "name": "boolean" } },
+          "then": { "source": "users", "field": "time_zone", "type": { "name": "string" } },
+          "else": { "type": { "name": "string" }, "value": "America/New_York" }
+        }
+      }
+    },
+    {
+      "alias": "nullable_zone",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "null_zone",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_operand_and_zone",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "null_operand",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "literal_operand",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-03-31T22:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "guarded",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "date" },
+        "values": [
+          {
+            "operator": "asDate",
+            "type": { "name": "date", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "last_login_at",
+              "type": { "name": "datetime", "nullable": true }
+            },
+            "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+          },
+          { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        ]
+      }
+    },
+    {
+      "alias": "as_text",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    }
+  ]
+}

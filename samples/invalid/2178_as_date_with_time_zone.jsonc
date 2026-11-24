@@ -1,4 +1,4 @@
-// asDate with a time zone: a datetime is read in UTC, as it is written
+// asDate with timeZone: the zone of an operator is written as zone, and is an expression
 {
   "from": { "entity": "orders" },
   "select": [

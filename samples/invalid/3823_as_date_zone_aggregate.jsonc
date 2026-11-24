@@ -1,0 +1,22 @@
+// asDate in a where with an aggregate as its zone: the zone is a row expression there
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "asDate",
+      "type": { "name": "date" },
+      "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "zone": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    },
+    "right": { "param": "day", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

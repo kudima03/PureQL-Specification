@@ -1,0 +1,15 @@
+// atTimeZone is not an operator: a datetime has no zone; the operator that reads it takes one
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atTimeZone",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

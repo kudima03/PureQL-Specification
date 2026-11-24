@@ -1,0 +1,15 @@
+// asTime of a string with a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": { "type": { "name": "string" }, "value": "18:30:00" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

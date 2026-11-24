@@ -1,0 +1,15 @@
+// An abbreviation as a zone: MSK does not name one zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "MSK" }
+      }
+    }
+  ]
+}

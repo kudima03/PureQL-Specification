@@ -1,0 +1,15 @@
+// An offset as a zone: +03:00 is not the name of a time zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "+03:00" }
+      }
+    }
+  ]
+}

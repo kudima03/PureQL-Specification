@@ -1,0 +1,15 @@
+// Etc/GMT-5:30 as a zone: a fixed offset is a whole number of hours; India is Asia/Kolkata
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-5:30" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// asTime in a null zone declared time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asTime",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

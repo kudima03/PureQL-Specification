@@ -1,0 +1,15 @@
+// tryAsDate with a zone: it reads a string
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsDate",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}
