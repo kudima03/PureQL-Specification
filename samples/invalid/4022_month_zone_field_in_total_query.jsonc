@@ -1,0 +1,20 @@
+// datetimeDiffMonths of aggregates in a total query with a field as its zone
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "param": "now", "type": { "name": "datetime" } },
+        "right": {
+          "operator": "min",
+          "type": { "name": "datetime", "nullable": true },
+          "selector": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

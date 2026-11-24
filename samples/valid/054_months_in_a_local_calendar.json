@@ -1,0 +1,400 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "source": "users",
+    "field": "is_active",
+    "type": {
+      "name": "boolean"
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "member_since",
+      "expression": {
+        "source": "users",
+        "field": "created_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "alias": "whole_months_as_a_member",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "param": "now",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "whole_years_as_a_member",
+      "expression": {
+        "operator": "integerDivide",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "datetimeDiffMonths",
+          "type": {
+            "name": "integer"
+          },
+          "left": {
+            "param": "now",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "right": {
+            "source": "users",
+            "field": "created_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 12
+        }
+      }
+    },
+    {
+      "alias": "next_monthly_renewal",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "months": {
+          "operator": "add",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "operator": "datetimeDiffMonths",
+              "type": {
+                "name": "integer"
+              },
+              "left": {
+                "param": "now",
+                "type": {
+                  "name": "datetime"
+                }
+              },
+              "right": {
+                "source": "users",
+                "field": "created_at",
+                "type": {
+                  "name": "datetime"
+                }
+              },
+              "zone": {
+                "source": "users",
+                "field": "time_zone",
+                "type": {
+                  "name": "string"
+                }
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          ]
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "next_anniversary",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "months": {
+          "operator": "multiply",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "operator": "add",
+              "type": {
+                "name": "integer"
+              },
+              "values": [
+                {
+                  "operator": "integerDivide",
+                  "type": {
+                    "name": "integer"
+                  },
+                  "left": {
+                    "operator": "datetimeDiffMonths",
+                    "type": {
+                      "name": "integer"
+                    },
+                    "left": {
+                      "param": "now",
+                      "type": {
+                        "name": "datetime"
+                      }
+                    },
+                    "right": {
+                      "source": "users",
+                      "field": "created_at",
+                      "type": {
+                        "name": "datetime"
+                      }
+                    },
+                    "zone": {
+                      "source": "users",
+                      "field": "time_zone",
+                      "type": {
+                        "name": "string"
+                      }
+                    }
+                  },
+                  "right": {
+                    "type": {
+                      "name": "integer"
+                    },
+                    "value": 12
+                  }
+                },
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 1
+                }
+              ]
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 12
+            }
+          ]
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "renews_this_local_month",
+      "expression": {
+        "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "operator": "datetimeAddMonths",
+          "type": {
+            "name": "datetime"
+          },
+          "operand": {
+            "source": "users",
+            "field": "created_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "months": {
+            "operator": "add",
+            "type": {
+              "name": "integer"
+            },
+            "values": [
+              {
+                "operator": "datetimeDiffMonths",
+                "type": {
+                  "name": "integer"
+                },
+                "left": {
+                  "param": "now",
+                  "type": {
+                    "name": "datetime"
+                  }
+                },
+                "right": {
+                  "source": "users",
+                  "field": "created_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                },
+                "zone": {
+                  "source": "users",
+                  "field": "time_zone",
+                  "type": {
+                    "name": "string"
+                  }
+                }
+              },
+              {
+                "type": {
+                  "name": "integer"
+                },
+                "value": 1
+              }
+            ]
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "right": {
+          "operator": "datetimeAddMonths",
+          "type": {
+            "name": "datetime"
+          },
+          "operand": {
+            "operator": "startOfMonth",
+            "type": {
+              "name": "datetime"
+            },
+            "operand": {
+              "param": "now",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "source": "users",
+              "field": "time_zone",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "months": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "trial_ended_at",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "months": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "next_monthly_renewal"
+    },
+    {
+      "column": "id"
+    }
+  ]
+}

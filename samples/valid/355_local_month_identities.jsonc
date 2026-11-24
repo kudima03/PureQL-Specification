@@ -1,0 +1,173 @@
+// Adding months in a zone and counting them back, the swapped difference, the same result built from parts,
+// the start of the next local month and of the previous quarter, and an age in whole years.
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "back_again",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeDiffMonths",
+          "type": { "name": "integer" },
+          "left": {
+            "operator": "datetimeAddMonths",
+            "type": { "name": "datetime" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "months": { "param": "months", "type": { "name": "integer" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": { "param": "months", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "swapped_is_negated",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeDiffMonths",
+          "type": { "name": "integer" },
+          "left": { "param": "now", "type": { "name": "datetime" } },
+          "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 0 },
+            {
+              "operator": "datetimeDiffMonths",
+              "type": { "name": "integer" },
+              "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+              "right": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "from_parts",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeAddMonths",
+          "type": { "name": "datetime" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "months": { "type": { "name": "integer" }, "value": 1 },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": {
+            "operator": "dateAddMonths",
+            "type": { "name": "date" },
+            "operand": {
+              "operator": "asDate",
+              "type": { "name": "date" },
+              "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            },
+            "months": { "type": { "name": "integer" }, "value": 1 }
+          },
+          "time": {
+            "operator": "asTime",
+            "type": { "name": "time" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "months_between_local_days",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "start_of_the_next_local_month",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": {
+          "operator": "startOfMonth",
+          "type": { "name": "datetime" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "start_of_the_previous_local_quarter",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": {
+          "operator": "startOfQuarter",
+          "type": { "name": "datetime" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "months": { "type": { "name": "integer" }, "value": -3 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "same_local_time_a_year_ago",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "param": "now", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": -12 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "age_in_whole_years",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "datetimeDiffMonths",
+          "type": { "name": "integer" },
+          "left": { "param": "now", "type": { "name": "datetime" } },
+          "right": {
+            "operator": "asDatetime",
+            "type": { "name": "datetime" },
+            "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "id" } ]
+}

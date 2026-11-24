@@ -83,6 +83,15 @@ Null semantics:
   - every condition (where, having, on, and/or/not, if.condition, aggregate
     predicate) requires a non-null boolean.
 
+Time zones:
+  A datetime is an instant and has no zone. An operator that reads a calendar or
+  a clock from it takes an optional `zone`, a string operand it is lifted over:
+  asDate, asTime, the parts but microsecond, startOfYear ... startOfMinute,
+  datetimeAddMonths and datetimeDiffMonths read a datetime in the zone, and
+  asDatetime of a date and datetimeFromParts give the instant of a local date and
+  time there. A literal zone is one of the names of time_zones.txt; UTC is the
+  absence of `zone`.
+
 Windows:
   A window is written on the function that reads it, in a plain query only:
   {"partitionBy": [row expressions], "orderBy": [sort keys], "frame": {...}}.
@@ -758,12 +767,14 @@ for ctx, rules in CONTEXTS.items():
     lifted("timeDiffSeconds", {"left": "time", "right": "time"}, "decimal")
     lifted("datetimeAddSeconds", {"operand": "datetime", "seconds": "decimal"}, "datetime")
     lifted("datetimeDiffSeconds", {"left": "datetime", "right": "datetime"}, "decimal")
-    # calendar months, the day clamped to the last day of the month; years are 12 months
+    # calendar months, the day clamped to the last day of the month; years are 12 months.
+    # A datetime moves in the calendar of UTC, or of its `zone`: the local date moves
+    # and the local time of day is kept.
     lifted("dateAddMonths", {"operand": "date", "months": "integer"}, "date")
-    lifted("datetimeAddMonths", {"operand": "datetime", "months": "integer"}, "datetime")
-    # whole months from right to left: the inverse of adding months
+    lifted("datetimeAddMonths", {"operand": "datetime", "months": "integer"}, "datetime", maybe={"zone": "string"})
+    # whole months from right to left: the inverse of adding months, in the same zone
     lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
-    lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")
+    lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer", maybe={"zone": "string"})
     # A date and a time built from their parts, the inverse of year ... day and
     # hour ... second, and an instant from a date and a time of day: in UTC, or in a
     # `zone`, the first instant at which its clocks read that date and time or later.

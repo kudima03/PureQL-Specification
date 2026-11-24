@@ -1,0 +1,17 @@
+// datetimeDiffMonths with a zone for each operand: both instants are read in one zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "leftZone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "rightZone": { "type": { "name": "string" }, "value": "America/New_York" }
+      }
+    }
+  ]
+}

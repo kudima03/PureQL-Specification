@@ -1,0 +1,17 @@
+// datetimeAddMonths in a zone with a clamp flag: the day is always clamped to the end of the month
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "clamp": false
+      }
+    }
+  ]
+}

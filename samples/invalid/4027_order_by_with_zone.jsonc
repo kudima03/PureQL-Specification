@@ -1,0 +1,13 @@
+// A sort key with a zone: instants sort the same in every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [
+    {
+      "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+    }
+  ]
+}
