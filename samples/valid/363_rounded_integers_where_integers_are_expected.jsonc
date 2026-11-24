@@ -1,0 +1,300 @@
+// round and truncate of an integer with digits in positions that take an integer: days and months to add, a
+// year, a repeat count, a pad length, modulo, a sum of integers, abs, nullIfEqual, if, a sort key of ntile,
+// previous, an integer list, and widened on purpose with asDecimal.
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "orders",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "round",
+      "type": { "name": "integer" },
+      "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+      "digits": { "type": { "name": "integer" }, "value": -1 }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "days",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    },
+    {
+      "alias": "months",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": {
+          "operator": "truncate",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    },
+    {
+      "alias": "decade",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "truncate",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "year",
+            "type": { "name": "integer" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "month": { "type": { "name": "integer" }, "value": 1 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "stars",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "*" },
+        "count": {
+          "operator": "integerDivide",
+          "type": { "name": "integer" },
+          "left": {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          "right": { "type": { "name": "integer" }, "value": 10 }
+        }
+      }
+    },
+    {
+      "alias": "padded",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string" },
+        "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "length": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "fill": { "type": { "name": "string" }, "value": " " }
+      }
+    },
+    {
+      "alias": "left_over",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": {
+          "operator": "greatest",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            },
+            { "type": { "name": "integer" }, "value": 10 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "sum_of_integers",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "absolute",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "unless_zero",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    },
+    {
+      "alias": "either",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "integer" },
+        "condition": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 100 }
+        },
+        "then": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -2 }
+        },
+        "else": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    },
+    {
+      "alias": "bucket",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "type": { "name": "integer" }, "value": 4 },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "round",
+                "type": { "name": "integer" },
+                "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 }
+              }
+            },
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_tens",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "in_a_list",
+      "expression": {
+        "operator": "in",
+        "type": { "name": "boolean" },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "list": { "type": { "name": "integerList" }, "value": [ 10, 20, 50 ] }
+      }
+    },
+    {
+      "alias": "as_text",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    },
+    {
+      "alias": "widened_on_purpose",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      },
+      "direction": "desc"
+    },
+    { "column": "id" }
+  ]
+}

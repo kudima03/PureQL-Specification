@@ -1,4 +1,4 @@
-// round declared integer declares integer although digits is given in a total query
+// round of a decimal declared integer although digits is given in a total query
 {
   "from": { "entity": "orders" },
   "aggregate": [

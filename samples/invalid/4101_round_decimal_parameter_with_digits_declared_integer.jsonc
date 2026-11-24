@@ -1,0 +1,16 @@
+// round of a decimal parameter with negative digits declared integer: a decimal rounded to tens is still a
+// decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "param": "amount", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

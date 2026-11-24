@@ -1,4 +1,4 @@
-// round with digits is decimal, declared integer
+// round of a decimal with digits is decimal, declared integer
 {
   "from": { "entity": "orders" },
   "select": [

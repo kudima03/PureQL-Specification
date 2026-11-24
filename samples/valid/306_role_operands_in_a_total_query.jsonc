@@ -82,7 +82,7 @@
       "alias": "still_non_null",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "operator": "count", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }

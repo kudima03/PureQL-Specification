@@ -1,4 +1,5 @@
-// truncate with digits declared integer: with digits it keeps decimal places, so it is decimal
+// truncate of a decimal with digits declared integer: with digits a decimal keeps decimal places and stays a
+// decimal
 {
   "from": { "entity": "orders" },
   "select": [

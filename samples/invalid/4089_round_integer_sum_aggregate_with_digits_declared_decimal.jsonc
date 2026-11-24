@@ -1,0 +1,19 @@
+// round of a sum of integers with digits declared decimal in a total query
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

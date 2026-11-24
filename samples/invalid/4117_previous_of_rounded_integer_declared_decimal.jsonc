@@ -1,0 +1,24 @@
+// previous of an integer rounded to tens declared decimal?: it has the type its operand declares
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}

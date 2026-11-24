@@ -666,21 +666,31 @@ for ctx, rules in CONTEXTS.items():
     lifted("modulo", {"left": "decimal", "right": "decimal"}, "decimal", some(["left", "right"], declares_name("decimal")))
     # Rounding to a whole number takes a decimal: an integer is one already, and an
     # operator that cannot change its operand is rejected, as asString of a string is.
-    # With digits an integer is accepted: round(1250, -2) is 1300.
-    whole = {"properties": {"operand": declares_name("decimal")}}
+    # One named check each, not an inline choice of two: round sits in the deepest
+    # chains of a query, and every inline branch widens the frame a validator keeps
+    # for each level of nesting.
+    whole = {"properties": {"operand": check("declares.name.decimal", "decimal")}}
     for name in ["floor", "ceiling"]:
         lifted(name, {"operand": "decimal"}, "integer", whole)
-    # round gives integer, or decimal with digits
+    # round is typed by what it can yield. Without digits it rounds a decimal to a
+    # whole number: integer. With digits the type follows the operand, as for abs: a
+    # decimal stays a decimal, and an integer stays an integer, since rounding one to
+    # tens or hundreds (round(1250, -2) is 1300) never leaves the integers.
     digits = {"digits": "integer"}
+    kept = {
+        "if": {"required": ["digits"]},
+        "then": {"properties": {"operand": check("declares.name.integer", "integer")}},
+        "else": whole,
+    }
     # `mode` names the rule for a value exactly halfway. Its absence is half away from
     # zero, which is never written; the enum holds the other rules. It is a name,
     # like the form of normalize, and changes neither the type nor the nullability.
     rounding = {"mode": {"enum": ROUNDING_MODES}}
-    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, maybe=digits, optional=rounding)
-    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, maybe=digits, optional=rounding)
+    lifted("round", {"operand": "decimal"}, "integer", kept, maybe=digits, optional=rounding)
+    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, whole, maybe=digits, optional=rounding)
     # truncate drops digits, toward zero, and is typed as round is
-    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, maybe=digits)
-    lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, maybe=digits)
+    lifted("truncate", {"operand": "decimal"}, "integer", kept, maybe=digits)
+    lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, whole, maybe=digits)
     # abs keeps the type of its operand; sign is -1, 0 or 1, an integer whatever the operand
     lifted("abs", {"operand": "integer"}, "integer")
     lifted("abs", {"operand": "decimal"}, "decimal", some(["operand"], declares_name("decimal")))

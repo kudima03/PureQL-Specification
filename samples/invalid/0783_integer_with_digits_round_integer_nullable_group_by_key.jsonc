@@ -1,4 +1,4 @@
-// round declared integer? declares integer although digits is given in a groupBy key
+// round of a decimal? declared integer? although digits is given in a groupBy key
 {
   "from": { "entity": "orders" },
   "groupBy": [

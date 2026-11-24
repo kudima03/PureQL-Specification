@@ -1,4 +1,5 @@
-// round with null digits declared integer?: with digits it is a decimal, whatever their value
+// round of a decimal with null digits declared integer?: with digits a decimal stays a decimal, whatever
+// their value
 {
   "from": { "entity": "users" },
   "select": [

@@ -1,0 +1,14 @@
+// roundToInteger is not an operator: round of an integer is an integer, and of a decimal without digits too
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "roundToInteger",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

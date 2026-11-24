@@ -1,0 +1,19 @@
+// asNullable of an integer rounded to tens declared decimal?: it keeps the name of the type
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    }
+  ]
+}

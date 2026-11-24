@@ -1,0 +1,22 @@
+// coalesce of a rounded nullable integer and an integer declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer", "nullable": true },
+            "operand": { "param": "units", "type": { "name": "integer", "nullable": true } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

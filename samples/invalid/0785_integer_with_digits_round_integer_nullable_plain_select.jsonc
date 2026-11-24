@@ -1,4 +1,4 @@
-// round declared integer? declares integer although digits is given in a plain select
+// round of a decimal? declared integer? although digits is given in a plain select
 {
   "from": { "entity": "orders" },
   "select": [

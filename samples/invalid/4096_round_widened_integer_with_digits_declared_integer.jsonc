@@ -1,0 +1,20 @@
+// round of asDecimal of an integer with digits declared integer: asDecimal makes it a decimal, and a decimal
+// stays one
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

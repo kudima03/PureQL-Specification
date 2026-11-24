@@ -1,7 +1,7 @@
-// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: average of an
-// integer selector (decimal), min over the group and over all rows (non-null in a grouped query), coalesce and if
-// mixing integer with decimal (decimal), round with digits over an integer (decimal), equal of an integer and a
-// decimal. Each column has the type its expression declares.
+// Each operator declares its exact type, and an operand accepts it wherever a wider type is expected: average
+// of an integer selector (decimal), min over the group and over all rows (non-null in a grouped query),
+// coalesce and if mixing integer with decimal (decimal), round with digits over an integer (an integer
+// still), equal of an integer and a decimal. Each column has the type its expression declares.
 {
   "from": { "entity": "orders" },
   "where": {
@@ -24,14 +24,8 @@
     }
   ],
   "select": [
-    {
-      "alias": "user_id",
-      "expression": { "key": "user_id", "type": { "name": "uuid" } }
-    },
-    {
-      "alias": "orders",
-      "expression": { "operator": "count", "type": { "name": "integer" } }
-    },
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
     {
       "alias": "items",
       "expression": {
@@ -115,7 +109,7 @@
       "alias": "rounded",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "operator": "count", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }
