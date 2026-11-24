@@ -223,11 +223,15 @@ REGEX_ATOM = (
 REGEX_QUANTIFIER = r"([*+?]|\{[0-9]+(,[0-9]*)?\})\??"
 REGEX = rf"(({REGEX_ATOM})({REGEX_QUANTIFIER})?|\((\?:)?|[|^$])*"
 
-# The name of a time zone, as the IANA time zone database spells it: parts of
-# letters, digits, `_`, `-` and `+`, separated by `/` (Europe/Moscow,
-# America/Argentina/Buenos_Aires, Etc/GMT+3). Whether the database has the name
-# is checked by the interpreter. An offset (+03:00) is not a name.
-ZONE = r"[A-Za-z][A-Za-z0-9_+-]*(/[A-Za-z0-9_+-]+)*"
+# The names of the time zones, as the IANA time zone database spells them
+# (Europe/Moscow, America/Argentina/Buenos_Aires, Etc/GMT+3): the current name of
+# every zone and the fixed offsets, listed in time_zones.txt next to this file.
+# The list has no name for UTC, no older name of a zone and no abbreviation, and
+# an offset (+03:00) is not a name.
+ZONES = [
+    line for line in (Path(__file__).resolve().parent / "time_zones.txt").read_text(encoding="utf-8").split("\n")
+    if line and not line.startswith("#")
+]
 
 # An entity, field, alias, parameter or subquery name: not empty, no leading
 # or trailing space or tab, no line break. Inner spaces and any other
@@ -396,11 +400,12 @@ defs["regexGroup"] = {
 # expression like any operand, typed and lifted by the operator's signature: a
 # literal, a parameter, or a value of the row, such as a column that holds the
 # zone of a user. This check is shallow: it reads only the value of a literal,
-# which has the form of a zone name. UTC is the absence of `zone`, and a default
-# is never written, so the two names the database has for it are rejected.
+# which is one of the listed names, so a literal zone is checked in full here. A
+# parameter and a computed zone are checked by the interpreter. UTC is the
+# absence of `zone`, and a default is never written: the list has no name for it.
 defs["zoneName"] = {
     "if": {"required": ["value"], "properties": {"value": {"type": "string"}}},
-    "then": {"properties": {"value": {"allOf": [pattern(ZONE), {"not": {"enum": ["UTC", "Etc/UTC"]}}]}}},
+    "then": {"properties": {"value": {"enum": ZONES}}},
 }
 
 # The separator of concatAll is a string literal or a string parameter: an

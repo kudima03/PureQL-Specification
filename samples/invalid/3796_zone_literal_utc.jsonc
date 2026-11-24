@@ -1,4 +1,4 @@
-// The zone UTC as a literal: UTC is the absence of zone, and a default is never written
+// The zone UTC as a literal: UTC is the absence of zone, and a default is never written, so the list has no name for it
 {
   "from": { "entity": "orders" },
   "select": [

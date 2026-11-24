@@ -1,0 +1,15 @@
+// Etc/GMT+13 as a zone: the fixed offsets go from Etc/GMT+12 to Etc/GMT-14
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT+13" }
+      }
+    }
+  ]
+}

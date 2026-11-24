@@ -631,7 +631,7 @@ A query fails at execution with an error when it:
 - reads, with an `as…` operator, a string that is not written as a literal of the type;
 - produces a `date` or `datetime` outside the years 0001–9999;
 - builds a date or a time from a part outside its range, with `dateFromParts` or `timeFromParts`;
-- computes, for a row, a `zone` that is not the name of a time zone in the database, or is run with such a `zone` parameter;
+- computes, for a row, a `zone` that is not a [time zone name](#time-zones), or is run with such a `zone` parameter;
 - is run with a regular expression parameter that is not a pattern of the dialect, or with a `group` parameter that is below 1 or names a group the pattern does not have;
 - is run with a `fraction` parameter that is below 0 or above 1;
 - is run with a frame count or a range distance parameter below 0, or an `offset` or `buckets` parameter below 1;
@@ -915,9 +915,13 @@ A `datetime` is an instant and has no time zone of its own. A zone is given to t
 
 - **Operators.** `asDate` and `asTime` of a `datetime` take a `zone` and give the local day and the local time of day. A string spells a date or a time that has no zone, so `asDate` and `asTime` of a string take none.
 - **`zone` is a `string` expression**, an operand like any other: a literal, a parameter, or a value of the row, such as a column that holds the zone of a user or of a store. One query can then cut each row by its own local day. The operator is lifted over it: a `null` zone gives `null`, and the result is nullable exactly when the `datetime` or the zone is.
-- **Names.** A zone is named as the [IANA time zone database](https://www.iana.org/time-zones) names it: `Europe/Moscow`, `America/New_York`, `Asia/Kolkata`. A name is matched exactly, letter case included. The database also keeps older names as links to a zone, `Asia/Calcutta` for `Asia/Kolkata` and `US/Eastern` for `America/New_York`; an installation may leave them out, so a query names a zone by its current name. An offset such as `+03:00` is not a name, and neither is an abbreviation the database does not list, such as `MSK` or `PST`: an offset says nothing about daylight saving time, and an abbreviation does not name one zone.
-- **Checks.** The schema checks the form of a literal name: parts of ASCII letters, digits, `_`, `-` and `+`, separated by `/`. Whether the database has the name is checked by the interpreter: for a literal before the query runs, for a parameter when it is bound. A zone computed for a row that is not a name of the database is an [execution error](#execution-errors).
-- **UTC is the absence of `zone`.** A default is never written, so the literals `UTC` and `Etc/UTC` are rejected. A parameter or a column may still hold them.
+- **Names.** A zone is named as the [IANA time zone database](https://www.iana.org/time-zones) names it: `Europe/Moscow`, `America/New_York`, `Asia/Kolkata`. The schema lists the names a literal zone may hold ([`tools/time_zones.txt`](tools/time_zones.txt), 444 names from release 2026e of the database):
+  - the current name of every zone, at least one for each country: the zones of the database's `zone.tab`;
+  - the fixed offsets `Etc/GMT+12` to `Etc/GMT-14`, a whole number of hours each. Their sign is reversed, as in POSIX: `Etc/GMT-3` is three hours ahead of UTC.
+
+  A name is matched exactly, letter case included, so a literal zone that is not in the list is rejected by the schema: a zone that does not exist (`Europe/Atlantis`), an older name the database keeps as a link (`US/Eastern` for `America/New_York`, `Asia/Calcutta` for `Asia/Kolkata`), an abbreviation (`MSK`, `EST`), which does not name one zone, and an offset (`+03:00`), which says nothing about daylight saving time.
+- **UTC is the absence of `zone`.** A default is never written, so the list has no name for UTC: `UTC`, `Etc/UTC`, `GMT` and the others are rejected as literals.
+- **Parameters and computed zones** are checked by the interpreter, since the schema sees no value: a parameter when it is bound, and a zone computed for a row when the row is read, where a value that is not a zone is an [execution error](#execution-errors). A name of the list is accepted by every interpreter, and so is `UTC`, which reads the instant as no zone does; whether another name is accepted is [not specified](#not-specified-yet).
 - **Local time.** The local time of an instant is the instant shifted by the offset from UTC that the database gives the zone at that instant, daylight saving time included. Every instant has exactly one local time in a zone, so these operators cannot fail on a zone the database has.
 
   | `2024-03-31T22:30:00Z` in | `asDate` | `asTime` |
@@ -929,7 +933,7 @@ A `datetime` is an instant and has no time zone of its own. A zone is given to t
 
   New York is 4 hours behind UTC on that day and 5 hours behind in January, so a fixed shift with `datetimeAddSeconds` does not give a local time: the offset of a zone changes with daylight saving time, and has changed over the years.
 - **Local values are ordinary values.** `asDate(dt, zone)` is a `date` and `asTime(dt, zone)` a `time`, so they are group keys, sort keys and operands like any other: revenue by local business day groups by `asDate` with a zone, and "before 18:00 local time" compares `asTime` with a `time` literal. The instant itself is unchanged. Comparison, `min` / `max` and `datetimeDiffSeconds` of `datetime`s never depend on a zone, and `datetime` results are returned in UTC.
-- **The database.** An interpreter uses a release of the time zone database; which one is [not specified](#not-specified-yet). Two interpreters give the same local time wherever their releases have the same rules for the zone at that instant.
+- **The database.** The schema fixes the names; the rules of each zone come from the release of the database an interpreter uses, and which one is [not specified](#not-specified-yet). Two interpreters give the same local time wherever their releases have the same rules for the zone at that instant.
 
 ### Conversion results
 
@@ -1072,15 +1076,15 @@ The schema checks everything about a query's shape and types. The interpreter ch
 | A subquery is a query, inline rows or recursive; a cell of an inline row is a typed literal or a parameter | schema |
 | A recursive subquery has `seed`, `next` and `maxDepth`; `next` is a plain query without aggregates, window functions, `orderBy`, `distinctBy` or `pagination`; a literal `maxDepth` is 1 or more | schema |
 | `pagination` has an `orderBy`, and so do `first`, `last` and `concatAll`; a subquery has `orderBy` only with `pagination` or `distinctBy`; `distinctBy` lists each alias once | schema |
-| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`, `distinct`, `"skip": 0`, the zone `UTC`), one spelling of each literal value, at least one value and no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
+| One spelling: no `"nullable": false`, `and` / `or` with two conditions or more, no defaults written out (`over`, `direction`, `distinct`, `"skip": 0`, a zone that is UTC), one spelling of each literal value, at least one value and no repeated value in a list literal, at most one non-null `coalesce` operand; `integer` literals within 64 bits, `decimal` literals within 28 digits | schema |
 | A literal `fraction` of a percentile is a `decimal` from 0 to 1 | schema |
 | A window is written only in a plain query and names a partition, an order or a frame; an aggregate's window has an order exactly when it has a frame; a ranking function, `previous` and `next` have a window with an order and no frame | schema |
 | A frame has a side, not `"all"` on both, and a count of 1 or more; a literal `offset` is 2 or more and literal `buckets` 1 or more | schema |
 | A window has a `frame` or a `range`, not both; a range has one sort key that declares `integer`, `decimal`, `date` or `datetime`, and distances written for that type, each above zero | schema |
 | A literal regular expression uses only the constructs of [the dialect](#regular-expressions), and a literal `group` is 1 or more | schema |
-| A `zone` is a `string` expression on an operator that reads a `datetime`; a literal one has the form of a [time zone name](#time-zones) | schema |
+| A `zone` is a `string` expression on an operator that reads a `datetime`; a literal one is a [time zone name](#time-zones) of the list in the schema | schema |
 | A regular expression is well formed (its parentheses balance, its ranges and counted quantifiers are in order) and has the `group` that is asked for; for a parameter, when it is bound | interpreter |
-| A literal `zone` is a name of the time zone database; for a parameter, when it is bound | interpreter |
+| A `zone` parameter is bound to a time zone name of that list, or to `UTC` | interpreter |
 | Entities, fields and parameters exist and have the declared types; a parameter used in several places has one type | interpreter |
 | A parameter value is written like a literal of its type: one spelling, a `decimal` within its range, a `datetime` in UTC | interpreter |
 | A `pagination` parameter is bound to `skip` ≥ 0 / `take` ≥ 1, a `fraction` parameter to a value from 0 to 1, a frame count or range distance parameter to 0 or more, and an `offset`, `buckets` or `maxDepth` parameter to 1 or more | interpreter |
@@ -1104,7 +1108,8 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 - the longest string a query may produce: `repeat`, `padStart`, `padEnd` and `concatAll` can ask for more than an interpreter holds;
 - other string functions (matching with `%` and `_` wildcards);
 - a time zone for the other operators that read a `datetime`: its parts, `startOf…`, the month operators, and an instant built from a local date and time. They work in UTC;
-- the release of the IANA time zone database behind `zone`: rules for future dates change when a government changes them, and rules for the past are sometimes corrected, so two interpreters with different releases may give different local times for the instants those changes touch;
+- the release of the IANA time zone database behind the rules of a zone: rules for future dates change when a government changes them, and rules for the past are sometimes corrected, so two interpreters with different releases may give different local times for the instants those changes touch. The names are fixed by the schema;
+- whether a `zone` parameter or a computed zone may hold a name outside the list, such as an older link the interpreter's database still has;
 - the version of the Unicode Character Database behind `upper`, `lower`, `foldCase`, `normalize` and `removeDiacritics`: a code point that a later version assigns, or gives a case mapping, a folding or a decomposition, may be converted differently by two interpreters. Text of code points that both versions assign is normalized the same way by both;
 - other windows: one in a grouped query, a frame or a range that leaves out the current row, a range over a `time` key or with an open bound, the n-th value of a frame;
 - other recursion: dropping rows that were already produced, detecting a cycle by a key, subqueries that read each other;
@@ -1117,6 +1122,7 @@ The interpreter's part needs no type inference. Besides lookups, it tracks which
 | Path | Purpose |
 |---|---|
 | `tools/generate_schema.py` | Generates `PureQL-Specification.json`. Edit this file, never the schema |
+| `tools/time_zones.txt` | The time zone names a literal `zone` may hold, read by the generator |
 | `samples/valid/` | Queries that must be accepted: the [samples](#samples) (`.json`) and valid tests (`.jsonc`) |
 | `samples/invalid/` | Queries that must be rejected, each a valid query with one thing broken (`.jsonc`) |
 | `.github/workflows/validate.yml` | Runs on every pull request: checks formatting, then validates both directories |

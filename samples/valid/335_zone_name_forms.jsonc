@@ -1,6 +1,5 @@
-// Literal zone names in every form the time zone database uses: areas and cities, three parts, hyphens,
-// underscores, signs, digits, mixed case and single words. Whether the database has a name is checked by the
-// interpreter.
+// Literal zone names of every form in the list of the schema: areas and cities, three parts, hyphens,
+// underscores, mixed case, and the fixed offsets from Etc/GMT+12 to Etc/GMT-14.
 {
   "from": { "entity": "orders" },
   "select": [
@@ -127,7 +126,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "Etc/GMT+3" }
+        "zone": { "type": { "name": "string" }, "value": "Europe/Kyiv" }
       }
     },
     {
@@ -136,7 +135,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-14" }
+        "zone": { "type": { "name": "string" }, "value": "Europe/Ljubljana" }
       }
     },
     {
@@ -145,7 +144,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "Etc/GMT" }
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT+1" }
       }
     },
     {
@@ -154,7 +153,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "GMT" }
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT+12" }
       }
     },
     {
@@ -163,7 +162,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "EST5EDT" }
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-1" }
       }
     },
     {
@@ -172,16 +171,7 @@
         "operator": "asDate",
         "type": { "name": "date" },
         "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "PST8PDT" }
-      }
-    },
-    {
-      "alias": "zone_19",
-      "expression": {
-        "operator": "asDate",
-        "type": { "name": "date" },
-        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "zone": { "type": { "name": "string" }, "value": "CET" }
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-14" }
       }
     }
   ]
