@@ -1,0 +1,16 @@
+// regressionSlope with a method: it is ordinary least squares
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "method": "leastSquares"
+      }
+    }
+  ]
+}

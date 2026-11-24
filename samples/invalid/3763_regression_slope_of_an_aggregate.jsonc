@@ -1,0 +1,19 @@
+// regressionSlope of an aggregate: its operands are row expressions
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

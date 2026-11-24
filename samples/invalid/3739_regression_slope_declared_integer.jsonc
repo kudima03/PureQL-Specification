@@ -1,0 +1,15 @@
+// regressionSlope of integers declared integer?: it is a decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "integer", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

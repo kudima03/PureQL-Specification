@@ -1,0 +1,25 @@
+// regressionSlope in where: an aggregate is not a row expression
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "coalesce",
+      "type": { "name": "decimal" },
+      "values": [
+        {
+          "operator": "regressionSlope",
+          "type": { "name": "decimal", "nullable": true },
+          "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        { "type": { "name": "integer" }, "value": 0 }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

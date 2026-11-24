@@ -1,0 +1,14 @@
+// regressionSlope without x: a line needs two values
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

@@ -48795,138 +48795,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "median"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/median@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileContinuous"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileContinuous@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileDiscrete"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileDiscrete@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "mode"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/mode@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "variancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/variancePopulation@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationPopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationPopulation@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "varianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/varianceSample@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationSample@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covariancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covariancePopulation@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covarianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covarianceSample@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "correlation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/correlation@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "concatAll"
               }
             }
@@ -49063,138 +48931,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "median"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/median@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileContinuous"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileContinuous@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileDiscrete"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileDiscrete@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "mode"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/mode@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "variancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/variancePopulation@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationPopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationPopulation@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "varianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/varianceSample@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationSample@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covariancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covariancePopulation@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covarianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covarianceSample@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "correlation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/correlation@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "concatAll"
               }
             }
@@ -49325,138 +49061,6 @@
           },
           "then": {
             "$ref": "#/$defs/last@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "median"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/median@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileContinuous"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileContinuous@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "percentileDiscrete"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/percentileDiscrete@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "mode"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/mode@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "variancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/variancePopulation@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationPopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationPopulation@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "varianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/varianceSample@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "standardDeviationSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/standardDeviationSample@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covariancePopulation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covariancePopulation@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "covarianceSample"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/covarianceSample@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "correlation"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/correlation@total"
           }
         },
         {
@@ -54089,6 +53693,522 @@
         }
       ]
     },
+    "operator.statistics@group": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionSlope"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionSlope@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionIntercept"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionIntercept@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionRSquared"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionRSquared@group"
+          }
+        }
+      ]
+    },
+    "operator.statistics@projection": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionSlope"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionSlope@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionIntercept"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionIntercept@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionRSquared"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionRSquared@projection"
+          }
+        }
+      ]
+    },
+    "operator.statistics@total": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "median"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/median@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileContinuous"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileContinuous@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "percentileDiscrete"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/percentileDiscrete@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "mode"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/mode@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "variancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/variancePopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationPopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationPopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "varianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/varianceSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "standardDeviationSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/standardDeviationSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionSlope"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionSlope@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionIntercept"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionIntercept@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "regressionRSquared"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/regressionRSquared@total"
+          }
+        }
+      ]
+    },
     "operator.string@group": {
       "allOf": [
         {
@@ -55399,6 +55519,9 @@
             "covariancePopulation",
             "covarianceSample",
             "correlation",
+            "regressionSlope",
+            "regressionIntercept",
+            "regressionRSquared",
             "concatAll",
             "any",
             "all"
@@ -55651,6 +55774,22 @@
                   "max",
                   "first",
                   "last",
+                  "concatAll",
+                  "any",
+                  "all"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.aggregate@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
                   "median",
                   "percentileContinuous",
                   "percentileDiscrete",
@@ -55662,15 +55801,15 @@
                   "covariancePopulation",
                   "covarianceSample",
                   "correlation",
-                  "concatAll",
-                  "any",
-                  "all"
+                  "regressionSlope",
+                  "regressionIntercept",
+                  "regressionRSquared"
                 ]
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/operator.aggregate@group"
+            "$ref": "#/$defs/operator.statistics@group"
           }
         }
       ]
@@ -55813,6 +55952,9 @@
             "covariancePopulation",
             "covarianceSample",
             "correlation",
+            "regressionSlope",
+            "regressionIntercept",
+            "regressionRSquared",
             "concatAll",
             "any",
             "all",
@@ -56073,6 +56215,22 @@
                   "max",
                   "first",
                   "last",
+                  "concatAll",
+                  "any",
+                  "all"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.aggregate@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
                   "median",
                   "percentileContinuous",
                   "percentileDiscrete",
@@ -56084,15 +56242,15 @@
                   "covariancePopulation",
                   "covarianceSample",
                   "correlation",
-                  "concatAll",
-                  "any",
-                  "all"
+                  "regressionSlope",
+                  "regressionIntercept",
+                  "regressionRSquared"
                 ]
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/operator.aggregate@projection"
+            "$ref": "#/$defs/operator.statistics@projection"
           }
         },
         {
@@ -56613,6 +56771,9 @@
             "covariancePopulation",
             "covarianceSample",
             "correlation",
+            "regressionSlope",
+            "regressionIntercept",
+            "regressionRSquared",
             "concatAll",
             "any",
             "all"
@@ -56865,6 +57026,22 @@
                   "max",
                   "first",
                   "last",
+                  "concatAll",
+                  "any",
+                  "all"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.aggregate@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
                   "median",
                   "percentileContinuous",
                   "percentileDiscrete",
@@ -56876,15 +57053,15 @@
                   "covariancePopulation",
                   "covarianceSample",
                   "correlation",
-                  "concatAll",
-                  "any",
-                  "all"
+                  "regressionSlope",
+                  "regressionIntercept",
+                  "regressionRSquared"
                 ]
               }
             }
           },
           "then": {
-            "$ref": "#/$defs/operator.aggregate@total"
+            "$ref": "#/$defs/operator.statistics@total"
           }
         }
       ]
@@ -62556,6 +62733,390 @@
       "else": {
         "$ref": "#/$defs/param"
       }
+    },
+    "regressionIntercept@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionIntercept"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionIntercept@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionIntercept"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionIntercept@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionIntercept"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionRSquared@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionRSquared"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionRSquared@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionRSquared"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionRSquared@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionRSquared"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionSlope@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionSlope"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionSlope@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionSlope"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "regressionSlope@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "regressionSlope"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
     },
     "removeDiacritics.string.nullable@group": {
       "properties": {

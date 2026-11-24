@@ -1,0 +1,14 @@
+// regressionSlope with a selector: it reads y and x
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

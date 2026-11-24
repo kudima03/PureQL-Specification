@@ -1,0 +1,15 @@
+// regressionSlope of bare values
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": 1,
+        "x": 2
+      }
+    }
+  ]
+}

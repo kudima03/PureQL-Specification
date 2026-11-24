@@ -1,0 +1,112 @@
+// The operands of the regression aggregates: decimals, integers, a nullable y or x, a predicate, literals,
+// nulls, a parameter and a constant x; the result is decimal? whatever they are.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "of_decimals",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_an_integer_and_a_decimal",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_decimal_and_an_integer",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "of_integers",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "of_a_nullable_y",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "param": "discount", "type": { "name": "decimal", "nullable": true } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_nullable_x",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "param": "discount", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "with_a_predicate",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "of_literals",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal" }, "value": "2.5" },
+        "x": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "of_nulls",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "x": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "of_a_parameter",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "param": "weight", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_constant_x",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

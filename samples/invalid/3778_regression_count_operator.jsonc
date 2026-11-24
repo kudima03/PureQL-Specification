@@ -1,0 +1,15 @@
+// regressionCount is not an operator: the pairs are counted by count with a predicate
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionCount",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

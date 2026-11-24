@@ -1,0 +1,14 @@
+// regressionIntercept without x
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

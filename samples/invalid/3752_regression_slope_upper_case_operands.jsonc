@@ -1,0 +1,15 @@
+// regressionSlope with Y and X in upper case
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "Y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "X": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

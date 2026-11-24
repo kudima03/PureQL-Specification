@@ -1,0 +1,15 @@
+// regressionSlope with dependent and independent: its operands are y and x
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "dependent": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "independent": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}
