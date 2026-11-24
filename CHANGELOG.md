@@ -7,6 +7,78 @@ Versioning follows Semantic Versioning with preview suffix `major.minor.patch-pr
 
 ---
 
+## [0.1.0-preview.3.0.0] - 2026-11-24
+
+The language grows from basic arithmetic, dates and aggregates to a full analytical query language: strings, regular expressions and Unicode text matching, exact powers, logarithms and trigonometry, calendar parts and month arithmetic, time zones, conversions, statistics and regression, window functions, set operations, inline rows and recursive subqueries. Every new operator follows the rules of 2.0.0: it declares its exact type, the schema checks the declaration, and a value is computed exactly and rounded once, so every interpreter returns the same digits. Four tightenings make some existing queries invalid (see Breaking Changes); each has a mechanical rewrite.
+
+### ✨ New Features
+
+#### Strings and text
+
+- **String operators**: `length`, `upper` / `lower` (full Unicode case mappings, no locale), `trim` / `trimStart` / `trimEnd` (with `removables`, a required list of strings), `substring`, `replace`, `position`, `splitPart`, `padStart` / `padEnd`, `repeat`, `reverse`, and `concatWith`, which skips null operands and is never null. Lengths and positions count code points from 1.
+- **Literal matching**: `contains`, `startsWith` and `endsWith` (`{ operand, pattern }`) are non-null conditions, `false` when either side is null.
+- **Regular expressions**: `matchesRegex`, `extractRegex` (with an optional capture `group`, null when nothing matches) and `replaceRegex`. The dialect is the common part of the usual engines, and the schema holds a literal pattern to it token by token.
+- **Matching that ignores case and accents**: `foldCase` (Unicode full case folding), `normalize` (`NFC`, `NFD`, `NFKC`, `NFKD`) and `removeDiacritics`. Equality never folds anything by itself and no operator takes an `ignoreCase` flag: a search key is built explicitly.
+
+#### Numbers
+
+- **`abs`, `sign`, `truncate`, `greatest` and `least`**; `greatest` / `least` are the row-level counterparts of `max` / `min` for every type.
+- **`round` with `"mode": "halfEven"`** (banker's rounding); its absence is half away from zero.
+- **Exact functions**: `power`, `sqrt`, `exp`, `ln`, `log10`, `log`, `sin`, `cos`, `tan`, `asin`, `acos`, `atan`, `atan2` and `pi`. Each is the exact mathematical value rounded once to the decimal precision, never a binary floating-point approximation.
+- **Decimal `integerDivide` and `modulo`**: `integerDivide` is the exact quotient truncated toward zero, `modulo` the exact remainder with the sign of `left`.
+- **`nullIfEqual`**: null when two values are equal, otherwise `left`, so `divide(x, nullIfEqual(n, 0))` is null instead of failing on a zero divisor.
+
+#### Dates, times and time zones
+
+- **Parts**: `year`, `quarter`, `month`, `day`, `dayOfWeek`, `dayOfYear`, `week`, `weekYear` (ISO 8601) of a `date` or `datetime`, and `hour`, `minute`, `second`, `microsecond` of a `time` or `datetime`.
+- **Start of a period**: `startOfYear` … `startOfSecond`, keeping the type of the operand, e.g. to group by month.
+- **Months**: `dateAddMonths` / `datetimeAddMonths` clamp to the end of a shorter month, and `dateDiffMonths` / `datetimeDiffMonths` are their exact inverse.
+- **From parts**: `dateFromParts`, `timeFromParts` and `datetimeFromParts`; a part out of range is an execution error, never rolled over.
+- **Time zones**: an optional `zone` on every operator that reads a calendar or a clock from a `datetime` (`asDate`, `asTime`, the parts, `startOf…`, month arithmetic) or builds one from a local date and time (`asDatetime` of a `date`, `datetimeFromParts`). A zone is a string expression; a literal one must be a current IANA name from `tools/time_zones.txt`. Clock changes follow one rule: a local time that occurs twice is its first occurrence, one that never occurs is the instant the clocks jump over it.
+
+#### Conversions
+
+- **`as<Type>` operators**: `asString` of any type, written exactly as a literal of that type is spelled; `asDate`, `asTime`, `asDatetime` between temporal types; `asInteger`, `asDecimal`, `asBoolean`, `asUuid` and the temporal ones also read a string, and fail on text that is not a literal spelling.
+- **`tryAs<Type>`**: reads a nullable string and gives null instead of failing.
+- **Explicit widening**: `asDecimal` of an `integer` and `asNullable`, for positions where the expression itself fixes the type (a column, a group key, a recursive seed column).
+
+#### Aggregates
+
+- **`countDistinct`**, the number of different non-null values of a selector of any type.
+- **`first` and `last`**, with their own `orderBy`, return the selector's value in the first or last row, even when it is null.
+- **`concatAll`** joins strings over a group in its own `orderBy`, with a `separator` and an optional `distinct`.
+- **Statistics**: `median`, `percentileContinuous`, `percentileDiscrete`, `mode`, `variancePopulation` / `varianceSample`, `standardDeviationPopulation` / `standardDeviationSample`, `covariancePopulation` / `covarianceSample`, `correlation`, and the least-squares line `regressionSlope` / `regressionIntercept` / `regressionRSquared`. All are computed from exact values and rounded once.
+
+#### Queries
+
+- **Window functions**: `over: { partitionBy, orderBy, frame | range }` on an aggregate in a plain query, for running totals, moving averages and shares of a partition; `range` frames go over values (numbers, dates, datetimes) instead of rows. Ranking (`rowNumber`, `rank`, `denseRank`, `percentRank`, `cumulativeDistribution`, `ntile`) and `previous` / `next` read a row's position.
+- **Set operations**: a combined query (`unionAll`, `union`, `intersect`, `except`) over two or more queries of any kind is a fourth kind of query.
+- **Inline rows**: a subquery `{ name, rows }` written in the document, with literal or parameter cells.
+- **Recursive subqueries**: `{ name, recursive: { seed, next, maxDepth } }` for hierarchies of any depth; `next` may group and aggregate, so iterations such as Newton's method are written as queries. A row beyond `maxDepth` fails the query, so none runs forever.
+- **Sorting by a column**: an `orderBy` item may be `{ column }`, a `select` alias, so a computed column is written once.
+
+### 🔧 Improvements
+
+- **Lifting over every operand**: a nullable `exponent`, `base`, `digits`, `start`, `length`, `pattern`, `delimiter`, `fill`, `count` or zone makes the result nullable, as a nullable `operand` does.
+- **Deep queries**: operators are dispatched through short sections (`arithmetic`, `math`, `string`, `dateMath`, `datePart`, `startOf`, `conversion`, `aggregate`, `statistics`, `window`, …), so the number of operators no longer limits how deeply a query can nest before a compiled validator overflows its stack.
+- **Defined semantics**: the README now defines the evaluation order of list operators (`divide(2, 3, 2)` is a left fold, each step rounded) and of aggregates (exact in any order of rows, so a partial sum is never an error), and fills gaps in contexts, lifting and the checks left to the interpreter.
+- **Larger suite**: 151 samples, 226 valid tests and 4 197 invalid tests, each invalid one breaking exactly one thing in a valid query.
+
+### 🐛 Fixed
+
+- **`greaterThanOrEqual` and `lessThanOrEqual` of two nulls are `true`**, like `equal`, so `a >= b` is always `a > b or a = b`.
+- **A temporal mean exactly halfway** between two days or microseconds is the later one, instead of depending on the day an interpreter counts from.
+
+### ⚠️ Breaking Changes
+
+- **Add operators name their amount by its unit**: `dateAddDays` is `{ operand, days }`, `timeAddSeconds` and `datetimeAddSeconds` are `{ operand, seconds }`, instead of `{ left, right }`.
+- **`skip` and `take` are optional and start from 1**: `"skip": 0` is rejected; a first page omits `skip`.
+- **A list literal has at least one value**: `in` over no values is the literal `false`, and a set that may be empty is a list parameter.
+- **Rounding to a whole number takes a `decimal`**: `floor`, `ceiling`, and `round` / `truncate` without `digits` reject an `integer` operand, which is whole already; drop the operator.
+- **`round` with `digits` keeps the type of its operand**: `round(1250, -2)` of an `integer` declares `integer`, not `decimal`; wrap it in `asDecimal` where a `decimal` column is wanted.
+
+---
+
 ## [0.1.0-preview.2.0.1] - 2026-10-14
 
 `time` and `datetime` have microsecond precision, and dates start at year 0001, so every value the schema accepts is held exactly by the common stores and runtimes.
