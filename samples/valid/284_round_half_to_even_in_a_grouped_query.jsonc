@@ -1,0 +1,266 @@
+// round with mode halfEven as a group key, in having, select and orderBy, over a sum and inside a selector:
+// tax rounded once against tax rounded per line.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "rounded_price",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "round",
+      "type": { "name": "decimal" },
+      "operand": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              ]
+            },
+            { "type": { "name": "decimal" }, "value": "0.19" }
+          ]
+        }
+      },
+      "digits": { "type": { "name": "integer" }, "value": 2 },
+      "mode": "halfEven"
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "order_id", "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+    { "alias": "rounded_price", "expression": { "key": "rounded_price", "type": { "name": "integer" } } },
+    {
+      "alias": "tax_rounded_once",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              },
+              { "type": { "name": "decimal" }, "value": "0.19" }
+            ]
+          }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "tax_rounded_per_line",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "round",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              },
+              { "type": { "name": "decimal" }, "value": "0.19" }
+            ]
+          },
+          "digits": { "type": { "name": "integer" }, "value": 2 },
+          "mode": "halfEven"
+        }
+      }
+    },
+    {
+      "alias": "rounding_difference",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "multiply",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                      { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                    ]
+                  },
+                  { "type": { "name": "decimal" }, "value": "0.19" }
+                ]
+              }
+            },
+            "digits": { "type": { "name": "integer" }, "value": 2 },
+            "mode": "halfEven"
+          },
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": {
+              "operator": "round",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "multiply",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                      { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                    ]
+                  },
+                  { "type": { "name": "decimal" }, "value": "0.19" }
+                ]
+              },
+              "digits": { "type": { "name": "integer" }, "value": 2 },
+              "mode": "halfEven"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "average_price_to_cents",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "lines_rounding_down",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "lessThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "round",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                    { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                  ]
+                },
+                { "type": { "name": "decimal" }, "value": "0.19" }
+              ]
+            },
+            "digits": { "type": { "name": "integer" }, "value": 2 },
+            "mode": "halfEven"
+          },
+          "right": {
+            "operator": "round",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                    { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                  ]
+                },
+                { "type": { "name": "decimal" }, "value": "0.19" }
+              ]
+            },
+            "digits": { "type": { "name": "integer" }, "value": 2 }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              },
+              { "type": { "name": "decimal" }, "value": "0.19" }
+            ]
+          }
+        },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    { "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+    { "expression": { "key": "rounded_price", "type": { "name": "integer" } } }
+  ]
+}

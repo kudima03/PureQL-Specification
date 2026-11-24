@@ -1,0 +1,16 @@
+// round with the mode "HALF_EVEN": the rule is named halfEven
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "HALF_EVEN"
+      }
+    }
+  ]
+}

@@ -124,6 +124,8 @@ START_OF = {
 # The Unicode normalization forms: canonical (C, D) and compatibility (KC, KD),
 # composed (C) or decomposed (D).
 NORMALIZATION_FORMS = ["NFC", "NFD", "NFKC", "NFKD"]
+# The midpoint rules of round besides its default, half away from zero.
+ROUNDING_MODES = ["halfEven"]
 # average: selector type -> result type
 AVERAGEABLE = {"decimal": "decimal", "date": "date", "time": "time", "datetime": "datetime"}
 
@@ -565,8 +567,12 @@ for ctx, rules in CONTEXTS.items():
         lifted(name, {"operand": "decimal"}, "integer", whole)
     # round gives integer, or decimal with digits
     digits = {"digits": expr("integer", ctx)}
-    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=digits)
-    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
+    # `mode` names the rule for a value exactly halfway. Its absence is half away from
+    # zero, which is never written; the enum holds the other rules. It is a name,
+    # like the form of normalize, and changes neither the type nor the nullability.
+    rounding = {**digits, "mode": {"enum": ROUNDING_MODES}}
+    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=rounding)
+    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=rounding)
     # truncate drops digits, toward zero, and is typed as round is
     lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=digits)
     lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)

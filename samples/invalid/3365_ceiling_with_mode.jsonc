@@ -1,0 +1,15 @@
+// ceiling with a mode
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ceiling",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

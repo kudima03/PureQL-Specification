@@ -1,0 +1,16 @@
+// round with mode halfEven of a nullable operand declared non-null: the mode does not change nullability
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "param": "amount", "type": { "name": "decimal", "nullable": true } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

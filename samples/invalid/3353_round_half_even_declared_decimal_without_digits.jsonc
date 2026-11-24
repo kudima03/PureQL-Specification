@@ -1,0 +1,15 @@
+// round with mode halfEven and no digits declared decimal: the mode does not change the type
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// round with mode halfEven and no operand
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

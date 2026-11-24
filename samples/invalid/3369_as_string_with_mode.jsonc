@@ -1,0 +1,15 @@
+// asString with a mode: it writes the value as it is
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

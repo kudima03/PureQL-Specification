@@ -1,0 +1,15 @@
+// sqrt with a mode
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sqrt",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

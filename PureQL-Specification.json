@@ -59461,6 +59461,11 @@
         "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@group"
+        },
+        "mode": {
+          "enum": [
+            "halfEven"
+          ]
         }
       },
       "additionalProperties": false,
@@ -59524,6 +59529,11 @@
         "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@projection"
+        },
+        "mode": {
+          "enum": [
+            "halfEven"
+          ]
         }
       },
       "additionalProperties": false,
@@ -59587,6 +59597,11 @@
         "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@row"
+        },
+        "mode": {
+          "enum": [
+            "halfEven"
+          ]
         }
       },
       "additionalProperties": false,
@@ -59650,6 +59665,11 @@
         "operand": true,
         "digits": {
           "$ref": "#/$defs/integer@total"
+        },
+        "mode": {
+          "enum": [
+            "halfEven"
+          ]
         }
       },
       "additionalProperties": false,

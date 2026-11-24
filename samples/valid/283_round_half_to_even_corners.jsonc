@@ -1,0 +1,165 @@
+// round with mode halfEven: to a whole number, to cents, tens and hundreds, with digits from a parameter or
+// computed, lifted, nested, for cash rounding to five cents, and next to the default rule.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "to_a_whole_number",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "to_cents",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "to_tens",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "integer_to_hundreds",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "by_a_parameter",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": { "param": "digits", "type": { "name": "integer" } },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "by_computed_digits",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "digits": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 4 },
+            { "type": { "name": "integer" }, "value": 2 }
+          ]
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "of_a_nullable",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "amount", "type": { "name": "decimal", "nullable": true } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "of_a_literal_halfway",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "of_a_negative_halfway",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "-2.5" },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "default_rule_beside_it",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" }
+      }
+    },
+    {
+      "alias": "nested",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "digits": { "type": { "name": "integer" }, "value": 3 },
+          "mode": "halfEven"
+        },
+        "digits": { "type": { "name": "integer" }, "value": 1 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "cash_rounding",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                { "type": { "name": "decimal" }, "value": "0.05" }
+              ]
+            },
+            "mode": "halfEven"
+          },
+          { "type": { "name": "decimal" }, "value": "0.05" }
+        ]
+      }
+    },
+    {
+      "alias": "of_a_quotient",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "type": { "name": "integer" }, "value": 3 }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 4 },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// divide with a mode: a decimal result is rounded half away from zero; round it again with round
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 3 }
+        ],
+        "mode": "halfEven"
+      }
+    }
+  ]
+}
