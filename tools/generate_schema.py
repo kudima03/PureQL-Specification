@@ -629,15 +629,16 @@ for ctx, rules in CONTEXTS.items():
             ]
         }
 
-    def reads(name, t, families, accepted, zoned=False):
+    def reads(name, t, families, accepted, zoned=None):
         """An operator that reads one `operand` of several families of types and yields
         `t`, lifted: the type the operand declares picks the position it is validated
-        against. With `zoned`, a datetime operand may be read in a `zone`, a string
-        operand of the operator, so the result is nullable exactly when the operand or
-        the zone is. An operand of another family has no zone to be read in."""
+        against. `zoned` names the family whose operand may come with a `zone`: a
+        datetime read in the zone, or a date whose local day becomes an instant there.
+        The zone is a string operand of the operator, so the result is nullable exactly
+        when the operand or the zone is. An operand of another family takes no zone."""
         shape(name, ["operand"], {"operand": accepted, **({"zone": ref("zoneName")} if zoned else {})})
         operand = by_family(name, "operand", families, lambda f: {"properties": {
-            "operand": expr(f, ctx, True), **({"zone": False} if zoned and f != "datetime" else {})}})
+            "operand": expr(f, ctx, True), **({"zone": False} if zoned and f != zoned else {})}})
         zone = lambda nullable: {"properties": {"zone": expr("string", ctx, nullable)}} if zoned else {}
         signature(name, t, False, {"properties": {"operand": NON_NULL}}, zone(False), operand)
         signature(name, t, True, some(["operand", "zone"] if zoned else ["operand"], NULLABLE), zone(True), operand)
@@ -764,11 +765,13 @@ for ctx, rules in CONTEXTS.items():
     lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
     lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")
     # A date and a time built from their parts, the inverse of year ... day and
-    # hour ... second, and an instant from a date and a time of day, in UTC. Lifted
-    # over every part. `second` is a decimal and carries the fraction.
+    # hour ... second, and an instant from a date and a time of day: in UTC, or in a
+    # `zone`, the first instant at which its clocks read that date and time or later.
+    # Lifted over every part and over the zone. `second` is a decimal and carries
+    # the fraction.
     lifted("dateFromParts", {"year": "integer", "month": "integer", "day": "integer"}, "date")
     lifted("timeFromParts", {"hour": "integer", "minute": "integer", "second": "decimal"}, "time")
-    lifted("datetimeFromParts", {"date": "date", "time": "time"}, "datetime")
+    lifted("datetimeFromParts", {"date": "date", "time": "time"}, "datetime", maybe={"zone": "string"})
 
     section = "datePart"
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
@@ -777,7 +780,7 @@ for ctx, rules in CONTEXTS.items():
     # so the microsecond is the same in every zone and takes none.
     for names, families in [(DATE_PARTS, ["date", "datetime"]), (TIME_PARTS, ["time", "datetime"])]:
         for name in names:
-            reads(name, "integer", families, check(f"accepts.{families[0]}OrDatetime", families), zoned=name != "microsecond")
+            reads(name, "integer", families, check(f"accepts.{families[0]}OrDatetime", families), zoned=None if name == "microsecond" else "datetime")
     section = "startOf"
     # Truncation keeps the type of its operand: the declared type picks the signature.
     # A datetime is truncated in UTC, or in its `zone`: the result is then the first
@@ -806,12 +809,13 @@ for ctx, rules in CONTEXTS.items():
     # day or the time of day of a datetime, midnight of a date), and read a string
     # written as asString writes a value of the type. The type the operand declares
     # picks the position. asDate and asTime of a datetime take a `zone`: the day and
-    # the time of day in that time zone. It is an operand, so the result is nullable
-    # exactly when the datetime or the zone is; a string spells a date or a time
-    # that has no zone, so with a string operand `zone` is rejected.
+    # the time of day in that time zone. asDatetime of a date takes one too: the
+    # first instant of that day there. It is an operand, so the result is nullable
+    # exactly when the operand or the zone is. A string spells a value as its literal
+    # is written, which has no zone, so with a string operand `zone` is rejected.
     for name, source in [("asDate", "datetime"), ("asTime", "datetime"), ("asDatetime", "date")]:
         reads(name, name[2:].lower(), [source, "string"], check(f"accepts.{source}OrString", [source, "string"]),
-              zoned=source == "datetime")
+              zoned=source)
     # The other types are read from a string only: an integer is already a decimal,
     # and a decimal becomes an integer by rounding. as<Type> of a string is lifted and
     # fails the query on text that is not a literal of the type.

@@ -3306,15 +3306,36 @@
       }
     },
     "asDatetime.datetime.nullable@group": {
-      "required": [
-        "operand"
-      ],
       "properties": {
-        "operand": {
-          "$ref": "#/$defs/declares.nullable"
+        "zone": {
+          "$ref": "#/$defs/string.nullable@group"
         }
       },
       "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
         {
           "if": {
             "required": [
@@ -3348,15 +3369,36 @@
       ]
     },
     "asDatetime.datetime.nullable@projection": {
-      "required": [
-        "operand"
-      ],
       "properties": {
-        "operand": {
-          "$ref": "#/$defs/declares.nullable"
+        "zone": {
+          "$ref": "#/$defs/string.nullable@projection"
         }
       },
       "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
         {
           "if": {
             "required": [
@@ -3390,15 +3432,36 @@
       ]
     },
     "asDatetime.datetime.nullable@row": {
-      "required": [
-        "operand"
-      ],
       "properties": {
-        "operand": {
-          "$ref": "#/$defs/declares.nullable"
+        "zone": {
+          "$ref": "#/$defs/string.nullable@row"
         }
       },
       "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
         {
           "if": {
             "required": [
@@ -3432,15 +3495,36 @@
       ]
     },
     "asDatetime.datetime.nullable@total": {
-      "required": [
-        "operand"
-      ],
       "properties": {
-        "operand": {
-          "$ref": "#/$defs/declares.nullable"
+        "zone": {
+          "$ref": "#/$defs/string.nullable@total"
         }
       },
       "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "operand"
+              ],
+              "properties": {
+                "operand": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
         {
           "if": {
             "required": [
@@ -3477,6 +3561,9 @@
       "properties": {
         "operand": {
           "$ref": "#/$defs/declares.nonNull"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@group"
         }
       },
       "allOf": [
@@ -3516,6 +3603,9 @@
       "properties": {
         "operand": {
           "$ref": "#/$defs/declares.nonNull"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@projection"
         }
       },
       "allOf": [
@@ -3555,6 +3645,9 @@
       "properties": {
         "operand": {
           "$ref": "#/$defs/declares.nonNull"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@row"
         }
       },
       "allOf": [
@@ -3594,6 +3687,9 @@
       "properties": {
         "operand": {
           "$ref": "#/$defs/declares.nonNull"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@total"
         }
       },
       "allOf": [
@@ -3633,28 +3729,32 @@
       "properties": {
         "operand": {
           "$ref": "#/$defs/string.nullable@group"
-        }
+        },
+        "zone": false
       }
     },
     "asDatetime.string@projection": {
       "properties": {
         "operand": {
           "$ref": "#/$defs/string.nullable@projection"
-        }
+        },
+        "zone": false
       }
     },
     "asDatetime.string@row": {
       "properties": {
         "operand": {
           "$ref": "#/$defs/string.nullable@row"
-        }
+        },
+        "zone": false
       }
     },
     "asDatetime.string@total": {
       "properties": {
         "operand": {
           "$ref": "#/$defs/string.nullable@total"
-        }
+        },
+        "zone": false
       }
     },
     "asDatetime@group": {
@@ -3680,6 +3780,9 @@
         },
         "operand": {
           "$ref": "#/$defs/accepts.dateOrString"
+        },
+        "zone": {
+          "$ref": "#/$defs/zoneName"
         }
       },
       "additionalProperties": false,
@@ -3725,6 +3828,9 @@
         },
         "operand": {
           "$ref": "#/$defs/accepts.dateOrString"
+        },
+        "zone": {
+          "$ref": "#/$defs/zoneName"
         }
       },
       "additionalProperties": false,
@@ -3770,6 +3876,9 @@
         },
         "operand": {
           "$ref": "#/$defs/accepts.dateOrString"
+        },
+        "zone": {
+          "$ref": "#/$defs/zoneName"
         }
       },
       "additionalProperties": false,
@@ -3815,6 +3924,9 @@
         },
         "operand": {
           "$ref": "#/$defs/accepts.dateOrString"
+        },
+        "zone": {
+          "$ref": "#/$defs/zoneName"
         }
       },
       "additionalProperties": false,
@@ -16934,6 +17046,9 @@
         },
         "time": {
           "$ref": "#/$defs/time.nullable@group"
+        },
+        "zone": {
+          "$ref": "#/$defs/string.nullable@group"
         }
       },
       "allOf": [
@@ -16955,6 +17070,16 @@
               ],
               "properties": {
                 "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -16970,6 +17095,9 @@
         },
         "time": {
           "$ref": "#/$defs/time.nullable@projection"
+        },
+        "zone": {
+          "$ref": "#/$defs/string.nullable@projection"
         }
       },
       "allOf": [
@@ -16991,6 +17119,16 @@
               ],
               "properties": {
                 "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -17006,6 +17144,9 @@
         },
         "time": {
           "$ref": "#/$defs/time.nullable@row"
+        },
+        "zone": {
+          "$ref": "#/$defs/string.nullable@row"
         }
       },
       "allOf": [
@@ -17027,6 +17168,16 @@
               ],
               "properties": {
                 "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -17042,6 +17193,9 @@
         },
         "time": {
           "$ref": "#/$defs/time.nullable@total"
+        },
+        "zone": {
+          "$ref": "#/$defs/string.nullable@total"
         }
       },
       "allOf": [
@@ -17066,6 +17220,16 @@
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
+            },
+            {
+              "required": [
+                "zone"
+              ],
+              "properties": {
+                "zone": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
             }
           ]
         }
@@ -17078,6 +17242,9 @@
         },
         "time": {
           "$ref": "#/$defs/time@group"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@group"
         }
       }
     },
@@ -17088,6 +17255,9 @@
         },
         "time": {
           "$ref": "#/$defs/time@projection"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@projection"
         }
       }
     },
@@ -17098,6 +17268,9 @@
         },
         "time": {
           "$ref": "#/$defs/time@row"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@row"
         }
       }
     },
@@ -17108,6 +17281,9 @@
         },
         "time": {
           "$ref": "#/$defs/time@total"
+        },
+        "zone": {
+          "$ref": "#/$defs/string@total"
         }
       }
     },
@@ -17134,7 +17310,10 @@
           }
         },
         "date": true,
-        "time": true
+        "time": true,
+        "zone": {
+          "$ref": "#/$defs/zoneName"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -17179,7 +17358,10 @@
           }
         },
         "date": true,
-        "time": true
+        "time": true,
+        "zone": {
+          "$ref": "#/$defs/zoneName"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -17224,7 +17406,10 @@
           }
         },
         "date": true,
-        "time": true
+        "time": true,
+        "zone": {
+          "$ref": "#/$defs/zoneName"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -17269,7 +17454,10 @@
           }
         },
         "date": true,
-        "time": true
+        "time": true,
+        "zone": {
+          "$ref": "#/$defs/zoneName"
+        }
       },
       "additionalProperties": false,
       "allOf": [

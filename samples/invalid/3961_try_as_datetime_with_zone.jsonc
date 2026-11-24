@@ -1,0 +1,15 @@
+// tryAsDatetime with a zone: it reads a string, which spells an instant in UTC
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tryAsDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31T18:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

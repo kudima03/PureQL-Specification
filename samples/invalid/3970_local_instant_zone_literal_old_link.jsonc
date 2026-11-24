@@ -1,0 +1,16 @@
+// datetimeFromParts in an older name of a zone: Europe/Kiev is Europe/Kyiv
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Kiev" }
+      }
+    }
+  ]
+}

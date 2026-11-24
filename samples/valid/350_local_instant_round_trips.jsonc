@@ -1,0 +1,228 @@
+// Instants built from the local date and time of other instants: the start of the local day, the same instant
+// again, local noon, the same local time on the next day and in the next month, the length of a local day and
+// the offset from UTC.
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "start_of_the_local_day",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asDatetime",
+          "type": { "name": "datetime" },
+          "operand": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "startOfDay",
+          "type": { "name": "datetime" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "same_instant_again",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "time": {
+            "operator": "asTime",
+            "type": { "name": "time" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "same_local_day_again",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": {
+            "operator": "asDatetime",
+            "type": { "name": "datetime" },
+            "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "local_noon",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "time": { "type": { "name": "time" }, "value": "12:00:00" },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "same_local_time_tomorrow",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": {
+          "operator": "dateAddDays",
+          "type": { "name": "date" },
+          "operand": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "days": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "time": {
+          "operator": "asTime",
+          "type": { "name": "time" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "same_local_time_next_month",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": {
+          "operator": "dateAddMonths",
+          "type": { "name": "date" },
+          "operand": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "months": { "type": { "name": "integer" }, "value": 1 }
+        },
+        "time": {
+          "operator": "asTime",
+          "type": { "name": "time" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "hours_in_the_local_day",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "datetimeDiffSeconds",
+            "type": { "name": "decimal" },
+            "left": {
+              "operator": "asDatetime",
+              "type": { "name": "datetime" },
+              "operand": {
+                "operator": "dateAddDays",
+                "type": { "name": "date" },
+                "operand": {
+                  "operator": "asDate",
+                  "type": { "name": "date" },
+                  "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+                  "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+                },
+                "days": { "type": { "name": "integer" }, "value": 1 }
+              },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            },
+            "right": {
+              "operator": "asDatetime",
+              "type": { "name": "datetime" },
+              "operand": {
+                "operator": "asDate",
+                "type": { "name": "date" },
+                "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+                "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+              },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          },
+          { "type": { "name": "integer" }, "value": 3600 }
+        ]
+      }
+    },
+    {
+      "alias": "offset_from_utc_in_seconds",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "time": {
+            "operator": "asTime",
+            "type": { "name": "time" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          }
+        },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "the_same_wall_clock_elsewhere",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "time": {
+          "operator": "asTime",
+          "type": { "name": "time" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "zone": { "type": { "name": "string" }, "value": "America/New_York" }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "id" } ]
+}

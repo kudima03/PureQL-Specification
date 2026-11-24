@@ -1,0 +1,172 @@
+// The zone of asDatetime and datetimeFromParts as a literal, a fixed offset, a parameter, a column and a
+// coalesce; the result is nullable exactly when the date, the time or the zone is; without a zone, and of a
+// string, they read UTC as before.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "literal_zone",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "fixed_offset",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-3" }
+      }
+    },
+    {
+      "alias": "parameter_zone",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "column_zone",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "computed_zone",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "zone": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "nullable_zone",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "null_zone",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "nullable_date",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "trial_start",
+          "type": { "name": "date", "nullable": true }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_date_part",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_time_part",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "param": "at", "type": { "name": "time", "nullable": true } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "everything_nullable",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "time": { "param": "at", "type": { "name": "time", "nullable": true } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "literal_parts",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "type": { "name": "date" }, "value": "2024-03-10" },
+        "time": { "type": { "name": "time" }, "value": "02:30:00" },
+        "zone": { "type": { "name": "string" }, "value": "America/New_York" }
+      }
+    },
+    {
+      "alias": "parts_from_parts",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": {
+          "operator": "dateFromParts",
+          "type": { "name": "date" },
+          "year": { "type": { "name": "integer" }, "value": 2024 },
+          "month": { "type": { "name": "integer" }, "value": 1 },
+          "day": { "type": { "name": "integer" }, "value": 31 }
+        },
+        "time": {
+          "operator": "timeFromParts",
+          "type": { "name": "time" },
+          "hour": { "type": { "name": "integer" }, "value": 18 },
+          "minute": { "type": { "name": "integer" }, "value": 30 },
+          "second": { "type": { "name": "integer" }, "value": 0 }
+        },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "without_a_zone",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "of_a_string",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31T18:30:00Z" }
+      }
+    }
+  ]
+}

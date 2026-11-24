@@ -1,4 +1,4 @@
-// datetimeFromParts with a time zone: a datetime is always in UTC
+// datetimeFromParts with its zone as a bare string: a zone is an expression and declares its type
 {
   "from": { "entity": "orders" },
   "select": [

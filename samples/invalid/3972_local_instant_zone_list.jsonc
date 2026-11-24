@@ -1,0 +1,19 @@
+// datetimeFromParts with a list of zones
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": [
+          { "type": { "name": "string" }, "value": "Europe/Moscow" },
+          { "type": { "name": "string" }, "value": "America/New_York" }
+        ]
+      }
+    }
+  ]
+}

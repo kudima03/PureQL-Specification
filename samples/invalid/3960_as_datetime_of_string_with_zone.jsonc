@@ -1,0 +1,15 @@
+// asDatetime of a string with a zone: the text spells an instant in UTC, as a datetime literal does
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "string" }, "value": "2024-01-31T18:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}
