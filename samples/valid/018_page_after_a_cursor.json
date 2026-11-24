@@ -1,0 +1,115 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "greaterThan",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "param": "after_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      },
+      {
+        "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "is_active",
+          "type": {
+            "name": "boolean"
+          }
+        },
+        "right": {
+          "param": "only_active",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "users",
+          "field": "preferred_call_time",
+          "type": {
+            "name": "time"
+          }
+        },
+        "right": {
+          "param": "latest_call_time",
+          "type": {
+            "name": "time"
+          }
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "name",
+      "expression": {
+        "source": "users",
+        "field": "name",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "preferred_call_time",
+      "expression": {
+        "source": "users",
+        "field": "preferred_call_time",
+        "type": {
+          "name": "time"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "id"
+    }
+  ],
+  "pagination": {
+    "take": {
+      "param": "page_size",
+      "type": {
+        "name": "integer"
+      }
+    }
+  }
+}

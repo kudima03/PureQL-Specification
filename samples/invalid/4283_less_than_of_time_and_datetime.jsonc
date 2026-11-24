@@ -1,0 +1,14 @@
+// lessThan of a time and a datetime: a datetime is read with asTime: both operands of a comparison are one
+// family, as in equal, though every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+    "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

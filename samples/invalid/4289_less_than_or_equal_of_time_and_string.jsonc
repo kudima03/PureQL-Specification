@@ -1,0 +1,14 @@
+// lessThanOrEqual of a time and a string: both operands of a comparison are one family, as in equal, though
+// every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+    "right": { "type": { "name": "string" }, "value": "09:00:00" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

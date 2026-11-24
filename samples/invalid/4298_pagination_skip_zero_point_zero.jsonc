@@ -1,0 +1,9 @@
+// A page with "skip": 0.0: zero rows skipped is the absence of skip
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "orderBy": [ { "column": "id" } ],
+  "pagination": { "skip": 0.0, "take": 10 }
+}

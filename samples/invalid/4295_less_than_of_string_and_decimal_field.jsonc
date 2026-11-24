@@ -1,0 +1,14 @@
+// lessThan of a string and a decimal field: both operands of a comparison are one family, as in equal, though
+// every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

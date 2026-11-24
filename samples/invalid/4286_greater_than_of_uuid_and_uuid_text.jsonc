@@ -1,0 +1,14 @@
+// greaterThan of a uuid and the text of a uuid: both operands of a comparison are one family, as in equal,
+// though every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+    "right": { "type": { "name": "string" }, "value": "6f1c1b6e-2a4b-4c8d-9e0f-1a2b3c4d5e6f" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
