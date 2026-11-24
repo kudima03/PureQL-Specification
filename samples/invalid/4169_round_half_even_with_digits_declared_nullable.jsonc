@@ -1,0 +1,16 @@
+// round with a mode and literal digits of a non-null operand declared nullable: the mode does not make the result nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "rate", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// normalize of a non-null string declared nullable: the form is a name, never null, and does not make the result nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFKC"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+// previous of a non-null operand with a default and an offset parameter declared nullable: the offset does not make it nullable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "offset": { "param": "offset", "type": { "name": "integer" } },
+        "default": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "over": {
+          "orderBy": [ { "expression": { "source": "users", "field": "birth_date", "type": { "name": "date" } } } ]
+        }
+      }
+    }
+  ]
+}

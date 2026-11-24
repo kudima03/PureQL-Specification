@@ -1,0 +1,156 @@
+// An aggregate takes a frame, a range or a partition alone; the ranking functions and next take an order and neither a frame nor a range
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "running",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "last_month",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "orderBy": [ { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } } ],
+          "range": { "preceding": { "months": 1 } }
+        }
+      }
+    },
+    {
+      "alias": "hour_around",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            {
+              "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "direction": "desc"
+            }
+          ],
+          "range": { "preceding": { "seconds": 3600 }, "following": { "seconds": 3600 } }
+        }
+      }
+    },
+    {
+      "alias": "user_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    },
+    {
+      "alias": "position",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank",
+      "expression": {
+        "operator": "rank",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "dense_rank",
+      "expression": {
+        "operator": "denseRank",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "status", "type": { "name": "string" } } ],
+          "orderBy": [
+            {
+              "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "percent_rank",
+      "expression": {
+        "operator": "percentRank",
+        "type": { "name": "decimal" },
+        "over": {
+          "orderBy": [ { "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } } ]
+        }
+      }
+    },
+    {
+      "alias": "distribution",
+      "expression": {
+        "operator": "cumulativeDistribution",
+        "type": { "name": "decimal" },
+        "over": {
+          "orderBy": [ { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } } ]
+        }
+      }
+    },
+    {
+      "alias": "quartile",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "type": { "name": "integer" }, "value": 4 },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "second_next",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "decimal" },
+        "operand": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "offset": { "type": { "name": "integer" }, "value": 2 },
+        "default": { "type": { "name": "integer" }, "value": 0 },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}

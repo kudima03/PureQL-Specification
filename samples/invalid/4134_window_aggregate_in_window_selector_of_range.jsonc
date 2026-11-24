@@ -1,0 +1,35 @@
+// An aggregate over a window in the selector of an aggregate over a range: aggregates do not nest
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+        },
+        "over": {
+          "orderBy": [ { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } } ],
+          "range": { "preceding": { "days": 6 } }
+        }
+      }
+    }
+  ]
+}

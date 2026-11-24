@@ -1,0 +1,16 @@
+// timeFromParts with a nullable second declared non-null: it is lifted over every part
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 9 },
+        "minute": { "type": { "name": "integer" }, "value": 0 },
+        "second": { "param": "second", "type": { "name": "decimal", "nullable": true } }
+      }
+    }
+  ]
+}

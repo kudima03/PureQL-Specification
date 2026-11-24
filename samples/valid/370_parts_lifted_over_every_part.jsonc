@@ -1,0 +1,125 @@
+// dateFromParts, timeFromParts and datetimeFromParts are lifted over every part, the zone included: nullable exactly when a part is, from fields and parameters
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "datetimeFromParts",
+      "type": { "name": "datetime", "nullable": true },
+      "date": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+      "time": { "type": { "name": "time" }, "value": "09:00:00" }
+    },
+    "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+  },
+  "select": [
+    {
+      "alias": "year_of_age",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "month": { "type": { "name": "integer" }, "value": 1 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "chosen_month",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        },
+        "month": { "param": "month", "type": { "name": "integer", "nullable": true } },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "birthday",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": { "param": "year", "type": { "name": "integer" } },
+        "month": {
+          "operator": "month",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        },
+        "day": {
+          "operator": "day",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "slot",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": { "param": "hour", "type": { "name": "integer" } },
+        "minute": { "type": { "name": "integer" }, "value": 0 },
+        "second": { "param": "second", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "call",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": {
+          "operator": "hour",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+        },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "trial_call",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "local_call",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "chosen_zone_call",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "time": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+        "month": { "type": { "name": "integer" }, "value": 12 },
+        "day": { "type": { "name": "integer" }, "value": 31 }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

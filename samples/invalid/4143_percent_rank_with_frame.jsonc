@@ -1,0 +1,29 @@
+// percentRank with a frame: a ranking function takes an order and no frame
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "percentRank",
+        "type": { "name": "decimal" },
+        "over": {
+          "orderBy": [ { "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } } } ],
+          "frame": { "following": 2 }
+        }
+      }
+    }
+  ]
+}
