@@ -1,0 +1,15 @@
+// A total query with an orderBy by column: it has one row
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "revenue" } ]
+}

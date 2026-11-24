@@ -1127,10 +1127,15 @@ for ctx in ["row", "projection", "group", "total"]:
     )
 # `orderItem@row` is a sort key of an aggregate's own `orderBy` (first / last /
 # concatAll) and of a window.
-for ctx in ["row", "projection", "group"]:
-    defs[f"orderItem@{ctx}"] = obj(
-        ["expression"], {"expression": ref(f"expr@{ctx}"), "direction": DIRECTION}
-    )
+defs["orderItem@row"] = obj(["expression"], {"expression": ref("expr@row"), "direction": DIRECTION})
+# A sort key of a query is an expression, or a column of its own `select`, named by
+# its alias as `distinctBy` names columns: a computed column that is also sorted
+# by is then written once. A column is not an expression, so it declares no type.
+for ctx in ["projection", "group"]:
+    defs[f"orderItem@{ctx}"] = {
+        **obj([], {"expression": ref(f"expr@{ctx}"), "column": NAME, "direction": DIRECTION}),
+        "oneOf": [{"required": ["expression"]}, {"required": ["column"]}],
+    }
 
 sources = {
     "from": ref("from"),

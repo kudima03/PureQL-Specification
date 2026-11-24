@@ -1,0 +1,80 @@
+// A grouped query sorted by columns and by expressions in one orderBy, in both directions, by a nullable
+// column, and paged.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "operator": "count", "type": { "name": "integer" } },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  },
+  "select": [
+    { "alias": "month", "expression": { "key": "month", "type": { "name": "date" } } },
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "latest",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "first_shipped",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "date", "nullable": true },
+        "selector": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "column": "month", "direction": "desc" },
+    {
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          },
+          { "operator": "count", "type": { "name": "integer" } }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "column": "first_shipped" },
+    { "column": "latest", "direction": "desc" },
+    { "expression": { "key": "status", "type": { "name": "string" } } }
+  ],
+  "pagination": { "skip": { "param": "offset", "type": { "name": "integer" } }, "take": 20 }
+}

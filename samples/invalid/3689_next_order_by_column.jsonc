@@ -1,0 +1,26 @@
+// The next query of a recursive subquery sorted by a column: it has no orderBy
+{
+  "subqueries": [
+    {
+      "name": "r",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "users" },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "r" },
+          "select": [
+            { "alias": "id", "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "orderBy": [ { "column": "id" } ]
+        },
+        "maxDepth": 3
+      }
+    }
+  ],
+  "from": { "subquery": "r" },
+  "select": [ { "alias": "id", "expression": { "source": "r", "field": "id", "type": { "name": "uuid" } } } ]
+}

@@ -1,0 +1,28 @@
+// A subquery ordered by a column with neither pagination nor distinctBy: its result is unordered
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "doubled",
+            "expression": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                { "type": { "name": "integer" }, "value": 2 }
+              ]
+            }
+          }
+        ],
+        "orderBy": [ { "column": "doubled", "direction": "desc" }, { "column": "id" } ]
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [ { "alias": "id", "expression": { "source": "s", "field": "id", "type": { "name": "uuid" } } } ]
+}

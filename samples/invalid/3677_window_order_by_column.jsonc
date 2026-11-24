@@ -1,0 +1,24 @@
+// A sort key of a window that names a column: a window is computed with select, so its keys are row
+// expressions
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "n",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "column": "total" },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ]
+}

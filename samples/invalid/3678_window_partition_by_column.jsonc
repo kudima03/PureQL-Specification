@@ -1,0 +1,21 @@
+// A partition key that names a column
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "total",
+      "expression": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "n",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "column": "total" } ],
+          "orderBy": [ { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ]
+        }
+      }
+    }
+  ]
+}
