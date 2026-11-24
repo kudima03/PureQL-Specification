@@ -1,0 +1,5 @@
+// pi without a declared type
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "pi" } } ]
+}

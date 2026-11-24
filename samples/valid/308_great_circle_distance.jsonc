@@ -1,0 +1,794 @@
+// The distance and the bearing from a point to stores written as inline rows: sin, cos, asin, sqrt and atan2
+// over coordinates converted to radians with pi, in where, select and orderBy.
+{
+  "subqueries": [
+    {
+      "name": "stores",
+      "rows": [
+        [
+          { "alias": "name", "expression": { "type": { "name": "string" }, "value": "Berlin" } },
+          { "alias": "latitude", "expression": { "type": { "name": "decimal" }, "value": "52.52" } },
+          { "alias": "longitude", "expression": { "type": { "name": "decimal" }, "value": "13.405" } }
+        ],
+        [
+          { "alias": "name", "expression": { "type": { "name": "string" }, "value": "Paris" } },
+          { "alias": "latitude", "expression": { "type": { "name": "decimal" }, "value": "48.8566" } },
+          { "alias": "longitude", "expression": { "type": { "name": "decimal" }, "value": "2.3522" } }
+        ],
+        [
+          { "alias": "name", "expression": { "type": { "name": "string" }, "value": "Madrid" } },
+          { "alias": "latitude", "expression": { "type": { "name": "decimal" }, "value": "40.4168" } },
+          { "alias": "longitude", "expression": { "type": { "name": "decimal" }, "value": "-3.7038" } }
+        ]
+      ]
+    }
+  ],
+  "from": { "subquery": "stores" },
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "multiply",
+      "type": { "name": "decimal" },
+      "values": [
+        { "type": { "name": "integer" }, "value": 2 },
+        { "type": { "name": "decimal" }, "value": "6371.0088" },
+        {
+          "operator": "asin",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "sqrt",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "add",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "power",
+                  "type": { "name": "decimal" },
+                  "operand": {
+                    "operator": "sin",
+                    "type": { "name": "decimal" },
+                    "operand": {
+                      "operator": "divide",
+                      "type": { "name": "decimal" },
+                      "values": [
+                        {
+                          "operator": "subtract",
+                          "type": { "name": "decimal" },
+                          "values": [
+                            {
+                              "operator": "multiply",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                                {
+                                  "operator": "divide",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    { "operator": "pi", "type": { "name": "decimal" } },
+                                    { "type": { "name": "integer" }, "value": 180 }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "operator": "multiply",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                { "param": "latitude", "type": { "name": "decimal" } },
+                                {
+                                  "operator": "divide",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    { "operator": "pi", "type": { "name": "decimal" } },
+                                    { "type": { "name": "integer" }, "value": 180 }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        { "type": { "name": "integer" }, "value": 2 }
+                      ]
+                    }
+                  },
+                  "exponent": { "type": { "name": "integer" }, "value": 2 }
+                },
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "param": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "operator": "power",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "sin",
+                        "type": { "name": "decimal" },
+                        "operand": {
+                          "operator": "divide",
+                          "type": { "name": "decimal" },
+                          "values": [
+                            {
+                              "operator": "subtract",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                {
+                                  "operator": "multiply",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    {
+                                      "source": "stores",
+                                      "field": "longitude",
+                                      "type": { "name": "decimal" }
+                                    },
+                                    {
+                                      "operator": "divide",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        { "operator": "pi", "type": { "name": "decimal" } },
+                                        { "type": { "name": "integer" }, "value": 180 }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "operator": "multiply",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    { "param": "longitude", "type": { "name": "decimal" } },
+                                    {
+                                      "operator": "divide",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        { "operator": "pi", "type": { "name": "decimal" } },
+                                        { "type": { "name": "integer" }, "value": 180 }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            { "type": { "name": "integer" }, "value": 2 }
+                          ]
+                        }
+                      },
+                      "exponent": { "type": { "name": "integer" }, "value": 2 }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "right": { "param": "radius_km", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "name", "expression": { "source": "stores", "field": "name", "type": { "name": "string" } } },
+    {
+      "alias": "distance_km",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "type": { "name": "decimal" }, "value": "6371.0088" },
+            {
+              "operator": "asin",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "sqrt",
+                "type": { "name": "decimal" },
+                "operand": {
+                  "operator": "add",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    {
+                      "operator": "power",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "sin",
+                        "type": { "name": "decimal" },
+                        "operand": {
+                          "operator": "divide",
+                          "type": { "name": "decimal" },
+                          "values": [
+                            {
+                              "operator": "subtract",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                {
+                                  "operator": "multiply",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    {
+                                      "source": "stores",
+                                      "field": "latitude",
+                                      "type": { "name": "decimal" }
+                                    },
+                                    {
+                                      "operator": "divide",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        { "operator": "pi", "type": { "name": "decimal" } },
+                                        { "type": { "name": "integer" }, "value": 180 }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "operator": "multiply",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    { "param": "latitude", "type": { "name": "decimal" } },
+                                    {
+                                      "operator": "divide",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        { "operator": "pi", "type": { "name": "decimal" } },
+                                        { "type": { "name": "integer" }, "value": 180 }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            { "type": { "name": "integer" }, "value": 2 }
+                          ]
+                        }
+                      },
+                      "exponent": { "type": { "name": "integer" }, "value": 2 }
+                    },
+                    {
+                      "operator": "multiply",
+                      "type": { "name": "decimal" },
+                      "values": [
+                        {
+                          "operator": "cos",
+                          "type": { "name": "decimal" },
+                          "operand": {
+                            "operator": "multiply",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "param": "latitude", "type": { "name": "decimal" } },
+                              {
+                                "operator": "divide",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "operator": "pi", "type": { "name": "decimal" } },
+                                  { "type": { "name": "integer" }, "value": 180 }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "operator": "cos",
+                          "type": { "name": "decimal" },
+                          "operand": {
+                            "operator": "multiply",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                              {
+                                "operator": "divide",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "operator": "pi", "type": { "name": "decimal" } },
+                                  { "type": { "name": "integer" }, "value": 180 }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "operator": "power",
+                          "type": { "name": "decimal" },
+                          "operand": {
+                            "operator": "sin",
+                            "type": { "name": "decimal" },
+                            "operand": {
+                              "operator": "divide",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                {
+                                  "operator": "subtract",
+                                  "type": { "name": "decimal" },
+                                  "values": [
+                                    {
+                                      "operator": "multiply",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        {
+                                          "source": "stores",
+                                          "field": "longitude",
+                                          "type": { "name": "decimal" }
+                                        },
+                                        {
+                                          "operator": "divide",
+                                          "type": { "name": "decimal" },
+                                          "values": [
+                                            { "operator": "pi", "type": { "name": "decimal" } },
+                                            { "type": { "name": "integer" }, "value": 180 }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "operator": "multiply",
+                                      "type": { "name": "decimal" },
+                                      "values": [
+                                        { "param": "longitude", "type": { "name": "decimal" } },
+                                        {
+                                          "operator": "divide",
+                                          "type": { "name": "decimal" },
+                                          "values": [
+                                            { "operator": "pi", "type": { "name": "decimal" } },
+                                            { "type": { "name": "integer" }, "value": 180 }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                { "type": { "name": "integer" }, "value": 2 }
+                              ]
+                            }
+                          },
+                          "exponent": { "type": { "name": "integer" }, "value": 2 }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "bearing_degrees",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "atan2",
+            "type": { "name": "decimal" },
+            "y": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "sin",
+                  "type": { "name": "decimal" },
+                  "operand": {
+                    "operator": "subtract",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "source": "stores", "field": "longitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "param": "longitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "operator": "cos",
+                  "type": { "name": "decimal" },
+                  "operand": {
+                    "operator": "multiply",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                      {
+                        "operator": "divide",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "operator": "pi", "type": { "name": "decimal" } },
+                          { "type": { "name": "integer" }, "value": 180 }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "x": {
+              "operator": "subtract",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "param": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "operator": "sin",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    {
+                      "operator": "sin",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "param": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 180 }
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "subtract",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "multiply",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "source": "stores", "field": "longitude", "type": { "name": "decimal" } },
+                              {
+                                "operator": "divide",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "operator": "pi", "type": { "name": "decimal" } },
+                                  { "type": { "name": "integer" }, "value": 180 }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "operator": "multiply",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "param": "longitude", "type": { "name": "decimal" } },
+                              {
+                                "operator": "divide",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "operator": "pi", "type": { "name": "decimal" } },
+                                  { "type": { "name": "integer" }, "value": 180 }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "operator": "divide",
+            "type": { "name": "decimal" },
+            "values": [
+              { "type": { "name": "integer" }, "value": 180 },
+              { "operator": "pi", "type": { "name": "decimal" } }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 2 },
+          { "type": { "name": "decimal" }, "value": "6371.0088" },
+          {
+            "operator": "asin",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "sqrt",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "add",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "power",
+                    "type": { "name": "decimal" },
+                    "operand": {
+                      "operator": "sin",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "divide",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "subtract",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              {
+                                "operator": "multiply",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                                  {
+                                    "operator": "divide",
+                                    "type": { "name": "decimal" },
+                                    "values": [
+                                      { "operator": "pi", "type": { "name": "decimal" } },
+                                      { "type": { "name": "integer" }, "value": 180 }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "operator": "multiply",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  { "param": "latitude", "type": { "name": "decimal" } },
+                                  {
+                                    "operator": "divide",
+                                    "type": { "name": "decimal" },
+                                    "values": [
+                                      { "operator": "pi", "type": { "name": "decimal" } },
+                                      { "type": { "name": "integer" }, "value": 180 }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          { "type": { "name": "integer" }, "value": 2 }
+                        ]
+                      }
+                    },
+                    "exponent": { "type": { "name": "integer" }, "value": 2 }
+                  },
+                  {
+                    "operator": "multiply",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      {
+                        "operator": "cos",
+                        "type": { "name": "decimal" },
+                        "operand": {
+                          "operator": "multiply",
+                          "type": { "name": "decimal" },
+                          "values": [
+                            { "param": "latitude", "type": { "name": "decimal" } },
+                            {
+                              "operator": "divide",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                { "operator": "pi", "type": { "name": "decimal" } },
+                                { "type": { "name": "integer" }, "value": 180 }
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "operator": "cos",
+                        "type": { "name": "decimal" },
+                        "operand": {
+                          "operator": "multiply",
+                          "type": { "name": "decimal" },
+                          "values": [
+                            { "source": "stores", "field": "latitude", "type": { "name": "decimal" } },
+                            {
+                              "operator": "divide",
+                              "type": { "name": "decimal" },
+                              "values": [
+                                { "operator": "pi", "type": { "name": "decimal" } },
+                                { "type": { "name": "integer" }, "value": 180 }
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        "operator": "power",
+                        "type": { "name": "decimal" },
+                        "operand": {
+                          "operator": "sin",
+                          "type": { "name": "decimal" },
+                          "operand": {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              {
+                                "operator": "subtract",
+                                "type": { "name": "decimal" },
+                                "values": [
+                                  {
+                                    "operator": "multiply",
+                                    "type": { "name": "decimal" },
+                                    "values": [
+                                      {
+                                        "source": "stores",
+                                        "field": "longitude",
+                                        "type": { "name": "decimal" }
+                                      },
+                                      {
+                                        "operator": "divide",
+                                        "type": { "name": "decimal" },
+                                        "values": [
+                                          { "operator": "pi", "type": { "name": "decimal" } },
+                                          { "type": { "name": "integer" }, "value": 180 }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "operator": "multiply",
+                                    "type": { "name": "decimal" },
+                                    "values": [
+                                      { "param": "longitude", "type": { "name": "decimal" } },
+                                      {
+                                        "operator": "divide",
+                                        "type": { "name": "decimal" },
+                                        "values": [
+                                          { "operator": "pi", "type": { "name": "decimal" } },
+                                          { "type": { "name": "integer" }, "value": 180 }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              { "type": { "name": "integer" }, "value": 2 }
+                            ]
+                          }
+                        },
+                        "exponent": { "type": { "name": "integer" }, "value": 2 }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    { "expression": { "source": "stores", "field": "name", "type": { "name": "string" } } }
+  ]
+}

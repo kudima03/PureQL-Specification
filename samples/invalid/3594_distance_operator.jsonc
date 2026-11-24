@@ -1,0 +1,15 @@
+// distance is not an operator: a great-circle distance is composed from sin, cos, asin and sqrt
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "distance",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

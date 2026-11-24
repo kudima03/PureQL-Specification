@@ -1,0 +1,14 @@
+// sin with a values array
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "values": [ { "source": "orders", "field": "total", "type": { "name": "decimal" } } ]
+      }
+    }
+  ]
+}

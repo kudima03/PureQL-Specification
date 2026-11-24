@@ -612,6 +612,187 @@
       }
     },
     {
+      "alias": "sin_decimal",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "sin_decimal_of_integer",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "sin_decimal_nullable",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "cos_decimal",
+      "expression": {
+        "operator": "cos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "cos_decimal_of_integer",
+      "expression": {
+        "operator": "cos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "cos_decimal_nullable",
+      "expression": {
+        "operator": "cos",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "tan_decimal",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "tan_decimal_of_integer",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "tan_decimal_nullable",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "asin_decimal",
+      "expression": {
+        "operator": "asin",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "asin_decimal_of_integer",
+      "expression": {
+        "operator": "asin",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "asin_decimal_nullable",
+      "expression": {
+        "operator": "asin",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "acos_decimal",
+      "expression": {
+        "operator": "acos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "acos_decimal_of_integer",
+      "expression": {
+        "operator": "acos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "acos_decimal_nullable",
+      "expression": {
+        "operator": "acos",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "atan_decimal",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "atan_decimal_of_integer",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "atan_decimal_nullable",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "atan2_decimal",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "type": { "name": "decimal" }, "value": "0.5" },
+        "x": { "type": { "name": "decimal" }, "value": "-1" }
+      }
+    },
+    {
+      "alias": "atan2_decimal_of_integers",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "type": { "name": "integer" }, "value": 1 },
+        "x": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "atan2_decimal_nullable_y",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "x": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "atan2_decimal_nullable_x",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal" }, "value": "0.5" },
+        "x": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    { "alias": "pi_decimal", "expression": { "operator": "pi", "type": { "name": "decimal" } } },
+    {
       "alias": "log_decimal_of_integers",
       "expression": {
         "operator": "log",

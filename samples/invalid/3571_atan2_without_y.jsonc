@@ -1,0 +1,14 @@
+// atan2 without y
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

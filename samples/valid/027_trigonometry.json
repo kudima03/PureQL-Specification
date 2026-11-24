@@ -1,0 +1,328 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "hour",
+      "expression": {
+        "operator": "hour",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "hour_angle",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "hour",
+            "type": {
+              "name": "integer"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "operator": "divide",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "operator": "pi",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              {
+                "type": {
+                  "name": "integer"
+                },
+                "value": 12
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "hour_x",
+      "expression": {
+        "operator": "cos",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "hour",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "operator": "divide",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "operator": "pi",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "hour_y",
+      "expression": {
+        "operator": "sin",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "multiply",
+          "type": {
+            "name": "decimal"
+          },
+          "values": [
+            {
+              "operator": "hour",
+              "type": {
+                "name": "integer"
+              },
+              "operand": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "operator": "divide",
+              "type": {
+                "name": "decimal"
+              },
+              "values": [
+                {
+                  "operator": "pi",
+                  "type": {
+                    "name": "decimal"
+                  }
+                },
+                {
+                  "type": {
+                    "name": "integer"
+                  },
+                  "value": 12
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "angle_back_in_degrees",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "atan2",
+            "type": {
+              "name": "decimal"
+            },
+            "y": {
+              "operator": "sin",
+              "type": {
+                "name": "decimal"
+              },
+              "operand": {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "operator": "hour",
+                    "type": {
+                      "name": "integer"
+                    },
+                    "operand": {
+                      "source": "orders",
+                      "field": "ordered_at",
+                      "type": {
+                        "name": "datetime"
+                      }
+                    }
+                  },
+                  {
+                    "operator": "divide",
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "values": [
+                      {
+                        "operator": "pi",
+                        "type": {
+                          "name": "decimal"
+                        }
+                      },
+                      {
+                        "type": {
+                          "name": "integer"
+                        },
+                        "value": 12
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "x": {
+              "operator": "cos",
+              "type": {
+                "name": "decimal"
+              },
+              "operand": {
+                "operator": "multiply",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "operator": "hour",
+                    "type": {
+                      "name": "integer"
+                    },
+                    "operand": {
+                      "source": "orders",
+                      "field": "ordered_at",
+                      "type": {
+                        "name": "datetime"
+                      }
+                    }
+                  },
+                  {
+                    "operator": "divide",
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "values": [
+                      {
+                        "operator": "pi",
+                        "type": {
+                          "name": "decimal"
+                        }
+                      },
+                      {
+                        "type": {
+                          "name": "integer"
+                        },
+                        "value": 12
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "operator": "divide",
+            "type": {
+              "name": "decimal"
+            },
+            "values": [
+              {
+                "type": {
+                  "name": "integer"
+                },
+                "value": 180
+              },
+              {
+                "operator": "pi",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "pi",
+      "expression": {
+        "operator": "pi",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

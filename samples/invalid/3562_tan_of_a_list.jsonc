@@ -1,0 +1,14 @@
+// tan of a list
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimalList" }, "value": [ "1" ] }
+      }
+    }
+  ]
+}

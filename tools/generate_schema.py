@@ -59,7 +59,7 @@ so each subquery has a verified output schema. Matching a reference to that
 schema is name resolution and is left to the interpreter.
 
 Null semantics:
-  - arithmetic, abs, sign, powers and logarithms, greatest, least, concat, length, upper/lower, foldCase, normalize, removeDiacritics, trim,
+  - arithmetic, abs, sign, powers, logarithms and trigonometry, greatest, least, concat, length, upper/lower, foldCase, normalize, removeDiacritics, trim,
     substring, replace, position,
     splitPart, padStart/padEnd, repeat, reverse, replaceRegex, date/time math, parts and startOf,
     conversions, round/truncate/floor/ceiling are lifted:
@@ -585,12 +585,23 @@ for ctx, rules in CONTEXTS.items():
     lifted("abs", {"operand": "integer"}, "integer")
     lifted("abs", {"operand": "decimal"}, "decimal", some(["operand"], declares_name("decimal")))
     lifted("sign", {"operand": "decimal"}, "integer")
-    # Powers, roots and logarithms are always decimal, like divide: the exact value
-    # rounded to the decimal precision. `exponent` and `base` are never null.
+
+    section = "math"
+    # Powers, roots, logarithms and trigonometry are always decimal, like divide: the
+    # exact value rounded to the decimal precision. Lifted over every operand,
+    # `exponent` and `base` included. Their own section, so that neither it nor
+    # `arithmetic` grows into a long dispatch list.
     lifted("power", {"operand": "decimal", "exponent": "decimal"}, "decimal")
     for name in ["sqrt", "exp", "ln", "log10"]:
         lifted(name, {"operand": "decimal"}, "decimal")
     lifted("log", {"operand": "decimal", "base": "decimal"}, "decimal")
+    # Angles are in radians. atan2 is the angle of the point (x, y), with y first as
+    # in every language that has it; pi has no operand and is the constant.
+    for name in ["sin", "cos", "tan", "asin", "acos", "atan"]:
+        lifted(name, {"operand": "decimal"}, "decimal")
+    lifted("atan2", {"y": "decimal", "x": "decimal"}, "decimal")
+    shape("pi", [], {})
+    signature("pi", "decimal", False)
 
     section = "string"
     # strings

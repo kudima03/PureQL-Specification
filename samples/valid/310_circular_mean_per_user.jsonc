@@ -1,0 +1,465 @@
+// The mean hour of the day per user as an angle: atan2 over sums of sines and cosines in a grouped query, in
+// having, select and orderBy.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "add",
+      "type": { "name": "decimal" },
+      "values": [
+        {
+          "operator": "power",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": {
+              "operator": "sin",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "hour",
+                    "type": { "name": "integer" },
+                    "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                  },
+                  {
+                    "operator": "divide",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "operator": "pi", "type": { "name": "decimal" } },
+                      { "type": { "name": "integer" }, "value": 12 }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "exponent": { "type": { "name": "integer" }, "value": 2 }
+        },
+        {
+          "operator": "power",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": {
+              "operator": "cos",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "hour",
+                    "type": { "name": "integer" },
+                    "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                  },
+                  {
+                    "operator": "divide",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "operator": "pi", "type": { "name": "decimal" } },
+                      { "type": { "name": "integer" }, "value": 12 }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "exponent": { "type": { "name": "integer" }, "value": 2 }
+        }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "mean_hour_angle",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "sin",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "operator": "pi", "type": { "name": "decimal" } },
+                    { "type": { "name": "integer" }, "value": 12 }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "x": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "cos",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "operator": "pi", "type": { "name": "decimal" } },
+                    { "type": { "name": "integer" }, "value": 12 }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "mean_hour",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "add",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "atan2",
+                  "type": { "name": "decimal" },
+                  "y": {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": {
+                      "operator": "sin",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "hour",
+                            "type": { "name": "integer" },
+                            "operand": {
+                              "source": "orders",
+                              "field": "ordered_at",
+                              "type": { "name": "datetime" }
+                            }
+                          },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 12 }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "x": {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "hour",
+                            "type": { "name": "integer" },
+                            "operand": {
+                              "source": "orders",
+                              "field": "ordered_at",
+                              "type": { "name": "datetime" }
+                            }
+                          },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 12 }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "type": { "name": "integer" }, "value": 12 },
+                    { "operator": "pi", "type": { "name": "decimal" } }
+                  ]
+                }
+              ]
+            },
+            { "type": { "name": "integer" }, "value": 24 }
+          ]
+        },
+        "right": { "type": { "name": "integer" }, "value": 24 }
+      }
+    },
+    {
+      "alias": "concentration",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sqrt",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "add",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "power",
+                  "type": { "name": "decimal" },
+                  "operand": {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": {
+                      "operator": "sin",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "hour",
+                            "type": { "name": "integer" },
+                            "operand": {
+                              "source": "orders",
+                              "field": "ordered_at",
+                              "type": { "name": "datetime" }
+                            }
+                          },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 12 }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "exponent": { "type": { "name": "integer" }, "value": 2 }
+                },
+                {
+                  "operator": "power",
+                  "type": { "name": "decimal" },
+                  "operand": {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": {
+                      "operator": "cos",
+                      "type": { "name": "decimal" },
+                      "operand": {
+                        "operator": "multiply",
+                        "type": { "name": "decimal" },
+                        "values": [
+                          {
+                            "operator": "hour",
+                            "type": { "name": "integer" },
+                            "operand": {
+                              "source": "orders",
+                              "field": "ordered_at",
+                              "type": { "name": "datetime" }
+                            }
+                          },
+                          {
+                            "operator": "divide",
+                            "type": { "name": "decimal" },
+                            "values": [
+                              { "operator": "pi", "type": { "name": "decimal" } },
+                              { "type": { "name": "integer" }, "value": 12 }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "exponent": { "type": { "name": "integer" }, "value": 2 }
+                }
+              ]
+            }
+          },
+          { "operator": "count", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "average_sine",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "sin",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "hour",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "operator": "pi", "type": { "name": "decimal" } },
+                  { "type": { "name": "integer" }, "value": 12 }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "night_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "cos",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "operator": "pi", "type": { "name": "decimal" } },
+                    { "type": { "name": "integer" }, "value": 12 }
+                  ]
+                }
+              ]
+            }
+          },
+          "right": { "type": { "name": "decimal" }, "value": "0.5" }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "sin",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "operator": "pi", "type": { "name": "decimal" } },
+                    { "type": { "name": "integer" }, "value": 12 }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "x": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": {
+            "operator": "cos",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "divide",
+                  "type": { "name": "decimal" },
+                  "values": [
+                    { "operator": "pi", "type": { "name": "decimal" } },
+                    { "type": { "name": "integer" }, "value": 12 }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    { "expression": { "key": "user_id", "type": { "name": "uuid" } } }
+  ]
+}

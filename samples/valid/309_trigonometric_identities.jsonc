@@ -1,0 +1,216 @@
+// sin, cos, tan and their inverses side by side, angles in degrees through pi, pi from atan2, the sine of pi,
+// which is not zero, and nullable operands.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "sine_squared_plus_cosine_squared",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "sin",
+              "type": { "name": "decimal" },
+              "operand": { "param": "x", "type": { "name": "decimal" } }
+            },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          },
+          {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "cos",
+              "type": { "name": "decimal" },
+              "operand": { "param": "x", "type": { "name": "decimal" } }
+            },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "tangent",
+      "expression": {
+        "operator": "tan",
+        "type": { "name": "decimal" },
+        "operand": { "param": "x", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "sine_over_cosine",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sin",
+            "type": { "name": "decimal" },
+            "operand": { "param": "x", "type": { "name": "decimal" } }
+          },
+          {
+            "operator": "cos",
+            "type": { "name": "decimal" },
+            "operand": { "param": "x", "type": { "name": "decimal" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "angle_of_its_sine",
+      "expression": {
+        "operator": "asin",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sin",
+          "type": { "name": "decimal" },
+          "operand": { "param": "x", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "angle_of_its_tangent",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "tan",
+          "type": { "name": "decimal" },
+          "operand": { "param": "x", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "half_pi",
+      "expression": {
+        "operator": "acos",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 0 }
+      }
+    },
+    {
+      "alias": "quarter_pi",
+      "expression": {
+        "operator": "atan",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "pi_from_atan2",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal" },
+        "y": { "type": { "name": "integer" }, "value": 0 },
+        "x": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "sine_of_pi_is_not_zero",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "pi", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "cosine_of_pi",
+      "expression": {
+        "operator": "cos",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "pi", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "in_degrees",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "asin",
+            "type": { "name": "decimal" },
+            "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+          },
+          {
+            "operator": "divide",
+            "type": { "name": "decimal" },
+            "values": [
+              { "type": { "name": "integer" }, "value": 180 },
+              { "operator": "pi", "type": { "name": "decimal" } }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "of_degrees",
+      "expression": {
+        "operator": "sin",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 30 },
+            {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                { "operator": "pi", "type": { "name": "decimal" } },
+                { "type": { "name": "integer" }, "value": 180 }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "nullable",
+      "expression": {
+        "operator": "cos",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "angle", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "nullable_point",
+      "expression": {
+        "operator": "atan2",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "param": "y", "type": { "name": "decimal", "nullable": true } },
+        "x": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "two_pi",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 2 },
+          { "operator": "pi", "type": { "name": "decimal" } }
+        ]
+      }
+    },
+    {
+      "alias": "area",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "operator": "pi", "type": { "name": "decimal" } },
+          {
+            "operator": "power",
+            "type": { "name": "decimal" },
+            "operand": { "param": "radius", "type": { "name": "decimal" } },
+            "exponent": { "type": { "name": "integer" }, "value": 2 }
+          }
+        ]
+      }
+    }
+  ]
+}

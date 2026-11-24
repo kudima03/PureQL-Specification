@@ -1117,6 +1117,282 @@
         }
       }
     },
+    "acos.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "acos.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "acos.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "acos.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "acos.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "acos.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "acos.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "acos.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "acos@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "acos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "acos@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "acos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "acos@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "acos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "acos@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "acos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/acos.decimal.nullable@total"
+          }
+        }
+      ]
+    },
     "add.decimal.nullable@group": {
       "required": [
         "values"
@@ -7113,6 +7389,922 @@
         }
       ]
     },
+    "asin.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "asin.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "asin.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "asin.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "asin.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "asin.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "asin.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "asin.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "asin@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "asin@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "asin@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "asin@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asin.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "atan.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "atan.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "atan.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "atan.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "atan.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "atan.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "atan.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "atan.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "atan2.decimal.nullable@group": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "y"
+              ],
+              "properties": {
+                "y": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "x"
+              ],
+              "properties": {
+                "x": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "atan2.decimal.nullable@projection": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "y"
+              ],
+              "properties": {
+                "y": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "x"
+              ],
+              "properties": {
+                "x": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "atan2.decimal.nullable@row": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "y"
+              ],
+              "properties": {
+                "y": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "x"
+              ],
+              "properties": {
+                "x": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "atan2.decimal.nullable@total": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "y"
+              ],
+              "properties": {
+                "y": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "x"
+              ],
+              "properties": {
+                "x": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "atan2.decimal@group": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal@group"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "atan2.decimal@projection": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal@projection"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "atan2.decimal@row": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal@row"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "atan2.decimal@total": {
+      "properties": {
+        "y": {
+          "$ref": "#/$defs/decimal@total"
+        },
+        "x": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "atan2@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan2"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "y": true,
+        "x": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "atan2@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan2"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "y": true,
+        "x": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "atan2@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan2"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "y": true,
+        "x": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "atan2@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "y",
+        "x"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan2"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "y": true,
+        "x": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan2.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "atan@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "atan@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "atan@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "atan@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "atan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/atan.decimal.nullable@total"
+          }
+        }
+      ]
+    },
     "average.date.nullable@group": {
       "properties": {
         "selector": {
@@ -11070,6 +12262,282 @@
         }
       },
       "additionalProperties": false
+    },
+    "cos.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "cos.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "cos.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "cos.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "cos.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "cos.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "cos.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "cos.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "cos@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "cos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "cos@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "cos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "cos@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "cos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "cos@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "cos"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/cos.decimal.nullable@total"
+          }
+        }
+      ]
     },
     "count@group": {
       "type": "object",
@@ -47773,78 +49241,6 @@
           "then": {
             "$ref": "#/$defs/sign@group"
           }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "power"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/power@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "sqrt"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/sqrt@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "exp"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/exp@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "ln"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/ln@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log10"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log10@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log@group"
-          }
         }
       ]
     },
@@ -47992,78 +49388,6 @@
           },
           "then": {
             "$ref": "#/$defs/sign@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "power"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/power@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "sqrt"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/sqrt@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "exp"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/exp@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "ln"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/ln@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log10"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log10@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log@projection"
           }
         }
       ]
@@ -48213,78 +49537,6 @@
           "then": {
             "$ref": "#/$defs/sign@row"
           }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "power"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/power@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "sqrt"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/sqrt@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "exp"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/exp@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "ln"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/ln@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log10"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log10@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log@row"
-          }
         }
       ]
     },
@@ -48432,78 +49684,6 @@
           },
           "then": {
             "$ref": "#/$defs/sign@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "power"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/power@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "sqrt"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/sqrt@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "exp"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/exp@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "ln"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/ln@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log10"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log10@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
-                "const": "log"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/log@total"
           }
         }
       ]
@@ -51420,6 +52600,694 @@
         }
       ]
     },
+    "operator.math@group": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sin@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "cos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/cos@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tan@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asin@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "acos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/acos@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan2"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan2@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "pi"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/pi@group"
+          }
+        }
+      ]
+    },
+    "operator.math@projection": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sin@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "cos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/cos@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tan@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asin@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "acos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/acos@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan2"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan2@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "pi"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/pi@projection"
+          }
+        }
+      ]
+    },
+    "operator.math@row": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sin@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "cos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/cos@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tan@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asin@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "acos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/acos@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan2"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan2@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "pi"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/pi@row"
+          }
+        }
+      ]
+    },
+    "operator.math@total": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "power"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/power@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sqrt"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sqrt@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "exp"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/exp@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "ln"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/ln@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log10"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log10@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "log"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/log@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "sin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/sin@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "cos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/cos@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "tan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/tan@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asin"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asin@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "acos"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/acos@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "atan2"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/atan2@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "pi"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/pi@total"
+          }
+        }
+      ]
+    },
     "operator.startOf@group": {
       "allOf": [
         {
@@ -53014,6 +54882,14 @@
             "ln",
             "log10",
             "log",
+            "sin",
+            "cos",
+            "tan",
+            "asin",
+            "acos",
+            "atan",
+            "atan2",
+            "pi",
             "concat",
             "length",
             "upper",
@@ -53144,19 +55020,40 @@
                   "round",
                   "truncate",
                   "abs",
-                  "sign",
-                  "power",
-                  "sqrt",
-                  "exp",
-                  "ln",
-                  "log10",
-                  "log"
+                  "sign"
                 ]
               }
             }
           },
           "then": {
             "$ref": "#/$defs/operator.arithmetic@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
+                  "power",
+                  "sqrt",
+                  "exp",
+                  "ln",
+                  "log10",
+                  "log",
+                  "sin",
+                  "cos",
+                  "tan",
+                  "asin",
+                  "acos",
+                  "atan",
+                  "atan2",
+                  "pi"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.math@group"
           }
         },
         {
@@ -53397,6 +55294,14 @@
             "ln",
             "log10",
             "log",
+            "sin",
+            "cos",
+            "tan",
+            "asin",
+            "acos",
+            "atan",
+            "atan2",
+            "pi",
             "concat",
             "length",
             "upper",
@@ -53535,19 +55440,40 @@
                   "round",
                   "truncate",
                   "abs",
-                  "sign",
-                  "power",
-                  "sqrt",
-                  "exp",
-                  "ln",
-                  "log10",
-                  "log"
+                  "sign"
                 ]
               }
             }
           },
           "then": {
             "$ref": "#/$defs/operator.arithmetic@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
+                  "power",
+                  "sqrt",
+                  "exp",
+                  "ln",
+                  "log10",
+                  "log",
+                  "sin",
+                  "cos",
+                  "tan",
+                  "asin",
+                  "acos",
+                  "atan",
+                  "atan2",
+                  "pi"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.math@projection"
           }
         },
         {
@@ -53809,6 +55735,14 @@
             "ln",
             "log10",
             "log",
+            "sin",
+            "cos",
+            "tan",
+            "asin",
+            "acos",
+            "atan",
+            "atan2",
+            "pi",
             "concat",
             "length",
             "upper",
@@ -53918,19 +55852,40 @@
                   "round",
                   "truncate",
                   "abs",
-                  "sign",
-                  "power",
-                  "sqrt",
-                  "exp",
-                  "ln",
-                  "log10",
-                  "log"
+                  "sign"
                 ]
               }
             }
           },
           "then": {
             "$ref": "#/$defs/operator.arithmetic@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
+                  "power",
+                  "sqrt",
+                  "exp",
+                  "ln",
+                  "log10",
+                  "log",
+                  "sin",
+                  "cos",
+                  "tan",
+                  "asin",
+                  "acos",
+                  "atan",
+                  "atan2",
+                  "pi"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.math@row"
           }
         },
         {
@@ -54137,6 +56092,14 @@
             "ln",
             "log10",
             "log",
+            "sin",
+            "cos",
+            "tan",
+            "asin",
+            "acos",
+            "atan",
+            "atan2",
+            "pi",
             "concat",
             "length",
             "upper",
@@ -54267,19 +56230,40 @@
                   "round",
                   "truncate",
                   "abs",
-                  "sign",
-                  "power",
-                  "sqrt",
-                  "exp",
-                  "ln",
-                  "log10",
-                  "log"
+                  "sign"
                 ]
               }
             }
           },
           "then": {
             "$ref": "#/$defs/operator.arithmetic@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
+                  "power",
+                  "sqrt",
+                  "exp",
+                  "ln",
+                  "log10",
+                  "log",
+                  "sin",
+                  "cos",
+                  "tan",
+                  "asin",
+                  "acos",
+                  "atan",
+                  "atan2",
+                  "pi"
+                ]
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/operator.math@total"
           }
         },
         {
@@ -57598,6 +59582,110 @@
           }
         }
       ]
+    },
+    "pi@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type"
+      ],
+      "properties": {
+        "operator": {
+          "const": "pi"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "pi@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type"
+      ],
+      "properties": {
+        "operator": {
+          "const": "pi"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "pi@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type"
+      ],
+      "properties": {
+        "operator": {
+          "const": "pi"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "pi@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type"
+      ],
+      "properties": {
+        "operator": {
+          "const": "pi"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        }
+      },
+      "additionalProperties": false
     },
     "plainQuery": {
       "type": "object",
@@ -63268,6 +65356,282 @@
           },
           "then": {
             "$ref": "#/$defs/sign.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "sin.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sin.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sin.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sin.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "sin.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "sin.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "sin.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "sin.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "sin@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "sin@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "sin@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "sin@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "sin"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/sin.decimal.nullable@total"
           }
         }
       ]
@@ -69242,6 +71606,282 @@
           },
           "then": {
             "$ref": "#/$defs/sum.decimal@total"
+          }
+        }
+      ]
+    },
+    "tan.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "tan.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "tan.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "tan.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "required": [
+            "operand"
+          ],
+          "properties": {
+            "operand": {
+              "$ref": "#/$defs/declares.nullable"
+            }
+          }
+        }
+      ]
+    },
+    "tan.decimal@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "tan.decimal@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "tan.decimal@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "tan.decimal@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "tan@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "tan@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "tan@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal.nullable@row"
+          }
+        }
+      ]
+    },
+    "tan@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "tan"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/tan.decimal.nullable@total"
           }
         }
       ]
