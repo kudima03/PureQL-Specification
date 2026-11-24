@@ -1,0 +1,14 @@
+// asNullable declared non-null: it would then do nothing at all
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "uuid" },
+        "operand": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

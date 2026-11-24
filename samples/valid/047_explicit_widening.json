@@ -1,0 +1,157 @@
+{
+  "from": {
+    "entity": "order_items"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "quantity",
+      "expression": {
+        "operator": "asDecimal",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        }
+      }
+    },
+    {
+      "alias": "previous_quantity_or_half",
+      "expression": {
+        "operator": "previous",
+        "type": {
+          "name": "decimal"
+        },
+        "operand": {
+          "operator": "asDecimal",
+          "type": {
+            "name": "decimal"
+          },
+          "operand": {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          }
+        },
+        "default": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0.5"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "order_items",
+              "field": "order_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "order_items",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "quantity_unless_half",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "left": {
+          "operator": "asDecimal",
+          "type": {
+            "name": "decimal"
+          },
+          "operand": {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          }
+        },
+        "right": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "0.5"
+        }
+      }
+    },
+    {
+      "alias": "optional_order_id",
+      "expression": {
+        "operator": "asNullable",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "alias": "optional_quantity",
+      "expression": {
+        "operator": "asNullable",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+// A recursive subquery whose seed declares its columns as next fills them: asNullable of a non-null field for
+// a column that next fills with a nullable one, asDecimal of an integer for a column next fills with a
+// decimal.
+{
+  "subqueries": [
+    {
+      "name": "tree",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "users" },
+          "where": {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "users",
+              "field": "referrer_id",
+              "type": { "name": "uuid", "nullable": true }
+            },
+            "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "parent_id",
+              "expression": {
+                "operator": "asNullable",
+                "type": { "name": "uuid", "nullable": true },
+                "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+              }
+            },
+            {
+              "alias": "seen_at",
+              "expression": {
+                "operator": "asNullable",
+                "type": { "name": "datetime", "nullable": true },
+                "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+              }
+            },
+            {
+              "alias": "score",
+              "expression": {
+                "operator": "asDecimal",
+                "type": { "name": "decimal", "nullable": true },
+                "operand": {
+                  "source": "users",
+                  "field": "age",
+                  "type": { "name": "integer", "nullable": true }
+                }
+              }
+            },
+            {
+              "alias": "share",
+              "expression": {
+                "operator": "asDecimal",
+                "type": { "name": "decimal" },
+                "operand": { "type": { "name": "integer" }, "value": 1 }
+              }
+            },
+            {
+              "alias": "label",
+              "expression": {
+                "operator": "asNullable",
+                "type": { "name": "string", "nullable": true },
+                "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+              }
+            }
+          ]
+        },
+        "next": {
+          "from": { "entity": "users" },
+          "joins": [
+            {
+              "kind": "inner",
+              "subquery": "tree",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": {
+                  "source": "users",
+                  "field": "referrer_id",
+                  "type": { "name": "uuid", "nullable": true }
+                },
+                "right": { "source": "tree", "field": "id", "type": { "name": "uuid" } }
+              }
+            }
+          ],
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "parent_id",
+              "expression": { "source": "tree", "field": "id", "type": { "name": "uuid" } }
+            },
+            {
+              "alias": "seen_at",
+              "expression": {
+                "source": "users",
+                "field": "last_login_at",
+                "type": { "name": "datetime", "nullable": true }
+              }
+            },
+            {
+              "alias": "score",
+              "expression": {
+                "operator": "multiply",
+                "type": { "name": "decimal", "nullable": true },
+                "values": [
+                  { "source": "tree", "field": "score", "type": { "name": "decimal", "nullable": true } },
+                  { "type": { "name": "decimal" }, "value": "0.5" }
+                ]
+              }
+            },
+            {
+              "alias": "share",
+              "expression": {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "tree", "field": "share", "type": { "name": "decimal" } },
+                  { "type": { "name": "integer" }, "value": 2 }
+                ]
+              }
+            },
+            {
+              "alias": "label",
+              "expression": {
+                "source": "users",
+                "field": "nickname",
+                "type": { "name": "string", "nullable": true }
+              }
+            }
+          ]
+        },
+        "maxDepth": 20
+      }
+    }
+  ],
+  "from": { "subquery": "tree" },
+  "select": [
+    { "alias": "id", "expression": { "source": "tree", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "parent_id",
+      "expression": { "source": "tree", "field": "parent_id", "type": { "name": "uuid", "nullable": true } }
+    },
+    {
+      "alias": "seen_at",
+      "expression": { "source": "tree", "field": "seen_at", "type": { "name": "datetime", "nullable": true } }
+    },
+    {
+      "alias": "score",
+      "expression": { "source": "tree", "field": "score", "type": { "name": "decimal", "nullable": true } }
+    },
+    { "alias": "share", "expression": { "source": "tree", "field": "share", "type": { "name": "decimal" } } },
+    {
+      "alias": "label",
+      "expression": { "source": "tree", "field": "label", "type": { "name": "string", "nullable": true } }
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "tree", "field": "id", "type": { "name": "uuid" } } } ]
+}

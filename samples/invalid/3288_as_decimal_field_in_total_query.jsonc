@@ -1,0 +1,14 @@
+// asDecimal of a field in a total query, which reads fields only inside aggregates
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

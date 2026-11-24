@@ -1,0 +1,151 @@
+// asNullable of a non-null value of every type, of a parameter, an expression and a widened integer: the same
+// value, declared nullable, with the name of the type kept.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "name",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "active",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "boolean", "nullable": true },
+        "operand": { "source": "users", "field": "is_active", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "born",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "call_time",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "created",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "one",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "half",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "of_a_parameter",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "param": "label", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "of_an_expression",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "users", "field": "first_name", "type": { "name": "string" } },
+            { "type": { "name": "string" }, "value": " " },
+            { "source": "users", "field": "last_name", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "of_a_widened_integer",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "is_never_null",
+      "expression": {
+        "operator": "notEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "asNullable",
+          "type": { "name": "uuid", "nullable": true },
+          "operand": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+        },
+        "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "in_a_coalesce",
+      "expression": {
+        "operator": "coalesce",
+        "type": { "name": "string", "nullable": true },
+        "values": [
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+          {
+            "operator": "asNullable",
+            "type": { "name": "string", "nullable": true },
+            "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "next_name",
+      "expression": {
+        "operator": "next",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "asNullable",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } }
+        },
+        "default": { "type": { "name": "string" }, "value": "-" },
+        "over": {
+          "orderBy": [ { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } } ]
+        }
+      }
+    }
+  ]
+}

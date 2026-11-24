@@ -1,0 +1,14 @@
+// asNullable of an integer declared decimal?: it keeps the name of the type; asDecimal widens it
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

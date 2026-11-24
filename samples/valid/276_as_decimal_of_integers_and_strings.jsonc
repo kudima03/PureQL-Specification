@@ -1,0 +1,99 @@
+// asDecimal of an integer next to asDecimal of a string in a total query: lifted over a nullable integer, and
+// never failing for an integer where reading text may.
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "lines",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "largest",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "integer", "nullable": true },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "text_as_decimal",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "param": "text", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "text_as_integer_as_decimal",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "asInteger",
+          "type": { "name": "integer" },
+          "operand": { "param": "text", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "tried_text",
+      "expression": {
+        "operator": "tryAsDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "text", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "nullable_integer",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "param": "units", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "rounded_again",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": {
+            "operator": "sum",
+            "type": { "name": "integer" },
+            "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          }
+        }
+      }
+    },
+    {
+      "alias": "optional_lines",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

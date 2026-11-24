@@ -690,8 +690,22 @@ for ctx, rules in CONTEXTS.items():
     # The other types are read from a string only: an integer is already a decimal,
     # and a decimal becomes an integer by rounding. as<Type> of a string is lifted and
     # fails the query on text that is not a literal of the type.
-    for t in ["integer", "decimal", "boolean", "uuid"]:
+    for t in ["integer", "boolean", "uuid"]:
         lifted(f"as{t.capitalize()}", {"operand": "string"}, t)
+    # asDecimal reads a string too, and also widens an integer, for the places that
+    # have no position to widen it: a column, a group key, the operand of previous.
+    # The type the operand declares picks the position; a decimal matches neither.
+    sources = ["integer", "string"]
+    shape("asDecimal", ["operand"], {"operand": check("accepts.integerOrString", sources)})
+    operand = by_family("asDecimal", "operand", sources, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
+    signature("asDecimal", "decimal", False, {"properties": {"operand": NON_NULL}}, operand)
+    signature("asDecimal", "decimal", True, some(["operand"], NULLABLE), operand)
+    # asNullable declares a non-null value nullable, and changes nothing else: the
+    # name of the type is the operand's, so an integer gives integer?, never decimal?.
+    # A nullable operand is rejected: it is the one type the operator would not change.
+    shape("asNullable", ["operand"], {"operand": True})
+    for t in TYPES:
+        signature("asNullable", t, True, {"properties": {"operand": {"allOf": [declares(t, False), expr(t, ctx)]}}})
     # tryAs<Type> reads a nullable string and yields null instead of failing, so it
     # is always nullable. It takes only strings: no other conversion can fail.
     for t in TYPES:

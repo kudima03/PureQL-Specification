@@ -1,0 +1,14 @@
+// toNullable is not an operator
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "toNullable",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

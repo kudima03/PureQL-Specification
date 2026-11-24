@@ -1,0 +1,14 @@
+// asDecimal of a boolean: a boolean becomes a number with if
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

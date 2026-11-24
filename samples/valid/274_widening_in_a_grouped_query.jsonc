@@ -1,0 +1,135 @@
+// asDecimal of an integer and asNullable as group keys, in having, select and orderBy, over count and a sum
+// of integers, and as the left operand of nullIfEqual, which keeps its type.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "quantity",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "optional_order_id",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "uuid", "nullable": true },
+        "operand": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "asDecimal",
+      "type": { "name": "decimal" },
+      "operand": { "operator": "count", "type": { "name": "integer" } }
+    },
+    "right": { "type": { "name": "decimal" }, "value": "1.5" }
+  },
+  "select": [
+    { "alias": "quantity", "expression": { "key": "quantity", "type": { "name": "decimal" } } },
+    {
+      "alias": "optional_order_id",
+      "expression": { "key": "optional_order_id", "type": { "name": "uuid", "nullable": true } }
+    },
+    {
+      "alias": "lines",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "largest_quantity",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "optional_units",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        }
+      }
+    },
+    {
+      "alias": "first_price_or_nothing",
+      "expression": {
+        "operator": "asNullable",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "lines_unless_one",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "decimal", "nullable": true },
+        "left": {
+          "operator": "asDecimal",
+          "type": { "name": "decimal" },
+          "operand": { "operator": "count", "type": { "name": "integer" } }
+        },
+        "right": { "type": { "name": "decimal" }, "value": "1" }
+      }
+    },
+    {
+      "alias": "larger_of_lines_and_key",
+      "expression": {
+        "operator": "greatest",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "asDecimal",
+            "type": { "name": "decimal" },
+            "operand": { "operator": "count", "type": { "name": "integer" } }
+          },
+          { "key": "quantity", "type": { "name": "decimal" } }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "asDecimal",
+        "type": { "name": "decimal" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    { "expression": { "key": "quantity", "type": { "name": "decimal" } } },
+    { "expression": { "key": "optional_order_id", "type": { "name": "uuid", "nullable": true } } }
+  ]
+}

@@ -911,6 +911,28 @@
         }
       }
     },
+    "accepts.integerOrString": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "string"
+              ]
+            }
+          }
+        }
+      }
+    },
     "accepts.nonString": {
       "type": "object",
       "required": [
@@ -3404,77 +3426,169 @@
       ]
     },
     "asDecimal.decimal.nullable@group": {
+      "required": [
+        "operand"
+      ],
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string.nullable@group"
+          "$ref": "#/$defs/declares.nullable"
         }
       },
       "allOf": [
         {
-          "required": [
-            "operand"
-          ],
-          "properties": {
-            "operand": {
-              "$ref": "#/$defs/declares.nullable"
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
             }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@group"
           }
         }
       ]
     },
     "asDecimal.decimal.nullable@projection": {
+      "required": [
+        "operand"
+      ],
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string.nullable@projection"
+          "$ref": "#/$defs/declares.nullable"
         }
       },
       "allOf": [
         {
-          "required": [
-            "operand"
-          ],
-          "properties": {
-            "operand": {
-              "$ref": "#/$defs/declares.nullable"
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
             }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@projection"
           }
         }
       ]
     },
     "asDecimal.decimal.nullable@row": {
+      "required": [
+        "operand"
+      ],
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string.nullable@row"
+          "$ref": "#/$defs/declares.nullable"
         }
       },
       "allOf": [
         {
-          "required": [
-            "operand"
-          ],
-          "properties": {
-            "operand": {
-              "$ref": "#/$defs/declares.nullable"
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
             }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@row"
           }
         }
       ]
     },
     "asDecimal.decimal.nullable@total": {
+      "required": [
+        "operand"
+      ],
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string.nullable@total"
+          "$ref": "#/$defs/declares.nullable"
         }
       },
       "allOf": [
         {
-          "required": [
-            "operand"
-          ],
-          "properties": {
-            "operand": {
-              "$ref": "#/$defs/declares.nullable"
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
             }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@total"
           }
         }
       ]
@@ -3482,28 +3596,212 @@
     "asDecimal.decimal@group": {
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string@group"
+          "$ref": "#/$defs/declares.nonNull"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@group"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@group"
+          }
+        }
+      ]
     },
     "asDecimal.decimal@projection": {
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string@projection"
+          "$ref": "#/$defs/declares.nonNull"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@projection"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@projection"
+          }
+        }
+      ]
     },
     "asDecimal.decimal@row": {
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string@row"
+          "$ref": "#/$defs/declares.nonNull"
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@row"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@row"
+          }
+        }
+      ]
     },
     "asDecimal.decimal@total": {
       "properties": {
         "operand": {
-          "$ref": "#/$defs/string@total"
+          "$ref": "#/$defs/declares.nonNull"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.integer.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.integer@total"
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "operand"
+            ],
+            "properties": {
+              "operand": {
+                "$ref": "#/$defs/accepts.string.nullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal.string@total"
+          }
+        }
+      ]
+    },
+    "asDecimal.integer@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@group"
+        }
+      }
+    },
+    "asDecimal.integer@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        }
+      }
+    },
+    "asDecimal.integer@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      }
+    },
+    "asDecimal.integer@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/integer.nullable@total"
+        }
+      }
+    },
+    "asDecimal.string@group": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@group"
+        }
+      }
+    },
+    "asDecimal.string@projection": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@projection"
+        }
+      }
+    },
+    "asDecimal.string@row": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@row"
+        }
+      }
+    },
+    "asDecimal.string@total": {
+      "properties": {
+        "operand": {
+          "$ref": "#/$defs/string.nullable@total"
         }
       }
     },
@@ -3528,7 +3826,9 @@
             }
           }
         },
-        "operand": true
+        "operand": {
+          "$ref": "#/$defs/accepts.integerOrString"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -3571,7 +3871,9 @@
             }
           }
         },
-        "operand": true
+        "operand": {
+          "$ref": "#/$defs/accepts.integerOrString"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -3614,7 +3916,9 @@
             }
           }
         },
-        "operand": true
+        "operand": {
+          "$ref": "#/$defs/accepts.integerOrString"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -3657,7 +3961,9 @@
             }
           }
         },
-        "operand": true
+        "operand": {
+          "$ref": "#/$defs/accepts.integerOrString"
+        }
       },
       "additionalProperties": false,
       "allOf": [
@@ -3951,6 +4257,870 @@
           },
           "then": {
             "$ref": "#/$defs/asInteger.integer.nullable@total"
+          }
+        }
+      ]
+    },
+    "asNullable.boolean.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.boolean"
+            },
+            {
+              "$ref": "#/$defs/boolean@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.boolean.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.boolean"
+            },
+            {
+              "$ref": "#/$defs/boolean@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.boolean.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.boolean"
+            },
+            {
+              "$ref": "#/$defs/boolean@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.boolean.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.boolean"
+            },
+            {
+              "$ref": "#/$defs/boolean@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.date.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.date"
+            },
+            {
+              "$ref": "#/$defs/date@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.date.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.date"
+            },
+            {
+              "$ref": "#/$defs/date@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.date.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.date"
+            },
+            {
+              "$ref": "#/$defs/date@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.date.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.date"
+            },
+            {
+              "$ref": "#/$defs/date@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.datetime.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.datetime"
+            },
+            {
+              "$ref": "#/$defs/datetime@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.datetime.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.datetime"
+            },
+            {
+              "$ref": "#/$defs/datetime@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.datetime.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.datetime"
+            },
+            {
+              "$ref": "#/$defs/datetime@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.datetime.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.datetime"
+            },
+            {
+              "$ref": "#/$defs/datetime@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.decimal.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/decimal@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.decimal.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/decimal@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.decimal.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/decimal@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.decimal.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.decimal"
+            },
+            {
+              "$ref": "#/$defs/decimal@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.integer.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/integer@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.integer.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/integer@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.integer.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/integer@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.integer.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.integer"
+            },
+            {
+              "$ref": "#/$defs/integer@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.string.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.string"
+            },
+            {
+              "$ref": "#/$defs/string@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.string.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.string"
+            },
+            {
+              "$ref": "#/$defs/string@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.string.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.string"
+            },
+            {
+              "$ref": "#/$defs/string@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.string.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.string"
+            },
+            {
+              "$ref": "#/$defs/string@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.time.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.time"
+            },
+            {
+              "$ref": "#/$defs/time@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.time.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.time"
+            },
+            {
+              "$ref": "#/$defs/time@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.time.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.time"
+            },
+            {
+              "$ref": "#/$defs/time@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.time.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.time"
+            },
+            {
+              "$ref": "#/$defs/time@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.uuid.nullable@group": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.uuid"
+            },
+            {
+              "$ref": "#/$defs/uuid@group"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.uuid.nullable@projection": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.uuid"
+            },
+            {
+              "$ref": "#/$defs/uuid@projection"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.uuid.nullable@row": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.uuid"
+            },
+            {
+              "$ref": "#/$defs/uuid@row"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable.uuid.nullable@total": {
+      "properties": {
+        "operand": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/declares.uuid"
+            },
+            {
+              "$ref": "#/$defs/uuid@total"
+            }
+          ]
+        }
+      }
+    },
+    "asNullable@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asNullable"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.integer.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.decimal.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.string.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.boolean.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.date.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.time.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.datetime.nullable@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.uuid.nullable@group"
+          }
+        }
+      ]
+    },
+    "asNullable@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asNullable"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.integer.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.decimal.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.string.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.boolean.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.date.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.time.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.datetime.nullable@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.uuid.nullable@projection"
+          }
+        }
+      ]
+    },
+    "asNullable@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asNullable"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.integer.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.decimal.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.string.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.boolean.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.date.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.time.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.datetime.nullable@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.uuid.nullable@row"
+          }
+        }
+      ]
+    },
+    "asNullable@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "operand"
+      ],
+      "properties": {
+        "operator": {
+          "const": "asNullable"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "integer",
+                "decimal",
+                "string",
+                "boolean",
+                "date",
+                "time",
+                "datetime",
+                "uuid"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "operand": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.integer.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.decimal.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.string.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.string.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.boolean.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.boolean.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.date.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.time.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.datetime.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.uuid.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable.uuid.nullable@total"
           }
         }
       ]
@@ -46228,18 +47398,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "asDecimal"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/asDecimal@group"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "asBoolean"
               }
             }
@@ -46258,6 +47416,30 @@
           },
           "then": {
             "$ref": "#/$defs/asUuid@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asNullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable@group"
           }
         },
         {
@@ -46412,18 +47594,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "asDecimal"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/asDecimal@projection"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "asBoolean"
               }
             }
@@ -46442,6 +47612,30 @@
           },
           "then": {
             "$ref": "#/$defs/asUuid@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asNullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable@projection"
           }
         },
         {
@@ -46596,18 +47790,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "asDecimal"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/asDecimal@row"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "asBoolean"
               }
             }
@@ -46626,6 +47808,30 @@
           },
           "then": {
             "$ref": "#/$defs/asUuid@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asNullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable@row"
           }
         },
         {
@@ -46780,18 +47986,6 @@
           "if": {
             "properties": {
               "operator": {
-                "const": "asDecimal"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/$defs/asDecimal@total"
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "operator": {
                 "const": "asBoolean"
               }
             }
@@ -46810,6 +48004,30 @@
           },
           "then": {
             "$ref": "#/$defs/asUuid@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asDecimal"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asDecimal@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "asNullable"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/asNullable@total"
           }
         },
         {
@@ -49637,9 +50855,10 @@
             "asTime",
             "asDatetime",
             "asInteger",
-            "asDecimal",
             "asBoolean",
             "asUuid",
+            "asDecimal",
+            "asNullable",
             "tryAsInteger",
             "tryAsDecimal",
             "tryAsBoolean",
@@ -49832,9 +51051,10 @@
                   "asTime",
                   "asDatetime",
                   "asInteger",
-                  "asDecimal",
                   "asBoolean",
                   "asUuid",
+                  "asDecimal",
+                  "asNullable",
                   "tryAsInteger",
                   "tryAsDecimal",
                   "tryAsBoolean",
@@ -50006,9 +51226,10 @@
             "asTime",
             "asDatetime",
             "asInteger",
-            "asDecimal",
             "asBoolean",
             "asUuid",
+            "asDecimal",
+            "asNullable",
             "tryAsInteger",
             "tryAsDecimal",
             "tryAsBoolean",
@@ -50209,9 +51430,10 @@
                   "asTime",
                   "asDatetime",
                   "asInteger",
-                  "asDecimal",
                   "asBoolean",
                   "asUuid",
+                  "asDecimal",
+                  "asNullable",
                   "tryAsInteger",
                   "tryAsDecimal",
                   "tryAsBoolean",
@@ -50404,9 +51626,10 @@
             "asTime",
             "asDatetime",
             "asInteger",
-            "asDecimal",
             "asBoolean",
             "asUuid",
+            "asDecimal",
+            "asNullable",
             "tryAsInteger",
             "tryAsDecimal",
             "tryAsBoolean",
@@ -50581,9 +51804,10 @@
                   "asTime",
                   "asDatetime",
                   "asInteger",
-                  "asDecimal",
                   "asBoolean",
                   "asUuid",
+                  "asDecimal",
+                  "asNullable",
                   "tryAsInteger",
                   "tryAsDecimal",
                   "tryAsBoolean",
@@ -50724,9 +51948,10 @@
             "asTime",
             "asDatetime",
             "asInteger",
-            "asDecimal",
             "asBoolean",
             "asUuid",
+            "asDecimal",
+            "asNullable",
             "tryAsInteger",
             "tryAsDecimal",
             "tryAsBoolean",
@@ -50919,9 +52144,10 @@
                   "asTime",
                   "asDatetime",
                   "asInteger",
-                  "asDecimal",
                   "asBoolean",
                   "asUuid",
+                  "asDecimal",
+                  "asNullable",
                   "tryAsInteger",
                   "tryAsDecimal",
                   "tryAsBoolean",
