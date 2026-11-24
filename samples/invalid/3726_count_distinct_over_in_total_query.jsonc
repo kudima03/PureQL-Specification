@@ -1,0 +1,15 @@
+// countDistinct with over in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "over": "all"
+      }
+    }
+  ]
+}

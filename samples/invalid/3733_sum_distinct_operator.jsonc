@@ -1,0 +1,14 @@
+// sumDistinct is not an operator: only count has a distinct form
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sumDistinct",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

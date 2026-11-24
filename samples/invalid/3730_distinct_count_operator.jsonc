@@ -1,0 +1,14 @@
+// distinctCount is not an operator
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "distinctCount",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

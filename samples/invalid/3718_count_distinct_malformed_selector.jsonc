@@ -1,0 +1,21 @@
+// countDistinct of an add declared string: the selector is validated in full
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "add",
+          "type": { "name": "string" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 1 },
+            { "type": { "name": "integer" }, "value": 2 }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// average with distinct: distinct values are counted by countDistinct and listed by concatAll
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "distinct": true
+      }
+    }
+  ]
+}

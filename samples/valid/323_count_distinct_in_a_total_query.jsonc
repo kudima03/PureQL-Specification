@@ -1,0 +1,89 @@
+// countDistinct in a total query, where it is still never null: over no rows it is 0, so a ratio guards it
+// with nullIfEqual; with a predicate, over a nullable selector and over a computed month.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "status", "type": { "name": "string" } },
+    "right": { "type": { "name": "string" }, "value": "completed" }
+  },
+  "aggregate": [
+    { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "customers",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "coupons",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    },
+    {
+      "alias": "customers_with_a_coupon",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } },
+          "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+        }
+      }
+    },
+    {
+      "alias": "orders_per_customer",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "operator": "count", "type": { "name": "integer" } },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "operator": "countDistinct",
+              "type": { "name": "integer" },
+              "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "every_order_has_its_own_customer",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "operator": "count", "type": { "name": "integer" } },
+        "right": {
+          "operator": "countDistinct",
+          "type": { "name": "integer" },
+          "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      }
+    },
+    {
+      "alias": "months",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "startOfMonth",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    }
+  ]
+}

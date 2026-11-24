@@ -1,0 +1,165 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": {
+        "source": "orders",
+        "field": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "expression": {
+        "key": "status",
+        "type": {
+          "name": "string"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "customers",
+      "expression": {
+        "operator": "countDistinct",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    },
+    {
+      "alias": "paying_customers",
+      "expression": {
+        "operator": "countDistinct",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "predicate": {
+          "source": "orders",
+          "field": "is_paid",
+          "type": {
+            "name": "boolean"
+          }
+        }
+      }
+    },
+    {
+      "alias": "coupons_used",
+      "expression": {
+        "operator": "countDistinct",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "coupon_id",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "days_with_orders",
+      "expression": {
+        "operator": "countDistinct",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    },
+    {
+      "alias": "repeat_orders",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "integer"
+        },
+        "values": [
+          {
+            "operator": "count",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "operator": "countDistinct",
+            "type": {
+              "name": "integer"
+            },
+            "selector": {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "customers_of_any_status",
+      "expression": {
+        "operator": "countDistinct",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "over": "all"
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "customers",
+      "direction": "desc"
+    },
+    {
+      "column": "status"
+    }
+  ]
+}

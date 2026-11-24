@@ -1,0 +1,14 @@
+// countDistinct of an untyped null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// countDistinct of a nullable selector declared integer?: nulls are skipped, not counted and not returned
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+// The selectors of countDistinct: every type, nullable or not, a computed value, a condition, a literal, a
+// null and a parameter; the result is integer whatever the selector.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "of_a_uuid",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "of_a_nullable_uuid",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    },
+    {
+      "alias": "of_a_string",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "of_a_boolean",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    },
+    {
+      "alias": "of_a_decimal",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "of_a_date",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "of_a_datetime",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "of_a_time",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "of_a_computed_value",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_folded_string",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "foldCase",
+          "type": { "name": "string" },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "of_a_condition",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "integer" }, "value": 100 }
+        }
+      }
+    },
+    {
+      "alias": "of_a_literal",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "of_a_null",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "of_a_parameter",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "param": "tenant", "type": { "name": "uuid", "nullable": true } }
+      }
+    },
+    {
+      "alias": "with_a_predicate",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+      }
+    }
+  ]
+}

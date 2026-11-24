@@ -1,0 +1,14 @@
+// countDistinct of a list literal: a list is accepted only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "type": { "name": "stringList" }, "value": [ "a", "b" ] }
+      }
+    }
+  ]
+}

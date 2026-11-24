@@ -899,6 +899,10 @@ for ctx, rules in CONTEXTS.items():
 
         shape("count", [], aggregate_props)
         signature("count", "integer", False)
+        # countDistinct counts the different non-null values of its selector, of any
+        # type, compared as equal compares them. Like count it is 0 over no rows.
+        shape("countDistinct", ["selector"], {**aggregate_props, "selector": ref("expr@row")})
+        signature("countDistinct", "integer", False)
         # Sum of no rows is 0, never null.
         shape("sum", ["selector"], {**aggregate_props, "selector": True})
         for t in ["integer", "decimal"]:
