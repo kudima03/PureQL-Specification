@@ -1,6 +1,6 @@
 // Columns of a union are matched by alias, in any order, and take the least type that accepts every input: an
-// integer and a decimal give a decimal, and a column that is nullable in one input is nullable in the result,
-// which the query that reads it declares.
+// integer and a decimal give a decimal, a column that is non-null in every input stays non-null, and a column
+// that is nullable in one input is nullable in the result, which the query that reads it declares.
 {
   "subqueries": [
     {
@@ -47,11 +47,7 @@
             "select": [
               {
                 "alias": "key",
-                "expression": {
-                  "source": "coupons",
-                  "field": "issued_by",
-                  "type": { "name": "uuid", "nullable": true }
-                }
+                "expression": { "source": "coupons", "field": "issued_by", "type": { "name": "uuid" } }
               },
               {
                 "alias": "amount",
@@ -79,13 +75,13 @@
   "where": {
     "operator": "notEqual",
     "type": { "name": "boolean" },
-    "left": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } },
-    "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+    "left": { "source": "amounts", "field": "amount", "type": { "name": "decimal", "nullable": true } },
+    "right": { "type": { "name": "decimal", "nullable": true }, "value": null }
   },
   "select": [
     {
       "alias": "key",
-      "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } }
+      "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid" } }
     },
     {
       "alias": "amount",
@@ -108,7 +104,7 @@
     }
   ],
   "orderBy": [
-    { "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid", "nullable": true } } },
+    { "expression": { "source": "amounts", "field": "key", "type": { "name": "uuid" } } },
     {
       "expression": {
         "source": "amounts",

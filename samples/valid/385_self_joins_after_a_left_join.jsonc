@@ -1,0 +1,56 @@
+// Self joins by alias: referrer.name is a non-null field of an optional side and is nullable in select,
+// referrer.referrer_id is nullable in storage and stays nullable, and grand.id is uuid in its own on.
+{
+  "from": { "entity": "users" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "users",
+      "alias": "referrer",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "referrer", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "users", "field": "referrer_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "users",
+      "alias": "grand",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "grand", "field": "id", "type": { "name": "uuid" } },
+            "right": {
+              "source": "referrer",
+              "field": "referrer_id",
+              "type": { "name": "uuid", "nullable": true }
+            }
+          },
+          {
+            "operator": "notEqual",
+            "type": { "name": "boolean" },
+            "left": { "source": "grand", "field": "name", "type": { "name": "string" } },
+            "right": { "source": "referrer", "field": "name", "type": { "name": "string", "nullable": true } }
+          }
+        ]
+      }
+    }
+  ],
+  "select": [
+    { "alias": "name", "expression": { "source": "users", "field": "name", "type": { "name": "string" } } },
+    {
+      "alias": "referrer_name",
+      "expression": { "source": "referrer", "field": "name", "type": { "name": "string", "nullable": true } }
+    },
+    {
+      "alias": "grand_referrer_name",
+      "expression": { "source": "grand", "field": "name", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

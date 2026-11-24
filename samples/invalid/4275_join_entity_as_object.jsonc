@@ -1,0 +1,22 @@
+// A join whose entity is an object with a name: an entity is a name
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": { "name": "coupons" },
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "code",
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}
