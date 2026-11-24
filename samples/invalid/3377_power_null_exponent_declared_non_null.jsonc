@@ -1,0 +1,16 @@
+// power with a null exponent declared decimal: it is lifted over exponent, so a null exponent gives null and
+// the result is decimal?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "exponent": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

@@ -1,4 +1,5 @@
-// splitPart with a nullable index
+// splitPart with a nullable index declared string: it is lifted over index as over operand, so the result is
+// string?
 {
   "from": { "entity": "users" },
   "select": [

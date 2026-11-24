@@ -1,0 +1,182 @@
+// Each operand named by its role given as a nullable parameter, one at a time: the operator is lifted over it
+// as over operand, so the result is nullable.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "round_digits_from_a_parameter",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "truncate_digits_from_a_parameter",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "power_exponent_from_a_parameter",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "exponent": { "param": "exponent", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "log_base_from_a_parameter",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "base": { "param": "base", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "substring_start_from_a_parameter",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "start": { "param": "start", "type": { "name": "integer", "nullable": true } },
+        "length": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "substring_length_from_a_parameter",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": { "param": "length", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "replace_pattern_from_a_parameter",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "param": "pattern", "type": { "name": "string", "nullable": true } },
+        "replacement": { "type": { "name": "string" }, "value": "x" }
+      }
+    },
+    {
+      "alias": "replace_replacement_from_a_parameter",
+      "expression": {
+        "operator": "replace",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string" }, "value": "b" },
+        "replacement": { "param": "replacement", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "position_pattern_from_a_parameter",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "param": "pattern", "type": { "name": "string", "nullable": true } },
+        "start": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "position_start_from_a_parameter",
+      "expression": {
+        "operator": "position",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string" }, "value": "b" },
+        "start": { "param": "start", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "splitPart_delimiter_from_a_parameter",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "delimiter": { "param": "delimiter", "type": { "name": "string", "nullable": true } },
+        "index": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "splitPart_index_from_a_parameter",
+      "expression": {
+        "operator": "splitPart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a-b" },
+        "delimiter": { "type": { "name": "string" }, "value": "-" },
+        "index": { "param": "index", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "padStart_length_from_a_parameter",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "param": "length", "type": { "name": "integer", "nullable": true } },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "padStart_fill_from_a_parameter",
+      "expression": {
+        "operator": "padStart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "param": "fill", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "padEnd_length_from_a_parameter",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "param": "length", "type": { "name": "integer", "nullable": true } },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    },
+    {
+      "alias": "padEnd_fill_from_a_parameter",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "type": { "name": "integer" }, "value": 7 },
+        "fill": { "param": "fill", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "repeat_count_from_a_parameter",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "count": { "param": "count", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "replaceRegex_replacement_from_a_parameter",
+      "expression": {
+        "operator": "replaceRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "pattern": { "type": { "name": "string" }, "value": "b+" },
+        "replacement": { "param": "replacement", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

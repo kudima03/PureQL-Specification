@@ -1,0 +1,15 @@
+// round with digits written as null: an absent operand is omitted
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": null
+      }
+    }
+  ]
+}

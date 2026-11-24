@@ -1,0 +1,15 @@
+// trimStart of a nullable operand with a null removable
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimStart",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "removables": [ { "type": { "name": "string", "nullable": true }, "value": null } ]
+      }
+    }
+  ]
+}

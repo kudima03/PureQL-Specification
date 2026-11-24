@@ -1,0 +1,16 @@
+// padEnd with a null length and a null fill declared string
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "fill": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

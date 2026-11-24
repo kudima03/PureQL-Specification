@@ -524,14 +524,19 @@ for ctx, rules in CONTEXTS.items():
             }
         }
 
-    def lifted(name, types, t, *checks, extra=None, optional=None):
+    def lifted(name, types, t, *checks, maybe=None, extra=None, optional=None):
         """Non-null operands give T, nullable ones T?: then at least one of them is nullable.
-        `extra` / `optional`: required / optional properties of the node besides
-        its operands (if.condition, round.digits, trim.removables, substring.start), never null."""
+        `types` are the operands, those named by their role included (power.exponent,
+        substring.start); `maybe` are operands that may be absent (round.digits,
+        substring.length), lifted over when they are written. `extra` / `optional`:
+        required / optional properties of the node that are not operands and are
+        never null (if.condition, trim.removables, round.mode, a regex pattern)."""
+        typed = types | (maybe or {})
         shape(name, list(types) + list(extra or {}),
-              {p: OPERANDS if p == "values" else True for p in types} | (extra or {}) | (optional or {}))
-        signature(name, t, False, operands(types, False), *checks)
-        signature(name, t, True, operands(types, True), some(list(types), NULLABLE), *checks)
+              {p: OPERANDS if p == "values" else True for p in typed} | (extra or {}) | (optional or {}))
+        signature(name, t, False, operands(typed, False), *checks)
+        # `some` requires the operand it reads, so an absent one is never the nullable one
+        signature(name, t, True, operands(typed, True), some(list(typed), NULLABLE), *checks)
 
     def by_family(name, prop, families, build):
         """`<operator>.<family>@<ctx>` per family, chosen by the type `prop` declares."""
@@ -566,26 +571,26 @@ for ctx, rules in CONTEXTS.items():
     for name in ["floor", "ceiling"]:
         lifted(name, {"operand": "decimal"}, "integer", whole)
     # round gives integer, or decimal with digits
-    digits = {"digits": expr("integer", ctx)}
+    digits = {"digits": "integer"}
     # `mode` names the rule for a value exactly halfway. Its absence is half away from
     # zero, which is never written; the enum holds the other rules. It is a name,
     # like the form of normalize, and changes neither the type nor the nullability.
-    rounding = {**digits, "mode": {"enum": ROUNDING_MODES}}
-    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=rounding)
-    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=rounding)
+    rounding = {"mode": {"enum": ROUNDING_MODES}}
+    lifted("round", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, maybe=digits, optional=rounding)
+    lifted("round", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, maybe=digits, optional=rounding)
     # truncate drops digits, toward zero, and is typed as round is
-    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, optional=digits)
-    lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, optional=digits)
+    lifted("truncate", {"operand": "decimal"}, "integer", {"not": {"required": ["digits"]}}, whole, maybe=digits)
+    lifted("truncate", {"operand": "decimal"}, "decimal", {"required": ["digits"]}, maybe=digits)
     # abs keeps the type of its operand; sign is -1, 0 or 1, an integer whatever the operand
     lifted("abs", {"operand": "integer"}, "integer")
     lifted("abs", {"operand": "decimal"}, "decimal", some(["operand"], declares_name("decimal")))
     lifted("sign", {"operand": "decimal"}, "integer")
     # Powers, roots and logarithms are always decimal, like divide: the exact value
     # rounded to the decimal precision. `exponent` and `base` are never null.
-    lifted("power", {"operand": "decimal"}, "decimal", extra={"exponent": expr("decimal", ctx)})
+    lifted("power", {"operand": "decimal", "exponent": "decimal"}, "decimal")
     for name in ["sqrt", "exp", "ln", "log10"]:
         lifted(name, {"operand": "decimal"}, "decimal")
-    lifted("log", {"operand": "decimal"}, "decimal", extra={"base": expr("decimal", ctx)})
+    lifted("log", {"operand": "decimal", "base": "decimal"}, "decimal")
 
     section = "string"
     # strings
@@ -610,25 +615,20 @@ for ctx, rules in CONTEXTS.items():
     for name in ["trim", "trimStart", "trimEnd"]:
         lifted(name, {"operand": "string"}, "string", extra=removables)
     # code points from `start`, counted from 1, to the end or for `length` of them
-    lifted("substring", {"operand": "string"}, "string",
-           extra={"start": expr("integer", ctx)}, optional={"length": expr("integer", ctx)})
+    lifted("substring", {"operand": "string", "start": "integer"}, "string", maybe={"length": "integer"})
     # every occurrence of `pattern`, which is literal text, replaced by `replacement`
-    lifted("replace", {"operand": "string"}, "string",
-           extra={"pattern": expr("string", ctx), "replacement": expr("string", ctx)})
+    lifted("replace", {"operand": "string", "pattern": "string", "replacement": "string"}, "string")
     # the position, counted from 1, of the first occurrence of `pattern` at or after
     # `start`; 0 when there is none
-    lifted("position", {"operand": "string"}, "integer",
-           extra={"pattern": expr("string", ctx)}, optional={"start": expr("integer", ctx)})
+    lifted("position", {"operand": "string", "pattern": "string"}, "integer", maybe={"start": "integer"})
     # part number `index` of the string split at `delimiter`, counted from 1, or from
     # the end when negative
-    lifted("splitPart", {"operand": "string"}, "string",
-           extra={"delimiter": expr("string", ctx), "index": expr("integer", ctx)})
+    lifted("splitPart", {"operand": "string", "delimiter": "string", "index": "integer"}, "string")
     # padStart / padEnd add repetitions of `fill` before or after the string until it
     # has `length` code points; a longer string is never cut
     for name in ["padStart", "padEnd"]:
-        lifted(name, {"operand": "string"}, "string",
-               extra={"length": expr("integer", ctx), "fill": expr("string", ctx)})
-    lifted("repeat", {"operand": "string"}, "string", extra={"count": expr("integer", ctx)})
+        lifted(name, {"operand": "string", "length": "integer", "fill": "string"}, "string")
+    lifted("repeat", {"operand": "string", "count": "integer"}, "string")
     # the code points in reverse order
     lifted("reverse", {"operand": "string"}, "string")
     # concatWith joins its operands with `separator` between them and skips the null
@@ -645,8 +645,7 @@ for ctx, rules in CONTEXTS.items():
     shape("extractRegex", ["operand", "pattern"],
           {"operand": expr("string", ctx, True), "pattern": ref("regexPattern"), "group": ref("regexGroup")})
     signature("extractRegex", "string", True)
-    lifted("replaceRegex", {"operand": "string"}, "string",
-           extra={"pattern": ref("regexPattern"), "replacement": expr("string", ctx)})
+    lifted("replaceRegex", {"operand": "string", "replacement": "string"}, "string", extra={"pattern": ref("regexPattern")})
 
     section = "dateMath"
     # date / time / datetime math

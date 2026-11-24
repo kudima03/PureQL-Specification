@@ -1,0 +1,15 @@
+// power with an untyped null exponent: a null literal carries its type
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "exponent": { "value": null }
+      }
+    }
+  ]
+}

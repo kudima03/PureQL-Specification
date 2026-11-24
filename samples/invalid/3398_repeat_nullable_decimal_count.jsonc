@@ -1,0 +1,15 @@
+// repeat with a nullable decimal count
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "count": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// trimEnd of a nullable operand with one nullable removable among others
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "trimEnd",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } },
+        "removables": [
+          { "type": { "name": "string" }, "value": " " },
+          { "source": "users", "field": "nickname", "type": { "name": "string", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

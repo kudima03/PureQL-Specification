@@ -1,0 +1,15 @@
+// power with a null exponent declared integer?: it is a decimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "exponent": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

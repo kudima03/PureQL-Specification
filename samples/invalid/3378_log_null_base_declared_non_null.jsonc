@@ -1,0 +1,16 @@
+// log with a null base declared decimal: it is lifted over base, so a null base gives null and the result is
+// decimal?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "log",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "base": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

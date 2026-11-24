@@ -1,5 +1,5 @@
-// replace with a nullable pattern: the pattern is never null, so that the result is nullable exactly when the
-// operand is
+// replace with a nullable pattern declared string: it is lifted over pattern as over operand, so the result
+// is string?
 {
   "from": { "entity": "users" },
   "select": [

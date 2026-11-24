@@ -1,4 +1,5 @@
-// substring with a nullable length: length is never null; omit it to read to the end
+// substring with a nullable length declared string: it is lifted over length as over operand, so the result
+// is string?
 {
   "from": { "entity": "users" },
   "select": [

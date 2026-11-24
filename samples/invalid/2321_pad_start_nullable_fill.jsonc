@@ -1,4 +1,5 @@
-// padStart with a nullable fill
+// padStart with a nullable fill declared string: it is lifted over fill as over operand, so the result is
+// string?
 {
   "from": { "entity": "users" },
   "select": [

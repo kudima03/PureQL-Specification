@@ -1,0 +1,16 @@
+// substring with length written as null: to read to the end, length is omitted
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "substring",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "start": { "type": { "name": "integer" }, "value": 1 },
+        "length": null
+      }
+    }
+  ]
+}

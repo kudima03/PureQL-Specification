@@ -1,0 +1,15 @@
+// round with null digits declared integer?: with digits it is a decimal, whatever their value
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "decimal" }, "value": "2.5" },
+        "digits": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

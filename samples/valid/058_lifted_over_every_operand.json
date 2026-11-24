@@ -1,0 +1,225 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "score",
+      "expression": {
+        "operator": "power",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "type": {
+            "name": "decimal"
+          },
+          "value": "1.1"
+        },
+        "exponent": {
+          "source": "users",
+          "field": "age",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "age_rounded_to",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "operand": {
+          "operator": "asDecimal",
+          "type": {
+            "name": "decimal",
+            "nullable": true
+          },
+          "operand": {
+            "source": "users",
+            "field": "age",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          }
+        },
+        "digits": {
+          "param": "digits",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "stars",
+      "expression": {
+        "operator": "repeat",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "type": {
+            "name": "string"
+          },
+          "value": "*"
+        },
+        "count": {
+          "source": "users",
+          "field": "age",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "name_without_nickname",
+      "expression": {
+        "operator": "replace",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        },
+        "replacement": {
+          "type": {
+            "name": "string"
+          },
+          "value": ""
+        }
+      }
+    },
+    {
+      "alias": "nickname_starts_at",
+      "expression": {
+        "operator": "position",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "pattern": {
+          "source": "users",
+          "field": "nickname",
+          "type": {
+            "name": "string",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "first_letters",
+      "expression": {
+        "operator": "substring",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "last_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "start": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 1
+        },
+        "length": {
+          "param": "letters",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "padded_to_age",
+      "expression": {
+        "operator": "padEnd",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "first_name",
+          "type": {
+            "name": "string"
+          }
+        },
+        "length": {
+          "source": "users",
+          "field": "age",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        },
+        "fill": {
+          "type": {
+            "name": "string"
+          },
+          "value": "."
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

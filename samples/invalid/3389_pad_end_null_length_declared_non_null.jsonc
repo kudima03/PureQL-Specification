@@ -1,0 +1,17 @@
+// padEnd with a null length declared string: it is lifted over length, so a null length gives null and the
+// result is string?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "padEnd",
+        "type": { "name": "string" },
+        "operand": { "type": { "name": "string" }, "value": "abc" },
+        "length": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "fill": { "type": { "name": "string" }, "value": "0" }
+      }
+    }
+  ]
+}

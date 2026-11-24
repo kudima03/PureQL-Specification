@@ -1,4 +1,5 @@
-// substring with a nullable start: start is never null
+// substring with a nullable start declared string: it is lifted over start as over operand, so the result is
+// string?
 {
   "from": { "entity": "users" },
   "select": [

@@ -1,0 +1,15 @@
+// repeat with a null count declared integer?
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "repeat",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "string" }, "value": "a" },
+        "count": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

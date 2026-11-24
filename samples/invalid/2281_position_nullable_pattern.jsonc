@@ -1,4 +1,5 @@
-// position of a nullable pattern: the pattern is never null
+// position with a nullable pattern declared integer: it is lifted over pattern as over operand, so the result
+// is integer?
 {
   "from": { "entity": "users" },
   "select": [

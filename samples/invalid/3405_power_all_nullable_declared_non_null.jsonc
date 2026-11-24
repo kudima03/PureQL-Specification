@@ -1,0 +1,15 @@
+// power of a nullable operand and a nullable exponent declared decimal
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal" },
+        "operand": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "exponent": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

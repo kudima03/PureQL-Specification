@@ -1,4 +1,5 @@
-// round.digits given a nullable integer parameter
+// round with a nullable digits declared decimal: it is lifted over digits as over operand, so the result is
+// decimal?
 {
   "from": { "entity": "orders" },
   "select": [
