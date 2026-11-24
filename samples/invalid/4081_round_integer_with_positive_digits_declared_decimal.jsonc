@@ -1,0 +1,15 @@
+// round of an integer to two decimal places declared decimal: it is the same integer, not a decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

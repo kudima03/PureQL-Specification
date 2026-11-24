@@ -1,0 +1,25 @@
+// round of an average of integers with digits declared integer: an average is a decimal
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "average",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

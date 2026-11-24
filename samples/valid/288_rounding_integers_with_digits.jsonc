@@ -1,5 +1,6 @@
-// round and truncate of an integer with digits, which changes it: to tens and hundreds, by a parameter and by
-// computed digits, lifted, and rounded back to an integer.
+// round and truncate of an integer with digits, which changes it and keeps it an integer: to tens and
+// hundreds, by a parameter and by computed digits, lifted, with no digits to drop, and added to another
+// integer.
 {
   "from": { "entity": "order_items" },
   "select": [
@@ -7,7 +8,7 @@
       "alias": "to_tens",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }
@@ -16,7 +17,7 @@
       "alias": "to_hundreds_toward_zero",
       "expression": {
         "operator": "truncate",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -2 }
       }
@@ -25,7 +26,7 @@
       "alias": "by_a_parameter",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": { "param": "digits", "type": { "name": "integer" } }
       }
@@ -34,7 +35,7 @@
       "alias": "by_computed_digits",
       "expression": {
         "operator": "truncate",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": {
           "operator": "subtract",
@@ -50,7 +51,7 @@
       "alias": "nullable_to_tens",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal", "nullable": true },
+        "type": { "name": "integer", "nullable": true },
         "operand": { "param": "units", "type": { "name": "integer", "nullable": true } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }
@@ -59,7 +60,7 @@
       "alias": "of_a_sum_of_integers",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": {
           "operator": "add",
           "type": { "name": "integer" },
@@ -75,22 +76,25 @@
       "alias": "with_no_digits_to_drop",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": 2 }
       }
     },
     {
-      "alias": "back_to_an_integer",
+      "alias": "still_an_integer",
       "expression": {
-        "operator": "round",
+        "operator": "add",
         "type": { "name": "integer" },
-        "operand": {
-          "operator": "round",
-          "type": { "name": "decimal" },
-          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-          "digits": { "type": { "name": "integer" }, "value": -1 }
-        }
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
       }
     }
   ]

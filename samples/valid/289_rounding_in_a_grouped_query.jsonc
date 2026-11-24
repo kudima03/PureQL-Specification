@@ -102,7 +102,7 @@
       "alias": "units_in_tens",
       "expression": {
         "operator": "truncate",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": {
           "operator": "sum",
           "type": { "name": "integer" },

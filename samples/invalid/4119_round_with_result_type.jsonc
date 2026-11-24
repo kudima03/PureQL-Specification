@@ -1,0 +1,17 @@
+// round with a result type to choose: the declared type is a result, never an instruction; a decimal from an
+// integer is asDecimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "type": { "name": "integer" }, "value": -1 },
+        "as": "decimal"
+      }
+    }
+  ]
+}

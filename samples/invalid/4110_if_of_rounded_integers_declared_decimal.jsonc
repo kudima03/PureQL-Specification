@@ -1,0 +1,26 @@
+// if with two integers rounded to tens as its branches declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "decimal" },
+        "condition": { "type": { "name": "boolean" }, "value": true },
+        "then": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "else": {
+          "operator": "truncate",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    }
+  ]
+}

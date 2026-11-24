@@ -1,0 +1,22 @@
+// truncate of a product with a decimal and digits declared integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

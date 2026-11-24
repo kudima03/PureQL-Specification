@@ -1,0 +1,22 @@
+// multiply of an integer rounded to tens and an integer declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

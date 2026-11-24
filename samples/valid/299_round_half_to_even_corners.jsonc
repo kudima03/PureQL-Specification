@@ -36,7 +36,7 @@
       "alias": "integer_to_hundreds",
       "expression": {
         "operator": "round",
-        "type": { "name": "decimal" },
+        "type": { "name": "integer" },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
         "digits": { "type": { "name": "integer" }, "value": -2 },
         "mode": "halfEven"

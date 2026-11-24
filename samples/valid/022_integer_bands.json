@@ -1,0 +1,160 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "source": "users",
+    "field": "is_active",
+    "type": {
+      "name": "boolean"
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "age_band",
+      "expression": {
+        "operator": "truncate",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "age",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -1
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "age_band",
+      "expression": {
+        "key": "age_band",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        }
+      }
+    },
+    {
+      "alias": "up_to",
+      "expression": {
+        "operator": "add",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "values": [
+          {
+            "key": "age_band",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 9
+          }
+        ]
+      }
+    },
+    {
+      "alias": "users",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "users_to_the_nearest_ten",
+      "expression": {
+        "operator": "round",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "operator": "count",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "digits": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -1
+        }
+      }
+    },
+    {
+      "alias": "youngest",
+      "expression": {
+        "operator": "min",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "selector": {
+          "source": "users",
+          "field": "age",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "alias": "label",
+      "expression": {
+        "operator": "concat",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "values": [
+          {
+            "operator": "asString",
+            "type": {
+              "name": "string",
+              "nullable": true
+            },
+            "operand": {
+              "key": "age_band",
+              "type": {
+                "name": "integer",
+                "nullable": true
+              }
+            }
+          },
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "s"
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "age_band"
+    }
+  ]
+}

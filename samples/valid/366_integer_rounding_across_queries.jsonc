@@ -1,0 +1,346 @@
+// Rounded integers as columns of a grouped, a total and a recursive subquery, read as integers by the main
+// query: in a join on an integer band, over a running sum and a row number.
+{
+  "subqueries": [
+    {
+      "name": "bands",
+      "query": {
+        "from": { "entity": "order_items" },
+        "groupBy": [
+          {
+            "alias": "quantity_band",
+            "expression": {
+              "operator": "truncate",
+              "type": { "name": "integer" },
+              "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          }
+        ],
+        "having": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            },
+            "digits": { "type": { "name": "integer" }, "value": -2 }
+          },
+          "right": { "type": { "name": "integer" }, "value": 100 }
+        },
+        "select": [
+          {
+            "alias": "quantity_band",
+            "expression": { "key": "quantity_band", "type": { "name": "integer" } }
+          },
+          {
+            "alias": "next_band",
+            "expression": {
+              "operator": "add",
+              "type": { "name": "integer" },
+              "values": [
+                { "key": "quantity_band", "type": { "name": "integer" } },
+                { "type": { "name": "integer" }, "value": 10 }
+              ]
+            }
+          },
+          {
+            "alias": "units_in_hundreds",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": {
+                "operator": "sum",
+                "type": { "name": "integer" },
+                "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              "digits": { "type": { "name": "integer" }, "value": -2 }
+            }
+          },
+          {
+            "alias": "rounded_units",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "round",
+                "type": { "name": "integer" },
+                "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 }
+              }
+            }
+          },
+          {
+            "alias": "largest_rounded",
+            "expression": {
+              "operator": "max",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "round",
+                "type": { "name": "integer" },
+                "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 }
+              }
+            }
+          },
+          {
+            "alias": "lines_in_tens",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": { "operator": "count", "type": { "name": "integer" } },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          },
+          {
+            "alias": "lines_of_all_in_tens",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": { "operator": "count", "type": { "name": "integer" }, "over": "all" },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          },
+          {
+            "alias": "rounded_bands",
+            "expression": {
+              "operator": "countDistinct",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "round",
+                "type": { "name": "integer" },
+                "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -2 }
+              }
+            }
+          },
+          {
+            "alias": "average_stays_decimal",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "decimal" },
+              "operand": {
+                "operator": "average",
+                "type": { "name": "decimal" },
+                "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "totals",
+      "query": {
+        "from": { "entity": "order_items" },
+        "aggregate": [
+          {
+            "alias": "lines_in_hundreds",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "integer" },
+              "operand": { "operator": "count", "type": { "name": "integer" } },
+              "digits": { "type": { "name": "integer" }, "value": -2 }
+            }
+          },
+          {
+            "alias": "units_in_thousands",
+            "expression": {
+              "operator": "truncate",
+              "type": { "name": "integer" },
+              "operand": {
+                "operator": "sum",
+                "type": { "name": "integer" },
+                "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              "digits": { "type": { "name": "integer" }, "value": -3 }
+            }
+          },
+          {
+            "alias": "largest_in_tens",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "integer", "nullable": true },
+              "operand": {
+                "operator": "max",
+                "type": { "name": "integer", "nullable": true },
+                "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          },
+          {
+            "alias": "median_stays_decimal",
+            "expression": {
+              "operator": "round",
+              "type": { "name": "decimal", "nullable": true },
+              "operand": {
+                "operator": "median",
+                "type": { "name": "decimal", "nullable": true },
+                "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+              },
+              "digits": { "type": { "name": "integer" }, "value": -1 }
+            }
+          },
+          {
+            "alias": "rounded_units",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "truncate",
+                "type": { "name": "integer" },
+                "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "steps",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "order_items" },
+          "select": [
+            {
+              "alias": "id",
+              "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } }
+            },
+            {
+              "alias": "units",
+              "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "steps" },
+          "where": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "steps", "field": "units", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 10 }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "steps", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "units",
+              "expression": {
+                "operator": "truncate",
+                "type": { "name": "integer" },
+                "operand": { "source": "steps", "field": "units", "type": { "name": "integer" } },
+                "digits": { "type": { "name": "integer" }, "value": -1 }
+              }
+            }
+          ]
+        },
+        "maxDepth": 3
+      }
+    }
+  ],
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "bands",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "truncate",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "right": { "source": "bands", "field": "quantity_band", "type": { "name": "integer" } }
+      }
+    },
+    { "kind": "inner", "subquery": "totals", "on": { "type": { "name": "boolean" }, "value": true } },
+    {
+      "kind": "left",
+      "subquery": "steps",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "steps", "field": "id", "type": { "name": "uuid", "nullable": true } },
+        "right": { "source": "order_items", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "running_units_in_tens",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "over": {
+            "partitionBy": [ { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } } ],
+            "orderBy": [
+              { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+            ],
+            "frame": { "preceding": "all" }
+          }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "rank_in_tens",
+      "expression": {
+        "operator": "truncate",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "rowNumber",
+          "type": { "name": "integer" },
+          "over": {
+            "orderBy": [
+              { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+            ]
+          }
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    },
+    {
+      "alias": "share_of_rounded_units",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "integer", "nullable": true },
+            "left": { "source": "totals", "field": "rounded_units", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "band_units",
+      "expression": { "source": "bands", "field": "units_in_hundreds", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "step_units",
+      "expression": { "source": "steps", "field": "units", "type": { "name": "integer", "nullable": true } }
+    }
+  ],
+  "orderBy": [ { "column": "id" } ]
+}

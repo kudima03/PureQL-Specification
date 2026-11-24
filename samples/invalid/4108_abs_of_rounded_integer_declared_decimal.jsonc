@@ -1,0 +1,19 @@
+// abs of an integer rounded to tens declared decimal: abs keeps the type of its operand
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "abs",
+        "type": { "name": "decimal" },
+        "operand": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        }
+      }
+    }
+  ]
+}

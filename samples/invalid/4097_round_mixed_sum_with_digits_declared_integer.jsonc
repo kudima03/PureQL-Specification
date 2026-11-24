@@ -1,0 +1,22 @@
+// round of a sum of an integer and a decimal with digits declared integer: the sum is a decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "add",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          ]
+        },
+        "digits": { "type": { "name": "integer" }, "value": -1 }
+      }
+    }
+  ]
+}

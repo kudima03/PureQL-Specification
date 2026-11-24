@@ -1,0 +1,15 @@
+// round of an integer with nullable digits declared integer: round is lifted over digits
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
+      }
+    }
+  ]
+}

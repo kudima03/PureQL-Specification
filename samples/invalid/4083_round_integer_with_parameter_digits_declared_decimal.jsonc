@@ -1,0 +1,16 @@
+// round of an integer with digits from a parameter declared decimal: the type does not depend on the value of
+// digits
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "digits": { "param": "digits", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

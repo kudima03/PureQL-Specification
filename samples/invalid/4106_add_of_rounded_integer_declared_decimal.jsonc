@@ -1,0 +1,22 @@
+// add of an integer rounded to tens and an integer declared decimal: both operands are integers
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "round",
+            "type": { "name": "integer" },
+            "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            "digits": { "type": { "name": "integer" }, "value": -1 }
+          },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

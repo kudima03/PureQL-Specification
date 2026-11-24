@@ -1,0 +1,20 @@
+// nullIfEqual of an integer rounded to tens declared decimal?: it has the type its left operand declares
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "nullIfEqual",
+        "type": { "name": "decimal", "nullable": true },
+        "left": {
+          "operator": "round",
+          "type": { "name": "integer" },
+          "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "digits": { "type": { "name": "integer" }, "value": -1 }
+        },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

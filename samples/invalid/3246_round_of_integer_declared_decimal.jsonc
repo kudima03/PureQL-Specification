@@ -1,4 +1,5 @@
-// round of an integer without digits declared decimal: with digits it would be
+// round of an integer declared decimal: rounding never turns an integer into a decimal, with digits or
+// without; that is asDecimal
 {
   "from": { "entity": "order_items" },
   "select": [

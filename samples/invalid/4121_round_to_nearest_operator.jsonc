@@ -1,0 +1,15 @@
+// roundTo is not an operator: rounding to tens is round with digits -1
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "roundTo",
+        "type": { "name": "integer" },
+        "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "nearest": { "type": { "name": "integer" }, "value": 10 }
+      }
+    }
+  ]
+}

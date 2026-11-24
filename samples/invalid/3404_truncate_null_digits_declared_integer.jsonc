@@ -1,4 +1,4 @@
-// truncate with null digits declared integer?
+// truncate of a decimal with null digits declared integer?
 {
   "from": { "entity": "users" },
   "select": [
