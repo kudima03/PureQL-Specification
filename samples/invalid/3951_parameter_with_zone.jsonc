@@ -1,0 +1,14 @@
+// A datetime parameter with a zone: a parameter is bound in UTC
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "param": "now",
+        "type": { "name": "datetime" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

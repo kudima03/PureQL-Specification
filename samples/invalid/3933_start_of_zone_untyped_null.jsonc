@@ -1,0 +1,15 @@
+// startOfYear with an untyped null as its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfYear",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "value": null }
+      }
+    }
+  ]
+}

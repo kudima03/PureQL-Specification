@@ -605,10 +605,12 @@ for ctx, rules in CONTEXTS.items():
         substring.start); `maybe` are operands that may be absent (round.digits,
         substring.length), lifted over when they are written. `extra` / `optional`:
         required / optional properties of the node that are not operands and are
-        never null (if.condition, trim.removables, round.mode, a regex pattern)."""
+        never null (if.condition, trim.removables, round.mode, a regex pattern).
+        An operand named `zone` is a time zone: a literal one is held to the names."""
         typed = types | (maybe or {})
         shape(name, list(types) + list(extra or {}),
-              {p: OPERANDS if p == "values" else True for p in typed} | (extra or {}) | (optional or {}))
+              {p: OPERANDS if p == "values" else ref("zoneName") if p == "zone" else True for p in typed}
+              | (extra or {}) | (optional or {}))
         signature(name, t, False, operands(typed, False), *checks)
         # `some` requires the operand it reads, so an absent one is never the nullable one
         signature(name, t, True, operands(typed, True), some(list(typed), NULLABLE), *checks)
@@ -778,9 +780,19 @@ for ctx, rules in CONTEXTS.items():
             reads(name, "integer", families, check(f"accepts.{families[0]}OrDatetime", families), zoned=name != "microsecond")
     section = "startOf"
     # Truncation keeps the type of its operand: the declared type picks the signature.
+    # A datetime is truncated in UTC, or in its `zone`: the result is then the first
+    # instant of the period of the local calendar or clock. A date and a time have
+    # no zone, and startOfSecond takes none: an offset from UTC is a whole number of
+    # seconds, so a second starts at the same instant in every zone.
+    no_zone = {"not": {"required": ["zone"]}}
     for name, types in START_OF.items():
         for t in types:
-            lifted(name, {"operand": t}, t)
+            if name == "startOfSecond":
+                lifted(name, {"operand": t}, t)
+            elif t == "datetime":
+                lifted(name, {"operand": t}, t, maybe={"zone": "string"})
+            else:
+                lifted(name, {"operand": t}, t, no_zone, optional={"zone": ref("zoneName")})
 
     section = "conversion"
     # Conversions. asString writes a value of any other type as its literal is

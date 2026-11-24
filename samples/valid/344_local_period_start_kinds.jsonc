@@ -1,0 +1,210 @@
+// Every startOf that takes a zone, in a literal zone; a zone that is a parameter, a column or computed; a
+// nullable zone or datetime makes the result nullable; startOfSecond, and the starts of a date and of a time,
+// take no zone.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "start_of_year_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfYear",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_quarter_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfQuarter",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_month_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_week_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_day_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_hour_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfHour",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "start_of_minute_in_a_literal_zone",
+      "expression": {
+        "operator": "startOfMinute",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "parameter_zone",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "column_zone",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "computed_zone",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "nullable_zone",
+      "expression": {
+        "operator": "startOfYear",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "null_zone",
+      "expression": {
+        "operator": "startOfHour",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "startOfQuarter",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_operand_and_zone",
+      "expression": {
+        "operator": "startOfMinute",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "literal_operand",
+      "expression": {
+        "operator": "startOfHour",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-08-15T18:30:15.25Z" },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kathmandu" }
+      }
+    },
+    {
+      "alias": "second_needs_no_zone",
+      "expression": {
+        "operator": "startOfSecond",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "of_a_date",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "of_a_time",
+      "expression": {
+        "operator": "startOfHour",
+        "type": { "name": "time" },
+        "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "local_day_of_the_start",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "startOfMonth",
+          "type": { "name": "datetime" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nested",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": {
+          "operator": "startOfMonth",
+          "type": { "name": "datetime" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

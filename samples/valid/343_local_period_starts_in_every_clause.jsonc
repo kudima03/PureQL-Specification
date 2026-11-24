@@ -1,0 +1,161 @@
+// startOf with the zone of a column in join.on, where, select, a window's partition, the sort key of a range
+// and an aggregate's selector; the UTC start next to the local one.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "greaterThanOrEqual",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "right": {
+              "operator": "startOfMonth",
+              "type": { "name": "datetime" },
+              "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": {
+          "operator": "startOfDay",
+          "type": { "name": "datetime" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      },
+      {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": {
+          "operator": "startOfHour",
+          "type": { "name": "datetime" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "local_day_start",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "utc_day_start",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "seconds_into_the_local_day",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": {
+          "operator": "startOfDay",
+          "type": { "name": "datetime" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "orders_of_the_local_week",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            {
+              "operator": "startOfWeek",
+              "type": { "name": "datetime" },
+              "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "first_local_quarter",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime" },
+        "selector": {
+          "operator": "startOfQuarter",
+          "type": { "name": "datetime" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "revenue_of_the_last_seven_local_days",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "startOfDay",
+                "type": { "name": "datetime" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+              }
+            }
+          ],
+          "range": { "preceding": { "seconds": 518400 } }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      },
+      "direction": "desc"
+    },
+    { "column": "id" }
+  ]
+}

@@ -1,0 +1,17 @@
+// startOfDay with a start hour: a day starts at midnight; a business day that starts later is shifted with
+// datetimeAddSeconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "startHour": { "type": { "name": "integer" }, "value": 6 }
+      }
+    }
+  ]
+}

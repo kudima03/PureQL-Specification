@@ -1,0 +1,16 @@
+// startOfSecond of a datetime in a zone: an offset from UTC is a whole number of seconds, so a second starts
+// at the same instant in every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfSecond",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

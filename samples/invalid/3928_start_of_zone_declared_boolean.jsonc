@@ -1,0 +1,15 @@
+// startOfWeek with a boolean as its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "boolean" }, "value": true }
+      }
+    }
+  ]
+}

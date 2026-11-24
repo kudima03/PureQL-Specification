@@ -1,0 +1,15 @@
+// startOfMonth in a null zone declared datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

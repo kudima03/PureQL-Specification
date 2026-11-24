@@ -1,0 +1,15 @@
+// startOfDay with an integer as its zone: an offset in hours is not a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}
