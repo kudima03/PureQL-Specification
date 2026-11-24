@@ -1,0 +1,176 @@
+// datetimeAddMonths and datetimeDiffMonths with the zone of a column in join.on, where, select, a window's
+// partition, an aggregate's selector and predicate, and orderBy; the UTC results next to the local ones.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "right": {
+              "operator": "datetimeAddMonths",
+              "type": { "name": "datetime" },
+              "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+              "months": { "type": { "name": "integer" }, "value": 12 },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": {
+          "operator": "datetimeAddMonths",
+          "type": { "name": "datetime" },
+          "operand": {
+            "operator": "startOfMonth",
+            "type": { "name": "datetime" },
+            "operand": { "param": "now", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "months": { "type": { "name": "integer" }, "value": -3 },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      },
+      {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "datetimeDiffMonths",
+          "type": { "name": "integer" },
+          "left": { "param": "now", "type": { "name": "datetime" } },
+          "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    ]
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "months_after_signing_up",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "in_utc",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "a_month_later",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "a_month_later_in_utc",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "orders_of_the_same_month_of_membership",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+            {
+              "operator": "datetimeDiffMonths",
+              "type": { "name": "integer" },
+              "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "latest_month_of_membership",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "datetimeDiffMonths",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "ordered_in_the_first_year",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "lessThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "right": {
+            "operator": "datetimeAddMonths",
+            "type": { "name": "datetime" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "months": { "type": { "name": "integer" }, "value": 12 },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      },
+      "direction": "desc"
+    },
+    { "column": "id" }
+  ]
+}

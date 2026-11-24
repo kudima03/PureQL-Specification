@@ -1,0 +1,191 @@
+// The month operators with a zone in a grouped query, of a key and of aggregates, and in a total query over
+// twelve local months.
+{
+  "subqueries": [
+    {
+      "name": "recent",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "ordered_at",
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          {
+            "alias": "status",
+            "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+          }
+        ],
+        "having": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": { "key": "ordered_at", "type": { "name": "datetime" } },
+          "right": {
+            "operator": "datetimeAddMonths",
+            "type": { "name": "datetime" },
+            "operand": { "param": "now", "type": { "name": "datetime" } },
+            "months": { "type": { "name": "integer" }, "value": -6 },
+            "zone": { "param": "zone", "type": { "name": "string" } }
+          }
+        },
+        "select": [
+          { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+          {
+            "alias": "a_month_after_the_key",
+            "expression": {
+              "operator": "datetimeAddMonths",
+              "type": { "name": "datetime" },
+              "operand": { "key": "ordered_at", "type": { "name": "datetime" } },
+              "months": { "type": { "name": "integer" }, "value": 1 },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "months_since_the_key",
+            "expression": {
+              "operator": "datetimeDiffMonths",
+              "type": { "name": "integer" },
+              "left": { "param": "now", "type": { "name": "datetime" } },
+              "right": { "key": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+            }
+          },
+          {
+            "alias": "months_between_first_and_last_shipment",
+            "expression": {
+              "operator": "datetimeDiffMonths",
+              "type": { "name": "integer" },
+              "left": {
+                "operator": "max",
+                "type": { "name": "datetime" },
+                "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+              },
+              "right": {
+                "operator": "min",
+                "type": { "name": "datetime" },
+                "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+              },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "orders_in_the_last_local_month",
+            "expression": {
+              "operator": "count",
+              "type": { "name": "integer" },
+              "predicate": {
+                "operator": "greaterThanOrEqual",
+                "type": { "name": "boolean" },
+                "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "right": {
+                  "operator": "datetimeAddMonths",
+                  "type": { "name": "datetime" },
+                  "operand": { "param": "now", "type": { "name": "datetime" } },
+                  "months": { "type": { "name": "integer" }, "value": -1 },
+                  "zone": { "param": "zone", "type": { "name": "string" } }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "year",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "greaterThanOrEqual",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "right": {
+            "operator": "datetimeAddMonths",
+            "type": { "name": "datetime" },
+            "operand": {
+              "operator": "startOfMonth",
+              "type": { "name": "datetime" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            },
+            "months": { "type": { "name": "integer" }, "value": -12 },
+            "zone": { "param": "zone", "type": { "name": "string" } }
+          }
+        },
+        "aggregate": [
+          {
+            "alias": "orders_of_twelve_local_months",
+            "expression": { "operator": "count", "type": { "name": "integer" } }
+          },
+          {
+            "alias": "months_covered",
+            "expression": {
+              "operator": "datetimeDiffMonths",
+              "type": { "name": "integer", "nullable": true },
+              "left": {
+                "operator": "max",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              "right": {
+                "operator": "min",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "a_month_after_the_last_order",
+            "expression": {
+              "operator": "datetimeAddMonths",
+              "type": { "name": "datetime", "nullable": true },
+              "operand": {
+                "operator": "max",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              "months": { "type": { "name": "integer" }, "value": 1 },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "most_common_age_in_months",
+            "expression": {
+              "operator": "mode",
+              "type": { "name": "integer", "nullable": true },
+              "selector": {
+                "operator": "datetimeDiffMonths",
+                "type": { "name": "integer" },
+                "left": { "param": "now", "type": { "name": "datetime" } },
+                "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "recent" },
+  "joins": [
+    { "kind": "inner", "subquery": "year", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "recent", "field": "status", "type": { "name": "string" } }
+    },
+    {
+      "alias": "months_since",
+      "expression": { "source": "recent", "field": "months_since_the_key", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "orders_of_twelve_local_months",
+      "expression": {
+        "source": "year",
+        "field": "orders_of_twelve_local_months",
+        "type": { "name": "integer" }
+      }
+    }
+  ]
+}

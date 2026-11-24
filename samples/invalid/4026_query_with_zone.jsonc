@@ -1,0 +1,16 @@
+// A zone on the query: each operator that reads a datetime takes its own
+{
+  "from": { "entity": "orders" },
+  "zone": "Europe/Moscow",
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

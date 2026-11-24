@@ -1,0 +1,22 @@
+// datetimeAddMonths of a key in a grouped select with a field as its zone
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "key": "k", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

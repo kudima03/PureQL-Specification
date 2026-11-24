@@ -1,0 +1,17 @@
+// datetimeAddDays is not an operator: the same local time on another day is datetimeFromParts of the next
+// local day
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddDays",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "days": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

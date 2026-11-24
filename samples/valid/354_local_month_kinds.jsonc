@@ -1,0 +1,197 @@
+// The zone of the month operators as a literal, a fixed offset, a parameter, a column and a coalesce; the
+// result is nullable exactly when an operand, the months or the zone is; dateAddMonths of a date takes no
+// zone.
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "literal_zone",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "fixed_offset",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "type": { "name": "string" }, "value": "Etc/GMT-3" }
+      }
+    },
+    {
+      "alias": "parameter_zone",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "column_zone",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "computed_zone",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "param": "now", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "nullable_zone",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "null_zone",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "param": "now", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "nullable_operand",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_months",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "param": "months", "type": { "name": "integer", "nullable": true } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_left",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "nullable_right",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "param": "now", "type": { "name": "datetime" } },
+        "right": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "everything_nullable",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "right": { "param": "since", "type": { "name": "datetime", "nullable": true } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    },
+    {
+      "alias": "negative_months",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": -6 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "computed_months",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": {
+          "operator": "multiply",
+          "type": { "name": "integer", "nullable": true },
+          "values": [
+            { "source": "users", "field": "age", "type": { "name": "integer", "nullable": true } },
+            { "type": { "name": "integer" }, "value": 12 }
+          ]
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "literals",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-02-15T17:00:00Z" },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "type": { "name": "string" }, "value": "America/New_York" }
+      }
+    },
+    {
+      "alias": "of_a_date_without_a_zone",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
