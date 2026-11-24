@@ -627,6 +627,19 @@ for ctx, rules in CONTEXTS.items():
             ]
         }
 
+    def reads(name, t, families, accepted, zoned=False):
+        """An operator that reads one `operand` of several families of types and yields
+        `t`, lifted: the type the operand declares picks the position it is validated
+        against. With `zoned`, a datetime operand may be read in a `zone`, a string
+        operand of the operator, so the result is nullable exactly when the operand or
+        the zone is. An operand of another family has no zone to be read in."""
+        shape(name, ["operand"], {"operand": accepted, **({"zone": ref("zoneName")} if zoned else {})})
+        operand = by_family(name, "operand", families, lambda f: {"properties": {
+            "operand": expr(f, ctx, True), **({"zone": False} if zoned and f != "datetime" else {})}})
+        zone = lambda nullable: {"properties": {"zone": expr("string", ctx, nullable)}} if zoned else {}
+        signature(name, t, False, {"properties": {"operand": NON_NULL}}, zone(False), operand)
+        signature(name, t, True, some(["operand", "zone"] if zoned else ["operand"], NULLABLE), zone(True), operand)
+
     section = "arithmetic"
     # numbers: integer operands give integer, a decimal operand gives decimal
     for name in ["add", "subtract", "multiply"]:
@@ -757,14 +770,12 @@ for ctx, rules in CONTEXTS.items():
 
     section = "datePart"
     # Parts, each an integer: calendar parts of a date or a datetime, clock parts of a
-    # time or a datetime (a datetime is read in UTC). The type the operand declares
-    # picks the position it is validated against; the result is lifted.
+    # time or a datetime. A datetime is read in UTC, or in its `zone`: the parts of
+    # the local date and time there. An offset from UTC is a whole number of seconds,
+    # so the microsecond is the same in every zone and takes none.
     for names, families in [(DATE_PARTS, ["date", "datetime"]), (TIME_PARTS, ["time", "datetime"])]:
         for name in names:
-            shape(name, ["operand"], {"operand": check(f"accepts.{families[0]}OrDatetime", families)})
-            operand = by_family(name, "operand", families, lambda f: {"properties": {"operand": expr(f, ctx, True)}})
-            signature(name, "integer", False, {"properties": {"operand": NON_NULL}}, operand)
-            signature(name, "integer", True, some(["operand"], NULLABLE), operand)
+            reads(name, "integer", families, check(f"accepts.{families[0]}OrDatetime", families), zoned=name != "microsecond")
     section = "startOf"
     # Truncation keeps the type of its operand: the declared type picks the signature.
     for name, types in START_OF.items():
@@ -787,16 +798,8 @@ for ctx, rules in CONTEXTS.items():
     # exactly when the datetime or the zone is; a string spells a date or a time
     # that has no zone, so with a string operand `zone` is rejected.
     for name, source in [("asDate", "datetime"), ("asTime", "datetime"), ("asDatetime", "date")]:
-        sources = [source, "string"]
-        zoned = source == "datetime"
-        shape(name, ["operand"], {"operand": check(f"accepts.{source}OrString", sources),
-                                  **({"zone": ref("zoneName")} if zoned else {})})
-        operand = by_family(name, "operand", sources, lambda f: {"properties": {
-            "operand": expr(f, ctx, True), **({"zone": False} if zoned and f == "string" else {})}})
-        zone = lambda nullable: {"properties": {"zone": expr("string", ctx, nullable)}} if zoned else {}
-        signature(name, name[2:].lower(), False, {"properties": {"operand": NON_NULL}}, zone(False), operand)
-        signature(name, name[2:].lower(), True, some(["operand", "zone"] if zoned else ["operand"], NULLABLE),
-                  zone(True), operand)
+        reads(name, name[2:].lower(), [source, "string"], check(f"accepts.{source}OrString", [source, "string"]),
+              zoned=source == "datetime")
     # The other types are read from a string only: an integer is already a decimal,
     # and a decimal becomes an integer by rounding. as<Type> of a string is lifted and
     # fails the query on text that is not a literal of the type.

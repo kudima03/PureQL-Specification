@@ -1,0 +1,15 @@
+// second of a time in a zone: a time of day has no zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

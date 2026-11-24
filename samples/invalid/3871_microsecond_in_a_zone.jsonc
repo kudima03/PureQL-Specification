@@ -1,0 +1,16 @@
+// microsecond of a datetime in a zone: an offset from UTC is a whole number of seconds, so the microsecond is
+// the same in every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

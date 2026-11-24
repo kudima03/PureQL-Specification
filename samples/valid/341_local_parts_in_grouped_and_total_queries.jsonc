@@ -1,0 +1,203 @@
+// Parts in a zone in a grouped query, of a key and of an aggregate, with a parameter and a literal as the
+// zone; and in a total query, inside and around aggregates.
+{
+  "subqueries": [
+    {
+      "name": "night_orders",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "ordered_at",
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          {
+            "alias": "status",
+            "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+          }
+        ],
+        "having": {
+          "operator": "lessThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "hour",
+            "type": { "name": "integer" },
+            "operand": { "key": "ordered_at", "type": { "name": "datetime" } },
+            "zone": { "param": "zone", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "integer" }, "value": 6 }
+        },
+        "select": [
+          { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+          {
+            "alias": "local_hour_of_the_key",
+            "expression": {
+              "operator": "hour",
+              "type": { "name": "integer" },
+              "operand": { "key": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "local_month_of_the_key",
+            "expression": {
+              "operator": "month",
+              "type": { "name": "integer" },
+              "operand": { "key": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+            }
+          },
+          {
+            "alias": "local_hour_of_the_last_shipment",
+            "expression": {
+              "operator": "hour",
+              "type": { "name": "integer" },
+              "operand": {
+                "operator": "max",
+                "type": { "name": "datetime" },
+                "selector": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } }
+              },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "weekdays_ordered_on",
+            "expression": {
+              "operator": "countDistinct",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "dayOfWeek",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "latest_local_hour",
+            "expression": {
+              "operator": "max",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "hour",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "totals",
+      "query": {
+        "from": { "entity": "orders" },
+        "aggregate": [
+          {
+            "alias": "orders_at_night",
+            "expression": {
+              "operator": "count",
+              "type": { "name": "integer" },
+              "predicate": {
+                "operator": "lessThan",
+                "type": { "name": "boolean" },
+                "left": {
+                  "operator": "hour",
+                  "type": { "name": "integer" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                  "zone": { "param": "zone", "type": { "name": "string" } }
+                },
+                "right": { "type": { "name": "integer" }, "value": 6 }
+              }
+            }
+          },
+          {
+            "alias": "local_year_of_the_first_order",
+            "expression": {
+              "operator": "year",
+              "type": { "name": "integer", "nullable": true },
+              "operand": {
+                "operator": "min",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "alias": "busiest_local_hour",
+            "expression": {
+              "operator": "mode",
+              "type": { "name": "integer", "nullable": true },
+              "selector": {
+                "operator": "hour",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "weeks_with_orders",
+            "expression": {
+              "operator": "countDistinct",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  {
+                    "operator": "multiply",
+                    "type": { "name": "integer" },
+                    "values": [
+                      {
+                        "operator": "weekYear",
+                        "type": { "name": "integer" },
+                        "operand": {
+                          "source": "orders",
+                          "field": "ordered_at",
+                          "type": { "name": "datetime" }
+                        },
+                        "zone": { "param": "zone", "type": { "name": "string" } }
+                      },
+                      { "type": { "name": "integer" }, "value": 100 }
+                    ]
+                  },
+                  {
+                    "operator": "week",
+                    "type": { "name": "integer" },
+                    "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                    "zone": { "param": "zone", "type": { "name": "string" } }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "night_orders" },
+  "joins": [
+    { "kind": "inner", "subquery": "totals", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "select": [
+    {
+      "alias": "status",
+      "expression": { "source": "night_orders", "field": "status", "type": { "name": "string" } }
+    },
+    {
+      "alias": "local_hour",
+      "expression": {
+        "source": "night_orders",
+        "field": "local_hour_of_the_key",
+        "type": { "name": "integer" }
+      }
+    },
+    {
+      "alias": "orders_at_night",
+      "expression": { "source": "totals", "field": "orders_at_night", "type": { "name": "integer" } }
+    }
+  ]
+}

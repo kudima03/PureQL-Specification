@@ -1935,6 +1935,33 @@
       }
     },
     {
+      "alias": "year_datetime_in_zone",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "year_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "year_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "quarter_date",
       "expression": {
         "operator": "quarter",
@@ -1964,6 +1991,33 @@
         "operator": "quarter",
         "type": { "name": "integer", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "quarter_datetime_in_zone",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "quarter_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "quarter_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
       }
     },
     {
@@ -1999,6 +2053,33 @@
       }
     },
     {
+      "alias": "month_datetime_in_zone",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "month_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "month_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "month",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "day_date",
       "expression": {
         "operator": "day",
@@ -2028,6 +2109,33 @@
         "operator": "day",
         "type": { "name": "integer", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "day_datetime_in_zone",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "day_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "day_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "day",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
       }
     },
     {
@@ -2063,6 +2171,33 @@
       }
     },
     {
+      "alias": "dayOfWeek_datetime_in_zone",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "dayOfWeek_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "dayOfWeek_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "dayOfYear_date",
       "expression": {
         "operator": "dayOfYear",
@@ -2092,6 +2227,33 @@
         "operator": "dayOfYear",
         "type": { "name": "integer", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "dayOfYear_datetime_in_zone",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "dayOfYear_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "dayOfYear_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "dayOfYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
       }
     },
     {
@@ -2127,6 +2289,33 @@
       }
     },
     {
+      "alias": "week_datetime_in_zone",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "week_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "week_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "weekYear_date",
       "expression": {
         "operator": "weekYear",
@@ -2156,6 +2345,33 @@
         "operator": "weekYear",
         "type": { "name": "integer", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "weekYear_datetime_in_zone",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "weekYear_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "weekYear_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "weekYear",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
       }
     },
     {
@@ -2191,6 +2407,33 @@
       }
     },
     {
+      "alias": "hour_datetime_in_zone",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "hour_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "hour_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "minute_time",
       "expression": {
         "operator": "minute",
@@ -2223,6 +2466,33 @@
       }
     },
     {
+      "alias": "minute_datetime_in_zone",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "minute_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "minute_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "minute",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "second_time",
       "expression": {
         "operator": "second",
@@ -2252,6 +2522,33 @@
         "operator": "second",
         "type": { "name": "integer", "nullable": true },
         "operand": { "type": { "name": "datetime", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "second_datetime_in_zone",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer" },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    },
+    {
+      "alias": "second_datetime_nullable_in_zone",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime", "nullable": true }, "value": null },
+        "zone": { "type": { "name": "string" }, "value": "Asia/Kolkata" }
+      }
+    },
+    {
+      "alias": "second_datetime_nullable_by_zone",
+      "expression": {
+        "operator": "second",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "type": { "name": "datetime" }, "value": "2024-01-31T08:30:00Z" },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
       }
     },
     {

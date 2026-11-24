@@ -1,0 +1,15 @@
+// hour in a nullable zone declared integer: the part is lifted over its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

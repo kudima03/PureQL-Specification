@@ -1,0 +1,16 @@
+// datetimeAddSeconds with a zone: seconds are added to the instant
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "type": { "name": "integer" }, "value": 3600 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

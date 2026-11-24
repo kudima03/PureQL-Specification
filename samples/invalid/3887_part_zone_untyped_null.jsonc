@@ -1,0 +1,15 @@
+// quarter with an untyped null as its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "quarter",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "value": null }
+      }
+    }
+  ]
+}

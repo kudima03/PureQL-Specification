@@ -1,0 +1,15 @@
+// hour with its zone as a bare string: a zone is an expression and declares its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": "Europe/Moscow"
+      }
+    }
+  ]
+}
