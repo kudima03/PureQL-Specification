@@ -1,0 +1,15 @@
+// covarianceSample of a uuid
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

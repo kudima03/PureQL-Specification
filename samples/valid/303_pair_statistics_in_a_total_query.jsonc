@@ -1,0 +1,104 @@
+// covariancePopulation, covarianceSample and correlation in a total query, where all are nullable; a slope
+// and a coefficient of determination composed from them.
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "covariance",
+      "expression": {
+        "operator": "covariancePopulation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "sample_covariance",
+      "expression": {
+        "operator": "covarianceSample",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "correlation",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "correlation_of_large_lines",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "r_squared",
+      "expression": {
+        "operator": "power",
+        "type": { "name": "decimal", "nullable": true },
+        "operand": {
+          "operator": "correlation",
+          "type": { "name": "decimal", "nullable": true },
+          "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "exponent": { "type": { "name": "integer" }, "value": 2 }
+      }
+    },
+    {
+      "alias": "slope",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          {
+            "operator": "covariancePopulation",
+            "type": { "name": "decimal", "nullable": true },
+            "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": { "name": "decimal", "nullable": true },
+            "left": {
+              "operator": "variancePopulation",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "with_a_nullable_operand",
+      "expression": {
+        "operator": "correlation",
+        "type": { "name": "decimal", "nullable": true },
+        "left": {
+          "operator": "multiply",
+          "type": { "name": "decimal", "nullable": true },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "param": "discount", "type": { "name": "decimal", "nullable": true } }
+          ]
+        },
+        "right": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

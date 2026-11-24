@@ -877,6 +877,24 @@ for ctx, rules in CONTEXTS.items():
         for name in ["varianceSample", "standardDeviationSample"]:
             shape(name, ["selector"], {**aggregate_props, "selector": expr("decimal", "row", True)})
             signature(name, "decimal", True)
+        # Statistics of two columns. `left` and `right` take the place of `selector`:
+        # the statistics are symmetric, so the names are those of equal. A row counts
+        # when both values are non-null. The population covariance is typed as the
+        # population variance is, with two operands; the sample covariance and the
+        # correlation have no value over one pair, so they are nullable wherever they are.
+        pair = lambda nullable: {"properties": {p: expr("decimal", "row", nullable) for p in ["left", "right"]}}
+        shape("covariancePopulation", ["left", "right"], {**aggregate_props, "left": True, "right": True})
+        if some_row:
+            signature("covariancePopulation", "decimal", False, pair(False), {"not": {"required": ["predicate"]}})
+            signature("covariancePopulation", "decimal", True, pair(True), {"anyOf": [
+                {"required": ["predicate"]},
+                *[{"required": [p], "properties": {p: NULLABLE}} for p in ["left", "right"]],
+            ]})
+        else:
+            signature("covariancePopulation", "decimal", True, pair(True))
+        for name in ["covarianceSample", "correlation"]:
+            shape(name, ["left", "right"], {**aggregate_props, **pair(True)["properties"]})
+            signature(name, "decimal", True)
         # concatAll joins the strings of its rows with a separator, in the order of its
         # own orderBy, as first and last have one. Null values are skipped and no row
         # gives the empty string, so it is never null, as sum is never null.

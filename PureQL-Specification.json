@@ -10943,6 +10943,134 @@
       },
       "additionalProperties": false
     },
+    "correlation@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "correlation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "correlation@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "correlation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "correlation@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "correlation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
     "count@group": {
       "type": "object",
       "required": [
@@ -11034,6 +11162,406 @@
         },
         "predicate": {
           "$ref": "#/$defs/boolean@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "covariancePopulation.decimal.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "covariancePopulation.decimal.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "predicate"
+              ]
+            },
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "covariancePopulation.decimal@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "covariancePopulation.decimal@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "not": {
+            "required": [
+              "predicate"
+            ]
+          }
+        }
+      ]
+    },
+    "covariancePopulation@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covariancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation.decimal.nullable@group"
+          }
+        }
+      ]
+    },
+    "covariancePopulation@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covariancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation.decimal.nullable@projection"
+          }
+        }
+      ]
+    },
+    "covariancePopulation@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covariancePopulation"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "left": true,
+        "right": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "left": {
+              "$ref": "#/$defs/decimal.nullable@row"
+            },
+            "right": {
+              "$ref": "#/$defs/decimal.nullable@row"
+            }
+          }
+        }
+      ]
+    },
+    "covarianceSample@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covarianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "covarianceSample@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covarianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "covarianceSample@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "left",
+        "right"
+      ],
+      "properties": {
+        "operator": {
+          "const": "covarianceSample"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "required": [
+            "nullable"
+          ],
+          "properties": {
+            "name": {
+              "enum": [
+                "decimal"
+              ]
+            },
+            "nullable": {
+              "const": true
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "additionalProperties": false
@@ -46518,6 +47046,42 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "concatAll"
               }
             }
@@ -46738,6 +47302,42 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "concatAll"
               }
             }
@@ -46952,6 +47552,42 @@
           },
           "then": {
             "$ref": "#/$defs/standardDeviationSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covariancePopulation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covariancePopulation@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "covarianceSample"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/covarianceSample@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "correlation"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/correlation@total"
           }
         },
         {
@@ -52482,6 +53118,9 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "covariancePopulation",
+            "covarianceSample",
+            "correlation",
             "concatAll",
             "any",
             "all"
@@ -52720,6 +53359,9 @@
                   "standardDeviationPopulation",
                   "varianceSample",
                   "standardDeviationSample",
+                  "covariancePopulation",
+                  "covarianceSample",
+                  "correlation",
                   "concatAll",
                   "any",
                   "all"
@@ -52859,6 +53501,9 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "covariancePopulation",
+            "covarianceSample",
+            "correlation",
             "concatAll",
             "any",
             "all",
@@ -53105,6 +53750,9 @@
                   "standardDeviationPopulation",
                   "varianceSample",
                   "standardDeviationSample",
+                  "covariancePopulation",
+                  "covarianceSample",
+                  "correlation",
                   "concatAll",
                   "any",
                   "all"
@@ -53593,6 +54241,9 @@
             "standardDeviationPopulation",
             "varianceSample",
             "standardDeviationSample",
+            "covariancePopulation",
+            "covarianceSample",
+            "correlation",
             "concatAll",
             "any",
             "all"
@@ -53831,6 +54482,9 @@
                   "standardDeviationPopulation",
                   "varianceSample",
                   "standardDeviationSample",
+                  "covariancePopulation",
+                  "covarianceSample",
+                  "correlation",
                   "concatAll",
                   "any",
                   "all"
