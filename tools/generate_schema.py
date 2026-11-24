@@ -216,21 +216,23 @@ CONTEXTS = {
 # one pattern can tell a pattern of the dialect from another: every token is one
 # the dialect has, and a quantifier follows something it can repeat. An atom is
 # a literal code point, an escape, a class, `.` or the `)` that closes a group.
-# An escape is a class of characters (\d \w \s and their negations), a word
-# boundary, a control character, or a special character standing for
-# itself: so no backreference, property class or code point escape. `(` opens a
+# An escape is a class of characters (\d \w \s and their negations), a control
+# character, or a special character standing for itself: so no backreference,
+# property class or code point escape. A word boundary `\b` / `\B` is an
+# assertion, as `^` and `$` are: it matches a position, not a code point, so it
+# is not an atom and no quantifier may follow it. `(` opens a
 # group, capturing or `(?:`: nothing else may follow `(?`, so no lookaround,
 # named group or flag. A quantifier takes one optional `?`, so none is
 # possessive. Whether parentheses balance, a range or a `{n,m}` is in order and a
 # group exists is checked by the interpreter, before it reads any row.
 REGEX_ATOM = (
     r"[^\\()\[\]{}*+?|^$.]"
-    r"|\\([dDwWsSbBnrt]|[\\()\[\]{}*+?|^$./])"
+    r"|\\([dDwWsSnrt]|[\\()\[\]{}*+?|^$./])"
     r"|\[\^?([^\]\[\\^]|\\([dDwWsSnrt]|[\\()\[\]{}*+?|^$./-]))+\]"
     r"|\.|\)"
 )
 REGEX_QUANTIFIER = r"([*+?]|\{[0-9]+(,[0-9]*)?\})\??"
-REGEX = rf"(({REGEX_ATOM})({REGEX_QUANTIFIER})?|\((\?:)?|[|^$])*"
+REGEX = rf"(({REGEX_ATOM})({REGEX_QUANTIFIER})?|\((\?:)?|[|^$]|\\[bB])*"
 
 # The names of the time zones, as the IANA time zone database spells them
 # (Europe/Moscow, America/Argentina/Buenos_Aires, Etc/GMT+3): the current name of
