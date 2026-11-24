@@ -1,4 +1,4 @@
-// A frame of a range of values: a frame counts rows
+// A frame of a range of values: a frame counts rows, and a distance in days belongs to range
 {
   "from": { "entity": "orders" },
   "select": [

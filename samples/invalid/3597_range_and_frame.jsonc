@@ -1,0 +1,22 @@
+// A window with both a frame and a range: an order has one or the other
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 29 } },
+          "frame": { "preceding": 3 }
+        }
+      }
+    }
+  ]
+}

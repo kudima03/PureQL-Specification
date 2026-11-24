@@ -1,0 +1,15 @@
+// A window of a range alone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": { "range": { "preceding": { "days": 29 } } }
+      }
+    }
+  ]
+}

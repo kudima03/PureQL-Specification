@@ -433,12 +433,65 @@ WINDOW = {
     "orderBy": array_of(ref("orderItem@row"), 1),
 }
 # The window of an aggregate. Without an order it is the whole partition; with
-# one the frame is always stated, so there is no default frame to remember. A
-# window that names nothing is all rows: the absence of `over`.
+# one the frame is always stated, as rows (`frame`) or as values (`range`), so
+# there is no default frame to remember. A window that names nothing is all
+# rows: the absence of `over`.
 defs["window"] = {
-    **obj([], {**WINDOW, "frame": ref("frame")}),
+    **obj([], {**WINDOW, "frame": ref("frame"), "range": True}),
     "minProperties": 1,
-    "dependentRequired": {"orderBy": ["frame"], "frame": ["orderBy"]},
+    # an order has a frame of rows or a range of values, exactly one, and both need an order
+    "dependentRequired": {"frame": ["orderBy"], "range": ["orderBy"]},
+    "dependentSchemas": {"orderBy": {"oneOf": [{"required": ["frame"]}, {"required": ["range"]}]}},
+    "allOf": [{"if": {"required": ["range"]}, "then": ref("rangeWindow")}],
+}
+# A range frame holds the rows whose sort key lies within a distance of the
+# current row's key, instead of a number of rows before and after it. So the
+# window has one sort key, of a type that has distances: a number, a date or a
+# datetime. The current row and its peers are always inside, so an aggregate
+# over a range is typed as it is over all rows, and does not depend on the
+# order of peers. A side is "all" or a distance, written for the type of the key:
+#   integer   a number from 1, or an integer parameter
+#   decimal   the same, or a positive decimal literal or a decimal parameter
+#   date      { "days": n } or { "months": n }
+#   datetime  { "seconds": s } or { "months": n }
+# with n as for integer and s as for decimal. Distances are never computed.
+RANGE_KEYS = ["integer", "decimal", "date", "datetime"]
+WHOLE = [{**INT64, "minimum": 1}, INTEGER_PARAM]
+POSITIVE_DECIMAL = r"([1-9][0-9]*(\.[0-9]*[1-9])?|0\.[0-9]*[1-9])"
+FRACTIONAL = WHOLE + [
+    {"allOf": [declares("decimal", False), ref("literal"), {"properties": {"value": pattern(POSITIVE_DECIMAL)}}]},
+    {"allOf": [declares("decimal", False), ref("param")]},
+]
+DISTANCES = {
+    "integer": WHOLE,
+    "decimal": FRACTIONAL,
+    "date": [obj(["days"], {"days": {"anyOf": WHOLE}}), obj(["months"], {"months": {"anyOf": WHOLE}})],
+    "datetime": [obj(["seconds"], {"seconds": {"anyOf": FRACTIONAL}}), obj(["months"], {"months": {"anyOf": WHOLE}})],
+}
+for t in RANGE_KEYS:
+    defs[f"distance.{t}"] = {"anyOf": [{"const": "all"}, *DISTANCES[t]]}
+    defs[f"range.{t}"] = {
+        **obj([], {"preceding": ref(f"distance.{t}"), "following": ref(f"distance.{t}")}),
+        # a range of the current value alone is a partition key
+        "minProperties": 1,
+        # every value on both sides is the whole partition: no order, no range
+        "not": {
+            "type": "object",
+            "required": ["preceding", "following"],
+            "properties": {"preceding": {"const": "all"}, "following": {"const": "all"}},
+        },
+    }
+range_key = {"properties": {"expression": check("accepts.rangeKey", RANGE_KEYS)}}
+defs["rangeWindow"] = {
+    "properties": {"orderBy": {"maxItems": 1, "items": range_key}},
+    # the type the sort key declares picks the form of a distance
+    "allOf": [
+        {
+            "if": {"required": ["orderBy"], "properties": {"orderBy": {"items": {"properties": {"expression": declares_name(t)}}}}},
+            "then": {"properties": {"range": ref(f"range.{t}")}},
+        }
+        for t in RANGE_KEYS
+    ],
 }
 # The window of a function that reads the position of a row (the ranking
 # functions, previous / next): an order is required, and there is no frame.

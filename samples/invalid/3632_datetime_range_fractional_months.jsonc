@@ -1,0 +1,21 @@
+// A range of a decimal number of months
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "preceding": { "months": { "type": { "name": "decimal" }, "value": "1.5" } } }
+        }
+      }
+    }
+  ]
+}

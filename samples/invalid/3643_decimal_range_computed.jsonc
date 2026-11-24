@@ -1,0 +1,30 @@
+// A range over a decimal key by a computed distance
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": {
+            "preceding": {
+              "operator": "multiply",
+              "type": { "name": "decimal" },
+              "values": [
+                { "type": { "name": "decimal" }, "value": "0.5" },
+                { "type": { "name": "integer" }, "value": 2 }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}

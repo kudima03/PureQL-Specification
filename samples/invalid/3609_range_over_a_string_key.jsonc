@@ -1,0 +1,21 @@
+// A range over a string sort key: a string has no distance
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+          ],
+          "range": { "preceding": { "days": 29 } }
+        }
+      }
+    }
+  ]
+}

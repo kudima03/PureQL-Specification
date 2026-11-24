@@ -1,0 +1,19 @@
+// A range over an integer key in days: a number has no unit
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": { "days": 5 } }
+        }
+      }
+    }
+  ]
+}

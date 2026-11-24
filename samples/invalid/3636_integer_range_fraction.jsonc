@@ -1,0 +1,19 @@
+// A range over an integer key by a fraction
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": 2.5 }
+        }
+      }
+    }
+  ]
+}

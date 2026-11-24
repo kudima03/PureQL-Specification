@@ -1,0 +1,191 @@
+// Every form of a distance over an integer and a decimal sort key: a number, an integer parameter, a decimal
+// literal, a decimal parameter and all, on either side, with a computed and a descending key and a partition.
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "integer_key_by_a_number",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": 5 }
+        }
+      }
+    },
+    {
+      "alias": "integer_key_by_a_parameter",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "following": { "param": "distance", "type": { "name": "integer" } } }
+        }
+      }
+    },
+    {
+      "alias": "integer_key_all_before",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "integer_key_all_after_and_two_before",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": 2, "following": "all" }
+        }
+      }
+    },
+    {
+      "alias": "decimal_key_by_a_whole_number",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": { "preceding": 10 }
+        }
+      }
+    },
+    {
+      "alias": "decimal_key_by_a_decimal",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": {
+            "preceding": { "type": { "name": "decimal" }, "value": "0.5" },
+            "following": { "type": { "name": "decimal" }, "value": "0.5" }
+          }
+        }
+      }
+    },
+    {
+      "alias": "decimal_key_by_a_decimal_parameter",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": { "preceding": { "param": "tolerance", "type": { "name": "decimal" } } }
+        }
+      }
+    },
+    {
+      "alias": "decimal_key_by_an_integer_parameter",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": { "following": { "param": "distance", "type": { "name": "integer" } } }
+        }
+      }
+    },
+    {
+      "alias": "decimal_key_small_distance",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          ],
+          "range": {
+            "following": { "type": { "name": "decimal" }, "value": "0.0000000000000000000000000001" }
+          }
+        }
+      }
+    },
+    {
+      "alias": "computed_key",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "multiply",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                ]
+              }
+            }
+          ],
+          "range": { "preceding": 100 }
+        }
+      }
+    },
+    {
+      "alias": "descending_key",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              "direction": "desc"
+            }
+          ],
+          "range": { "preceding": 10 }
+        }
+      }
+    },
+    {
+      "alias": "partitioned",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } } }
+          ],
+          "range": { "preceding": 1, "following": 1 }
+        }
+      }
+    }
+  ]
+}

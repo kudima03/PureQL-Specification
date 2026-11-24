@@ -1,0 +1,184 @@
+// Every form of a distance over a date and a datetime sort key: days, months and seconds as numbers and
+// parameters, fractional seconds, all, and a nullable key.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "date_key_days",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 6 } }
+        }
+      }
+    },
+    {
+      "alias": "date_key_days_parameter",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "following": { "days": { "param": "days", "type": { "name": "integer" } } } }
+        }
+      }
+    },
+    {
+      "alias": "date_key_months",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "months": 11 } }
+        }
+      }
+    },
+    {
+      "alias": "date_key_months_and_days",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "months": 1 }, "following": { "days": 7 } }
+        }
+      }
+    },
+    {
+      "alias": "date_key_all_before",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "nullable_date_key",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "shipped_date",
+                "type": { "name": "date", "nullable": true }
+              }
+            }
+          ],
+          "range": { "preceding": { "days": 3 } }
+        }
+      }
+    },
+    {
+      "alias": "datetime_key_seconds",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "preceding": { "seconds": 3600 } }
+        }
+      }
+    },
+    {
+      "alias": "datetime_key_fractional_seconds",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "following": { "seconds": { "type": { "name": "decimal" }, "value": "0.5" } } }
+        }
+      }
+    },
+    {
+      "alias": "datetime_key_seconds_parameter",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "preceding": { "seconds": { "param": "seconds", "type": { "name": "decimal" } } } }
+        }
+      }
+    },
+    {
+      "alias": "datetime_key_months",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "preceding": { "months": { "param": "months", "type": { "name": "integer" } } } }
+        }
+      }
+    },
+    {
+      "alias": "datetime_key_all_after",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+          ],
+          "range": { "following": "all" }
+        }
+      }
+    },
+    {
+      "alias": "month_key",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "startOfMonth",
+                "type": { "name": "date" },
+                "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+              }
+            }
+          ],
+          "range": { "preceding": { "months": 2 }, "following": { "months": 2 } }
+        }
+      }
+    }
+  ]
+}

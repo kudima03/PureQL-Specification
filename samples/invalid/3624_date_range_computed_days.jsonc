@@ -1,0 +1,32 @@
+// A range of computed days: a distance is a number or a parameter
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": {
+            "preceding": {
+              "days": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "type": { "name": "integer" }, "value": 1 },
+                  { "type": { "name": "integer" }, "value": 6 }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

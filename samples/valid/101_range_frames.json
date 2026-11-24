@@ -1,0 +1,279 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "user_id",
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "order_date",
+      "expression": {
+        "source": "orders",
+        "field": "order_date",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "alias": "total",
+      "expression": {
+        "source": "orders",
+        "field": "total",
+        "type": {
+          "name": "decimal"
+        }
+      }
+    },
+    {
+      "alias": "spent_in_last_30_days",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "order_date",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": {
+              "days": 29
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "spent_in_last_12_months",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "startOfMonth",
+                "type": {
+                  "name": "date"
+                },
+                "operand": {
+                  "source": "orders",
+                  "field": "order_date",
+                  "type": {
+                    "name": "date"
+                  }
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": {
+              "months": 11
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "balance_to_date",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "order_date",
+                "type": {
+                  "name": "date"
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": "all"
+          }
+        }
+      }
+    },
+    {
+      "alias": "orders_within_an_hour",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": {
+              "seconds": 3600
+            },
+            "following": {
+              "seconds": 3600
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "orders_of_similar_size",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": 10,
+            "following": {
+              "type": {
+                "name": "decimal"
+              },
+              "value": "9.99"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "order_date",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}
