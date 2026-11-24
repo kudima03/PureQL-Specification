@@ -1,0 +1,166 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "coupons",
+              "field": "id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "source": "orders",
+              "field": "coupon_id",
+              "type": {
+                "name": "uuid",
+                "nullable": true
+              }
+            }
+          },
+          {
+            "operator": "notEqual",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "source": "coupons",
+              "field": "issued_by",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            "right": {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "users",
+      "alias": "issuer",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "issuer",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "coupons",
+          "field": "issued_by",
+          "type": {
+            "name": "uuid",
+            "nullable": true
+          }
+        }
+      }
+    },
+    {
+      "kind": "right",
+      "entity": "order_items",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "order_items",
+          "field": "order_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "orders",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "item_id",
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "order_id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        }
+      }
+    },
+    {
+      "alias": "coupon_id",
+      "expression": {
+        "source": "coupons",
+        "field": "id",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        }
+      }
+    },
+    {
+      "alias": "issued_by",
+      "expression": {
+        "source": "coupons",
+        "field": "issued_by",
+        "type": {
+          "name": "uuid",
+          "nullable": true
+        }
+      }
+    },
+    {
+      "alias": "issuer_name",
+      "expression": {
+        "source": "issuer",
+        "field": "name",
+        "type": {
+          "name": "string",
+          "nullable": true
+        }
+      }
+    }
+  ]
+}

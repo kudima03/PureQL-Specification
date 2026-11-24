@@ -1,0 +1,22 @@
+// A join on an equal declared string: a condition is a non-null boolean
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "string" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "code",
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

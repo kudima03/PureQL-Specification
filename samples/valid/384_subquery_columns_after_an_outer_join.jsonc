@@ -1,0 +1,73 @@
+// A subquery column follows the rule of a stored field: issuers.issued_by is uuid in the subquery and in the
+// on of the left join that reads it, and nullable in the next join's on and in select.
+{
+  "subqueries": [
+    {
+      "name": "issuers",
+      "query": {
+        "from": { "entity": "coupons" },
+        "select": [
+          { "alias": "id", "expression": { "source": "coupons", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "issued_by",
+            "expression": { "source": "coupons", "field": "issued_by", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "issuers",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "issuers", "field": "id", "type": { "name": "uuid" } },
+            "right": {
+              "source": "orders",
+              "field": "coupon_id",
+              "type": { "name": "uuid", "nullable": true }
+            }
+          },
+          {
+            "operator": "notEqual",
+            "type": { "name": "boolean" },
+            "left": { "source": "issuers", "field": "issued_by", "type": { "name": "uuid" } },
+            "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "issuers", "field": "issued_by", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "order_id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "issued_by",
+      "expression": {
+        "source": "issuers",
+        "field": "issued_by",
+        "type": { "name": "uuid", "nullable": true }
+      }
+    },
+    {
+      "alias": "issuer_name",
+      "expression": { "source": "users", "field": "name", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

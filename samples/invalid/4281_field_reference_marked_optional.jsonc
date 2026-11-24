@@ -1,0 +1,27 @@
+// A field reference marked optional: an optional side shows only in the declared type
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "code",
+      "expression": {
+        "source": "coupons",
+        "field": "code",
+        "type": { "name": "string", "nullable": true },
+        "optional": true
+      }
+    }
+  ]
+}

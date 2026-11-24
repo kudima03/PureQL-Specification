@@ -1,0 +1,23 @@
+// A join with its own where: a filter on the joined rows is a condition of the on
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      },
+      "where": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "code",
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

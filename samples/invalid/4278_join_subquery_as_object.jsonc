@@ -1,0 +1,27 @@
+// A join whose subquery is a query object: a subquery is declared in subqueries and joined by name
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "coupon_id", "type": { "name": "uuid", "nullable": true } }
+      },
+      "subquery": {
+        "from": { "entity": "coupons" },
+        "select": [
+          { "alias": "id", "expression": { "source": "coupons", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "code",
+      "expression": { "source": "coupons", "field": "code", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}

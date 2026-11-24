@@ -1,0 +1,66 @@
+// A full join makes both sides nullable after it, never in its own on: orders.id and coupons.id are uuid in
+// the on of the full join, and the next join reads orders.user_id as nullable in its own on, where users.id
+// stays uuid.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "full",
+      "entity": "coupons",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+            "right": {
+              "source": "orders",
+              "field": "coupon_id",
+              "type": { "name": "uuid", "nullable": true }
+            }
+          },
+          {
+            "operator": "notEqual",
+            "type": { "name": "boolean" },
+            "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+            "right": { "source": "coupons", "field": "issued_by", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    },
+    {
+      "kind": "left",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid", "nullable": true } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "orders", "field": "id", "type": { "name": "uuid", "nullable": true } }
+    },
+    {
+      "alias": "coupon_id",
+      "expression": { "source": "coupons", "field": "id", "type": { "name": "uuid", "nullable": true } }
+    },
+    {
+      "alias": "issued_by",
+      "expression": {
+        "source": "coupons",
+        "field": "issued_by",
+        "type": { "name": "uuid", "nullable": true }
+      }
+    },
+    {
+      "alias": "user_name",
+      "expression": { "source": "users", "field": "name", "type": { "name": "string", "nullable": true } }
+    }
+  ]
+}
