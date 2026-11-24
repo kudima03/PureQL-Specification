@@ -7,8 +7,8 @@
       "expression": {
         "operator": "timeAddSeconds",
         "type": { "name": "time", "nullable": true },
-        "left": { "type": { "name": "time" }, "value": "08:30:00" },
-        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "seconds": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     }
   ],

@@ -11150,10 +11150,10 @@
     },
     "dateAddDays.date.nullable@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@group"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer.nullable@group"
         }
       },
@@ -11162,20 +11162,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "days"
               ],
               "properties": {
-                "right": {
+                "days": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11186,10 +11186,10 @@
     },
     "dateAddDays.date.nullable@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@projection"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer.nullable@projection"
         }
       },
@@ -11198,20 +11198,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "days"
               ],
               "properties": {
-                "right": {
+                "days": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11222,10 +11222,10 @@
     },
     "dateAddDays.date.nullable@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@row"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer.nullable@row"
         }
       },
@@ -11234,20 +11234,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "days"
               ],
               "properties": {
-                "right": {
+                "days": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11258,10 +11258,10 @@
     },
     "dateAddDays.date.nullable@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@total"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer.nullable@total"
         }
       },
@@ -11270,20 +11270,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "days"
               ],
               "properties": {
-                "right": {
+                "days": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11294,40 +11294,40 @@
     },
     "dateAddDays.date@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@group"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer@group"
         }
       }
     },
     "dateAddDays.date@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@projection"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer@projection"
         }
       }
     },
     "dateAddDays.date@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@row"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer@row"
         }
       }
     },
     "dateAddDays.date@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@total"
         },
-        "right": {
+        "days": {
           "$ref": "#/$defs/integer@total"
         }
       }
@@ -11337,8 +11337,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "days"
       ],
       "properties": {
         "operator": {
@@ -11354,8 +11354,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "days": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11382,8 +11382,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "days"
       ],
       "properties": {
         "operator": {
@@ -11399,8 +11399,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "days": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11427,8 +11427,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "days"
       ],
       "properties": {
         "operator": {
@@ -11444,8 +11444,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "days": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11472,8 +11472,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "days"
       ],
       "properties": {
         "operator": {
@@ -11489,8 +11489,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "days": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11514,10 +11514,10 @@
     },
     "dateAddMonths.date.nullable@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@group"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@group"
         }
       },
@@ -11526,20 +11526,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11550,10 +11550,10 @@
     },
     "dateAddMonths.date.nullable@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@projection"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@projection"
         }
       },
@@ -11562,20 +11562,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11586,10 +11586,10 @@
     },
     "dateAddMonths.date.nullable@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@row"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@row"
         }
       },
@@ -11598,20 +11598,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11622,10 +11622,10 @@
     },
     "dateAddMonths.date.nullable@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date.nullable@total"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@total"
         }
       },
@@ -11634,20 +11634,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -11658,40 +11658,40 @@
     },
     "dateAddMonths.date@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@group"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@group"
         }
       }
     },
     "dateAddMonths.date@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@projection"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@projection"
         }
       }
     },
     "dateAddMonths.date@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@row"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@row"
         }
       }
     },
     "dateAddMonths.date@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/date@total"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@total"
         }
       }
@@ -11701,8 +11701,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -11718,8 +11718,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11746,8 +11746,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -11763,8 +11763,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11791,8 +11791,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -11808,8 +11808,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -11836,8 +11836,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -11853,8 +11853,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -12686,10 +12686,10 @@
     },
     "datetimeAddMonths.datetime.nullable@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@group"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@group"
         }
       },
@@ -12698,20 +12698,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -12722,10 +12722,10 @@
     },
     "datetimeAddMonths.datetime.nullable@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@projection"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@projection"
         }
       },
@@ -12734,20 +12734,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -12758,10 +12758,10 @@
     },
     "datetimeAddMonths.datetime.nullable@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@row"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@row"
         }
       },
@@ -12770,20 +12770,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -12794,10 +12794,10 @@
     },
     "datetimeAddMonths.datetime.nullable@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@total"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer.nullable@total"
         }
       },
@@ -12806,20 +12806,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "months"
               ],
               "properties": {
-                "right": {
+                "months": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -12830,40 +12830,40 @@
     },
     "datetimeAddMonths.datetime@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@group"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@group"
         }
       }
     },
     "datetimeAddMonths.datetime@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@projection"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@projection"
         }
       }
     },
     "datetimeAddMonths.datetime@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@row"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@row"
         }
       }
     },
     "datetimeAddMonths.datetime@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@total"
         },
-        "right": {
+        "months": {
           "$ref": "#/$defs/integer@total"
         }
       }
@@ -12873,8 +12873,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -12890,8 +12890,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -12918,8 +12918,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -12935,8 +12935,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -12963,8 +12963,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -12980,8 +12980,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -13008,8 +13008,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "months"
       ],
       "properties": {
         "operator": {
@@ -13025,8 +13025,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "months": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -13050,10 +13050,10 @@
     },
     "datetimeAddSeconds.datetime.nullable@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@group"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
@@ -13062,20 +13062,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -13086,10 +13086,10 @@
     },
     "datetimeAddSeconds.datetime.nullable@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@projection"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
@@ -13098,20 +13098,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -13122,10 +13122,10 @@
     },
     "datetimeAddSeconds.datetime.nullable@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@row"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
@@ -13134,20 +13134,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -13158,10 +13158,10 @@
     },
     "datetimeAddSeconds.datetime.nullable@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime.nullable@total"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
@@ -13170,20 +13170,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -13194,40 +13194,40 @@
     },
     "datetimeAddSeconds.datetime@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@group"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@group"
         }
       }
     },
     "datetimeAddSeconds.datetime@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@projection"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@projection"
         }
       }
     },
     "datetimeAddSeconds.datetime@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@row"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@row"
         }
       }
     },
     "datetimeAddSeconds.datetime@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/datetime@total"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@total"
         }
       }
@@ -13237,8 +13237,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -13254,8 +13254,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -13282,8 +13282,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -13299,8 +13299,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -13327,8 +13327,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -13344,8 +13344,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -13372,8 +13372,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -13389,8 +13389,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -67706,10 +67706,10 @@
     },
     "timeAddSeconds.time.nullable@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@group"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@group"
         }
       },
@@ -67718,20 +67718,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -67742,10 +67742,10 @@
     },
     "timeAddSeconds.time.nullable@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@projection"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
@@ -67754,20 +67754,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -67778,10 +67778,10 @@
     },
     "timeAddSeconds.time.nullable@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@row"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@row"
         }
       },
@@ -67790,20 +67790,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -67814,10 +67814,10 @@
     },
     "timeAddSeconds.time.nullable@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time.nullable@total"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal.nullable@total"
         }
       },
@@ -67826,20 +67826,20 @@
           "anyOf": [
             {
               "required": [
-                "left"
+                "operand"
               ],
               "properties": {
-                "left": {
+                "operand": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
             },
             {
               "required": [
-                "right"
+                "seconds"
               ],
               "properties": {
-                "right": {
+                "seconds": {
                   "$ref": "#/$defs/declares.nullable"
                 }
               }
@@ -67850,40 +67850,40 @@
     },
     "timeAddSeconds.time@group": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time@group"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@group"
         }
       }
     },
     "timeAddSeconds.time@projection": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time@projection"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@projection"
         }
       }
     },
     "timeAddSeconds.time@row": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time@row"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@row"
         }
       }
     },
     "timeAddSeconds.time@total": {
       "properties": {
-        "left": {
+        "operand": {
           "$ref": "#/$defs/time@total"
         },
-        "right": {
+        "seconds": {
           "$ref": "#/$defs/decimal@total"
         }
       }
@@ -67893,8 +67893,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -67910,8 +67910,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -67938,8 +67938,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -67955,8 +67955,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -67983,8 +67983,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -68000,8 +68000,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [
@@ -68028,8 +68028,8 @@
       "required": [
         "operator",
         "type",
-        "left",
-        "right"
+        "operand",
+        "seconds"
       ],
       "properties": {
         "operator": {
@@ -68045,8 +68045,8 @@
             }
           }
         },
-        "left": true,
-        "right": true
+        "operand": true,
+        "seconds": true
       },
       "additionalProperties": false,
       "allOf": [

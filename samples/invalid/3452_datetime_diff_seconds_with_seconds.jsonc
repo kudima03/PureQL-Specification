@@ -1,0 +1,15 @@
+// datetimeDiffSeconds with seconds instead of right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

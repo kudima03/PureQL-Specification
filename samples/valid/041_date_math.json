@@ -54,14 +54,14 @@
         "type": {
           "name": "date"
         },
-        "left": {
+        "operand": {
           "source": "orders",
           "field": "order_date",
           "type": {
             "name": "date"
           }
         },
-        "right": {
+        "days": {
           "type": {
             "name": "integer"
           },

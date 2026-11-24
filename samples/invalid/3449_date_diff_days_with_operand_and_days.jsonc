@@ -1,0 +1,15 @@
+// dateDiffDays with operand and days: a difference is left minus right
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

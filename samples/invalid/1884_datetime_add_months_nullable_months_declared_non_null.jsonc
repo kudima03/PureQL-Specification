@@ -7,8 +7,8 @@
       "expression": {
         "operator": "datetimeAddMonths",
         "type": { "name": "datetime" },
-        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
-        "right": { "type": { "name": "integer", "nullable": true }, "value": null }
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer", "nullable": true }, "value": null }
       }
     }
   ]

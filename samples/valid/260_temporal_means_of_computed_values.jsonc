@@ -1,0 +1,98 @@
+// Means of computed dates, times and instants: asDate and asTime of a datetime, a shifted date, the start of
+// a week, and a part of a mean.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "month", "expression": { "key": "month", "type": { "name": "date" } } },
+    {
+      "alias": "average_day_placed",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "median_time_of_day",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "time" },
+        "selector": {
+          "operator": "asTime",
+          "type": { "name": "time" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "average_due_date",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date" },
+        "selector": {
+          "operator": "dateAddDays",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "days": { "type": { "name": "integer" }, "value": 30 }
+        }
+      }
+    },
+    {
+      "alias": "median_week",
+      "expression": {
+        "operator": "median",
+        "type": { "name": "date" },
+        "selector": {
+          "operator": "startOfWeek",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        }
+      }
+    },
+    {
+      "alias": "average_shipping_moment",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "datetime" },
+        "selector": {
+          "operator": "datetimeAddSeconds",
+          "type": { "name": "datetime" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+          "seconds": { "type": { "name": "decimal" }, "value": "0.5" }
+        }
+      }
+    },
+    {
+      "alias": "average_is_in_first_half",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "day",
+          "type": { "name": "integer" },
+          "operand": {
+            "operator": "average",
+            "type": { "name": "date" },
+            "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          }
+        },
+        "right": { "type": { "name": "integer" }, "value": 16 }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "key": "month", "type": { "name": "date" } } } ]
+}

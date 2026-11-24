@@ -1,0 +1,79 @@
+// The operators that add in where and over the aggregates of a total query, lifted over those that are
+// nullable there, and inside a selector.
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": {
+      "operator": "datetimeAddMonths",
+      "type": { "name": "datetime" },
+      "operand": { "param": "now", "type": { "name": "datetime" } },
+      "months": { "type": { "name": "integer" }, "value": -3 }
+    }
+  },
+  "aggregate": [
+    {
+      "alias": "latest_due",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "date", "nullable": true },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "days": { "type": { "name": "integer" }, "value": 30 }
+      }
+    },
+    {
+      "alias": "earliest_window_end",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "time", "nullable": true },
+          "selector": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+        },
+        "seconds": { "type": { "name": "integer" }, "value": 7200 }
+      }
+    },
+    {
+      "alias": "a_year_after_the_first",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "datetime", "nullable": true },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        },
+        "months": { "type": { "name": "integer" }, "value": 12 }
+      }
+    },
+    {
+      "alias": "shifted_by_the_count",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "param": "today", "type": { "name": "date" } },
+        "days": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "average_due",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "date", "nullable": true },
+        "selector": {
+          "operator": "dateAddDays",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "days": { "type": { "name": "integer" }, "value": 30 }
+        }
+      }
+    }
+  ]
+}

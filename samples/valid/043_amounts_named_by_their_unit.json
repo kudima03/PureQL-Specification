@@ -1,0 +1,177 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "due_date",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "days": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 30
+        }
+      }
+    },
+    {
+      "alias": "a_year_later",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "order_date",
+          "type": {
+            "name": "date"
+          }
+        },
+        "months": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 12
+        }
+      }
+    },
+    {
+      "alias": "a_month_before",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "months": {
+          "type": {
+            "name": "integer"
+          },
+          "value": -1
+        }
+      }
+    },
+    {
+      "alias": "reminder_at",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "seconds": {
+          "operator": "multiply",
+          "type": {
+            "name": "integer"
+          },
+          "values": [
+            {
+              "param": "hours",
+              "type": {
+                "name": "integer"
+              }
+            },
+            {
+              "type": {
+                "name": "integer"
+              },
+              "value": 3600
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "window_end",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": {
+          "name": "time"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "delivery_window_start",
+          "type": {
+            "name": "time"
+          }
+        },
+        "seconds": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 7200
+        }
+      }
+    },
+    {
+      "alias": "return_until",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "days": {
+          "param": "grace_days",
+          "type": {
+            "name": "integer",
+            "nullable": true
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

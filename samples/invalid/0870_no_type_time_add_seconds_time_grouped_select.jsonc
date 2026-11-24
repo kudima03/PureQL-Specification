@@ -12,8 +12,8 @@
       "alias": "c",
       "expression": {
         "operator": "timeAddSeconds",
-        "left": { "type": { "name": "time" }, "value": "08:30:00" },
-        "right": { "type": { "name": "decimal" }, "value": "2.5" }
+        "operand": { "type": { "name": "time" }, "value": "08:30:00" },
+        "seconds": { "type": { "name": "decimal" }, "value": "2.5" }
       }
     }
   ]

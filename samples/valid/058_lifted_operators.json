@@ -1,0 +1,93 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "trial_end",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "operand": {
+          "source": "users",
+          "field": "trial_start",
+          "type": {
+            "name": "date",
+            "nullable": true
+          }
+        },
+        "days": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 30
+        }
+      }
+    },
+    {
+      "alias": "greeting",
+      "expression": {
+        "operator": "concat",
+        "type": {
+          "name": "string",
+          "nullable": true
+        },
+        "values": [
+          {
+            "type": {
+              "name": "string"
+            },
+            "value": "Hi "
+          },
+          {
+            "source": "users",
+            "field": "nickname",
+            "type": {
+              "name": "string",
+              "nullable": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "age_next_year",
+      "expression": {
+        "operator": "add",
+        "type": {
+          "name": "integer",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "users",
+            "field": "age",
+            "type": {
+              "name": "integer",
+              "nullable": true
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        ]
+      }
+    }
+  ]
+}

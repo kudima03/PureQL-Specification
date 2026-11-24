@@ -1,0 +1,83 @@
+// Users whose 14-day trial ends within the next 3 days.
+// trial_start is nullable, so the lifted dateAddDays and dateDiffDays give nullable results; comparing null is false,
+// so users without a trial drop out of where on their own. The column stays date?: a filter does not narrow types.
+{
+  "from": { "entity": "users" },
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateAddDays",
+          "type": { "name": "date", "nullable": true },
+          "operand": {
+            "source": "users",
+            "field": "trial_start",
+            "type": { "name": "date", "nullable": true }
+          },
+          "days": { "type": { "name": "integer" }, "value": 14 }
+        },
+        "right": { "param": "today", "type": { "name": "date" } }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer", "nullable": true },
+          "left": {
+            "operator": "dateAddDays",
+            "type": { "name": "date", "nullable": true },
+            "operand": {
+              "source": "users",
+              "field": "trial_start",
+              "type": { "name": "date", "nullable": true }
+            },
+            "days": { "type": { "name": "integer" }, "value": 14 }
+          },
+          "right": { "param": "today", "type": { "name": "date" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "email",
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    },
+    {
+      "alias": "trial_ends_on",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "trial_start",
+          "type": { "name": "date", "nullable": true }
+        },
+        "days": { "type": { "name": "integer" }, "value": 14 }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "trial_start",
+          "type": { "name": "date", "nullable": true }
+        },
+        "days": { "type": { "name": "integer" }, "value": 14 }
+      }
+    },
+    {
+      "expression": { "source": "users", "field": "email", "type": { "name": "string" } }
+    }
+  ]
+}

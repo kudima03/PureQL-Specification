@@ -1,0 +1,125 @@
+// The operators that add in group keys, having, select, a predicate and orderBy of a grouped query, over keys
+// and aggregates, with count as an amount.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "due_month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "dateAddDays",
+          "type": { "name": "date" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "days": { "type": { "name": "integer" }, "value": 30 }
+        }
+      }
+    },
+    {
+      "alias": "window_end",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "integer" }, "value": 7200 }
+      }
+    }
+  ],
+  "having": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateAddMonths",
+      "type": { "name": "date" },
+      "operand": {
+        "operator": "max",
+        "type": { "name": "date" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      },
+      "months": { "type": { "name": "integer" }, "value": 1 }
+    },
+    "right": { "param": "today", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "due_month", "expression": { "key": "due_month", "type": { "name": "date" } } },
+    { "alias": "window_end", "expression": { "key": "window_end", "type": { "name": "time" } } },
+    {
+      "alias": "last_due",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "date" },
+          "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "days": { "type": { "name": "integer" }, "value": 30 }
+      }
+    },
+    {
+      "alias": "by_as_many_days_as_orders",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "key": "due_month", "type": { "name": "date" } },
+        "days": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "first_reminder",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "datetime" },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        },
+        "seconds": { "type": { "name": "decimal" }, "value": "0.5" }
+      }
+    },
+    {
+      "alias": "next_month",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "key": "due_month", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "late",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          },
+          "right": {
+            "operator": "dateAddDays",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+            "days": { "type": { "name": "integer" }, "value": 3 }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "key": "due_month", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    { "expression": { "key": "window_end", "type": { "name": "time" } } }
+  ]
+}

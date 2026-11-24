@@ -1,0 +1,15 @@
+// dateAdd is not an operator: the unit is in the name: dateAddDays or dateAddMonths
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAdd",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

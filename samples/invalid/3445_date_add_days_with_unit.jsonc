@@ -1,0 +1,16 @@
+// dateAddDays with an amount and a unit: the unit is in the name of the operator and of the operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "amount": { "type": { "name": "integer" }, "value": 3 },
+        "unit": "days"
+      }
+    }
+  ]
+}

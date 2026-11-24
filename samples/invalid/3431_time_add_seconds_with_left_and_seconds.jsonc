@@ -1,0 +1,15 @@
+// timeAddSeconds with left instead of operand
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

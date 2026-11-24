@@ -1,0 +1,15 @@
+// datetimeAddSeconds with right instead of seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

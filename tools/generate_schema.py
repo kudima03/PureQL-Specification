@@ -648,16 +648,17 @@ for ctx, rules in CONTEXTS.items():
     lifted("replaceRegex", {"operand": "string", "replacement": "string"}, "string", extra={"pattern": ref("regexPattern")})
 
     section = "dateMath"
-    # date / time / datetime math
-    lifted("dateAddDays", {"left": "date", "right": "integer"}, "date")
+    # date / time / datetime math. An operator that adds takes the value as `operand`
+    # and the amount under the name of its unit; a difference is left minus right.
+    lifted("dateAddDays", {"operand": "date", "days": "integer"}, "date")
     lifted("dateDiffDays", {"left": "date", "right": "date"}, "integer")
-    lifted("timeAddSeconds", {"left": "time", "right": "decimal"}, "time")
+    lifted("timeAddSeconds", {"operand": "time", "seconds": "decimal"}, "time")
     lifted("timeDiffSeconds", {"left": "time", "right": "time"}, "decimal")
-    lifted("datetimeAddSeconds", {"left": "datetime", "right": "decimal"}, "datetime")
+    lifted("datetimeAddSeconds", {"operand": "datetime", "seconds": "decimal"}, "datetime")
     lifted("datetimeDiffSeconds", {"left": "datetime", "right": "datetime"}, "decimal")
     # calendar months, the day clamped to the last day of the month; years are 12 months
-    lifted("dateAddMonths", {"left": "date", "right": "integer"}, "date")
-    lifted("datetimeAddMonths", {"left": "datetime", "right": "integer"}, "datetime")
+    lifted("dateAddMonths", {"operand": "date", "months": "integer"}, "date")
+    lifted("datetimeAddMonths", {"operand": "datetime", "months": "integer"}, "datetime")
     # whole months from right to left: the inverse of adding months
     lifted("dateDiffMonths", {"left": "date", "right": "date"}, "integer")
     lifted("datetimeDiffMonths", {"left": "datetime", "right": "datetime"}, "integer")

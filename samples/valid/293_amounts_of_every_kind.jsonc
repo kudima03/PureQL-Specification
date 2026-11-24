@@ -1,0 +1,267 @@
+// Each of the five operators that add, with its amount as a literal, a negative, a parameter, a nullable
+// parameter and a computed value: the amount is named by its unit and is lifted over.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "dateAddDays_by_a_literal",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "dateAddDays_by_a_negative",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "dateAddDays_by_a_parameter",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "param": "days", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "dateAddDays_by_a_nullable_parameter",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": { "param": "optional_days", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "dateAddDays_by_a_computed_amount",
+      "expression": {
+        "operator": "dateAddDays",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "days": {
+          "operator": "multiply",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "param": "days", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "dateAddMonths_by_a_literal",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "dateAddMonths_by_a_negative",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "dateAddMonths_by_a_parameter",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "param": "months", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "dateAddMonths_by_a_nullable_parameter",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date", "nullable": true },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "param": "optional_months", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "dateAddMonths_by_a_computed_amount",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": {
+          "operator": "multiply",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "param": "months", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "datetimeAddMonths_by_a_literal",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 3 }
+      }
+    },
+    {
+      "alias": "datetimeAddMonths_by_a_negative",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "datetimeAddMonths_by_a_parameter",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "param": "months", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "datetimeAddMonths_by_a_nullable_parameter",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": { "param": "optional_months", "type": { "name": "integer", "nullable": true } }
+      }
+    },
+    {
+      "alias": "datetimeAddMonths_by_a_computed_amount",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "months": {
+          "operator": "multiply",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "param": "months", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "timeAddSeconds_by_a_literal",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    },
+    {
+      "alias": "timeAddSeconds_by_a_negative",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "timeAddSeconds_by_a_parameter",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "param": "seconds", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "timeAddSeconds_by_a_nullable_parameter",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time", "nullable": true },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": { "param": "optional_seconds", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "timeAddSeconds_by_a_computed_amount",
+      "expression": {
+        "operator": "timeAddSeconds",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "seconds": {
+          "operator": "multiply",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "param": "seconds", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "datetimeAddSeconds_by_a_literal",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "type": { "name": "decimal" }, "value": "1.5" }
+      }
+    },
+    {
+      "alias": "datetimeAddSeconds_by_a_negative",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "datetimeAddSeconds_by_a_parameter",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "param": "seconds", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "datetimeAddSeconds_by_a_nullable_parameter",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": { "param": "optional_seconds", "type": { "name": "decimal", "nullable": true } }
+      }
+    },
+    {
+      "alias": "datetimeAddSeconds_by_a_computed_amount",
+      "expression": {
+        "operator": "datetimeAddSeconds",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "seconds": {
+          "operator": "multiply",
+          "type": { "name": "integer" },
+          "values": [
+            { "type": { "name": "integer" }, "value": 2 },
+            { "param": "seconds", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    }
+  ]
+}

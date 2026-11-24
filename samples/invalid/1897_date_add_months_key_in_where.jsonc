@@ -7,8 +7,8 @@
     "left": {
       "operator": "dateAddMonths",
       "type": { "name": "date" },
-      "left": { "key": "d", "type": { "name": "date" } },
-      "right": { "type": { "name": "integer" }, "value": 1 }
+      "operand": { "key": "d", "type": { "name": "date" } },
+      "months": { "type": { "name": "integer" }, "value": 1 }
     },
     "right": { "type": { "name": "date" }, "value": "2024-01-31" }
   },

@@ -1,0 +1,15 @@
+// timeAddMinutes is not an operator: a minute is 60 seconds
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeAddMinutes",
+        "type": { "name": "time" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "minutes": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
