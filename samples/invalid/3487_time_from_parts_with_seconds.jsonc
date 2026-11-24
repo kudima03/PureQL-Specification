@@ -1,0 +1,16 @@
+// timeFromParts with seconds instead of second
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "seconds": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+// An instant built from a date and a time as a partition key, a sort key and the operand of previous, and a
+// month built from parts as a partition key.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": {
+          "operator": "month",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "orders_in_month",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "dateFromParts",
+              "type": { "name": "date" },
+              "year": {
+                "operator": "year",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+              },
+              "month": {
+                "operator": "month",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+              },
+              "day": { "type": { "name": "integer" }, "value": 1 }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "position_by_window",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "order_date", "type": { "name": "date" } } ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "datetimeFromParts",
+                "type": { "name": "datetime" },
+                "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+              }
+            },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "previous_window_start",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+        },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "datetimeFromParts",
+                "type": { "name": "datetime" },
+                "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+              }
+            },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "seconds_to_window",
+      "expression": {
+        "operator": "datetimeDiffSeconds",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "datetimeFromParts",
+          "type": { "name": "datetime" },
+          "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+        },
+        "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "window_on_shipping_day",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    },
+    { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

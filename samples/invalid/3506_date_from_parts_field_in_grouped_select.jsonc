@@ -1,0 +1,23 @@
+// dateFromParts of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    { "alias": "k", "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 1 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+// A month and an hour built from parts as group keys, in having, select, a predicate and orderBy, over keys
+// and aggregates.
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    {
+      "alias": "birth_month",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        },
+        "month": {
+          "operator": "month",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "call_hour",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": {
+          "operator": "hour",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+        },
+        "minute": { "type": { "name": "integer" }, "value": 0 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ],
+  "having": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateFromParts",
+      "type": { "name": "date" },
+      "year": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        }
+      },
+      "month": { "type": { "name": "integer" }, "value": 1 },
+      "day": { "type": { "name": "integer" }, "value": 1 }
+    },
+    "right": { "param": "born_before", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "birth_month", "expression": { "key": "birth_month", "type": { "name": "date" } } },
+    { "alias": "call_hour", "expression": { "key": "call_hour", "type": { "name": "time" } } },
+    { "alias": "users", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "first_call",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "key": "birth_month", "type": { "name": "date" } },
+        "time": { "key": "call_hour", "type": { "name": "time" } }
+      }
+    },
+    {
+      "alias": "latest_sign_up_day",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "max",
+          "type": { "name": "integer" },
+          "selector": {
+            "operator": "year",
+            "type": { "name": "integer" },
+            "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+          }
+        },
+        "month": { "type": { "name": "integer" }, "value": 12 },
+        "day": { "type": { "name": "integer" }, "value": 31 }
+      }
+    },
+    {
+      "alias": "born_on_the_first",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+          "right": {
+            "operator": "dateFromParts",
+            "type": { "name": "date" },
+            "year": {
+              "operator": "year",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+            },
+            "month": {
+              "operator": "month",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+            },
+            "day": { "type": { "name": "integer" }, "value": 1 }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "birth_month", "type": { "name": "date" } } },
+    { "expression": { "key": "call_hour", "type": { "name": "time" } } }
+  ]
+}

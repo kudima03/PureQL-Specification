@@ -1,0 +1,16 @@
+// timeFromParts of non-null parts declared time?
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

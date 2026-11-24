@@ -12604,6 +12604,442 @@
         }
       ]
     },
+    "dateFromParts.date.nullable@group": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer.nullable@group"
+        },
+        "month": {
+          "$ref": "#/$defs/integer.nullable@group"
+        },
+        "day": {
+          "$ref": "#/$defs/integer.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "year"
+              ],
+              "properties": {
+                "year": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "month"
+              ],
+              "properties": {
+                "month": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "day"
+              ],
+              "properties": {
+                "day": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateFromParts.date.nullable@projection": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        },
+        "month": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        },
+        "day": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "year"
+              ],
+              "properties": {
+                "year": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "month"
+              ],
+              "properties": {
+                "month": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "day"
+              ],
+              "properties": {
+                "day": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateFromParts.date.nullable@row": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "month": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "day": {
+          "$ref": "#/$defs/integer.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "year"
+              ],
+              "properties": {
+                "year": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "month"
+              ],
+              "properties": {
+                "month": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "day"
+              ],
+              "properties": {
+                "day": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateFromParts.date.nullable@total": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer.nullable@total"
+        },
+        "month": {
+          "$ref": "#/$defs/integer.nullable@total"
+        },
+        "day": {
+          "$ref": "#/$defs/integer.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "year"
+              ],
+              "properties": {
+                "year": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "month"
+              ],
+              "properties": {
+                "month": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "day"
+              ],
+              "properties": {
+                "day": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dateFromParts.date@group": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "month": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "day": {
+          "$ref": "#/$defs/integer@group"
+        }
+      }
+    },
+    "dateFromParts.date@projection": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "month": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "day": {
+          "$ref": "#/$defs/integer@projection"
+        }
+      }
+    },
+    "dateFromParts.date@row": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "month": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "day": {
+          "$ref": "#/$defs/integer@row"
+        }
+      }
+    },
+    "dateFromParts.date@total": {
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "month": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "day": {
+          "$ref": "#/$defs/integer@total"
+        }
+      }
+    },
+    "dateFromParts@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "year",
+        "month",
+        "day"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "year": true,
+        "month": true,
+        "day": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date.nullable@group"
+          }
+        }
+      ]
+    },
+    "dateFromParts@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "year",
+        "month",
+        "day"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "year": true,
+        "month": true,
+        "day": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date.nullable@projection"
+          }
+        }
+      ]
+    },
+    "dateFromParts@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "year",
+        "month",
+        "day"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "year": true,
+        "month": true,
+        "day": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date.nullable@row"
+          }
+        }
+      ]
+    },
+    "dateFromParts@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "year",
+        "month",
+        "day"
+      ],
+      "properties": {
+        "operator": {
+          "const": "dateFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "date"
+              ]
+            }
+          }
+        },
+        "year": true,
+        "month": true,
+        "day": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.date.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts.date.nullable@total"
+          }
+        }
+      ]
+    },
     "datetime.nullable@group": {
       "allOf": [
         {
@@ -14136,6 +14572,370 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeDiffSeconds.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "datetimeFromParts.datetime.nullable@group": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date.nullable@group"
+        },
+        "time": {
+          "$ref": "#/$defs/time.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "time"
+              ],
+              "properties": {
+                "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeFromParts.datetime.nullable@projection": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date.nullable@projection"
+        },
+        "time": {
+          "$ref": "#/$defs/time.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "time"
+              ],
+              "properties": {
+                "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeFromParts.datetime.nullable@row": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date.nullable@row"
+        },
+        "time": {
+          "$ref": "#/$defs/time.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "time"
+              ],
+              "properties": {
+                "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeFromParts.datetime.nullable@total": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date.nullable@total"
+        },
+        "time": {
+          "$ref": "#/$defs/time.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "date"
+              ],
+              "properties": {
+                "date": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "time"
+              ],
+              "properties": {
+                "time": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "datetimeFromParts.datetime@group": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date@group"
+        },
+        "time": {
+          "$ref": "#/$defs/time@group"
+        }
+      }
+    },
+    "datetimeFromParts.datetime@projection": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date@projection"
+        },
+        "time": {
+          "$ref": "#/$defs/time@projection"
+        }
+      }
+    },
+    "datetimeFromParts.datetime@row": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date@row"
+        },
+        "time": {
+          "$ref": "#/$defs/time@row"
+        }
+      }
+    },
+    "datetimeFromParts.datetime@total": {
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date@total"
+        },
+        "time": {
+          "$ref": "#/$defs/time@total"
+        }
+      }
+    },
+    "datetimeFromParts@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "date",
+        "time"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "date": true,
+        "time": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime.nullable@group"
+          }
+        }
+      ]
+    },
+    "datetimeFromParts@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "date",
+        "time"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "date": true,
+        "time": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime.nullable@projection"
+          }
+        }
+      ]
+    },
+    "datetimeFromParts@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "date",
+        "time"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "date": true,
+        "time": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime.nullable@row"
+          }
+        }
+      ]
+    },
+    "datetimeFromParts@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "date",
+        "time"
+      ],
+      "properties": {
+        "operator": {
+          "const": "datetimeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "datetime"
+              ]
+            }
+          }
+        },
+        "date": true,
+        "time": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.datetime.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts.datetime.nullable@total"
           }
         }
       ]
@@ -48873,6 +49673,42 @@
           "then": {
             "$ref": "#/$defs/datetimeDiffMonths@group"
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "timeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts@group"
+          }
         }
       ]
     },
@@ -48996,6 +49832,42 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeDiffMonths@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "timeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts@projection"
           }
         }
       ]
@@ -49121,6 +49993,42 @@
           "then": {
             "$ref": "#/$defs/datetimeDiffMonths@row"
           }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "timeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts@row"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts@row"
+          }
         }
       ]
     },
@@ -49244,6 +50152,42 @@
           },
           "then": {
             "$ref": "#/$defs/datetimeDiffMonths@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "dateFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/dateFromParts@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "timeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "datetimeFromParts"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/datetimeFromParts@total"
           }
         }
       ]
@@ -51466,6 +52410,9 @@
             "datetimeAddMonths",
             "dateDiffMonths",
             "datetimeDiffMonths",
+            "dateFromParts",
+            "timeFromParts",
+            "datetimeFromParts",
             "year",
             "quarter",
             "month",
@@ -51622,7 +52569,10 @@
                   "dateAddMonths",
                   "datetimeAddMonths",
                   "dateDiffMonths",
-                  "datetimeDiffMonths"
+                  "datetimeDiffMonths",
+                  "dateFromParts",
+                  "timeFromParts",
+                  "datetimeFromParts"
                 ]
               }
             }
@@ -51837,6 +52787,9 @@
             "datetimeAddMonths",
             "dateDiffMonths",
             "datetimeDiffMonths",
+            "dateFromParts",
+            "timeFromParts",
+            "datetimeFromParts",
             "year",
             "quarter",
             "month",
@@ -52001,7 +52954,10 @@
                   "dateAddMonths",
                   "datetimeAddMonths",
                   "dateDiffMonths",
-                  "datetimeDiffMonths"
+                  "datetimeDiffMonths",
+                  "dateFromParts",
+                  "timeFromParts",
+                  "datetimeFromParts"
                 ]
               }
             }
@@ -52237,6 +53193,9 @@
             "datetimeAddMonths",
             "dateDiffMonths",
             "datetimeDiffMonths",
+            "dateFromParts",
+            "timeFromParts",
+            "datetimeFromParts",
             "year",
             "quarter",
             "month",
@@ -52375,7 +53334,10 @@
                   "dateAddMonths",
                   "datetimeAddMonths",
                   "dateDiffMonths",
-                  "datetimeDiffMonths"
+                  "datetimeDiffMonths",
+                  "dateFromParts",
+                  "timeFromParts",
+                  "datetimeFromParts"
                 ]
               }
             }
@@ -52559,6 +53521,9 @@
             "datetimeAddMonths",
             "dateDiffMonths",
             "datetimeDiffMonths",
+            "dateFromParts",
+            "timeFromParts",
+            "datetimeFromParts",
             "year",
             "quarter",
             "month",
@@ -52715,7 +53680,10 @@
                   "dateAddMonths",
                   "datetimeAddMonths",
                   "dateDiffMonths",
-                  "datetimeDiffMonths"
+                  "datetimeDiffMonths",
+                  "dateFromParts",
+                  "timeFromParts",
+                  "datetimeFromParts"
                 ]
               }
             }
@@ -68428,6 +69396,442 @@
           },
           "then": {
             "$ref": "#/$defs/timeDiffSeconds.decimal.nullable@total"
+          }
+        }
+      ]
+    },
+    "timeFromParts.time.nullable@group": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer.nullable@group"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer.nullable@group"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "hour"
+              ],
+              "properties": {
+                "hour": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "minute"
+              ],
+              "properties": {
+                "minute": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "second"
+              ],
+              "properties": {
+                "second": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "timeFromParts.time.nullable@projection": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer.nullable@projection"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "hour"
+              ],
+              "properties": {
+                "hour": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "minute"
+              ],
+              "properties": {
+                "minute": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "second"
+              ],
+              "properties": {
+                "second": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "timeFromParts.time.nullable@row": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer.nullable@row"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "hour"
+              ],
+              "properties": {
+                "hour": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "minute"
+              ],
+              "properties": {
+                "minute": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "second"
+              ],
+              "properties": {
+                "second": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "timeFromParts.time.nullable@total": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer.nullable@total"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer.nullable@total"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "hour"
+              ],
+              "properties": {
+                "hour": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "minute"
+              ],
+              "properties": {
+                "minute": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "second"
+              ],
+              "properties": {
+                "second": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "timeFromParts.time@group": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer@group"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      }
+    },
+    "timeFromParts.time@projection": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer@projection"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      }
+    },
+    "timeFromParts.time@row": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer@row"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      }
+    },
+    "timeFromParts.time@total": {
+      "properties": {
+        "hour": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "minute": {
+          "$ref": "#/$defs/integer@total"
+        },
+        "second": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      }
+    },
+    "timeFromParts@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "hour",
+        "minute",
+        "second"
+      ],
+      "properties": {
+        "operator": {
+          "const": "timeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "hour": true,
+        "minute": true,
+        "second": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time.nullable@group"
+          }
+        }
+      ]
+    },
+    "timeFromParts@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "hour",
+        "minute",
+        "second"
+      ],
+      "properties": {
+        "operator": {
+          "const": "timeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "hour": true,
+        "minute": true,
+        "second": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time.nullable@projection"
+          }
+        }
+      ]
+    },
+    "timeFromParts@row": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "hour",
+        "minute",
+        "second"
+      ],
+      "properties": {
+        "operator": {
+          "const": "timeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "hour": true,
+        "minute": true,
+        "second": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time.nullable@row"
+          }
+        }
+      ]
+    },
+    "timeFromParts@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "hour",
+        "minute",
+        "second"
+      ],
+      "properties": {
+        "operator": {
+          "const": "timeFromParts"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "time"
+              ]
+            }
+          }
+        },
+        "hour": true,
+        "minute": true,
+        "second": true
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.time.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/timeFromParts.time.nullable@total"
           }
         }
       ]

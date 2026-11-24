@@ -1,0 +1,19 @@
+// datetimeFromParts with year, month and day: it takes a date and a time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "year": { "type": { "name": "integer" }, "value": 2024 },
+        "month": { "type": { "name": "integer" }, "value": 1 },
+        "day": { "type": { "name": "integer" }, "value": 31 },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+// dateFromParts of non-null parts declared date?: a part out of range is an error, not null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 4 },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

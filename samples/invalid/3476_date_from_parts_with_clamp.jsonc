@@ -1,0 +1,21 @@
+// dateFromParts with a clamp flag: a day beyond its month is an error; least over the day clamps it
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 4 },
+        "day": { "type": { "name": "integer" }, "value": 1 },
+        "clamp": true
+      }
+    }
+  ]
+}

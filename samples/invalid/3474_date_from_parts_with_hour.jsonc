@@ -1,0 +1,21 @@
+// dateFromParts with an hour: an instant is datetimeFromParts of a date and a time
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 4 },
+        "day": { "type": { "name": "integer" }, "value": 1 },
+        "hour": { "type": { "name": "integer" }, "value": 12 }
+      }
+    }
+  ]
+}

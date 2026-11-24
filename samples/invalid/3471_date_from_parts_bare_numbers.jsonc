@@ -1,0 +1,16 @@
+// dateFromParts with bare numbers as parts
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": 2024,
+        "month": 4,
+        "day": 1
+      }
+    }
+  ]
+}

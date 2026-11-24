@@ -1,0 +1,15 @@
+// timeFromParts without an hour
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

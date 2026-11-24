@@ -1,0 +1,19 @@
+// dateFromParts without a day: the first day of a month is day 1, written out
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "integer" }, "value": 4 }
+      }
+    }
+  ]
+}

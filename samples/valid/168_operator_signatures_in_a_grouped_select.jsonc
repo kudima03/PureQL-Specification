@@ -1605,6 +1605,123 @@
       }
     },
     {
+      "alias": "dateFromParts_date",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": { "type": { "name": "integer" }, "value": 2024 },
+        "month": { "type": { "name": "integer" }, "value": 2 },
+        "day": { "type": { "name": "integer" }, "value": 29 }
+      }
+    },
+    {
+      "alias": "dateFromParts_date_nullable_year",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "month": { "type": { "name": "integer" }, "value": 2 },
+        "day": { "type": { "name": "integer" }, "value": 29 }
+      }
+    },
+    {
+      "alias": "dateFromParts_date_nullable_month",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "type": { "name": "integer" }, "value": 2024 },
+        "month": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "day": { "type": { "name": "integer" }, "value": 29 }
+      }
+    },
+    {
+      "alias": "dateFromParts_date_nullable_day",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "type": { "name": "integer" }, "value": 2024 },
+        "month": { "type": { "name": "integer" }, "value": 2 },
+        "day": { "type": { "name": "integer", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "timeFromParts_time",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "decimal" }, "value": "15.25" }
+      }
+    },
+    {
+      "alias": "timeFromParts_time_integer_second",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 15 }
+      }
+    },
+    {
+      "alias": "timeFromParts_time_nullable_hour",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 15 }
+      }
+    },
+    {
+      "alias": "timeFromParts_time_nullable_minute",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "second": { "type": { "name": "integer" }, "value": 15 }
+      }
+    },
+    {
+      "alias": "timeFromParts_time_nullable_second",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "decimal", "nullable": true }, "value": null }
+      }
+    },
+    {
+      "alias": "datetimeFromParts_datetime",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "time": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "datetimeFromParts_datetime_nullable_date",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "type": { "name": "date", "nullable": true }, "value": null },
+        "time": { "type": { "name": "time" }, "value": "08:30:00" }
+      }
+    },
+    {
+      "alias": "datetimeFromParts_datetime_nullable_time",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": { "type": { "name": "date" }, "value": "2024-01-31" },
+        "time": { "type": { "name": "time", "nullable": true }, "value": null }
+      }
+    },
+    {
       "alias": "year_date",
       "expression": {
         "operator": "year",

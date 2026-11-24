@@ -1,0 +1,20 @@
+// dateFromParts with a string as month: a month is a number from 1 to 12
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "month": { "type": { "name": "string" }, "value": "April" },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

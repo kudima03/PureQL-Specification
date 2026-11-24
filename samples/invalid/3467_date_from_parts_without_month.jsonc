@@ -1,0 +1,19 @@
+// dateFromParts without a month
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "day": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
