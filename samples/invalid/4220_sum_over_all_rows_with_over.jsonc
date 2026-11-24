@@ -1,0 +1,15 @@
+// sum over all rows with over: all in a total query
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": "all"
+      }
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+// add, subtract, multiply and divide over three values in where, a groupBy key, having, a grouped select
+// over aggregates and a key, over: all, a total query, a join's on, a window aggregate's selector, next to
+// previous, and orderBy
+{
+  "subqueries": [
+    {
+      "name": "per_order",
+      "query": {
+        "from": { "entity": "order_items" },
+        "where": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "subtract",
+            "type": { "name": "integer" },
+            "values": [
+              { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        },
+        "groupBy": [
+          {
+            "alias": "order_id",
+            "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+          },
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "add",
+              "type": { "name": "integer" },
+              "values": [
+                { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+                { "type": { "name": "integer" }, "value": 1 }
+              ]
+            }
+          }
+        ],
+        "having": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "add",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+              },
+              { "operator": "count", "type": { "name": "integer" } },
+              { "key": "units", "type": { "name": "integer" } }
+            ]
+          },
+          "right": { "type": { "name": "decimal" }, "value": "100.5" }
+        },
+        "select": [
+          { "alias": "order_id", "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+          {
+            "alias": "weighted",
+            "expression": {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": {
+                    "operator": "multiply",
+                    "type": { "name": "decimal" },
+                    "values": [
+                      { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                      { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                      { "param": "tax_rate", "type": { "name": "decimal" } }
+                    ]
+                  }
+                },
+                { "operator": "count", "type": { "name": "integer" } },
+                { "key": "units", "type": { "name": "integer" } }
+              ]
+            }
+          },
+          {
+            "alias": "share",
+            "expression": {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": { "name": "decimal" }
+                  }
+                },
+                {
+                  "operator": "sum",
+                  "type": { "name": "decimal" },
+                  "selector": {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": { "name": "decimal" }
+                  },
+                  "over": "all"
+                },
+                { "type": { "name": "integer" }, "value": 100 }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "totals",
+      "query": {
+        "from": { "entity": "order_items" },
+        "aggregate": [
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "subtract",
+              "type": { "name": "integer" },
+              "values": [
+                {
+                  "operator": "sum",
+                  "type": { "name": "integer" },
+                  "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+                },
+                {
+                  "operator": "sum",
+                  "type": { "name": "integer" },
+                  "selector": {
+                    "source": "order_items",
+                    "field": "returned_quantity",
+                    "type": { "name": "integer" }
+                  }
+                },
+                { "operator": "count", "type": { "name": "integer" } }
+              ]
+            }
+          },
+          {
+            "alias": "spread",
+            "expression": {
+              "operator": "subtract",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                {
+                  "operator": "max",
+                  "type": { "name": "decimal", "nullable": true },
+                  "selector": {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": { "name": "decimal" }
+                  }
+                },
+                {
+                  "operator": "min",
+                  "type": { "name": "decimal", "nullable": true },
+                  "selector": {
+                    "source": "order_items",
+                    "field": "unit_price",
+                    "type": { "name": "decimal" }
+                  }
+                },
+                { "type": { "name": "decimal" }, "value": "0.01" }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "per_order",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "per_order", "field": "order_id", "type": { "name": "uuid" } },
+        "right": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "kind": "inner",
+      "subquery": "totals",
+      "on": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "totals", "field": "units", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        },
+        "right": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "running",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "param": "tax_rate", "type": { "name": "decimal" } }
+          ]
+        },
+        "over": {
+          "partitionBy": [{ "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }],
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "change",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          {
+            "operator": "previous",
+            "type": { "name": "decimal" },
+            "operand": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            "default": { "type": { "name": "integer" }, "value": 0 },
+            "over": {
+              "orderBy": [
+                { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+              ]
+            }
+          },
+          {
+            "operator": "average",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "weighted",
+      "expression": { "source": "per_order", "field": "weighted", "type": { "name": "decimal" } }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "param": "tax_rate", "type": { "name": "decimal" } }
+        ]
+      },
+      "direction": "desc"
+    },
+    { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "pagination": { "take": 20 }
+}

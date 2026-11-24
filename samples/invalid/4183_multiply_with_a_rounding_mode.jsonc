@@ -1,0 +1,19 @@
+// multiply with a rounding mode: only round has one
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "param": "tax_rate", "type": { "name": "decimal" } }
+        ],
+        "mode": "halfEven"
+      }
+    }
+  ]
+}

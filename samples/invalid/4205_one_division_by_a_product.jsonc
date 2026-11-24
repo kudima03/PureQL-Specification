@@ -1,0 +1,24 @@
+// one division by a product: multiply of two integer parameters declared decimal
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          {
+            "operator": "multiply",
+            "type": { "name": "decimal" },
+            "values": [
+              { "param": "parts", "type": { "name": "integer" } },
+              { "param": "people", "type": { "name": "integer" } }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

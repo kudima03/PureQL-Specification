@@ -1,0 +1,14 @@
+// subtract with a single value
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [{ "source": "order_items", "field": "quantity", "type": { "name": "integer" } }]
+      }
+    }
+  ]
+}

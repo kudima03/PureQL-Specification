@@ -1,0 +1,14 @@
+// sum declared nullable: over no rows it is 0
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer", "nullable": true },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

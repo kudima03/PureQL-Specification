@@ -1,0 +1,14 @@
+// add with a single value
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [{ "source": "order_items", "field": "quantity", "type": { "name": "integer" } }]
+      }
+    }
+  ]
+}

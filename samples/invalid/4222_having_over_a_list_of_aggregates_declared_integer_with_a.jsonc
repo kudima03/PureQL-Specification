@@ -1,0 +1,29 @@
+// having over a list of aggregates declared integer with a decimal sum
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [{ "alias": "value", "expression": { "key": "order_id", "type": { "name": "uuid" } } }],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "add",
+      "type": { "name": "integer" },
+      "values": [
+        {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        { "operator": "count", "type": { "name": "integer" } },
+        { "type": { "name": "integer" }, "value": 1 }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  }
+}

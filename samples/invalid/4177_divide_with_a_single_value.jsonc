@@ -1,0 +1,14 @@
+// divide with a single value
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [{ "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }]
+      }
+    }
+  ]
+}

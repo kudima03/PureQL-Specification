@@ -1,0 +1,18 @@
+// an integer literal beyond 64 bits in a list of three
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 9300000000000000000 },
+          { "type": { "name": "integer" }, "value": -1 },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+// divide with an option to round once: a single rounding is written as one division
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 3 },
+          { "type": { "name": "integer" }, "value": 2 }
+        ],
+        "roundOnce": true
+      }
+    }
+  ]
+}

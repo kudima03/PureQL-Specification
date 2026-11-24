@@ -1,0 +1,15 @@
+// add with left and right in place of values
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

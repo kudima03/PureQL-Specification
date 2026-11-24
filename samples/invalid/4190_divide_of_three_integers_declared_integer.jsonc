@@ -1,0 +1,18 @@
+// divide of three integers declared integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 3 },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}
