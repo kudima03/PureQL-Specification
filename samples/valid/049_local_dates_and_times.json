@@ -1,0 +1,216 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "asDate",
+      "type": {
+        "name": "date"
+      },
+      "operand": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      },
+      "zone": {
+        "type": {
+          "name": "string"
+        },
+        "value": "Europe/Moscow"
+      }
+    },
+    "right": {
+      "param": "from",
+      "type": {
+        "name": "date"
+      }
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "business_day",
+      "expression": {
+        "operator": "asDate",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "type": {
+            "name": "string"
+          },
+          "value": "Europe/Moscow"
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "business_day",
+      "expression": {
+        "key": "business_day",
+        "type": {
+          "name": "date"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "orders_after_six_in_the_evening",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "operator": "greaterThanOrEqual",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "operator": "asTime",
+            "type": {
+              "name": "time"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Europe/Moscow"
+            }
+          },
+          "right": {
+            "type": {
+              "name": "time"
+            },
+            "value": "18:00:00"
+          }
+        }
+      }
+    },
+    {
+      "alias": "first_order_at",
+      "expression": {
+        "operator": "min",
+        "type": {
+          "name": "time"
+        },
+        "selector": {
+          "operator": "asTime",
+          "type": {
+            "name": "time"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "type": {
+              "name": "string"
+            },
+            "value": "Europe/Moscow"
+          }
+        }
+      }
+    },
+    {
+      "alias": "orders_on_another_utc_day",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        },
+        "predicate": {
+          "operator": "notEqual",
+          "type": {
+            "name": "boolean"
+          },
+          "left": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          "right": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "type": {
+                "name": "string"
+              },
+              "value": "Europe/Moscow"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "business_day"
+    }
+  ]
+}

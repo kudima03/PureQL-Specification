@@ -1,0 +1,198 @@
+// Rows grouped by the local day of each user's zone, with local times in having and in aggregates; and a
+// total query over one local day of a zone given by a parameter.
+{
+  "subqueries": [
+    {
+      "name": "per_local_day",
+      "query": {
+        "from": { "entity": "orders" },
+        "joins": [
+          {
+            "kind": "inner",
+            "entity": "users",
+            "on": {
+              "operator": "equal",
+              "type": { "name": "boolean" },
+              "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+              "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+            }
+          }
+        ],
+        "groupBy": [
+          {
+            "alias": "zone",
+            "expression": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          {
+            "alias": "local_day",
+            "expression": {
+              "operator": "asDate",
+              "type": { "name": "date" },
+              "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          }
+        ],
+        "having": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "count",
+            "type": { "name": "integer" },
+            "predicate": {
+              "operator": "lessThan",
+              "type": { "name": "boolean" },
+              "left": {
+                "operator": "asTime",
+                "type": { "name": "time" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+              },
+              "right": { "type": { "name": "time" }, "value": "06:00:00" }
+            }
+          },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        },
+        "select": [
+          { "alias": "zone", "expression": { "key": "zone", "type": { "name": "string" } } },
+          { "alias": "local_day", "expression": { "key": "local_day", "type": { "name": "date" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+          {
+            "alias": "night_orders",
+            "expression": {
+              "operator": "count",
+              "type": { "name": "integer" },
+              "predicate": {
+                "operator": "lessThan",
+                "type": { "name": "boolean" },
+                "left": {
+                  "operator": "asTime",
+                  "type": { "name": "time" },
+                  "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                  "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+                },
+                "right": { "type": { "name": "time" }, "value": "06:00:00" }
+              }
+            }
+          },
+          {
+            "alias": "latest_local_time",
+            "expression": {
+              "operator": "max",
+              "type": { "name": "time" },
+              "selector": {
+                "operator": "asTime",
+                "type": { "name": "time" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "local_days_shipped_on",
+            "expression": {
+              "operator": "countDistinct",
+              "type": { "name": "integer" },
+              "selector": {
+                "operator": "asDate",
+                "type": { "name": "date" },
+                "operand": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+                "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "next_local_day",
+            "expression": {
+              "operator": "dateAddDays",
+              "type": { "name": "date" },
+              "operand": { "key": "local_day", "type": { "name": "date" } },
+              "days": { "type": { "name": "integer" }, "value": 1 }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "one_day",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "asDate",
+            "type": { "name": "date" },
+            "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+            "zone": { "param": "zone", "type": { "name": "string" } }
+          },
+          "right": { "param": "day", "type": { "name": "date" } }
+        },
+        "aggregate": [
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } },
+          {
+            "alias": "first_local_time",
+            "expression": {
+              "operator": "min",
+              "type": { "name": "time", "nullable": true },
+              "selector": {
+                "operator": "asTime",
+                "type": { "name": "time" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "last_local_day_shipped",
+            "expression": {
+              "operator": "max",
+              "type": { "name": "date", "nullable": true },
+              "selector": {
+                "operator": "asDate",
+                "type": { "name": "date" },
+                "operand": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          },
+          {
+            "alias": "median_local_time",
+            "expression": {
+              "operator": "median",
+              "type": { "name": "time", "nullable": true },
+              "selector": {
+                "operator": "asTime",
+                "type": { "name": "time" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "param": "zone", "type": { "name": "string" } }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "per_local_day" },
+  "joins": [
+    { "kind": "inner", "subquery": "one_day", "on": { "type": { "name": "boolean" }, "value": true } }
+  ],
+  "select": [
+    {
+      "alias": "zone",
+      "expression": { "source": "per_local_day", "field": "zone", "type": { "name": "string" } }
+    },
+    {
+      "alias": "local_day",
+      "expression": { "source": "per_local_day", "field": "local_day", "type": { "name": "date" } }
+    },
+    {
+      "alias": "orders",
+      "expression": { "source": "per_local_day", "field": "orders", "type": { "name": "integer" } }
+    },
+    {
+      "alias": "orders_of_the_day",
+      "expression": { "source": "one_day", "field": "orders", "type": { "name": "integer" } }
+    }
+  ]
+}

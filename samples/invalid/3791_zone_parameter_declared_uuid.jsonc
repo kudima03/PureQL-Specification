@@ -1,0 +1,15 @@
+// A zone parameter that declares uuid
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

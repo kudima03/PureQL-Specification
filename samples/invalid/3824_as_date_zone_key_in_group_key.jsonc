@@ -1,0 +1,17 @@
+// asDate in a group key with a key as its zone
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    { "alias": "k", "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } },
+    {
+      "alias": "d",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "key": "k", "type": { "name": "string" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}
