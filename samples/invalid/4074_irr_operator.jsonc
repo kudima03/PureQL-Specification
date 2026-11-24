@@ -1,0 +1,23 @@
+// irr is not an operator
+{
+  "from": { "entity": "cash_flows" },
+  "groupBy": [
+    {
+      "alias": "investment_id",
+      "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "irr",
+        "type": { "name": "decimal", "nullable": true },
+        "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } },
+        "orderBy": [
+          { "expression": { "source": "cash_flows", "field": "period", "type": { "name": "integer" } } }
+        ]
+      }
+    }
+  ]
+}

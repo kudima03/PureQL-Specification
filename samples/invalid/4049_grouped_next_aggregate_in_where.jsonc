@@ -1,0 +1,98 @@
+// An aggregate in the where of a grouped next query: where filters rows before they are grouped; having
+// filters groups
+{
+  "subqueries": [
+    {
+      "name": "totals",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "cash_flows" },
+          "groupBy": [
+            {
+              "alias": "investment_id",
+              "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+            }
+          ],
+          "select": [
+            {
+              "alias": "investment_id",
+              "expression": { "key": "investment_id", "type": { "name": "uuid" } }
+            },
+            { "alias": "step", "expression": { "type": { "name": "integer" }, "value": 0 } },
+            { "alias": "balance", "expression": { "type": { "name": "decimal" }, "value": "0" } }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "totals" },
+          "joins": [
+            {
+              "kind": "inner",
+              "entity": "cash_flows",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } },
+                "right": { "source": "totals", "field": "investment_id", "type": { "name": "uuid" } }
+              }
+            }
+          ],
+          "where": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "operator": "count", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          },
+          "groupBy": [
+            {
+              "alias": "investment_id",
+              "expression": { "source": "totals", "field": "investment_id", "type": { "name": "uuid" } }
+            },
+            {
+              "alias": "step",
+              "expression": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+            }
+          ],
+          "having": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": { "operator": "count", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          },
+          "select": [
+            {
+              "alias": "investment_id",
+              "expression": { "key": "investment_id", "type": { "name": "uuid" } }
+            },
+            {
+              "alias": "step",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "key": "step", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            },
+            {
+              "alias": "balance",
+              "expression": {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+              }
+            }
+          ]
+        },
+        "maxDepth": 10
+      }
+    }
+  ],
+  "from": { "subquery": "totals" },
+  "select": [
+    {
+      "alias": "balance",
+      "expression": { "source": "totals", "field": "balance", "type": { "name": "decimal" } }
+    }
+  ]
+}

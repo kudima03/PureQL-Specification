@@ -1,5 +1,5 @@
-// An aggregate in a next query: its columns are row expressions, each computed from one row of the level
-// before
+// An aggregate in a next query without groupBy: its columns are then row expressions, each computed from one
+// row of the level before
 {
   "subqueries": [
     {

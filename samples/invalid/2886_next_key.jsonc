@@ -1,4 +1,4 @@
-// A group key in a next query
+// A group key in a next query without groupBy
 {
   "subqueries": [
     {

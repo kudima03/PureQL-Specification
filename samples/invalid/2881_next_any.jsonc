@@ -1,4 +1,4 @@
-// any in a next query
+// any in a next query without groupBy
 {
   "subqueries": [
     {

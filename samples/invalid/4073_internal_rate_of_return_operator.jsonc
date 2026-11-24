@@ -1,0 +1,22 @@
+// internalRateOfReturn is not an operator: a rate is solved by a recursive subquery whose next aggregates the
+// cash flows
+{
+  "from": { "entity": "cash_flows" },
+  "groupBy": [
+    {
+      "alias": "investment_id",
+      "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "internalRateOfReturn",
+        "type": { "name": "decimal", "nullable": true },
+        "amount": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } },
+        "period": { "source": "cash_flows", "field": "period", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

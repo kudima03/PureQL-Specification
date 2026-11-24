@@ -1,0 +1,25 @@
+// solve is not an operator
+{
+  "from": { "entity": "cash_flows" },
+  "groupBy": [
+    {
+      "alias": "investment_id",
+      "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "solve",
+        "type": { "name": "decimal", "nullable": true },
+        "expression": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+        },
+        "variable": "rate"
+      }
+    }
+  ]
+}

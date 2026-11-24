@@ -1,4 +1,4 @@
-// A grouped next query: next has no groupBy
+// A grouped next query whose columns read fields: with groupBy, a column reads group keys and aggregates
 {
   "subqueries": [
     {

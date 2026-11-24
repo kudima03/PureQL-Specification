@@ -1302,13 +1302,28 @@ defs["rowItem"] = obj(["alias", "expression"], {"alias": NAME, "expression": ref
 # `seed` is a query that gives the first rows. `next` is run on the rows of each
 # level in turn, reading them under the subquery's own name, and gives the rows
 # of the following level, until a level is empty. Every row of every level is
-# returned. `next` is a plain query without aggregates, windows, orderBy,
-# distinctBy or pagination: its columns are row expressions. `maxDepth` is the
+# returned. `next` has no orderBy, distinctBy or pagination, and comes in two
+# forms, told apart by `groupBy`:
+#   plain    from / joins / where / select: one row for each row it reads. Its
+#            columns are row expressions, so it has no aggregates and no windows.
+#   grouped  the same with groupBy and having: one row for each group, with
+#            columns and `having` in group context. A step can then aggregate
+#            over the rows it reads, which is how an iteration computes a sum of
+#            the previous level, and `having` stops it, by leaving no group.
+# A total query is not a form of `next`: it returns a row over no rows, so its
+# levels would never be empty. `maxDepth` is the
 # last level that may hold rows, a number or a non-null integer parameter: rows
 # beyond it fail the query, so a cycle in the data never runs forever. That
 # `next` reads the subquery itself, once, and repeats the columns of `seed` is
 # checked by the interpreter, like every other reference to a subquery.
-defs["nextQuery"] = obj(["from", "select"], {**sources, "select": array_of(ref("selectItem@row"), 1)})
+defs["plainNextQuery"] = obj(["from", "select"], {**sources, "select": array_of(ref("selectItem@row"), 1)})
+defs["groupedNextQuery"] = obj(["from", "groupBy", "select"], {
+    **sources,
+    "groupBy": array_of(ref("groupKey"), 1),
+    "having": expr("boolean", "group"),
+    "select": array_of(ref("selectItem@group"), 1),
+})
+defs["nextQuery"] = {"if": {"required": ["groupBy"]}, "then": ref("groupedNextQuery"), "else": ref("plainNextQuery")}
 defs["recursion"] = obj(["seed", "next", "maxDepth"], {
     "seed": ref("query"),
     "next": ref("nextQuery"),

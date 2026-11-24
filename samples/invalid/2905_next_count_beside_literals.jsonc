@@ -1,4 +1,4 @@
-// count in a next query whose other columns are literals: next is not a grouped query either
+// count in a next query whose other columns are literals: without groupBy a next query has no aggregates
 {
   "subqueries": [
     {

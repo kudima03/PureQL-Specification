@@ -1,0 +1,21 @@
+// xirr is not an operator
+{
+  "from": { "entity": "cash_flows" },
+  "groupBy": [
+    {
+      "alias": "investment_id",
+      "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "xirr",
+        "type": { "name": "decimal", "nullable": true },
+        "amount": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } },
+        "date": { "source": "cash_flows", "field": "paid_on", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

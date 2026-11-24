@@ -1,0 +1,237 @@
+// Recursive subqueries whose seed is a total query and a combined query, each with a grouped next, and one
+// with a plain next beside them; maxDepth as a parameter.
+{
+  "subqueries": [
+    {
+      "name": "totals",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "cash_flows" },
+          "aggregate": [
+            { "alias": "step", "expression": { "type": { "name": "integer" }, "value": 0 } },
+            {
+              "alias": "balance",
+              "expression": {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+              }
+            }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "totals" },
+          "joins": [
+            {
+              "kind": "inner",
+              "entity": "cash_flows",
+              "on": {
+                "operator": "greaterThan",
+                "type": { "name": "boolean" },
+                "left": { "source": "cash_flows", "field": "period", "type": { "name": "integer" } },
+                "right": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+              }
+            }
+          ],
+          "groupBy": [
+            {
+              "alias": "step",
+              "expression": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+            }
+          ],
+          "select": [
+            {
+              "alias": "step",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "key": "step", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            },
+            {
+              "alias": "balance",
+              "expression": {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+              }
+            }
+          ]
+        },
+        "maxDepth": { "param": "periods", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "name": "from_a_union",
+      "recursive": {
+        "seed": {
+          "unionAll": [
+            {
+              "from": { "entity": "cash_flows" },
+              "select": [
+                {
+                  "alias": "period",
+                  "expression": { "source": "cash_flows", "field": "period", "type": { "name": "integer" } }
+                },
+                {
+                  "alias": "amount",
+                  "expression": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+                }
+              ]
+            },
+            {
+              "from": { "subquery": "totals" },
+              "select": [
+                {
+                  "alias": "period",
+                  "expression": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+                },
+                {
+                  "alias": "amount",
+                  "expression": { "source": "totals", "field": "balance", "type": { "name": "decimal" } }
+                }
+              ]
+            }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "from_a_union" },
+          "where": {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "from_a_union", "field": "period", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 12 }
+          },
+          "groupBy": [
+            {
+              "alias": "period",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "from_a_union", "field": "period", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            }
+          ],
+          "having": {
+            "operator": "greaterThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "from_a_union", "field": "amount", "type": { "name": "decimal" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 0 }
+          },
+          "select": [
+            { "alias": "period", "expression": { "key": "period", "type": { "name": "integer" } } },
+            {
+              "alias": "amount",
+              "expression": {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": { "source": "from_a_union", "field": "amount", "type": { "name": "decimal" } }
+                  },
+                  { "type": { "name": "integer" }, "value": 2 }
+                ]
+              }
+            }
+          ]
+        },
+        "maxDepth": 12
+      }
+    },
+    {
+      "name": "without_aggregates",
+      "recursive": {
+        "seed": {
+          "from": { "subquery": "totals" },
+          "select": [
+            {
+              "alias": "step",
+              "expression": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+            }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "without_aggregates" },
+          "where": {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "without_aggregates", "field": "step", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 3 }
+          },
+          "select": [
+            {
+              "alias": "step",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "without_aggregates", "field": "step", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            }
+          ]
+        },
+        "maxDepth": 3
+      }
+    }
+  ],
+  "from": { "subquery": "totals" },
+  "joins": [
+    {
+      "kind": "left",
+      "subquery": "from_a_union",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "from_a_union", "field": "period", "type": { "name": "integer" } },
+        "right": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "kind": "left",
+      "subquery": "without_aggregates",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "without_aggregates", "field": "step", "type": { "name": "integer" } },
+        "right": { "source": "totals", "field": "step", "type": { "name": "integer" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "step", "expression": { "source": "totals", "field": "step", "type": { "name": "integer" } } },
+    {
+      "alias": "balance",
+      "expression": { "source": "totals", "field": "balance", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "amount",
+      "expression": {
+        "source": "from_a_union",
+        "field": "amount",
+        "type": { "name": "decimal", "nullable": true }
+      }
+    },
+    {
+      "alias": "plain_step",
+      "expression": {
+        "source": "without_aggregates",
+        "field": "step",
+        "type": { "name": "integer", "nullable": true }
+      }
+    }
+  ]
+}
