@@ -1,0 +1,14 @@
+// countDistinct of a uuid declared uuid: it yields a number, not a value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "uuid" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

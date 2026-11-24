@@ -1,0 +1,18 @@
+// countDistinct of an aggregate: its selector is a row expression
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    }
+  ]
+}

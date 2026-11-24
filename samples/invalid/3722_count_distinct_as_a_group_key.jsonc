@@ -1,0 +1,15 @@
+// countDistinct as a group key
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

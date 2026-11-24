@@ -1,0 +1,14 @@
+// countDistinct with an operand: an aggregate reads a selector
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

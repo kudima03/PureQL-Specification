@@ -1,0 +1,14 @@
+// approximateCountDistinct is not an operator: every result of the language is exact
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "approximateCountDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

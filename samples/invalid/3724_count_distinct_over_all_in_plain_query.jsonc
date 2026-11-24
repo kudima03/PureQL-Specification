@@ -1,0 +1,15 @@
+// countDistinct with over "all" in a plain query, where over is only ever a window
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "over": "all"
+      }
+    }
+  ]
+}

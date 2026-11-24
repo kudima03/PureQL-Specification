@@ -12658,6 +12658,113 @@
       },
       "additionalProperties": false
     },
+    "countDistinct@group": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "countDistinct"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "enum": [
+            "all"
+          ]
+        },
+        "selector": {
+          "$ref": "#/$defs/expr@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "countDistinct@projection": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "countDistinct"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "over": {
+          "$ref": "#/$defs/window"
+        },
+        "selector": {
+          "$ref": "#/$defs/expr@row"
+        }
+      },
+      "additionalProperties": false
+    },
+    "countDistinct@total": {
+      "type": "object",
+      "required": [
+        "operator",
+        "type",
+        "selector"
+      ],
+      "properties": {
+        "operator": {
+          "const": "countDistinct"
+        },
+        "type": {
+          "$ref": "#/$defs/type",
+          "properties": {
+            "name": {
+              "enum": [
+                "integer"
+              ]
+            },
+            "nullable": {
+              "const": false
+            }
+          }
+        },
+        "predicate": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "selector": {
+          "$ref": "#/$defs/expr@row"
+        }
+      },
+      "additionalProperties": false
+    },
     "covariancePopulation.decimal.nullable@group": {
       "properties": {
         "left": {
@@ -48604,6 +48711,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "countDistinct"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/countDistinct@group"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "sum"
               }
             }
@@ -48860,6 +48979,18 @@
           "if": {
             "properties": {
               "operator": {
+                "const": "countDistinct"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/countDistinct@projection"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
                 "const": "sum"
               }
             }
@@ -49110,6 +49241,18 @@
           },
           "then": {
             "$ref": "#/$defs/count@total"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "countDistinct"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/$defs/countDistinct@total"
           }
         },
         {
@@ -55238,6 +55381,7 @@
             "greatest",
             "least",
             "count",
+            "countDistinct",
             "sum",
             "average",
             "min",
@@ -55500,6 +55644,7 @@
               "operator": {
                 "enum": [
                   "count",
+                  "countDistinct",
                   "sum",
                   "average",
                   "min",
@@ -55650,6 +55795,7 @@
             "greatest",
             "least",
             "count",
+            "countDistinct",
             "sum",
             "average",
             "min",
@@ -55920,6 +56066,7 @@
               "operator": {
                 "enum": [
                   "count",
+                  "countDistinct",
                   "sum",
                   "average",
                   "min",
@@ -56448,6 +56595,7 @@
             "greatest",
             "least",
             "count",
+            "countDistinct",
             "sum",
             "average",
             "min",
@@ -56710,6 +56858,7 @@
               "operator": {
                 "enum": [
                   "count",
+                  "countDistinct",
                   "sum",
                   "average",
                   "min",

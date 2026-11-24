@@ -1,0 +1,15 @@
+// countDistinct with distinctBy: its selector is the value it tells apart
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "distinctBy": [ "user_id" ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// countDistinct with a nullable predicate
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+        "predicate": { "param": "only_paid", "type": { "name": "boolean", "nullable": true } }
+      }
+    }
+  ]
+}

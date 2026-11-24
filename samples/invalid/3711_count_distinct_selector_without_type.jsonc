@@ -1,0 +1,14 @@
+// countDistinct of a field without a type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id" }
+      }
+    }
+  ]
+}

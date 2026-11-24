@@ -1,0 +1,78 @@
+// countDistinct over all rows, a partition, a frame of ten rows, a range of thirty days and a running frame
+// with a predicate.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "customers",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "statuses_of_the_customer",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    },
+    {
+      "alias": "coupons_in_the_last_ten_orders",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "source": "orders",
+          "field": "coupon_id",
+          "type": { "name": "uuid", "nullable": true }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 9 }
+        }
+      }
+    },
+    {
+      "alias": "days_in_the_last_month",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 30 } }
+        }
+      }
+    },
+    {
+      "alias": "paid_statuses_so_far",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } },
+        "predicate": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ]
+}

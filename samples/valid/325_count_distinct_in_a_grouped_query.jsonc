@@ -1,0 +1,106 @@
+// countDistinct in having, select and orderBy of a grouped query, over all rows, and compared with count.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "countDistinct",
+      "type": { "name": "integer" },
+      "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    },
+    "right": { "param": "min_orders", "type": { "name": "integer" } }
+  },
+  "select": [
+    { "alias": "product_id", "expression": { "key": "product_id", "type": { "name": "uuid" } } },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      }
+    },
+    {
+      "alias": "prices",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "quantities",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "share_of_orders",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "countDistinct",
+            "type": { "name": "integer" },
+            "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "countDistinct",
+            "type": { "name": "integer" },
+            "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } },
+            "over": "all"
+          }
+        ]
+      }
+    },
+    {
+      "alias": "sold_at_one_price",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "countDistinct",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "lines_per_order",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "operator": "count", "type": { "name": "integer" } },
+          {
+            "operator": "countDistinct",
+            "type": { "name": "integer" },
+            "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+      },
+      "direction": "desc"
+    },
+    { "expression": { "key": "product_id", "type": { "name": "uuid" } } }
+  ]
+}

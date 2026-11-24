@@ -1,0 +1,17 @@
+// countDistinct of a group key: its selector is a row expression
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    { "alias": "k", "expression": { "source": "orders", "field": "status", "type": { "name": "string" } } }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "key": "status", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

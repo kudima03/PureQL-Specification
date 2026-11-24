@@ -1,0 +1,14 @@
+// countDistinct of a subquery column: it is a list, read only by in
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": { "subquery": "vip", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ]
+}

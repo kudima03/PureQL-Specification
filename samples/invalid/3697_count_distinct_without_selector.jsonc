@@ -1,0 +1,5 @@
+// countDistinct without a selector: the number of rows is count
+{
+  "from": { "entity": "orders" },
+  "select": [ { "alias": "c", "expression": { "operator": "countDistinct", "type": { "name": "integer" } } } ]
+}

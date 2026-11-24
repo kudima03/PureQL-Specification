@@ -1,0 +1,10 @@
+// countDistinct of a bare value
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "operator": "countDistinct", "type": { "name": "integer" }, "selector": "user_id" }
+    }
+  ]
+}

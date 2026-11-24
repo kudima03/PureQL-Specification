@@ -1,0 +1,20 @@
+// countDistinct of a window function
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "rowNumber",
+          "type": { "name": "integer" },
+          "over": {
+            "orderBy": [ { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ]
+          }
+        }
+      }
+    }
+  ]
+}

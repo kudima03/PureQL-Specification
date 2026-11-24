@@ -1,0 +1,18 @@
+// countDistinct of a countDistinct
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "countDistinct",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "countDistinct",
+          "type": { "name": "integer" },
+          "selector": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+        }
+      }
+    }
+  ]
+}
