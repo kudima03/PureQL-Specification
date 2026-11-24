@@ -1,0 +1,17 @@
+// ntile with a buckets parameter declared nullable: a ranking function is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer", "nullable": true },
+        "buckets": { "param": "buckets", "type": { "name": "integer" } },
+        "over": {
+          "orderBy": [ { "expression": { "source": "users", "field": "birth_date", "type": { "name": "date" } } } ]
+        }
+      }
+    }
+  ]
+}

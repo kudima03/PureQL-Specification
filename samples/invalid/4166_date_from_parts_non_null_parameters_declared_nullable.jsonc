@@ -1,0 +1,16 @@
+// dateFromParts of non-null parameters declared nullable: the declared type is exact
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date", "nullable": true },
+        "year": { "param": "year", "type": { "name": "integer" } },
+        "month": { "param": "month", "type": { "name": "integer" } },
+        "day": { "param": "day", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}

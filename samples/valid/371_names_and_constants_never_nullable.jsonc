@@ -1,0 +1,134 @@
+// A form, a mode, a regular expression, a group, a separator, a fraction, buckets and an offset are never null and never make a result nullable, as literals or as parameters
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "name_nfc",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFC"
+      }
+    },
+    {
+      "alias": "middle_nfkd",
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "middle_name", "type": { "name": "string", "nullable": true } },
+        "form": "NFKD"
+      }
+    },
+    {
+      "alias": "whole_age",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "integer" },
+        "operand": {
+          "operator": "divide",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "dateDiffDays",
+              "type": { "name": "integer" },
+              "left": { "param": "today", "type": { "name": "date" } },
+              "right": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+            },
+            { "type": { "name": "decimal" }, "value": "365.25" }
+          ]
+        },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "rate",
+      "expression": {
+        "operator": "round",
+        "type": { "name": "decimal" },
+        "operand": { "param": "rate", "type": { "name": "decimal" } },
+        "digits": { "type": { "name": "integer" }, "value": 2 },
+        "mode": "halfEven"
+      }
+    },
+    {
+      "alias": "has_domain",
+      "expression": {
+        "operator": "matchesRegex",
+        "type": { "name": "boolean" },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string", "nullable": true } },
+        "pattern": { "param": "domain_pattern", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "domain",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string", "nullable": true },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string", "nullable": true } },
+        "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
+        "group": { "param": "group", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "all_names",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "separator": { "param": "separator", "type": { "name": "string" } },
+        "orderBy": [ { "expression": { "source": "users", "field": "first_name", "type": { "name": "string" } } } ]
+      }
+    },
+    {
+      "alias": "birth_quantile",
+      "expression": {
+        "operator": "percentileDiscrete",
+        "type": { "name": "date" },
+        "selector": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "fraction": { "param": "fraction", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "bucket",
+      "expression": {
+        "operator": "ntile",
+        "type": { "name": "integer" },
+        "buckets": { "param": "buckets", "type": { "name": "integer" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "users", "field": "birth_date", "type": { "name": "date" } } },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "earlier_birth",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "date" },
+        "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "offset": { "param": "offset", "type": { "name": "integer" } },
+        "default": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "users", "field": "birth_date", "type": { "name": "date" } } },
+            { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "operator": "normalize",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "form": "NFKC"
+      }
+    },
+    { "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

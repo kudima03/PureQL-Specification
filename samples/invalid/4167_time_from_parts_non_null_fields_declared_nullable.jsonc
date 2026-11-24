@@ -1,0 +1,20 @@
+// timeFromParts of non-null parts declared nullable: the declared type is exact
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time", "nullable": true },
+        "hour": {
+          "operator": "hour",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+        },
+        "minute": { "type": { "name": "integer" }, "value": 0 },
+        "second": { "type": { "name": "integer" }, "value": 0 }
+      }
+    }
+  ]
+}

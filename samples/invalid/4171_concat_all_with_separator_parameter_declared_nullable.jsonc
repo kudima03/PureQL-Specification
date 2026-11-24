@@ -1,0 +1,16 @@
+// concatAll with a separator parameter declared nullable: it is never null
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string", "nullable": true },
+        "selector": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "separator": { "param": "separator", "type": { "name": "string" } },
+        "orderBy": [ { "expression": { "source": "users", "field": "first_name", "type": { "name": "string" } } } ]
+      }
+    }
+  ]
+}

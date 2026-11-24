@@ -1,0 +1,122 @@
+// An aggregate inside a computed column of a recursive next without groupBy: its select is row context
+{
+  "subqueries": [
+    {
+      "name": "chain",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "users" },
+          "where": {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+            "right": { "param": "user_id", "type": { "name": "uuid" } }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            { "alias": "depth", "expression": { "type": { "name": "integer" }, "value": 0 } },
+            {
+              "alias": "label",
+              "expression": { "source": "users", "field": "name", "type": { "name": "string" } }
+            }
+          ]
+        },
+        "next": {
+          "from": { "entity": "users" },
+          "joins": [
+            {
+              "kind": "inner",
+              "subquery": "chain",
+              "on": {
+                "operator": "and",
+                "type": { "name": "boolean" },
+                "conditions": [
+                  {
+                    "operator": "equal",
+                    "type": { "name": "boolean" },
+                    "left": {
+                      "source": "users",
+                      "field": "referrer_id",
+                      "type": { "name": "uuid", "nullable": true }
+                    },
+                    "right": { "source": "chain", "field": "id", "type": { "name": "uuid" } }
+                  },
+                  {
+                    "operator": "notEqual",
+                    "type": { "name": "boolean" },
+                    "left": {
+                      "operator": "foldCase",
+                      "type": { "name": "string" },
+                      "operand": { "source": "users", "field": "name", "type": { "name": "string" } }
+                    },
+                    "right": {
+                      "operator": "foldCase",
+                      "type": { "name": "string" },
+                      "operand": { "source": "chain", "field": "label", "type": { "name": "string" } }
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "where": {
+            "operator": "and",
+            "type": { "name": "boolean" },
+            "conditions": [
+              {
+                "operator": "lessThan",
+                "type": { "name": "boolean" },
+                "left": { "source": "chain", "field": "depth", "type": { "name": "integer" } },
+                "right": { "type": { "name": "integer" }, "value": 10 }
+              },
+              {
+                "operator": "contains",
+                "type": { "name": "boolean" },
+                "operand": { "source": "users", "field": "email", "type": { "name": "string", "nullable": true } },
+                "pattern": { "type": { "name": "string" }, "value": "@" }
+              }
+            ]
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "depth",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "chain", "field": "depth", "type": { "name": "integer" } },
+                  { "operator": "count", "type": { "name": "integer" } }
+                ]
+              }
+            },
+            {
+              "alias": "label",
+              "expression": {
+                "operator": "concatWith",
+                "type": { "name": "string" },
+                "values": [
+                  { "source": "chain", "field": "label", "type": { "name": "string" } },
+                  {
+                    "source": "users",
+                    "field": "middle_name",
+                    "type": { "name": "string", "nullable": true }
+                  },
+                  { "source": "users", "field": "name", "type": { "name": "string" } }
+                ],
+                "separator": { "type": { "name": "string" }, "value": " > " }
+              }
+            }
+          ]
+        },
+        "maxDepth": 50
+      }
+    }
+  ],
+  "from": { "subquery": "chain" },
+  "select": [
+    { "alias": "id", "expression": { "source": "chain", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "depth", "expression": { "source": "chain", "field": "depth", "type": { "name": "integer" } } },
+    { "alias": "label", "expression": { "source": "chain", "field": "label", "type": { "name": "string" } } }
+  ]
+}

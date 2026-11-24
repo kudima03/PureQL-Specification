@@ -1,0 +1,520 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "where": {
+    "source": "users",
+    "field": "is_active",
+    "type": {
+      "name": "boolean"
+    }
+  },
+  "select": [
+    {
+      "alias": "order_id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "local_month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "month_revenue",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            },
+            {
+              "operator": "startOfMonth",
+              "type": {
+                "name": "datetime"
+              },
+              "operand": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              },
+              "zone": {
+                "source": "users",
+                "field": "time_zone",
+                "type": {
+                  "name": "string"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "share_of_month",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal",
+          "nullable": true
+        },
+        "values": [
+          {
+            "source": "orders",
+            "field": "total",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "nullIfEqual",
+            "type": {
+              "name": "decimal",
+              "nullable": true
+            },
+            "left": {
+              "operator": "sum",
+              "type": {
+                "name": "decimal"
+              },
+              "selector": {
+                "source": "orders",
+                "field": "total",
+                "type": {
+                  "name": "decimal"
+                }
+              },
+              "over": {
+                "partitionBy": [
+                  {
+                    "source": "orders",
+                    "field": "user_id",
+                    "type": {
+                      "name": "uuid"
+                    }
+                  },
+                  {
+                    "operator": "startOfMonth",
+                    "type": {
+                      "name": "datetime"
+                    },
+                    "operand": {
+                      "source": "orders",
+                      "field": "ordered_at",
+                      "type": {
+                        "name": "datetime"
+                      }
+                    },
+                    "zone": {
+                      "source": "users",
+                      "field": "time_zone",
+                      "type": {
+                        "name": "string"
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "last_seven_local_days",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "asDate",
+                "type": {
+                  "name": "date"
+                },
+                "operand": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                },
+                "zone": {
+                  "source": "users",
+                  "field": "time_zone",
+                  "type": {
+                    "name": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "range": {
+            "preceding": {
+              "days": 6
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "days_since_previous",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "operator": "asDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "right": {
+          "operator": "previous",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "source": "users",
+              "field": "time_zone",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "default": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "users",
+              "field": "created_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "source": "users",
+              "field": "time_zone",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "over": {
+            "partitionBy": [
+              {
+                "source": "orders",
+                "field": "user_id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            ],
+            "orderBy": [
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                }
+              },
+              {
+                "expression": {
+                  "source": "orders",
+                  "field": "id",
+                  "type": {
+                    "name": "uuid"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "alias": "next_local_day",
+      "expression": {
+        "operator": "next",
+        "type": {
+          "name": "date",
+          "nullable": true
+        },
+        "operand": {
+          "operator": "asDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "source": "orders",
+              "field": "user_id",
+              "type": {
+                "name": "uuid"
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              }
+            },
+            {
+              "expression": {
+                "source": "orders",
+                "field": "id",
+                "type": {
+                  "name": "uuid"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "rank_in_local_day",
+      "expression": {
+        "operator": "rank",
+        "type": {
+          "name": "integer"
+        },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "asDate",
+              "type": {
+                "name": "date"
+              },
+              "operand": {
+                "source": "orders",
+                "field": "ordered_at",
+                "type": {
+                  "name": "datetime"
+                }
+              },
+              "zone": {
+                "source": "users",
+                "field": "time_zone",
+                "type": {
+                  "name": "string"
+                }
+              }
+            }
+          ],
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "coalesce",
+                "type": {
+                  "name": "decimal"
+                },
+                "values": [
+                  {
+                    "operator": "nullIfEqual",
+                    "type": {
+                      "name": "decimal",
+                      "nullable": true
+                    },
+                    "left": {
+                      "source": "orders",
+                      "field": "total",
+                      "type": {
+                        "name": "decimal"
+                      }
+                    },
+                    "right": {
+                      "type": {
+                        "name": "integer"
+                      },
+                      "value": 0
+                    }
+                  },
+                  {
+                    "type": {
+                      "name": "decimal"
+                    },
+                    "value": "0.01"
+                  }
+                ]
+              },
+              "direction": "desc"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "expression": {
+        "source": "orders",
+        "field": "user_id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ]
+}

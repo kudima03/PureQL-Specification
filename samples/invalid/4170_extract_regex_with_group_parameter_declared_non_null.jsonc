@@ -1,0 +1,16 @@
+// extractRegex with a group parameter declared non-null: it is always nullable, whatever its pattern and group
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "extractRegex",
+        "type": { "name": "string" },
+        "operand": { "source": "users", "field": "first_name", "type": { "name": "string" } },
+        "pattern": { "type": { "name": "string" }, "value": "(.)" },
+        "group": { "param": "group", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}
