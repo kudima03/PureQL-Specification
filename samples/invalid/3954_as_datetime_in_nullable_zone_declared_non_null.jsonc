@@ -1,0 +1,15 @@
+// asDatetime in a nullable zone declared datetime: the operator is lifted over its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+      }
+    }
+  ]
+}

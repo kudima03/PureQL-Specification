@@ -1,0 +1,16 @@
+// datetimeFromParts in a zone declared string: an instant is a datetime, written in UTC
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "string" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

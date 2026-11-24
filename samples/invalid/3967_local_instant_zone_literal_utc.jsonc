@@ -1,0 +1,15 @@
+// asDatetime in the literal zone UTC: UTC is the absence of zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "UTC" }
+      }
+    }
+  ]
+}

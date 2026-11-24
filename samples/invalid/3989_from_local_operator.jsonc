@@ -1,0 +1,16 @@
+// fromLocal is not an operator: an instant is built by datetimeFromParts with a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "fromLocal",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

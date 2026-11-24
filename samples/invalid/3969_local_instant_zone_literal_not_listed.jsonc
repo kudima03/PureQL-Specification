@@ -1,0 +1,15 @@
+// asDatetime in a zone that is not in the list of names
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Berlin_West" }
+      }
+    }
+  ]
+}

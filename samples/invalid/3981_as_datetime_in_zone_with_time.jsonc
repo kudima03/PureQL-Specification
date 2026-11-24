@@ -1,0 +1,16 @@
+// asDatetime of a date with a time: a date and a time are put together by datetimeFromParts
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// datetimeFromParts with an integer as its zone: an offset in hours is not a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

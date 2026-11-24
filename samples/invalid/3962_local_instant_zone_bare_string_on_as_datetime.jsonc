@@ -1,0 +1,15 @@
+// asDatetime with its zone as a bare string: a zone is an expression and declares its type
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": "Europe/Moscow"
+      }
+    }
+  ]
+}

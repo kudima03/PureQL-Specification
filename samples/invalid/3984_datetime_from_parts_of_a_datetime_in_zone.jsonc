@@ -1,0 +1,16 @@
+// datetimeFromParts with a datetime as its date: the local day of an instant is asDate with the zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime" },
+        "date": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "time": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

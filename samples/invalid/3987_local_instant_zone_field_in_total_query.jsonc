@@ -1,0 +1,20 @@
+// datetimeFromParts of aggregates in a total query with a field as its zone
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": { "name": "datetime", "nullable": true },
+        "date": {
+          "operator": "min",
+          "type": { "name": "date", "nullable": true },
+          "selector": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+        },
+        "time": { "type": { "name": "time" }, "value": "12:00:00" },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

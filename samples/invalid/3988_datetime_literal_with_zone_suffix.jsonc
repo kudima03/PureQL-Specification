@@ -1,0 +1,10 @@
+// A datetime literal with a zone name in brackets
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": { "type": { "name": "datetime" }, "value": "2024-01-31T18:30:00[Europe/Moscow]" }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+// asDatetime of a key in a grouped select with a field as its zone
+{
+  "from": { "entity": "users" },
+  "groupBy": [
+    { "alias": "k", "expression": { "source": "users", "field": "birth_date", "type": { "name": "date" } } }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asDatetime",
+        "type": { "name": "datetime" },
+        "operand": { "key": "k", "type": { "name": "date" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// asDatetime of a string with a time zone: the text is in UTC with Z, as a datetime literal is
+// asDatetime of a string with timeZone: the text spells an instant in UTC, and a zone is written as zone, for a date
 {
   "from": { "entity": "users" },
   "select": [

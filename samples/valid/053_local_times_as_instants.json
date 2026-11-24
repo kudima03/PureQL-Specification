@@ -1,0 +1,389 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "user_id",
+          "type": {
+            "name": "uuid"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "id",
+          "type": {
+            "name": "uuid"
+          }
+        }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": {
+      "name": "boolean"
+    },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "operator": "asDatetime",
+          "type": {
+            "name": "datetime"
+          },
+          "operand": {
+            "param": "day",
+            "type": {
+              "name": "date"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      },
+      {
+        "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "operator": "asDatetime",
+          "type": {
+            "name": "datetime"
+          },
+          "operand": {
+            "operator": "dateAddDays",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "param": "day",
+              "type": {
+                "name": "date"
+              }
+            },
+            "days": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 1
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "orders",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "ordered_at",
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": {
+          "name": "datetime"
+        }
+      }
+    },
+    {
+      "alias": "local_time",
+      "expression": {
+        "operator": "asTime",
+        "type": {
+          "name": "time"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "cutoff",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": {
+          "name": "datetime"
+        },
+        "date": {
+          "operator": "asDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "source": "orders",
+            "field": "ordered_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "time": {
+          "type": {
+            "name": "time"
+          },
+          "value": "18:00:00"
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "ships_today",
+      "expression": {
+        "operator": "lessThan",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "right": {
+          "operator": "datetimeFromParts",
+          "type": {
+            "name": "datetime"
+          },
+          "date": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "source": "users",
+              "field": "time_zone",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "time": {
+            "type": {
+              "name": "time"
+            },
+            "value": "18:00:00"
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "alias": "minutes_to_the_cutoff",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "datetimeDiffSeconds",
+            "type": {
+              "name": "decimal"
+            },
+            "left": {
+              "operator": "datetimeFromParts",
+              "type": {
+                "name": "datetime"
+              },
+              "date": {
+                "operator": "asDate",
+                "type": {
+                  "name": "date"
+                },
+                "operand": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": {
+                    "name": "datetime"
+                  }
+                },
+                "zone": {
+                  "source": "users",
+                  "field": "time_zone",
+                  "type": {
+                    "name": "string"
+                  }
+                }
+              },
+              "time": {
+                "type": {
+                  "name": "time"
+                },
+                "value": "18:00:00"
+              },
+              "zone": {
+                "source": "users",
+                "field": "time_zone",
+                "type": {
+                  "name": "string"
+                }
+              }
+            },
+            "right": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            }
+          },
+          {
+            "type": {
+              "name": "integer"
+            },
+            "value": 60
+          }
+        ]
+      }
+    },
+    {
+      "alias": "delivery_window_opens_at",
+      "expression": {
+        "operator": "datetimeFromParts",
+        "type": {
+          "name": "datetime"
+        },
+        "date": {
+          "operator": "dateAddDays",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "operator": "asDate",
+            "type": {
+              "name": "date"
+            },
+            "operand": {
+              "source": "orders",
+              "field": "ordered_at",
+              "type": {
+                "name": "datetime"
+              }
+            },
+            "zone": {
+              "source": "users",
+              "field": "time_zone",
+              "type": {
+                "name": "string"
+              }
+            }
+          },
+          "days": {
+            "type": {
+              "name": "integer"
+            },
+            "value": 1
+          }
+        },
+        "time": {
+          "source": "orders",
+          "field": "delivery_window_start",
+          "type": {
+            "name": "time"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "ordered_at"
+    },
+    {
+      "column": "id"
+    }
+  ]
+}
