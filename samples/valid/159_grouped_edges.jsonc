@@ -130,7 +130,7 @@
     },
     {
       "alias": "verified_key",
-      "expression": { "key": "verified", "type": { "name": "boolean", "nullable": true } }
+      "expression": { "key": "verified", "type": { "name": "boolean" } }
     },
     {
       "alias": "span_end",

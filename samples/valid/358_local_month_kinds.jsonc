@@ -55,7 +55,7 @@
           "operator": "coalesce",
           "type": { "name": "string" },
           "values": [
-            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "param": "optional_zone", "type": { "name": "string", "nullable": true } },
             { "source": "users", "field": "time_zone", "type": { "name": "string" } }
           ]
         }
@@ -68,7 +68,7 @@
         "type": { "name": "datetime", "nullable": true },
         "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
         "months": { "type": { "name": "integer" }, "value": 1 },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {
@@ -144,7 +144,7 @@
           "type": { "name": "datetime", "nullable": true }
         },
         "right": { "param": "since", "type": { "name": "datetime", "nullable": true } },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {

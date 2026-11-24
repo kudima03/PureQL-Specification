@@ -60,7 +60,7 @@
       "expression": {
         "operator": "tryAsDecimal",
         "type": { "name": "decimal", "nullable": true },
-        "operand": { "param": "text", "type": { "name": "string", "nullable": true } }
+        "operand": { "param": "optional_text", "type": { "name": "string", "nullable": true } }
       }
     },
     {
