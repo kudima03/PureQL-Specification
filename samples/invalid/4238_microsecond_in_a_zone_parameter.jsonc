@@ -1,0 +1,16 @@
+// microsecond with a zone parameter: an offset from UTC is a whole number of seconds, so it is the same in
+// every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

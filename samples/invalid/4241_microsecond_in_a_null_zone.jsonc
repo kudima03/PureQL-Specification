@@ -1,0 +1,16 @@
+// microsecond with a typed null zone: an offset from UTC is a whole number of seconds, so it is the same in
+// every zone, and no zone is never written as null
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string", "nullable": true }, "value": null }
+      }
+    }
+  ]
+}

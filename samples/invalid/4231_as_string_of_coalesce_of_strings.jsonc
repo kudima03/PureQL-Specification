@@ -1,0 +1,22 @@
+// asString of a coalesce of strings: it takes every type but string, since asString of a string changes
+// nothing
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "coalesce",
+          "type": { "name": "string" },
+          "values": [
+            { "source": "orders", "field": "coupon_code", "type": { "name": "string", "nullable": true } },
+            { "type": { "name": "string" }, "value": "none" }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// asString of a string inside a where condition: rejected in row context as in a select
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "asString",
+      "type": { "name": "string" },
+      "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    },
+    "right": { "type": { "name": "string" }, "value": "paid" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

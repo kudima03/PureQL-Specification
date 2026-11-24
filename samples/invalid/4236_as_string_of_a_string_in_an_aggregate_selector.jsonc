@@ -1,0 +1,22 @@
+// asString of a string as the selector of a concatAll in a total query
+{
+  "from": { "entity": "orders" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "asString",
+          "type": { "name": "string" },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+        },
+        "separator": { "type": { "name": "string" }, "value": "," },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } }
+        ]
+      }
+    }
+  ]
+}

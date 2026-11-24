@@ -1,0 +1,21 @@
+// asString of an if whose branches are strings: it takes every type but string, since asString of a string
+// changes nothing
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "if",
+          "type": { "name": "string" },
+          "condition": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+          "then": { "type": { "name": "string" }, "value": "paid" },
+          "else": { "source": "orders", "field": "status", "type": { "name": "string" } }
+        }
+      }
+    }
+  ]
+}

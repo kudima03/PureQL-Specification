@@ -1,0 +1,32 @@
+// microsecond of a nullable datetime with a zone: an offset from UTC is a whole number of seconds, so it is
+// the same in every zone
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer", "nullable": true },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

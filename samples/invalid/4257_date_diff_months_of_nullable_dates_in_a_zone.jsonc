@@ -1,0 +1,17 @@
+// dateDiffMonths of a nullable date with a zone: a date is a calendar day already and has no zone; the zone
+// belongs to asDate or to datetimeAddMonths / datetimeDiffMonths
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

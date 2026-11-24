@@ -1,0 +1,124 @@
+// asString of what operators yield, never of a string: an integer part, a datetime start of a period and a
+// decimal quotient inside a concatAll selector, a date group key, and aggregates of each type; an aggregate
+// that may be null gives a nullable string.
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "month",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "key": "month", "type": { "name": "date" } }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "operator": "count", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+        }
+      }
+    },
+    {
+      "alias": "latest",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "datetime" },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "last_shipped",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "max",
+          "type": { "name": "date", "nullable": true },
+          "selector": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        }
+      }
+    },
+    {
+      "alias": "stamps",
+      "expression": {
+        "operator": "concatAll",
+        "type": { "name": "string" },
+        "selector": {
+          "operator": "concat",
+          "type": { "name": "string" },
+          "values": [
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "microsecond",
+                "type": { "name": "integer" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              }
+            },
+            { "type": { "name": "string" }, "value": "@" },
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "startOfSecond",
+                "type": { "name": "datetime" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+              }
+            },
+            { "type": { "name": "string" }, "value": "/" },
+            {
+              "operator": "asString",
+              "type": { "name": "string" },
+              "operand": {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  { "type": { "name": "integer" }, "value": 3 }
+                ]
+              }
+            }
+          ]
+        },
+        "separator": { "type": { "name": "string" }, "value": ", " },
+        "orderBy": [
+          { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+        ]
+      }
+    }
+  ]
+}

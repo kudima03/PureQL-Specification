@@ -1,0 +1,29 @@
+// dateDiffMonths with the user's zone column: a date is a calendar day already and has no zone; the zone
+// belongs to asDate or to datetimeAddMonths / datetimeDiffMonths
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "param": "today", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

@@ -34,11 +34,11 @@ The language grows from basic arithmetic, dates and aggregates to a full analyti
 - **Start of a period**: `startOfYear` … `startOfSecond`, keeping the type of the operand, e.g. to group by month.
 - **Months**: `dateAddMonths` / `datetimeAddMonths` clamp to the end of a shorter month, and `dateDiffMonths` / `datetimeDiffMonths` are their exact inverse.
 - **From parts**: `dateFromParts`, `timeFromParts` and `datetimeFromParts`; a part out of range is an execution error, never rolled over.
-- **Time zones**: an optional `zone` on every operator that reads a calendar or a clock from a `datetime` (`asDate`, `asTime`, the parts, `startOf…`, month arithmetic) or builds one from a local date and time (`asDatetime` of a `date`, `datetimeFromParts`). A zone is a string expression; a literal one must be a current IANA name from `tools/time_zones.txt`. Clock changes follow one rule: a local time that occurs twice is its first occurrence, one that never occurs is the instant the clocks jump over it.
+- **Time zones**: an optional `zone` on every operator that reads a calendar or a clock from a `datetime` (`asDate`, `asTime`, the parts `year` … `second`, `startOfYear` … `startOfMinute`, `datetimeAddMonths` / `datetimeDiffMonths`) or builds one from a local date and time (`asDatetime` of a `date`, `datetimeFromParts`). `microsecond` and `startOfSecond` take none, since every offset is a whole number of seconds, and neither does an operator of a `date`, a `time` or a string (`dateAddMonths` / `dateDiffMonths` included). A zone is a string expression; a literal one must be a current IANA name from `tools/time_zones.txt`. Clock changes follow one rule: a local time that occurs twice is its first occurrence, one that never occurs is the instant the clocks jump over it.
 
 #### Conversions
 
-- **`as<Type>` operators**: `asString` of any type, written exactly as a literal of that type is spelled; `asDate`, `asTime`, `asDatetime` between temporal types; `asInteger`, `asDecimal`, `asBoolean`, `asUuid` and the temporal ones also read a string, and fail on text that is not a literal spelling.
+- **`as<Type>` operators**: `asString` of every type but `string`, written exactly as a literal of that type is spelled; `asDate`, `asTime`, `asDatetime` between temporal types; `asInteger`, `asDecimal`, `asBoolean`, `asUuid` and the temporal ones also read a string, and fail on text that is not a literal spelling.
 - **`tryAs<Type>`**: reads a nullable string and gives null instead of failing.
 - **Explicit widening**: `asDecimal` of an `integer` and `asNullable`, for positions where the expression itself fixes the type (a column, a group key, a recursive seed column).
 

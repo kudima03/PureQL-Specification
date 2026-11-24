@@ -1,0 +1,20 @@
+// dateAddMonths with a zone in where: a date is a calendar day already and has no zone; the zone belongs to
+// asDate or to datetimeAddMonths / datetimeDiffMonths
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateAddMonths",
+      "type": { "name": "date" },
+      "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+      "months": { "type": { "name": "integer" }, "value": 1 },
+      "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+    },
+    "right": { "param": "since", "type": { "name": "date" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

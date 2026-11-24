@@ -1,0 +1,19 @@
+// asString of upper, which declares a string: it takes every type but string, since asString of a string
+// changes nothing
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": {
+          "operator": "upper",
+          "type": { "name": "string" },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+        }
+      }
+    }
+  ]
+}
