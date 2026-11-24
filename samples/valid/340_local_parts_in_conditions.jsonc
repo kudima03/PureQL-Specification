@@ -1,0 +1,143 @@
+// Conditions on the local hour, weekday, month and day of each user: whether a user can be called now, a
+// greeting by the local hour, a birthday on the user's own local day.
+{
+  "from": { "entity": "users" },
+  "where": { "source": "users", "field": "is_active", "type": { "name": "boolean" } },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "local_hour_now",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "param": "now", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "can_be_called_now",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "greaterThanOrEqual",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "hour",
+              "type": { "name": "integer" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            },
+            "right": {
+              "operator": "hour",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+            }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "hour",
+              "type": { "name": "integer" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 21 }
+          },
+          {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "dayOfWeek",
+              "type": { "name": "integer" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            },
+            "right": { "type": { "name": "integer" }, "value": 6 }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "greeting",
+      "expression": {
+        "operator": "if",
+        "type": { "name": "string" },
+        "condition": {
+          "operator": "lessThan",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "hour",
+            "type": { "name": "integer" },
+            "operand": { "param": "now", "type": { "name": "datetime" } },
+            "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+          },
+          "right": { "type": { "name": "integer" }, "value": 12 }
+        },
+        "then": { "type": { "name": "string" }, "value": "Good morning" },
+        "else": { "type": { "name": "string" }, "value": "Good afternoon" }
+      }
+    },
+    {
+      "alias": "signed_up_this_local_year",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "year",
+          "type": { "name": "integer" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "birthday_today",
+      "expression": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "month",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+            },
+            "right": {
+              "operator": "month",
+              "type": { "name": "integer" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          },
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "operator": "day",
+              "type": { "name": "integer" },
+              "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } }
+            },
+            "right": {
+              "operator": "day",
+              "type": { "name": "integer" },
+              "operand": { "param": "now", "type": { "name": "datetime" } },
+              "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [ { "column": "id" } ]
+}

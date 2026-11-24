@@ -1,0 +1,16 @@
+// dateDiffDays with a zone: dates have no zone; the local days are asDate of each datetime in the zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateDiffDays",
+        "type": { "name": "integer" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

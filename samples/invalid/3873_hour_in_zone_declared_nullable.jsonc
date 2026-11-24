@@ -1,0 +1,15 @@
+// hour of a non-null datetime in a non-null zone declared integer?
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer", "nullable": true },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

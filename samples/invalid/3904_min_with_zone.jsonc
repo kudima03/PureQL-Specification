@@ -1,0 +1,15 @@
+// min of a datetime with a zone: the earliest instant does not depend on a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "min",
+        "type": { "name": "datetime" },
+        "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// microsecond of a time in a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "microsecond",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+// hour with an offset next to its zone: the offset follows from the zone and the instant
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "offset": { "type": { "name": "integer" }, "value": 3 }
+      }
+    }
+  ]
+}

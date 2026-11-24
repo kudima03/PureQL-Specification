@@ -1,0 +1,19 @@
+// week of a nullable datetime in a zone declared integer
+{
+  "from": { "entity": "users" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "week",
+        "type": { "name": "integer" },
+        "operand": {
+          "source": "users",
+          "field": "last_login_at",
+          "type": { "name": "datetime", "nullable": true }
+        },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

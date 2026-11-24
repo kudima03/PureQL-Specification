@@ -1,0 +1,17 @@
+// timeFromParts with a zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "timeFromParts",
+        "type": { "name": "time" },
+        "hour": { "type": { "name": "integer" }, "value": 18 },
+        "minute": { "type": { "name": "integer" }, "value": 30 },
+        "second": { "type": { "name": "integer" }, "value": 0 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

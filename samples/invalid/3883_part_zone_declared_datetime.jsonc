@@ -1,0 +1,15 @@
+// year with a datetime as its zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "year",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

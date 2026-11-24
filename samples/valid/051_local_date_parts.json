@@ -1,0 +1,215 @@
+{
+  "from": {
+    "entity": "orders"
+  },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "source": "orders",
+      "field": "ordered_at",
+      "type": {
+        "name": "datetime"
+      }
+    },
+    "right": {
+      "param": "since",
+      "type": {
+        "name": "datetime"
+      }
+    }
+  },
+  "groupBy": [
+    {
+      "alias": "weekday",
+      "expression": {
+        "operator": "dayOfWeek",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "param": "zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "hour",
+      "expression": {
+        "operator": "hour",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "orders",
+          "field": "ordered_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "param": "zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "weekday",
+      "expression": {
+        "key": "weekday",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "hour",
+      "expression": {
+        "key": "hour",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "orders",
+      "expression": {
+        "operator": "count",
+        "type": {
+          "name": "integer"
+        }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "orders",
+          "field": "total",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    },
+    {
+      "alias": "at_the_weekend",
+      "expression": {
+        "operator": "greaterThanOrEqual",
+        "type": {
+          "name": "boolean"
+        },
+        "left": {
+          "key": "weekday",
+          "type": {
+            "name": "integer"
+          }
+        },
+        "right": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 6
+        }
+      }
+    },
+    {
+      "alias": "in_business_hours",
+      "expression": {
+        "operator": "and",
+        "type": {
+          "name": "boolean"
+        },
+        "conditions": [
+          {
+            "operator": "greaterThanOrEqual",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "key": "hour",
+              "type": {
+                "name": "integer"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 9
+            }
+          },
+          {
+            "operator": "lessThan",
+            "type": {
+              "name": "boolean"
+            },
+            "left": {
+              "key": "hour",
+              "type": {
+                "name": "integer"
+              }
+            },
+            "right": {
+              "type": {
+                "name": "integer"
+              },
+              "value": 18
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "share_of_all_orders",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "operator": "count",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "operator": "count",
+            "type": {
+              "name": "integer"
+            },
+            "over": "all"
+          }
+        ]
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "weekday"
+    },
+    {
+      "column": "hour"
+    }
+  ]
+}

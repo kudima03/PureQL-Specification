@@ -1,0 +1,16 @@
+// hour with a second zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "hour",
+        "type": { "name": "integer" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "from": { "type": { "name": "string" }, "value": "America/New_York" }
+      }
+    }
+  ]
+}

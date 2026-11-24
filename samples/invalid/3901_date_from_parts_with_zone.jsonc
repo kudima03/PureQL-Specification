@@ -1,0 +1,17 @@
+// dateFromParts with a zone: a date has no zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "dateFromParts",
+        "type": { "name": "date" },
+        "year": { "type": { "name": "integer" }, "value": 2024 },
+        "month": { "type": { "name": "integer" }, "value": 3 },
+        "day": { "type": { "name": "integer" }, "value": 31 },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

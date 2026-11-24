@@ -1,0 +1,16 @@
+// equal of two datetimes with a zone: instants are compared, whatever the zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "right": { "source": "orders", "field": "shipped_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

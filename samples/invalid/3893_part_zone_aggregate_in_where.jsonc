@@ -1,0 +1,22 @@
+// hour in where with an aggregate as its zone
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "lessThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "hour",
+      "type": { "name": "integer" },
+      "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "zone": {
+        "operator": "min",
+        "type": { "name": "string" },
+        "selector": { "source": "orders", "field": "status", "type": { "name": "string" } }
+      }
+    },
+    "right": { "type": { "name": "integer" }, "value": 6 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
