@@ -1,0 +1,109 @@
+// Rows grouped by the start of the local day in a subquery, then read as instants: the local day of each
+// bucket, totals by local month and week over windows, and the previous bucket.
+{
+  "subqueries": [
+    {
+      "name": "local_days",
+      "query": {
+        "from": { "entity": "orders" },
+        "groupBy": [
+          {
+            "alias": "day_start",
+            "expression": {
+              "operator": "startOfDay",
+              "type": { "name": "datetime" },
+              "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          }
+        ],
+        "select": [
+          { "alias": "day_start", "expression": { "key": "day_start", "type": { "name": "datetime" } } },
+          {
+            "alias": "revenue",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+            }
+          },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ]
+      }
+    }
+  ],
+  "from": { "subquery": "local_days" },
+  "select": [
+    {
+      "alias": "day_start",
+      "expression": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } }
+    },
+    {
+      "alias": "local_day",
+      "expression": {
+        "operator": "asDate",
+        "type": { "name": "date" },
+        "operand": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } },
+        "zone": { "param": "zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "revenue",
+      "expression": { "source": "local_days", "field": "revenue", "type": { "name": "decimal" } }
+    },
+    {
+      "alias": "revenue_of_the_local_month",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "local_days", "field": "revenue", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "startOfMonth",
+              "type": { "name": "datetime" },
+              "operand": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "running_in_the_local_week",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "local_days", "field": "revenue", "type": { "name": "decimal" } },
+        "over": {
+          "partitionBy": [
+            {
+              "operator": "startOfWeek",
+              "type": { "name": "datetime" },
+              "operand": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } },
+              "zone": { "param": "zone", "type": { "name": "string" } }
+            }
+          ],
+          "orderBy": [
+            { "expression": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "previous_day_start",
+      "expression": {
+        "operator": "previous",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "local_days", "field": "day_start", "type": { "name": "datetime" } } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "day_start" } ]
+}

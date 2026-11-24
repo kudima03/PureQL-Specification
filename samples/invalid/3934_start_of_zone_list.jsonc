@@ -1,0 +1,18 @@
+// startOfDay with a list of zones
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": [
+          { "type": { "name": "string" }, "value": "Europe/Moscow" },
+          { "type": { "name": "string" }, "value": "America/New_York" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+// startOfDay in the literal zone UTC: UTC is the absence of zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfDay",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "UTC" }
+      }
+    }
+  ]
+}

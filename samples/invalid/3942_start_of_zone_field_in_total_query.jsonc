@@ -1,0 +1,19 @@
+// startOfMonth of an aggregate in a total query with a field as its zone
+{
+  "from": { "entity": "users" },
+  "aggregate": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfMonth",
+        "type": { "name": "datetime", "nullable": true },
+        "operand": {
+          "operator": "min",
+          "type": { "name": "datetime", "nullable": true },
+          "selector": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+        },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

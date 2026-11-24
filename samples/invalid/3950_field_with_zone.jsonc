@@ -1,0 +1,15 @@
+// A field with a zone: a zone belongs to the operator that reads the datetime
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "source": "orders",
+        "field": "ordered_at",
+        "type": { "name": "datetime" },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ]
+}

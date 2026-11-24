@@ -1,0 +1,16 @@
+// startOfWeek in a zone with a first day: a week starts on Monday in every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "startOfWeek",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" },
+        "firstDay": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+// A datetime literal with a zone next to it: a literal is always in UTC
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "type": { "name": "datetime" },
+        "value": "2024-01-31T18:30:00Z",
+        "zone": "Europe/Moscow"
+      }
+    }
+  ]
+}
