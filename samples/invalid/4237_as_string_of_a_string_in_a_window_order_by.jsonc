@@ -1,0 +1,24 @@
+// asString of a string as the sort key of a window
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "asString",
+                "type": { "name": "string" },
+                "operand": { "source": "orders", "field": "status", "type": { "name": "string" } }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

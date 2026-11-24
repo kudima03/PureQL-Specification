@@ -1,0 +1,14 @@
+// asString of a string parameter: it takes every type but string, since asString of a string changes nothing
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string" },
+        "operand": { "param": "label", "type": { "name": "string" } }
+      }
+    }
+  ]
+}

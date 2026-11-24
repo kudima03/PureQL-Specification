@@ -1,0 +1,20 @@
+// asString of extractRegex, a nullable string: it takes every type but string, since asString of a string
+// changes nothing
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "asString",
+        "type": { "name": "string", "nullable": true },
+        "operand": {
+          "operator": "extractRegex",
+          "type": { "name": "string", "nullable": true },
+          "operand": { "source": "orders", "field": "status", "type": { "name": "string" } },
+          "pattern": { "type": { "name": "string" }, "value": "[a-z]+" }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "from": {
+    "entity": "users"
+  },
+  "where": {
+    "source": "users",
+    "field": "is_active",
+    "type": {
+      "name": "boolean"
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "users",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "signed_up_at",
+      "expression": {
+        "operator": "asString",
+        "type": {
+          "name": "string"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "signed_up_local_second",
+      "expression": {
+        "operator": "second",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "signed_up_microsecond",
+      "expression": {
+        "operator": "microsecond",
+        "type": {
+          "name": "integer"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "signed_up_local_minute",
+      "expression": {
+        "operator": "startOfMinute",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "signed_up_second",
+      "expression": {
+        "operator": "startOfSecond",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        }
+      }
+    },
+    {
+      "alias": "signed_up_local_date",
+      "expression": {
+        "operator": "asDate",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "first_local_anniversary",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": {
+          "name": "datetime"
+        },
+        "operand": {
+          "source": "users",
+          "field": "created_at",
+          "type": {
+            "name": "datetime"
+          }
+        },
+        "months": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 12
+        },
+        "zone": {
+          "source": "users",
+          "field": "time_zone",
+          "type": {
+            "name": "string"
+          }
+        }
+      }
+    },
+    {
+      "alias": "first_anniversary_date",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": {
+          "name": "date"
+        },
+        "operand": {
+          "operator": "asDate",
+          "type": {
+            "name": "date"
+          },
+          "operand": {
+            "source": "users",
+            "field": "created_at",
+            "type": {
+              "name": "datetime"
+            }
+          },
+          "zone": {
+            "source": "users",
+            "field": "time_zone",
+            "type": {
+              "name": "string"
+            }
+          }
+        },
+        "months": {
+          "type": {
+            "name": "integer"
+          },
+          "value": 12
+        }
+      }
+    },
+    {
+      "alias": "age_in_months",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": {
+          "name": "integer"
+        },
+        "left": {
+          "param": "today",
+          "type": {
+            "name": "date"
+          }
+        },
+        "right": {
+          "source": "users",
+          "field": "birth_date",
+          "type": {
+            "name": "date"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "signed_up_at"
+    },
+    {
+      "column": "id"
+    }
+  ]
+}

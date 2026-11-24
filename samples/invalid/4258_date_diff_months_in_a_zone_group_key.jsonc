@@ -1,0 +1,18 @@
+// dateDiffMonths with a zone as a group key: a date is a calendar day already and has no zone; the zone
+// belongs to asDate or to datetimeAddMonths / datetimeDiffMonths
+{
+  "from": { "entity": "orders" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "param": "today", "type": { "name": "date" } },
+        "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+      }
+    }
+  ],
+  "select": [ { "alias": "n", "expression": { "operator": "count", "type": { "name": "integer" } } } ]
+}

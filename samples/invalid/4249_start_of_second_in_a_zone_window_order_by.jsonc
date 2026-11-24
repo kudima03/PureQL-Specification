@@ -1,0 +1,26 @@
+// startOfSecond with a zone as the sort key of a window: an offset from UTC is a whole number of seconds, so
+// it is the same in every zone
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "rowNumber",
+        "type": { "name": "integer" },
+        "over": {
+          "orderBy": [
+            {
+              "expression": {
+                "operator": "startOfSecond",
+                "type": { "name": "datetime" },
+                "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+// microsecond, startOfSecond, dateAddMonths and dateDiffMonths take no zone, and appear without one in where,
+// a group key, an aggregate selector and predicate, having, and the partition and sort keys of a window in a
+// subquery; a nullable date makes the month arithmetic nullable.
+{
+  "subqueries": [
+    {
+      "name": "ranked",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "rank_in_second",
+            "expression": {
+              "operator": "rowNumber",
+              "type": { "name": "integer" },
+              "over": {
+                "partitionBy": [
+                  {
+                    "operator": "startOfSecond",
+                    "type": { "name": "datetime" },
+                    "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                  }
+                ],
+                "orderBy": [
+                  {
+                    "expression": {
+                      "operator": "microsecond",
+                      "type": { "name": "integer" },
+                      "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+                    }
+                  },
+                  { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "subquery": "ranked",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "ranked", "field": "id", "type": { "name": "uuid" } },
+        "right": { "source": "orders", "field": "id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "dateDiffMonths",
+          "type": { "name": "integer" },
+          "left": { "param": "today", "type": { "name": "date" } },
+          "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      },
+      {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "microsecond",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 500000 }
+      }
+    ]
+  },
+  "groupBy": [
+    {
+      "alias": "second",
+      "expression": {
+        "operator": "startOfSecond",
+        "type": { "name": "datetime" },
+        "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    },
+    {
+      "alias": "renewal",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "shipped_renewal",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "source": "orders",
+          "field": "shipped_date",
+          "type": { "name": "date", "nullable": true }
+        },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "second", "expression": { "key": "second", "type": { "name": "datetime" } } },
+    { "alias": "renewal", "expression": { "key": "renewal", "type": { "name": "date" } } },
+    {
+      "alias": "shipped_renewal",
+      "expression": { "key": "shipped_renewal", "type": { "name": "date", "nullable": true } }
+    },
+    {
+      "alias": "latest_microsecond",
+      "expression": {
+        "operator": "max",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "microsecond",
+          "type": { "name": "integer" },
+          "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        }
+      }
+    },
+    {
+      "alias": "first_ranks",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": { "source": "ranked", "field": "rank_in_second", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    },
+    {
+      "alias": "shipped_same_month",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "equal",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "dateDiffMonths",
+            "type": { "name": "integer", "nullable": true },
+            "left": {
+              "source": "orders",
+              "field": "shipped_date",
+              "type": { "name": "date", "nullable": true }
+            },
+            "right": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+          },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "dateDiffMonths",
+      "type": { "name": "integer" },
+      "left": { "key": "renewal", "type": { "name": "date" } },
+      "right": { "param": "today", "type": { "name": "date" } }
+    },
+    "right": { "type": { "name": "integer" }, "value": -12 }
+  }
+}

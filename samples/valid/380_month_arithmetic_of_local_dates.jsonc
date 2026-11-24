@@ -1,0 +1,112 @@
+// Month arithmetic on a local calendar date: the zone is read once by asDate, then dateAddMonths and
+// dateDiffMonths move a date, which has no zone; next to datetimeAddMonths and datetimeDiffMonths, which take
+// the zone themselves and keep the local time of day. A nullable datetime or zone makes every step nullable.
+{
+  "from": { "entity": "users" },
+  "select": [
+    { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "local_renewal_date",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date" },
+        "operand": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "months": { "type": { "name": "integer" }, "value": 1 }
+      }
+    },
+    {
+      "alias": "local_renewal",
+      "expression": {
+        "operator": "datetimeAddMonths",
+        "type": { "name": "datetime" },
+        "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "months": { "type": { "name": "integer" }, "value": 1 },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "local_months_as_member",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "param": "now", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "right": {
+          "operator": "asDate",
+          "type": { "name": "date" },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "months_as_member",
+      "expression": {
+        "operator": "datetimeDiffMonths",
+        "type": { "name": "integer" },
+        "left": { "param": "now", "type": { "name": "datetime" } },
+        "right": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+        "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+      }
+    },
+    {
+      "alias": "login_renewal_date",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "operator": "asDate",
+          "type": { "name": "date", "nullable": true },
+          "operand": {
+            "source": "users",
+            "field": "last_login_at",
+            "type": { "name": "datetime", "nullable": true }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        },
+        "months": { "param": "months", "type": { "name": "integer" } }
+      }
+    },
+    {
+      "alias": "months_since_login",
+      "expression": {
+        "operator": "dateDiffMonths",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "param": "today", "type": { "name": "date" } },
+        "right": {
+          "operator": "asDate",
+          "type": { "name": "date", "nullable": true },
+          "operand": {
+            "source": "users",
+            "field": "last_login_at",
+            "type": { "name": "datetime", "nullable": true }
+          },
+          "zone": { "source": "users", "field": "time_zone", "type": { "name": "string" } }
+        }
+      }
+    },
+    {
+      "alias": "renewal_in_chosen_zone",
+      "expression": {
+        "operator": "dateAddMonths",
+        "type": { "name": "date", "nullable": true },
+        "operand": {
+          "operator": "asDate",
+          "type": { "name": "date", "nullable": true },
+          "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+          "zone": { "param": "chosen_zone", "type": { "name": "string", "nullable": true } }
+        },
+        "months": { "type": { "name": "integer" }, "value": 12 }
+      }
+    }
+  ]
+}

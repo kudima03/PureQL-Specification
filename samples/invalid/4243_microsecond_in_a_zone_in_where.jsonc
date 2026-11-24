@@ -1,0 +1,19 @@
+// microsecond with a zone in where: an offset from UTC is a whole number of seconds, so it is the same in
+// every zone
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "microsecond",
+      "type": { "name": "integer" },
+      "operand": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+      "zone": { "type": { "name": "string" }, "value": "Europe/Moscow" }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
