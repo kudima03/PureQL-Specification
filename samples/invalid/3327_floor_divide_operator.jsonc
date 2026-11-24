@@ -1,0 +1,15 @@
+// floorDivide is not an operator: integerDivide truncates toward zero
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "floorDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

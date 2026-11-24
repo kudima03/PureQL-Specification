@@ -1,0 +1,15 @@
+// integerDivide of non-null decimals declared integer?
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

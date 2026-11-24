@@ -1,0 +1,15 @@
+// modulo of a string
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "type": { "name": "string" }, "value": "7.5" },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

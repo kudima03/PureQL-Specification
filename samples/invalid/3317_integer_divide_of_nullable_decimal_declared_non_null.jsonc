@@ -1,0 +1,15 @@
+// integerDivide of a nullable decimal declared integer: it is lifted
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "param": "amount", "type": { "name": "decimal", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 2 }
+      }
+    }
+  ]
+}

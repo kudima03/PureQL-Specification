@@ -1,0 +1,129 @@
+// integerDivide and modulo of decimals as group keys, in having, over aggregates and inside a selector and a
+// predicate.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "price_band",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 10 }
+      }
+    },
+    {
+      "alias": "cents",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "modulo",
+      "type": { "name": "decimal" },
+      "left": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      },
+      "right": { "type": { "name": "integer" }, "value": 100 }
+    },
+    "right": { "type": { "name": "decimal" }, "value": "0.5" }
+  },
+  "select": [
+    { "alias": "price_band", "expression": { "key": "price_band", "type": { "name": "integer" } } },
+    { "alias": "cents", "expression": { "key": "cents", "type": { "name": "decimal" } } },
+    {
+      "alias": "remainder_of_the_sum",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 100 }
+      }
+    },
+    {
+      "alias": "hundreds_in_the_sum",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "decimal" },
+          "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 100 }
+      }
+    },
+    {
+      "alias": "average_remainder",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "modulo",
+          "type": { "name": "decimal" },
+          "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          "right": { "type": { "name": "decimal" }, "value": "0.05" }
+        }
+      }
+    },
+    {
+      "alias": "off_step",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "notEqual",
+          "type": { "name": "boolean" },
+          "left": {
+            "operator": "modulo",
+            "type": { "name": "decimal" },
+            "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            "right": { "type": { "name": "decimal" }, "value": "0.05" }
+          },
+          "right": { "type": { "name": "integer" }, "value": 0 }
+        }
+      }
+    },
+    {
+      "alias": "band_start",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "integer" },
+        "values": [
+          { "key": "price_band", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 10 }
+        ]
+      }
+    },
+    {
+      "alias": "dozens",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": {
+          "operator": "sum",
+          "type": { "name": "integer" },
+          "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    }
+  ],
+  "orderBy": [
+    { "expression": { "key": "price_band", "type": { "name": "integer" } } },
+    { "expression": { "key": "cents", "type": { "name": "decimal" } } }
+  ]
+}

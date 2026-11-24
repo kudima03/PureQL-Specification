@@ -1,0 +1,15 @@
+// modulo of non-null decimals declared decimal?
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal", "nullable": true },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

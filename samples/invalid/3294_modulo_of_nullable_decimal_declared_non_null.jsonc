@@ -1,0 +1,15 @@
+// modulo of a nullable decimal declared decimal: it is lifted
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "param": "amount", "type": { "name": "decimal", "nullable": true } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

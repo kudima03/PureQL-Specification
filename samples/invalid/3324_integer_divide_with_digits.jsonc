@@ -1,0 +1,16 @@
+// integerDivide with digits
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 2 },
+        "digits": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+// integerDivide of decimals with a values array
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "integerDivide",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

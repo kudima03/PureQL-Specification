@@ -27426,10 +27426,10 @@
     "integerDivide.integer.nullable@group": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer.nullable@group"
+          "$ref": "#/$defs/decimal.nullable@group"
         },
         "right": {
-          "$ref": "#/$defs/integer.nullable@group"
+          "$ref": "#/$defs/decimal.nullable@group"
         }
       },
       "allOf": [
@@ -27462,10 +27462,10 @@
     "integerDivide.integer.nullable@projection": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer.nullable@projection"
+          "$ref": "#/$defs/decimal.nullable@projection"
         },
         "right": {
-          "$ref": "#/$defs/integer.nullable@projection"
+          "$ref": "#/$defs/decimal.nullable@projection"
         }
       },
       "allOf": [
@@ -27498,10 +27498,10 @@
     "integerDivide.integer.nullable@row": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer.nullable@row"
+          "$ref": "#/$defs/decimal.nullable@row"
         },
         "right": {
-          "$ref": "#/$defs/integer.nullable@row"
+          "$ref": "#/$defs/decimal.nullable@row"
         }
       },
       "allOf": [
@@ -27534,10 +27534,10 @@
     "integerDivide.integer.nullable@total": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer.nullable@total"
+          "$ref": "#/$defs/decimal.nullable@total"
         },
         "right": {
-          "$ref": "#/$defs/integer.nullable@total"
+          "$ref": "#/$defs/decimal.nullable@total"
         }
       },
       "allOf": [
@@ -27570,40 +27570,40 @@
     "integerDivide.integer@group": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer@group"
+          "$ref": "#/$defs/decimal@group"
         },
         "right": {
-          "$ref": "#/$defs/integer@group"
+          "$ref": "#/$defs/decimal@group"
         }
       }
     },
     "integerDivide.integer@projection": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer@projection"
+          "$ref": "#/$defs/decimal@projection"
         },
         "right": {
-          "$ref": "#/$defs/integer@projection"
+          "$ref": "#/$defs/decimal@projection"
         }
       }
     },
     "integerDivide.integer@row": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer@row"
+          "$ref": "#/$defs/decimal@row"
         },
         "right": {
-          "$ref": "#/$defs/integer@row"
+          "$ref": "#/$defs/decimal@row"
         }
       }
     },
     "integerDivide.integer@total": {
       "properties": {
         "left": {
-          "$ref": "#/$defs/integer@total"
+          "$ref": "#/$defs/decimal@total"
         },
         "right": {
-          "$ref": "#/$defs/integer@total"
+          "$ref": "#/$defs/decimal@total"
         }
       }
     },
@@ -40700,6 +40700,502 @@
         }
       ]
     },
+    "modulo.decimal.nullable@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal.nullable@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal.nullable@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal.nullable@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal.nullable@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "$ref": "#/$defs/declares.nullable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal@group": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@group"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@group"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal@projection": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@projection"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@projection"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal@row": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@row"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@row"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulo.decimal@total": {
+      "properties": {
+        "left": {
+          "$ref": "#/$defs/decimal@total"
+        },
+        "right": {
+          "$ref": "#/$defs/decimal@total"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "required": [
+                "left"
+              ],
+              "properties": {
+                "left": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "required": [
+                "right"
+              ],
+              "properties": {
+                "right": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/$defs/declares.decimal"
+                    },
+                    {
+                      "$ref": "#/$defs/declares.decimal.nullable"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
     "modulo.integer.nullable@group": {
       "properties": {
         "left": {
@@ -40901,7 +41397,8 @@
           "properties": {
             "name": {
               "enum": [
-                "integer"
+                "integer",
+                "decimal"
               ]
             }
           }
@@ -40926,6 +41423,22 @@
           "then": {
             "$ref": "#/$defs/modulo.integer.nullable@group"
           }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal@group"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal.nullable@group"
+          }
         }
       ]
     },
@@ -40946,7 +41459,8 @@
           "properties": {
             "name": {
               "enum": [
-                "integer"
+                "integer",
+                "decimal"
               ]
             }
           }
@@ -40971,6 +41485,22 @@
           "then": {
             "$ref": "#/$defs/modulo.integer.nullable@projection"
           }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal@projection"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal.nullable@projection"
+          }
         }
       ]
     },
@@ -40991,7 +41521,8 @@
           "properties": {
             "name": {
               "enum": [
-                "integer"
+                "integer",
+                "decimal"
               ]
             }
           }
@@ -41016,6 +41547,22 @@
           "then": {
             "$ref": "#/$defs/modulo.integer.nullable@row"
           }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal@row"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal.nullable@row"
+          }
         }
       ]
     },
@@ -41036,7 +41583,8 @@
           "properties": {
             "name": {
               "enum": [
-                "integer"
+                "integer",
+                "decimal"
               ]
             }
           }
@@ -41060,6 +41608,22 @@
           },
           "then": {
             "$ref": "#/$defs/modulo.integer.nullable@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal@total"
+          }
+        },
+        {
+          "if": {
+            "$ref": "#/$defs/declares.decimal.nullable"
+          },
+          "then": {
+            "$ref": "#/$defs/modulo.decimal.nullable@total"
           }
         }
       ]

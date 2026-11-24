@@ -1,0 +1,21 @@
+// modulo of a field in a grouped select, which reads only group keys and aggregates
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "k",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}

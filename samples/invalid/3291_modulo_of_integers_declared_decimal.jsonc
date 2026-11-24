@@ -1,0 +1,15 @@
+// modulo of two integers declared decimal: integer operands give an integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "right": { "type": { "name": "integer" }, "value": 12 }
+      }
+    }
+  ]
+}

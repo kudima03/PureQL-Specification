@@ -1,0 +1,15 @@
+// modulo of a date: a part of a date is year, month or day
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+        "right": { "type": { "name": "integer" }, "value": 7 }
+      }
+    }
+  ]
+}

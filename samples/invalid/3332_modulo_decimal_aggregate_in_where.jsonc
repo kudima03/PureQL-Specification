@@ -1,0 +1,22 @@
+// modulo of an aggregate in where, a row context without aggregates
+{
+  "from": { "entity": "order_items" },
+  "where": {
+    "operator": "equal",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "modulo",
+      "type": { "name": "decimal" },
+      "left": {
+        "operator": "sum",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      },
+      "right": { "type": { "name": "integer" }, "value": 1 }
+    },
+    "right": { "type": { "name": "integer" }, "value": 0 }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

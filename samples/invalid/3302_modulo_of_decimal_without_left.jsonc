@@ -1,0 +1,14 @@
+// modulo of a decimal without left
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "modulo",
+        "type": { "name": "decimal" },
+        "right": { "type": { "name": "integer" }, "value": 1 }
+      }
+    }
+  ]
+}
