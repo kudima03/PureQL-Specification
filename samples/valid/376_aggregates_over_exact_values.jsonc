@@ -1,0 +1,153 @@
+// sum, average and the statistics, which are computed from exact values: integer sums over a group,
+// over all rows and over a window, a decimal mean that is nullable only in a total query, a variance,
+// and a sum of an operator over a list
+{
+  "subqueries": [
+    {
+      "name": "by_order",
+      "query": {
+        "from": { "entity": "order_items" },
+        "groupBy": [
+          {
+            "alias": "order_id",
+            "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "order_id", "expression": { "key": "order_id", "type": { "name": "uuid" } } },
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            }
+          },
+          {
+            "alias": "all_units",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "over": "all"
+            }
+          },
+          {
+            "alias": "mean",
+            "expression": {
+              "operator": "average",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "spread",
+            "expression": {
+              "operator": "variancePopulation",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "filtered",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "decimal" },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              "predicate": {
+                "operator": "greaterThan",
+                "type": { "name": "boolean" },
+                "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                "right": { "type": { "name": "integer" }, "value": 1 }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "overall",
+      "query": {
+        "from": { "entity": "order_items" },
+        "aggregate": [
+          {
+            "alias": "units",
+            "expression": {
+              "operator": "sum",
+              "type": { "name": "integer" },
+              "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+            }
+          },
+          {
+            "alias": "mean",
+            "expression": {
+              "operator": "average",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          },
+          {
+            "alias": "deviation",
+            "expression": {
+              "operator": "standardDeviationSample",
+              "type": { "name": "decimal", "nullable": true },
+              "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "units_so_far",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "over": {
+          "orderBy": [
+            { "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": "all" }
+        }
+      }
+    },
+    {
+      "alias": "mean_of_window",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "param": "tax_rate", "type": { "name": "decimal" } }
+          ]
+        },
+        "over": {
+          "partitionBy": [{ "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }]
+        }
+      }
+    },
+    {
+      "alias": "units",
+      "expression": {
+        "operator": "sum",
+        "type": { "name": "integer" },
+        "selector": {
+          "operator": "add",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+            { "type": { "name": "integer" }, "value": 1 }
+          ]
+        }
+      }
+    }
+  ]
+}

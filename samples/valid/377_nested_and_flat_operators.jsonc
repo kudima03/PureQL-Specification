@@ -1,0 +1,75 @@
+// A list operator next to the nested form it stands for, one division by a product in place of two,
+// and a rounding written out with round
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "add",
+            "type": { "name": "integer" },
+            "values": [
+              {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+                  { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+                ]
+              },
+              { "type": { "name": "integer" }, "value": 1 }
+            ]
+          },
+          {
+            "operator": "divide",
+            "type": { "name": "decimal" },
+            "values": [
+              { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              {
+                "operator": "multiply",
+                "type": { "name": "integer" },
+                "values": [
+                  { "param": "parts", "type": { "name": "integer" } },
+                  { "param": "people", "type": { "name": "integer" } }
+                ]
+              }
+            ]
+          },
+          {
+            "operator": "divide",
+            "type": { "name": "decimal" },
+            "values": [
+              {
+                "operator": "divide",
+                "type": { "name": "decimal" },
+                "values": [
+                  { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                  { "param": "parts", "type": { "name": "integer" } }
+                ]
+              },
+              { "param": "people", "type": { "name": "integer" } }
+            ]
+          },
+          {
+            "operator": "round",
+            "type": { "name": "decimal" },
+            "operand": {
+              "operator": "divide",
+              "type": { "name": "decimal" },
+              "values": [
+                { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+                { "type": { "name": "integer" }, "value": 3 },
+                { "type": { "name": "integer" }, "value": 2 }
+              ]
+            },
+            "digits": { "type": { "name": "integer" }, "value": 2 }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "from": {
+    "entity": "order_items"
+  },
+  "where": {
+    "operator": "greaterThan",
+    "type": {
+      "name": "boolean"
+    },
+    "left": {
+      "operator": "multiply",
+      "type": {
+        "name": "decimal"
+      },
+      "values": [
+        {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        },
+        {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        },
+        {
+          "param": "tax_rate",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      ]
+    },
+    "right": {
+      "param": "min_tax",
+      "type": {
+        "name": "decimal"
+      }
+    }
+  },
+  "select": [
+    {
+      "alias": "id",
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    },
+    {
+      "alias": "tax",
+      "expression": {
+        "operator": "multiply",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "order_items",
+            "field": "unit_price",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "param": "tax_rate",
+            "type": {
+              "name": "decimal"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "kept_units",
+      "expression": {
+        "operator": "subtract",
+        "type": {
+          "name": "integer"
+        },
+        "values": [
+          {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "source": "order_items",
+            "field": "returned_quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "param": "reserved_units",
+            "type": {
+              "name": "integer"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "share_in_steps",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "order_items",
+            "field": "unit_price",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "param": "parts",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "param": "people",
+            "type": {
+              "name": "integer"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "alias": "share_rounded_once",
+      "expression": {
+        "operator": "divide",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "order_items",
+            "field": "unit_price",
+            "type": {
+              "name": "decimal"
+            }
+          },
+          {
+            "operator": "multiply",
+            "type": {
+              "name": "integer"
+            },
+            "values": [
+              {
+                "param": "parts",
+                "type": {
+                  "name": "integer"
+                }
+              },
+              {
+                "param": "people",
+                "type": {
+                  "name": "integer"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "alias": "units_and_a_half",
+      "expression": {
+        "operator": "add",
+        "type": {
+          "name": "decimal"
+        },
+        "values": [
+          {
+            "source": "order_items",
+            "field": "quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "source": "order_items",
+            "field": "returned_quantity",
+            "type": {
+              "name": "integer"
+            }
+          },
+          {
+            "type": {
+              "name": "decimal"
+            },
+            "value": "0.5"
+          }
+        ]
+      }
+    },
+    {
+      "alias": "all_units",
+      "expression": {
+        "operator": "sum",
+        "type": {
+          "name": "integer"
+        },
+        "selector": {
+          "source": "order_items",
+          "field": "quantity",
+          "type": {
+            "name": "integer"
+          }
+        }
+      }
+    },
+    {
+      "alias": "average_price",
+      "expression": {
+        "operator": "average",
+        "type": {
+          "name": "decimal"
+        },
+        "selector": {
+          "source": "order_items",
+          "field": "unit_price",
+          "type": {
+            "name": "decimal"
+          }
+        }
+      }
+    }
+  ],
+  "orderBy": [
+    {
+      "column": "tax",
+      "direction": "desc"
+    },
+    {
+      "expression": {
+        "source": "order_items",
+        "field": "id",
+        "type": {
+          "name": "uuid"
+        }
+      }
+    }
+  ],
+  "pagination": {
+    "take": 50
+  }
+}

@@ -1,0 +1,18 @@
+// a decimal literal written as a JSON number in a list of three
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "type": { "name": "decimal" }, "value": 1.5 },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

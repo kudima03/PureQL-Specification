@@ -1,0 +1,7 @@
+// add with no values
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "alias": "value", "expression": { "operator": "add", "type": { "name": "integer" }, "values": [] } }
+  ]
+}

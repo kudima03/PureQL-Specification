@@ -1,0 +1,18 @@
+// a group key in a list of three in a plain select
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "key": "order_id", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

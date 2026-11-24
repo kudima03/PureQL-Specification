@@ -1,0 +1,14 @@
+// average in a total query declared non-null
+{
+  "from": { "entity": "order_items" },
+  "aggregate": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "decimal" },
+        "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

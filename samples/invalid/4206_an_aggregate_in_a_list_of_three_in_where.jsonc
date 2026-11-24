@@ -1,0 +1,21 @@
+// an aggregate in a list of three in where
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    { "alias": "value", "expression": { "source": "order_items", "field": "id", "type": { "name": "uuid" } } }
+  ],
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "add",
+      "type": { "name": "integer" },
+      "values": [
+        { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+        { "operator": "count", "type": { "name": "integer" } }
+      ]
+    },
+    "right": { "type": { "name": "integer" }, "value": 1 }
+  }
+}

@@ -1,0 +1,148 @@
+// Operators over lists of three to six values: integers that stay integer, a decimal first, last or in
+// the middle, a nullable operand first or last, a nullable parameter, a division of integers, the
+// smallest decimal step and the largest integers
+{
+  "from": { "entity": "order_items" },
+  "joins": [
+    {
+      "kind": "left",
+      "entity": "coupons",
+      "on": {
+        "operator": "equal",
+        "type": { "name": "boolean" },
+        "left": { "source": "coupons", "field": "id", "type": { "name": "uuid" } },
+        "right": { "param": "coupon_id", "type": { "name": "uuid" } }
+      }
+    }
+  ],
+  "select": [
+    {
+      "alias": "integers",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 },
+          { "type": { "name": "integer" }, "value": -2 },
+          { "param": "extra", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    },
+    {
+      "alias": "decimal_first",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    },
+    {
+      "alias": "decimal_last",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 1 },
+          { "type": { "name": "decimal" }, "value": "0.5" }
+        ]
+      }
+    },
+    {
+      "alias": "decimal_inside",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "decimal" }, "value": "1.5" },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 3 }
+        ]
+      }
+    },
+    {
+      "alias": "nullable_last",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "param": "tax_rate", "type": { "name": "decimal" } },
+          { "source": "coupons", "field": "discount", "type": { "name": "decimal", "nullable": true } }
+        ]
+      }
+    },
+    {
+      "alias": "nullable_first",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal", "nullable": true },
+        "values": [
+          { "source": "coupons", "field": "discount", "type": { "name": "decimal", "nullable": true } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 2 },
+          { "type": { "name": "integer" }, "value": 3 }
+        ]
+      }
+    },
+    {
+      "alias": "integer_param",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer", "nullable": true },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "param": "reserved", "type": { "name": "integer", "nullable": true } }
+        ]
+      }
+    },
+    {
+      "alias": "divide_integers",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 3 },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    },
+    {
+      "alias": "smallest_step",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "1.5" },
+          { "type": { "name": "decimal" }, "value": "0.0000000000000000000000000001" },
+          { "type": { "name": "integer" }, "value": 3 }
+        ]
+      }
+    },
+    {
+      "alias": "largest_integers",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "type": { "name": "integer" }, "value": 9223372036854775807 },
+          { "type": { "name": "integer" }, "value": -1 },
+          { "type": { "name": "integer" }, "value": 1 }
+        ]
+      }
+    }
+  ]
+}

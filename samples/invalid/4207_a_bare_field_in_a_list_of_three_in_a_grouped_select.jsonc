@@ -1,0 +1,28 @@
+// a bare field in a list of three in a grouped select
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "decimal" },
+        "values": [
+          {
+            "operator": "sum",
+            "type": { "name": "decimal" },
+            "selector": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+          },
+          { "operator": "count", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

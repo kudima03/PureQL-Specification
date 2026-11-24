@@ -1,0 +1,18 @@
+// divide with a nullable first operand declared non-null
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "divide",
+        "type": { "name": "decimal" },
+        "values": [
+          { "param": "discount", "type": { "name": "decimal", "nullable": true } },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "type": { "name": "integer" }, "value": 2 }
+        ]
+      }
+    }
+  ]
+}

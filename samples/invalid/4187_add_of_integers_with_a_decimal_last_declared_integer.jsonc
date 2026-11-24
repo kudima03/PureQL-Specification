@@ -1,0 +1,18 @@
+// add of integers with a decimal last declared integer
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "add",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "type": { "name": "decimal" }, "value": "0.5" }
+        ]
+      }
+    }
+  ]
+}

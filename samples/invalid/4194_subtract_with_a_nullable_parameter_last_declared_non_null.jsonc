@@ -1,0 +1,18 @@
+// subtract with a nullable parameter last declared non-null
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "subtract",
+        "type": { "name": "integer" },
+        "values": [
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } },
+          { "param": "reserved", "type": { "name": "integer", "nullable": true } }
+        ]
+      }
+    }
+  ]
+}

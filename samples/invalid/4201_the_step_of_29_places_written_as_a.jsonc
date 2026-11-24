@@ -1,0 +1,18 @@
+// the step 0.00000000000000000000000000015 written as a literal: 29 decimal places
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "multiply",
+        "type": { "name": "decimal" },
+        "values": [
+          { "type": { "name": "decimal" }, "value": "0.00000000000000000000000000015" },
+          { "type": { "name": "integer" }, "value": 3 },
+          { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+// average of an integer declared integer
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "order_id",
+      "expression": { "source": "order_items", "field": "order_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "value",
+      "expression": {
+        "operator": "average",
+        "type": { "name": "integer" },
+        "selector": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+      }
+    }
+  ]
+}
