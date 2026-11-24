@@ -1,0 +1,24 @@
+// A deduplicated subquery page with "skip": 0
+{
+  "subqueries": [
+    {
+      "name": "s",
+      "query": {
+        "from": { "entity": "orders" },
+        "select": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "orderBy": [ { "column": "user_id" } ],
+        "distinctBy": [ "user_id" ],
+        "pagination": { "skip": 0, "take": 10 }
+      }
+    }
+  ],
+  "from": { "subquery": "s" },
+  "select": [
+    { "alias": "user_id", "expression": { "source": "s", "field": "user_id", "type": { "name": "uuid" } } }
+  ]
+}

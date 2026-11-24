@@ -1,0 +1,122 @@
+// Every type is ordered, so the comparisons take every type, checked as equal is: booleans, uuids, times,
+// strings, dates and datetimes in a join on, where, a group key, an aggregate predicate and having, an integer
+// widened to a decimal, and nullable operands, which never make a comparison nullable.
+{
+  "from": { "entity": "orders" },
+  "joins": [
+    {
+      "kind": "inner",
+      "entity": "users",
+      "on": {
+        "operator": "and",
+        "type": { "name": "boolean" },
+        "conditions": [
+          {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "id", "type": { "name": "uuid" } },
+            "right": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          },
+          {
+            "operator": "lessThanOrEqual",
+            "type": { "name": "boolean" },
+            "left": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
+            "right": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          }
+        ]
+      }
+    }
+  ],
+  "where": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+        "right": { "param": "after_id", "type": { "name": "uuid" } }
+      },
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+        "right": {
+          "source": "users",
+          "field": "is_verified",
+          "type": { "name": "boolean", "nullable": true }
+        }
+      },
+      {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "delivery_window_start", "type": { "name": "time" } },
+        "right": { "source": "users", "field": "preferred_call_time", "type": { "name": "time" } }
+      },
+      {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": { "type": { "name": "integer" }, "value": 10 }
+      }
+    ]
+  },
+  "groupBy": [
+    {
+      "alias": "status",
+      "expression": { "source": "orders", "field": "status", "type": { "name": "string" } }
+    },
+    {
+      "alias": "early",
+      "expression": {
+        "operator": "lessThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "shipped_date", "type": { "name": "date", "nullable": true } },
+        "right": { "param": "cutoff", "type": { "name": "date" } }
+      }
+    }
+  ],
+  "select": [
+    { "alias": "status", "expression": { "key": "status", "type": { "name": "string" } } },
+    { "alias": "early", "expression": { "key": "early", "type": { "name": "boolean" } } },
+    {
+      "alias": "late_orders",
+      "expression": {
+        "operator": "count",
+        "type": { "name": "integer" },
+        "predicate": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": {
+            "source": "orders",
+            "field": "shipped_date",
+            "type": { "name": "date", "nullable": true }
+          }
+        }
+      }
+    }
+  ],
+  "having": {
+    "operator": "and",
+    "type": { "name": "boolean" },
+    "conditions": [
+      {
+        "operator": "greaterThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": { "key": "status", "type": { "name": "string" } },
+        "right": { "type": { "name": "string" }, "value": "paid" }
+      },
+      {
+        "operator": "lessThanOrEqual",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "max",
+          "type": { "name": "datetime" },
+          "selector": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+        },
+        "right": { "param": "until", "type": { "name": "datetime" } }
+      }
+    ]
+  }
+}

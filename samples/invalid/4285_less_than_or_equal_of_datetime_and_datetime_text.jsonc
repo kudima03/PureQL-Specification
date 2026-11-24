@@ -1,0 +1,14 @@
+// lessThanOrEqual of a datetime and the text of one: both operands of a comparison are one family, as in
+// equal, though every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "lessThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+    "right": { "type": { "name": "string" }, "value": "2026-01-01T00:00:00Z" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

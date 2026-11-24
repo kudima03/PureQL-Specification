@@ -1,0 +1,84 @@
+// A page after a cursor in a subquery, where orderBy needs pagination: take alone with no skip, a uuid cursor
+// and a datetime one, and a grouped page of a parameter size read by the main query.
+{
+  "subqueries": [
+    {
+      "name": "next_orders",
+      "query": {
+        "from": { "entity": "orders" },
+        "where": {
+          "operator": "or",
+          "type": { "name": "boolean" },
+          "conditions": [
+            {
+              "operator": "greaterThan",
+              "type": { "name": "boolean" },
+              "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+              "right": { "param": "after_at", "type": { "name": "datetime" } }
+            },
+            {
+              "operator": "and",
+              "type": { "name": "boolean" },
+              "conditions": [
+                {
+                  "operator": "equal",
+                  "type": { "name": "boolean" },
+                  "left": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } },
+                  "right": { "param": "after_at", "type": { "name": "datetime" } }
+                },
+                {
+                  "operator": "greaterThan",
+                  "type": { "name": "boolean" },
+                  "left": { "source": "orders", "field": "id", "type": { "name": "uuid" } },
+                  "right": { "param": "after_id", "type": { "name": "uuid" } }
+                }
+              ]
+            }
+          ]
+        },
+        "select": [
+          { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+          {
+            "alias": "ordered_at",
+            "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+          },
+          {
+            "alias": "user_id",
+            "expression": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "orderBy": [ { "column": "ordered_at" }, { "column": "id" } ],
+        "pagination": { "take": 50 }
+      }
+    },
+    {
+      "name": "busiest",
+      "query": {
+        "from": { "subquery": "next_orders" },
+        "groupBy": [
+          {
+            "alias": "user_id",
+            "expression": { "source": "next_orders", "field": "user_id", "type": { "name": "uuid" } }
+          }
+        ],
+        "select": [
+          { "alias": "user_id", "expression": { "key": "user_id", "type": { "name": "uuid" } } },
+          { "alias": "orders", "expression": { "operator": "count", "type": { "name": "integer" } } }
+        ],
+        "orderBy": [ { "column": "orders", "direction": "desc" }, { "column": "user_id" } ],
+        "pagination": { "take": { "param": "top", "type": { "name": "integer" } } }
+      }
+    }
+  ],
+  "from": { "subquery": "busiest" },
+  "select": [
+    {
+      "alias": "user_id",
+      "expression": { "source": "busiest", "field": "user_id", "type": { "name": "uuid" } }
+    },
+    {
+      "alias": "orders",
+      "expression": { "source": "busiest", "field": "orders", "type": { "name": "integer" } }
+    }
+  ]
+}

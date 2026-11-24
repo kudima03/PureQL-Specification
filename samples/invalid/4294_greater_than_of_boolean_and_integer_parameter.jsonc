@@ -1,0 +1,14 @@
+// greaterThan of a boolean and an integer parameter: both operands of a comparison are one family, as in
+// equal, though every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "is_paid", "type": { "name": "boolean" } },
+    "right": { "param": "flag", "type": { "name": "integer" } }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}

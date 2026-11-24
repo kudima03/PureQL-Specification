@@ -1,0 +1,14 @@
+// greaterThanOrEqual of a date and the text of a date: a date literal is typed date: both operands of a
+// comparison are one family, as in equal, though every type is ordered
+{
+  "from": { "entity": "orders" },
+  "where": {
+    "operator": "greaterThanOrEqual",
+    "type": { "name": "boolean" },
+    "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+    "right": { "type": { "name": "string" }, "value": "2026-01-01" }
+  },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+  ]
+}
