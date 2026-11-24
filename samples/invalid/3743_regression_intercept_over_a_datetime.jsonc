@@ -1,0 +1,15 @@
+// regressionIntercept over a datetime x
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } }
+      }
+    }
+  ]
+}

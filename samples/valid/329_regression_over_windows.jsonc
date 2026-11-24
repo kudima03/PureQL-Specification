@@ -1,0 +1,210 @@
+// The regression aggregates over all rows, a partition, a frame of twelve rows and a range of ninety days: a
+// rolling trend, and each order compared with the value its trend predicts.
+{
+  "from": { "entity": "orders" },
+  "select": [
+    { "alias": "id", "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } },
+    {
+      "alias": "trend_of_all_orders",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        }
+      }
+    },
+    {
+      "alias": "trend_of_the_customer",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        },
+        "over": { "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ] }
+      }
+    },
+    {
+      "alias": "rolling_trend",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 11 }
+        }
+      }
+    },
+    {
+      "alias": "rolling_intercept",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 11 }
+        }
+      }
+    },
+    {
+      "alias": "rolling_fit",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "ordered_at", "type": { "name": "datetime" } } },
+            { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+          ],
+          "frame": { "preceding": 11 }
+        }
+      }
+    },
+    {
+      "alias": "trend_of_ninety_days",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "dateDiffDays",
+          "type": { "name": "integer" },
+          "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+          "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+        },
+        "over": {
+          "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+          "orderBy": [
+            { "expression": { "source": "orders", "field": "order_date", "type": { "name": "date" } } }
+          ],
+          "range": { "preceding": { "days": 90 } }
+        }
+      }
+    },
+    {
+      "alias": "above_its_trend",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "right": {
+          "operator": "coalesce",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "add",
+              "type": { "name": "decimal", "nullable": true },
+              "values": [
+                {
+                  "operator": "regressionIntercept",
+                  "type": { "name": "decimal", "nullable": true },
+                  "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                  "x": {
+                    "operator": "dateDiffDays",
+                    "type": { "name": "integer" },
+                    "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                    "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+                  },
+                  "over": {
+                    "partitionBy": [ { "source": "orders", "field": "user_id", "type": { "name": "uuid" } } ],
+                    "orderBy": [
+                      {
+                        "expression": {
+                          "source": "orders",
+                          "field": "ordered_at",
+                          "type": { "name": "datetime" }
+                        }
+                      },
+                      { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                    ],
+                    "frame": { "preceding": 11 }
+                  }
+                },
+                {
+                  "operator": "multiply",
+                  "type": { "name": "decimal", "nullable": true },
+                  "values": [
+                    {
+                      "operator": "regressionSlope",
+                      "type": { "name": "decimal", "nullable": true },
+                      "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+                      "x": {
+                        "operator": "dateDiffDays",
+                        "type": { "name": "integer" },
+                        "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                        "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+                      },
+                      "over": {
+                        "partitionBy": [
+                          { "source": "orders", "field": "user_id", "type": { "name": "uuid" } }
+                        ],
+                        "orderBy": [
+                          {
+                            "expression": {
+                              "source": "orders",
+                              "field": "ordered_at",
+                              "type": { "name": "datetime" }
+                            }
+                          },
+                          { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } }
+                        ],
+                        "frame": { "preceding": 11 }
+                      }
+                    },
+                    {
+                      "operator": "dateDiffDays",
+                      "type": { "name": "integer" },
+                      "left": { "source": "orders", "field": "order_date", "type": { "name": "date" } },
+                      "right": { "type": { "name": "date" }, "value": "2024-01-01" }
+                    }
+                  ]
+                }
+              ]
+            },
+            { "source": "orders", "field": "total", "type": { "name": "decimal" } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [ { "expression": { "source": "orders", "field": "id", "type": { "name": "uuid" } } } ]
+}

@@ -1,0 +1,128 @@
+// The regression aggregates in having, select and orderBy of a grouped query, over all rows and over computed
+// values.
+{
+  "from": { "entity": "order_items" },
+  "groupBy": [
+    {
+      "alias": "product_id",
+      "expression": { "source": "order_items", "field": "product_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "having": {
+    "operator": "greaterThan",
+    "type": { "name": "boolean" },
+    "left": {
+      "operator": "coalesce",
+      "type": { "name": "decimal" },
+      "values": [
+        {
+          "operator": "regressionRSquared",
+          "type": { "name": "decimal", "nullable": true },
+          "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+        },
+        { "type": { "name": "integer" }, "value": 0 }
+      ]
+    },
+    "right": { "param": "min_fit", "type": { "name": "decimal" } }
+  },
+  "select": [
+    { "alias": "product_id", "expression": { "key": "product_id", "type": { "name": "uuid" } } },
+    { "alias": "lines", "expression": { "operator": "count", "type": { "name": "integer" } } },
+    {
+      "alias": "quantity_per_unit_of_price",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "quantity_at_no_price",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "fit",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+      }
+    },
+    {
+      "alias": "slope_over_all_products",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "over": "all"
+      }
+    },
+    {
+      "alias": "steeper_than_all",
+      "expression": {
+        "operator": "greaterThan",
+        "type": { "name": "boolean" },
+        "left": {
+          "operator": "coalesce",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "regressionSlope",
+              "type": { "name": "decimal", "nullable": true },
+              "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } }
+            },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        },
+        "right": {
+          "operator": "coalesce",
+          "type": { "name": "decimal" },
+          "values": [
+            {
+              "operator": "regressionSlope",
+              "type": { "name": "decimal", "nullable": true },
+              "y": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+              "x": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+              "over": "all"
+            },
+            { "type": { "name": "integer" }, "value": 0 }
+          ]
+        }
+      }
+    },
+    {
+      "alias": "of_computed_values",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": {
+          "operator": "multiply",
+          "type": { "name": "decimal" },
+          "values": [
+            { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } }
+          ]
+        },
+        "x": {
+          "operator": "subtract",
+          "type": { "name": "integer" },
+          "values": [
+            { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+            { "source": "order_items", "field": "returned_quantity", "type": { "name": "integer" } }
+          ]
+        }
+      }
+    }
+  ],
+  "orderBy": [ { "column": "fit", "direction": "desc" }, { "column": "product_id" } ]
+}

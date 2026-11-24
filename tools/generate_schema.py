@@ -924,8 +924,11 @@ for ctx, rules in CONTEXTS.items():
                   {**aggregate_props, "selector": True, "orderBy": array_of(ref("orderItem@row"), 1)})
             for t in ORDERED:
                 aggregate(name, t, t, exact=True)
-        # Statistics. median and the continuous percentile interpolate between two
-        # values, so they take the types average takes and are typed as it is.
+        # Statistics have a section of their own, so that neither it nor `aggregate`
+        # grows into a long dispatch list. median and the continuous percentile
+        # interpolate between two values, so they take the types average takes and are
+        # typed as it is.
+        section = "statistics"
         fraction = {"fraction": ref("fraction")}
         for name, extra in [("median", {}), ("percentileContinuous", fraction)]:
             shape(name, ["selector", *extra], {**aggregate_props, "selector": True, **extra})
@@ -963,6 +966,16 @@ for ctx, rules in CONTEXTS.items():
         for name in ["covarianceSample", "correlation"]:
             shape(name, ["left", "right"], {**aggregate_props, **pair(True)["properties"]})
             signature(name, "decimal", True)
+        # The line that fits y to x best, by least squares: its slope, its intercept (y
+        # where x is 0) and the share of the variance of y that it explains. The
+        # dependent value comes first, as in atan2. A row counts when both values are
+        # non-null. One pair has no line, nor have pairs that share one x, so the three
+        # are nullable wherever they are.
+        line = {p: expr("decimal", "row", True) for p in ["y", "x"]}
+        for name in ["regressionSlope", "regressionIntercept", "regressionRSquared"]:
+            shape(name, ["y", "x"], {**aggregate_props, **line})
+            signature(name, "decimal", True)
+        section = "aggregate"
         # concatAll joins the strings of its rows with a separator, in the order of its
         # own orderBy, as first and last have one. Null values are skipped and no row
         # gives the empty string, so it is never null, as sum is never null.

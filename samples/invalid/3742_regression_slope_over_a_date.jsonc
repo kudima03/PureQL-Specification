@@ -1,0 +1,15 @@
+// regressionSlope over a date x: a date is not a number; a trend over time reads dateDiffDays of it
+{
+  "from": { "entity": "orders" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "orders", "field": "total", "type": { "name": "decimal" } },
+        "x": { "source": "orders", "field": "order_date", "type": { "name": "date" } }
+      }
+    }
+  ]
+}

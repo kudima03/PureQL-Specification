@@ -1,0 +1,16 @@
+// regressionIntercept with at: it is y where x is 0; another point is intercept plus slope times x
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+        "at": { "type": { "name": "integer" }, "value": 10 }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+// regressionRSquared of a boolean
+{
+  "from": { "entity": "order_items" },
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "source": "order_items", "field": "unit_price", "type": { "name": "decimal" } },
+        "x": {
+          "operator": "greaterThan",
+          "type": { "name": "boolean" },
+          "left": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
+          "right": { "type": { "name": "integer" }, "value": 1 }
+        }
+      }
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-// regressionSlope is not an operator: a slope is a covariance divided by a variance
+// regressionSlope with left and right: a line is not symmetric, and its operands are y and x
 {
   "from": { "entity": "order_items" },
   "select": [

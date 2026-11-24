@@ -7677,6 +7677,90 @@
       }
     },
     {
+      "alias": "regressionSlope_decimal_nullable",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal" }, "value": "2.5" },
+        "x": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "regressionSlope_decimal_nullable_of_integers",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "integer" }, "value": 7 },
+        "x": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "regressionSlope_decimal_nullable_of_nulls_where",
+      "expression": {
+        "operator": "regressionSlope",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "x": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "regressionIntercept_decimal_nullable",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal" }, "value": "2.5" },
+        "x": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "regressionIntercept_decimal_nullable_of_integers",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "integer" }, "value": 7 },
+        "x": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "regressionIntercept_decimal_nullable_of_nulls_where",
+      "expression": {
+        "operator": "regressionIntercept",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "x": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
+      "alias": "regressionRSquared_decimal_nullable",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal" }, "value": "2.5" },
+        "x": { "type": { "name": "integer" }, "value": 7 }
+      }
+    },
+    {
+      "alias": "regressionRSquared_decimal_nullable_of_integers",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "integer" }, "value": 7 },
+        "x": { "type": { "name": "integer" }, "value": -3 }
+      }
+    },
+    {
+      "alias": "regressionRSquared_decimal_nullable_of_nulls_where",
+      "expression": {
+        "operator": "regressionRSquared",
+        "type": { "name": "decimal", "nullable": true },
+        "y": { "type": { "name": "decimal", "nullable": true }, "value": null },
+        "x": { "type": { "name": "integer", "nullable": true }, "value": null },
+        "predicate": { "type": { "name": "boolean" }, "value": true }
+      }
+    },
+    {
       "alias": "concatAll_string_over_frame",
       "expression": {
         "operator": "concatAll",
