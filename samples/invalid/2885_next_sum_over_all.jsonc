@@ -1,4 +1,4 @@
-// An aggregate with over "all" in a next query
+// An aggregate with over "all" in a next query without groupBy
 {
   "subqueries": [
     {

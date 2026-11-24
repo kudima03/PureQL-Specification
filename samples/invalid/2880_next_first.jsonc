@@ -1,4 +1,4 @@
-// first in a next query
+// first in a next query without groupBy
 {
   "subqueries": [
     {

@@ -27467,6 +27467,47 @@
       },
       "additionalProperties": false
     },
+    "groupedNextQuery": {
+      "type": "object",
+      "required": [
+        "from",
+        "groupBy",
+        "select"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/from"
+        },
+        "joins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/join"
+          },
+          "minItems": 1
+        },
+        "where": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "groupBy": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/groupKey"
+          },
+          "minItems": 1
+        },
+        "having": {
+          "$ref": "#/$defs/boolean@group"
+        },
+        "select": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/selectItem@group"
+          },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "groupedQuery": {
       "type": "object",
       "required": [
@@ -47792,34 +47833,17 @@
       ]
     },
     "nextQuery": {
-      "type": "object",
-      "required": [
-        "from",
-        "select"
-      ],
-      "properties": {
-        "from": {
-          "$ref": "#/$defs/from"
-        },
-        "joins": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/join"
-          },
-          "minItems": 1
-        },
-        "where": {
-          "$ref": "#/$defs/boolean@row"
-        },
-        "select": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/selectItem@row"
-          },
-          "minItems": 1
-        }
+      "if": {
+        "required": [
+          "groupBy"
+        ]
       },
-      "additionalProperties": false
+      "then": {
+        "$ref": "#/$defs/groupedNextQuery"
+      },
+      "else": {
+        "$ref": "#/$defs/plainNextQuery"
+      }
     },
     "normalize.string.nullable@group": {
       "properties": {
@@ -61539,6 +61563,36 @@
               "const": false
             }
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "plainNextQuery": {
+      "type": "object",
+      "required": [
+        "from",
+        "select"
+      ],
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/from"
+        },
+        "joins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/join"
+          },
+          "minItems": 1
+        },
+        "where": {
+          "$ref": "#/$defs/boolean@row"
+        },
+        "select": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/selectItem@row"
+          },
+          "minItems": 1
         }
       },
       "additionalProperties": false

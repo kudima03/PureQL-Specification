@@ -1,0 +1,21 @@
+// goalSeek is not an operator
+{
+  "from": { "entity": "cash_flows" },
+  "groupBy": [
+    {
+      "alias": "investment_id",
+      "expression": { "source": "cash_flows", "field": "investment_id", "type": { "name": "uuid" } }
+    }
+  ],
+  "select": [
+    {
+      "alias": "c",
+      "expression": {
+        "operator": "goalSeek",
+        "type": { "name": "decimal", "nullable": true },
+        "target": { "type": { "name": "integer" }, "value": 0 },
+        "selector": { "source": "cash_flows", "field": "amount", "type": { "name": "decimal" } }
+      }
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+// A grouped next with two joins, a where, a computed key, a having of count and any, and columns that are
+// sum, a share over all rows of the step, countDistinct, max, all and concatAll.
+{
+  "subqueries": [
+    {
+      "name": "walk",
+      "recursive": {
+        "seed": {
+          "from": { "entity": "users" },
+          "where": {
+            "operator": "equal",
+            "type": { "name": "boolean" },
+            "left": {
+              "source": "users",
+              "field": "referrer_id",
+              "type": { "name": "uuid", "nullable": true }
+            },
+            "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+          },
+          "select": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            { "alias": "level", "expression": { "type": { "name": "integer" }, "value": 0 } },
+            { "alias": "spent", "expression": { "type": { "name": "decimal" }, "value": "0" } },
+            {
+              "alias": "share",
+              "expression": {
+                "operator": "asNullable",
+                "type": { "name": "decimal", "nullable": true },
+                "operand": { "type": { "name": "decimal" }, "value": "1" }
+              }
+            },
+            { "alias": "orders", "expression": { "type": { "name": "integer" }, "value": 0 } },
+            {
+              "alias": "latest",
+              "expression": {
+                "operator": "asNullable",
+                "type": { "name": "datetime", "nullable": true },
+                "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } }
+              }
+            },
+            { "alias": "vip", "expression": { "type": { "name": "boolean" }, "value": false } },
+            { "alias": "statuses", "expression": { "type": { "name": "string" }, "value": "" } }
+          ]
+        },
+        "next": {
+          "from": { "subquery": "walk" },
+          "joins": [
+            {
+              "kind": "inner",
+              "entity": "users",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": {
+                  "source": "users",
+                  "field": "referrer_id",
+                  "type": { "name": "uuid", "nullable": true }
+                },
+                "right": { "source": "walk", "field": "id", "type": { "name": "uuid" } }
+              }
+            },
+            {
+              "kind": "left",
+              "entity": "orders",
+              "on": {
+                "operator": "equal",
+                "type": { "name": "boolean" },
+                "left": { "source": "orders", "field": "user_id", "type": { "name": "uuid" } },
+                "right": { "source": "users", "field": "id", "type": { "name": "uuid" } }
+              }
+            }
+          ],
+          "where": {
+            "operator": "lessThan",
+            "type": { "name": "boolean" },
+            "left": { "source": "walk", "field": "level", "type": { "name": "integer" } },
+            "right": { "type": { "name": "integer" }, "value": 5 }
+          },
+          "groupBy": [
+            { "alias": "id", "expression": { "source": "users", "field": "id", "type": { "name": "uuid" } } },
+            {
+              "alias": "level",
+              "expression": {
+                "operator": "add",
+                "type": { "name": "integer" },
+                "values": [
+                  { "source": "walk", "field": "level", "type": { "name": "integer" } },
+                  { "type": { "name": "integer" }, "value": 1 }
+                ]
+              }
+            }
+          ],
+          "having": {
+            "operator": "or",
+            "type": { "name": "boolean" },
+            "conditions": [
+              {
+                "operator": "greaterThan",
+                "type": { "name": "boolean" },
+                "left": { "operator": "count", "type": { "name": "integer" } },
+                "right": { "type": { "name": "integer" }, "value": 1 }
+              },
+              {
+                "operator": "any",
+                "type": { "name": "boolean" },
+                "predicate": {
+                  "operator": "notEqual",
+                  "type": { "name": "boolean" },
+                  "left": { "source": "orders", "field": "id", "type": { "name": "uuid", "nullable": true } },
+                  "right": { "type": { "name": "uuid", "nullable": true }, "value": null }
+                }
+              }
+            ]
+          },
+          "select": [
+            { "alias": "id", "expression": { "key": "id", "type": { "name": "uuid" } } },
+            { "alias": "level", "expression": { "key": "level", "type": { "name": "integer" } } },
+            {
+              "alias": "spent",
+              "expression": {
+                "operator": "sum",
+                "type": { "name": "decimal" },
+                "selector": {
+                  "source": "orders",
+                  "field": "total",
+                  "type": { "name": "decimal", "nullable": true }
+                }
+              }
+            },
+            {
+              "alias": "share",
+              "expression": {
+                "operator": "divide",
+                "type": { "name": "decimal", "nullable": true },
+                "values": [
+                  {
+                    "operator": "sum",
+                    "type": { "name": "decimal" },
+                    "selector": {
+                      "source": "orders",
+                      "field": "total",
+                      "type": { "name": "decimal", "nullable": true }
+                    }
+                  },
+                  {
+                    "operator": "nullIfEqual",
+                    "type": { "name": "decimal", "nullable": true },
+                    "left": {
+                      "operator": "sum",
+                      "type": { "name": "decimal" },
+                      "selector": {
+                        "source": "orders",
+                        "field": "total",
+                        "type": { "name": "decimal", "nullable": true }
+                      },
+                      "over": "all"
+                    },
+                    "right": { "type": { "name": "integer" }, "value": 0 }
+                  }
+                ]
+              }
+            },
+            {
+              "alias": "orders",
+              "expression": {
+                "operator": "countDistinct",
+                "type": { "name": "integer" },
+                "selector": {
+                  "source": "orders",
+                  "field": "id",
+                  "type": { "name": "uuid", "nullable": true }
+                }
+              }
+            },
+            {
+              "alias": "latest",
+              "expression": {
+                "operator": "max",
+                "type": { "name": "datetime", "nullable": true },
+                "selector": {
+                  "source": "orders",
+                  "field": "ordered_at",
+                  "type": { "name": "datetime", "nullable": true }
+                }
+              }
+            },
+            {
+              "alias": "vip",
+              "expression": {
+                "operator": "all",
+                "type": { "name": "boolean" },
+                "predicate": {
+                  "operator": "coalesce",
+                  "type": { "name": "boolean" },
+                  "values": [
+                    {
+                      "source": "orders",
+                      "field": "is_vip",
+                      "type": { "name": "boolean", "nullable": true }
+                    },
+                    { "type": { "name": "boolean" }, "value": false }
+                  ]
+                }
+              }
+            },
+            {
+              "alias": "statuses",
+              "expression": {
+                "operator": "concatAll",
+                "type": { "name": "string" },
+                "selector": {
+                  "source": "orders",
+                  "field": "status",
+                  "type": { "name": "string", "nullable": true }
+                },
+                "separator": { "type": { "name": "string" }, "value": ", " },
+                "orderBy": [
+                  {
+                    "expression": {
+                      "source": "orders",
+                      "field": "status",
+                      "type": { "name": "string", "nullable": true }
+                    }
+                  }
+                ],
+                "distinct": true
+              }
+            }
+          ]
+        },
+        "maxDepth": 6
+      }
+    }
+  ],
+  "from": { "subquery": "walk" },
+  "select": [
+    { "alias": "id", "expression": { "source": "walk", "field": "id", "type": { "name": "uuid" } } },
+    { "alias": "level", "expression": { "source": "walk", "field": "level", "type": { "name": "integer" } } },
+    { "alias": "spent", "expression": { "source": "walk", "field": "spent", "type": { "name": "decimal" } } },
+    {
+      "alias": "statuses",
+      "expression": { "source": "walk", "field": "statuses", "type": { "name": "string" } }
+    }
+  ]
+}

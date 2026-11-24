@@ -1,4 +1,4 @@
-// A next query with having
+// A next query with having and no groupBy: having filters groups
 {
   "subqueries": [
     {

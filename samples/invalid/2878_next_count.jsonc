@@ -1,4 +1,4 @@
-// count in a next query
+// count in a next query without groupBy
 {
   "subqueries": [
     {

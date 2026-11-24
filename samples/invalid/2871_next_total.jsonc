@@ -1,4 +1,4 @@
-// A total next query: next has select, not aggregate
+// A total next query: it returns a row over no rows, so its levels would never be empty
 {
   "subqueries": [
     {

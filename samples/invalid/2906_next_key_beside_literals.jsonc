@@ -1,4 +1,4 @@
-// A group key in a next query whose other columns are literals
+// A group key in a next query whose other columns are literals: without groupBy there are no keys
 {
   "subqueries": [
     {
