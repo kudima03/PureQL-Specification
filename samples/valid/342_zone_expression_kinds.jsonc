@@ -40,7 +40,7 @@
           "operator": "coalesce",
           "type": { "name": "string" },
           "values": [
-            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "param": "optional_zone", "type": { "name": "string", "nullable": true } },
             { "source": "users", "field": "time_zone", "type": { "name": "string" } }
           ]
         }
@@ -67,7 +67,7 @@
         "operator": "asDate",
         "type": { "name": "date", "nullable": true },
         "operand": { "source": "users", "field": "created_at", "type": { "name": "datetime" } },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {
@@ -102,7 +102,7 @@
           "field": "last_login_at",
           "type": { "name": "datetime", "nullable": true }
         },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {
@@ -137,7 +137,7 @@
               "field": "last_login_at",
               "type": { "name": "datetime", "nullable": true }
             },
-            "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+            "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
           },
           { "source": "users", "field": "birth_date", "type": { "name": "date" } }
         ]

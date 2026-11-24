@@ -56,7 +56,7 @@
       "expression": {
         "operator": "matchesRegex",
         "type": { "name": "boolean" },
-        "operand": { "source": "users", "field": "email", "type": { "name": "string", "nullable": true } },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
         "pattern": { "param": "domain_pattern", "type": { "name": "string" } }
       }
     },
@@ -65,7 +65,7 @@
       "expression": {
         "operator": "extractRegex",
         "type": { "name": "string", "nullable": true },
-        "operand": { "source": "users", "field": "email", "type": { "name": "string", "nullable": true } },
+        "operand": { "source": "users", "field": "email", "type": { "name": "string" } },
         "pattern": { "type": { "name": "string" }, "value": "@(.+)$" },
         "group": { "param": "group", "type": { "name": "integer" } }
       }

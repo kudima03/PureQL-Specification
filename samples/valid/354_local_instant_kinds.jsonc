@@ -51,7 +51,7 @@
           "operator": "coalesce",
           "type": { "name": "string" },
           "values": [
-            { "param": "zone", "type": { "name": "string", "nullable": true } },
+            { "param": "optional_zone", "type": { "name": "string", "nullable": true } },
             { "source": "users", "field": "time_zone", "type": { "name": "string" } }
           ]
         }
@@ -63,7 +63,7 @@
         "operator": "asDatetime",
         "type": { "name": "datetime", "nullable": true },
         "operand": { "source": "users", "field": "birth_date", "type": { "name": "date" } },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {
@@ -116,7 +116,7 @@
         "type": { "name": "datetime", "nullable": true },
         "date": { "source": "users", "field": "trial_start", "type": { "name": "date", "nullable": true } },
         "time": { "param": "at", "type": { "name": "time", "nullable": true } },
-        "zone": { "param": "zone", "type": { "name": "string", "nullable": true } }
+        "zone": { "param": "optional_zone", "type": { "name": "string", "nullable": true } }
       }
     },
     {

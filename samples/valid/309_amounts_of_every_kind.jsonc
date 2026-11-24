@@ -206,7 +206,7 @@
           "type": { "name": "integer" },
           "values": [
             { "type": { "name": "integer" }, "value": 2 },
-            { "param": "seconds", "type": { "name": "integer" } }
+            { "param": "whole_seconds", "type": { "name": "integer" } }
           ]
         }
       }
@@ -258,7 +258,7 @@
           "type": { "name": "integer" },
           "values": [
             { "type": { "name": "integer" }, "value": 2 },
-            { "param": "seconds", "type": { "name": "integer" } }
+            { "param": "whole_seconds", "type": { "name": "integer" } }
           ]
         }
       }

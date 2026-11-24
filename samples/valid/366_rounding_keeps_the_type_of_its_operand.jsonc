@@ -175,7 +175,7 @@
       "expression": {
         "operator": "round",
         "type": { "name": "integer", "nullable": true },
-        "operand": { "param": "units", "type": { "name": "integer", "nullable": true } },
+        "operand": { "param": "optional_units", "type": { "name": "integer", "nullable": true } },
         "digits": { "type": { "name": "integer" }, "value": -1 }
       }
     },
@@ -185,7 +185,7 @@
         "operator": "truncate",
         "type": { "name": "integer", "nullable": true },
         "operand": { "source": "order_items", "field": "quantity", "type": { "name": "integer" } },
-        "digits": { "param": "digits", "type": { "name": "integer", "nullable": true } }
+        "digits": { "param": "optional_digits", "type": { "name": "integer", "nullable": true } }
       }
     },
     {

@@ -268,7 +268,7 @@
       "on": {
         "operator": "equal",
         "type": { "name": "boolean" },
-        "left": { "source": "steps", "field": "id", "type": { "name": "uuid", "nullable": true } },
+        "left": { "source": "steps", "field": "id", "type": { "name": "uuid" } },
         "right": { "source": "order_items", "field": "id", "type": { "name": "uuid" } }
       }
     }
